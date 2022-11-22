@@ -9,6 +9,13 @@ Authors@R:
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Analysis code for the coding in analysis and research survey (CARS).
 License: MIT + file LICENSE
+Imports:
+    httr,
+    magrittr,
+    stringr
+Suggests:
+    devtools,
+    testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
