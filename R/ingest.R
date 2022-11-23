@@ -76,7 +76,7 @@ ingest <- function(survey = "1167489",
         }
       )
 
-      if (r$status_code == 200) {
+      if (exists("r") && r$status_code == 200) {
         break
       }
 
