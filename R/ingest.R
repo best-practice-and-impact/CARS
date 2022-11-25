@@ -10,6 +10,8 @@
 #' @export
 
 get_tidy_data <- function(...) {
+  ingest(...) # First API request always fails so the API is pinged twice to circumvent this.
+
   data <- ingest(...) %>%
     convert_raw() %>%
     tidy_colnames()
