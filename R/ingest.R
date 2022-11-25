@@ -87,7 +87,7 @@ ingest <- function(survey = "1167489",
   return(r)
 }
 
-#'@title Convert raw data to data.frame
+#'@title Convert raw data to data frame
 #'
 #'@description Convert raw smartsurvey data to data.frame . Extract contents (raw csv) from smartsurvey API request and convert to data.frame
 #'
@@ -131,8 +131,6 @@ convert_raw <- function(r) {
 #' @export
 
 tidy_colnames <- function(raw_data) {
-  r <- ingest()
-  raw_data <- convert_raw(r)
 
   colnames <- rbind(colnames(raw_data), raw_data[1, ], raw_data[2, ])
 
@@ -144,6 +142,8 @@ tidy_colnames <- function(raw_data) {
 
   output <- raw_data[3:nrow(raw_data), ]
   colnames(output) <- new_colnames
+
+  rownames(output) <- NULL
 
   return(output)
 }
