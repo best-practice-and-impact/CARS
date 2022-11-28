@@ -10,6 +10,10 @@
 #' @export
 
 get_tidy_data <- function(...) {
+  # Since the smartsurvey API update, the first request of each session is not authenticated.
+  # ingest() is called twice to successfully retrieve the data from the API.
+  ingest(...)
+
   data <- ingest(...) %>%
     convert_raw() %>%
     tidy_colnames()
