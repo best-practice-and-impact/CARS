@@ -8,6 +8,20 @@ test_that("check_skip_logic returns failing rows from one skipped column", {
   expect_equal(expected, got)
 })
 
+test_that("check_skip_logic returns failing rows from multiple skipped columns", {
+  dummy_data <- data.frame(cond_col = c(T, T, T, F, F, F),
+                           skipped_col1 = c(NA, NA, NA, "test", NA, NA),
+                           skipped_col2 = c(NA, NA, NA, NA, "test", NA),
+                           skipped_col3 = c(NA, NA, NA, NA, NA, "test"))
+
+  got <- check_skip_logic(dummy_data, dummy_data$cond, c("skipped_col1", "skipped_col2", "skipped_col3"))
+
+  expected <- c(4, 5, 6)
+
+  expect_equal(expected, got)
+})
+
+
 # test_that("question 1 routing removes redundant enteries in questions 2 to 5", {
 #
 #   dummy_data <- data.frame(Q1. = c("Civil service, including desolved administations", "NHS", "Other"),
