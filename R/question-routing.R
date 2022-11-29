@@ -1,21 +1,31 @@
 
 
-check_routing_all <- function(data, question, skipped_questions, condition, inverse=FALSE) {
+#' @title Check skip logic
+#'
+#' @description Checks whether the skip logic was followed correctly. Backtracking while filling the survey can result in inconsistent response sets.
+#' This check returns row numbers where questions which should have been skipped contain anything other than NA.
+#'
+#' @param data data.frame
+#' @param condition logical vector. Example: data$row == "skip response"
+#' @param skipped_cols character. questions that should have been skipped if condition != TRUE
+#'
+#' @return list of rows failing the check
+#'
+#' @export
 
-  if(!inverse) {
-    for(col in skipped_questions){
-      data[, col] <- ifelse(data[, question] == condition, NA, data[, col])
-    }
-  }
-  else {
-    for(col in skipped_questions){
-      data[, col] <- ifelse(data[, question] != condition, NA, data[, col])
-    }
-  }
+check_skip_logic <- function(data, condition, skipped_cols) {
 
-  return(data)
+  condition_failed <- !condition & !is.na(data[skipped_cols])
+
+  row_failed <- as.logical(rowSums(condition_failed))
+
+
+  return(
+    which(row_failed)
+  )
 
 }
+
 
 # check_routing_q1 <- function(data) {
 #
