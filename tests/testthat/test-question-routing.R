@@ -22,6 +22,56 @@ test_that("check_skip_logic returns failing rows from multiple skipped columns",
 })
 
 
+expected <- data.frame(cs_grade = c("Civil service, including desolved administations", "Other"),
+                       department = c("test1", NA),
+                       other_department_name = c("test1", NA),
+                       prof_DS = c("test1", NA),
+                       prof_DDAT = c("test1", NA),
+                       prof_GAD = c("test1", NA),
+                       prof_GES = c("test1", NA),
+                       prof_geog = c("test1", NA),
+                       prof_GORS = c("test1", NA),
+                       prof_GSR = c("test1", NA),
+                       prof_GSG = c("test1", NA),
+                       prof_CS_none = c("test1", NA),
+                       prof_CS_other = c("test1", NA),
+                       ONS_directorate = c("test1", NA))
+
+skipped_cols = colnames(expected)[2:length(colnames(expected))]
+
+for(col in skipped_cols) {
+
+  dummy_data <- data.frame(cs_grade = c("Civil service, including desolved administations", "Other"),
+                           department = c("test1", NA),
+                           other_department_name = c("test1", NA),
+                           prof_DS = c("test1", NA),
+                           prof_DDAT = c("test1", NA),
+                           prof_GAD = c("test1", NA),
+                           prof_GES = c("test1", NA),
+                           prof_geog = c("test1", NA),
+                           prof_GORS = c("test1", NA),
+                           prof_GSR = c("test1", NA),
+                           prof_GSG = c("test1", NA),
+                           prof_CS_none = c("test1", NA),
+                           prof_CS_other = c("test1", NA),
+                           ONS_directorate = c("test1", NA))
+
+  dummy_data[2, col] <- "test2"
+
+  condition <- dummy_data$cs_grade == "Civil service, including desolved administations"
+
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where the conditon has failed", col), {
+
+    got <- enforce_skip_logic(data = dummy_data,
+                              condition = condition,
+                              skipped_cols = skipped_cols)
+
+    expect_equal(got, expected)
+
+  })
+
+}
+
 # test_that("question 1 routing removes redundant enteries in questions 2 to 5", {
 #
 #   dummy_data <- data.frame(Q1. = c("Civil service, including desolved administations", "NHS", "Other"),

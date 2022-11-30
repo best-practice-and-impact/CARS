@@ -24,6 +24,17 @@ check_skip_logic <- function(data, condition, skipped_cols) {
     which(row_failed)
   )
 
+
+}
+
+enforce_skip_logic <- function(data, condition, skipped_cols) {
+
+  row_index <- check_skip_logic(data, condition, skipped_cols)
+
+  data[row_index, skipped_cols] <- NA
+
+  return(data)
+
 }
 
 
