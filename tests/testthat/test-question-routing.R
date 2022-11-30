@@ -21,8 +21,9 @@ test_that("check_skip_logic returns failing rows from multiple skipped columns",
   expect_equal(expected, got)
 })
 
+################################################################################
 
-expected <- data.frame(cs_grade = c("Civil service, including desolved administations", "Other"),
+expected <- data.frame(cs_grade = c("Civil service, including devolved administations", "Other"),
                        department = c("test1", NA),
                        other_department_name = c("test1", NA),
                        prof_DS = c("test1", NA),
@@ -41,7 +42,7 @@ skipped_cols = colnames(expected)[2:length(colnames(expected))]
 
 for(col in skipped_cols) {
 
-  dummy_data <- data.frame(cs_grade = c("Civil service, including desolved administations", "Other"),
+  dummy_data <- data.frame(cs_grade = c("Civil service, including devolved administations", "Other"),
                            department = c("test1", NA),
                            other_department_name = c("test1", NA),
                            prof_DS = c("test1", NA),
@@ -58,9 +59,9 @@ for(col in skipped_cols) {
 
   dummy_data[2, col] <- "test2"
 
-  condition <- dummy_data$cs_grade == "Civil service, including desolved administations"
+  condition <- dummy_data$cs_grade == "Civil service, including devolved administations"
 
-  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where the conditon has failed", col), {
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where cs_grade is 'Civil service, including devolved administations'", col), {
 
     got <- enforce_skip_logic(data = dummy_data,
                               condition = condition,
@@ -72,205 +73,237 @@ for(col in skipped_cols) {
 
 }
 
-# test_that("question 1 routing removes redundant enteries in questions 2 to 5", {
-#
-#   dummy_data <- data.frame(Q1. = c("Civil service, including desolved administations", "NHS", "Other"),
-#                            Q2. = c("test1", "test2", "test3"),
-#                            Q3. = c("test1", "test2", "test3"),
-#                            Q4.1 = c("test1", "test2", "test3"),
-#                            Q4.2 = c("test1", "test2", "test3"),
-#                            Q5. = c("test1", "test2", "test3")
-#   )
-#
-#   skipped_questions = c(list("Q2.", "Q3.", "Q5."), grep("Q4.", colnames(dummy_data)))
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q1.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "Civil service, including desolved administations",
-#                            inverse = TRUE)
-#
-#   exp <- data.frame(Q1. = c("Civil service, including desolved administations", "NHS", "Other"),
-#                     Q2. = c("test1", NA, NA),
-#                     Q3. = c("test1", NA, NA),
-#                     Q4.1 = c("test1", NA, NA),
-#                     Q4.2 = c("test1", NA, NA),
-#                     Q5. = c("test1", NA, NA)
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 3 routing removes redundant enteryin question 5", {
-#
-#   dummy_data <- data.frame(Q3. = c("Office for National Statistics", "Other1", "Other2"),
-#                            Q4.1. = c("test1", "test2", "test3"),
-#                            Q4.2. = c("test1", "test2", "test3"),
-#                            Q5. = c("test1", "test2", "test3")
-#   )
-#
-#   skipped_questions = list("Q5.")
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q3.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "Office for National Statistics",
-#                            inverse = TRUE)
-#
-#   exp <- data.frame(Q3. = c("Office for National Statistics", "Other1", "Other2"),
-#                     Q4.1. = c("test1", "test2", "test3"),
-#                     Q4.2. = c("test1", "test2", "test3"),
-#                     Q5. = c("test1", NA, NA)
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 6 routing removes redundant enteries in questions 7 to 15", {
-#
-#   dummy_data <- data.frame(Q6. = c("Any other qualification", "Other1", "Other2"),
-#                            Q7. = c("test1", "test2", "test3"),
-#                            Q8. = c("test1", "test2", "test3"),
-#                            Q9. = c("test1", "test2", "test3"),
-#                            Q10. = c("test1", "test2", "test3"),
-#                            Q11. = c("test1", "test2", "test3"),
-#                            Q12. = c("test1", "test2", "test3"),
-#                            Q13. = c("test1", "test2", "test3"),
-#                            Q14. = c("test1", "test2", "test3"),
-#                            Q15. = c("test1", "test2", "test3")
-#   )
-#
-#   skipped_questions = list("Q7.", "Q8.", "Q9.", "Q10.", "Q11.", "Q12.", "Q13.", "Q14.", "Q15.")
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q6.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "Any other qualification")
-#
-#   exp <- data.frame(Q6. = c("Any other qualification", "Other1", "Other2"),
-#                     Q7. = c(NA, "test2", "test3"),
-#                     Q8. = c(NA, "test2", "test3"),
-#                     Q9. = c(NA, "test2", "test3"),
-#                     Q10. = c(NA, "test2", "test3"),
-#                     Q11. = c(NA, "test2", "test3"),
-#                     Q12. = c(NA, "test2", "test3"),
-#                     Q13. = c(NA, "test2", "test3"),
-#                     Q14. = c(NA, "test2", "test3"),
-#                     Q15. = c(NA, "test2", "test3")
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 16 routing removes redundant enteries in questions 30 to 35", {
-#
-#   dummy_data <- data.frame(Q16. = c("Never", "Sometimes", "All the time"),
-#                            Q30. = c("test1", "test2", "test3"),
-#                            Q31. = c("test1", "test2", "test3"),
-#                            Q32. = c("test1", "test2", "test3"),
-#                            Q33. = c("test1", "test2", "test3"),
-#                            Q34. = c("test1", "test2", "test3"),
-#                            Q35. = c("test1", "test2", "test3")
-#   )
-#
-#   skipped_questions = list("Q30.", "Q31.", "Q32.", "Q33.", "Q34.", "Q35.")
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q16.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "Never")
-#
-#   exp <- data.frame(Q16. = c("Never", "Sometimes", "All the time"),
-#                     Q30. = c(NA, "test2", "test3"),
-#                     Q31. = c(NA, "test2", "test3"),
-#                     Q32. = c(NA, "test2", "test3"),
-#                     Q33. = c(NA, "test2", "test3"),
-#                     Q34. = c(NA, "test2", "test3"),
-#                     Q35. = c(NA, "test2", "test3")
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 22 routing removes redundant enteries in questions 23 to 25", {
-#
-#   dummy_data <- data.frame(Q22. = c("No", "Yes"),
-#                            Q23. = c("test1", "test2"),
-#                            Q24. = c("test1", "test2"),
-#                            Q25. = c("test1", "test2")
-#   )
-#
-#   skipped_questions = list("Q23.", "Q24.", "Q25.")
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q22.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "No")
-#
-#   exp <- data.frame(Q22. = c("No", "Yes"),
-#                     Q23. = c(NA, "test2"),
-#                     Q24. = c(NA, "test2"),
-#                     Q25. = c(NA, "test2")
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 24 routing removes redundant entery in question 25", {
-#
-#   dummy_data <- data.frame(Q24. = c("No", "Yes"),
-#                            Q25. = c("test1", "test2")
-#   )
-#
-#   skipped_questions = list("Q25.")
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q24.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "No")
-#
-#   exp <- data.frame(Q24. = c("No", "Yes"),
-#                     Q25. = c(NA, "test2")
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
-#
-#
-# test_that("question 26 routing removes redundant enteries in questions 27 to 29", {
-#
-#   dummy_data <- data.frame(Q26. = c("No", "Yes"),
-#                            Q27. = c("test1", "test2"),
-#                            Q28. = c("test1", "test2"),
-#                            Q29.1. = c("test1", "test2"),
-#                            Q29.2. = c("test1", "test2")
-#   )
-#
-#   skipped_questions = c(list("Q27.", "Q28."), grep("Q29.", colnames(dummy_data)))
-#
-#   got <- check_routing_all(data = dummy_data,
-#                            question = "Q26.",
-#                            skipped_questions = skipped_questions,
-#                            condition = "No")
-#
-#   exp <- data.frame(Q26. = c("No", "Yes"),
-#                     Q27. = c(NA, "test2"),
-#                     Q28. = c(NA, "test2"),
-#                     Q29.1. = c(NA, "test2"),
-#                     Q29.2. = c(NA, "test2")
-#   )
-#
-#   expect_equal(got, exp)
-#
-# })
+################################################################################
+
+test_that("enforce_skip_logic replaces ONS_directorate with NAs where department is 'Office for National Statistics'", {
+
+  dummy_data <- data.frame(department = c("Office for National Statistics", "Other"),
+                           ONS_directorate = c("test1", "test2"))
+
+  condition <- dummy_data$department == "Office for National Statistics"
+
+  got <- enforce_skip_logic(data = dummy_data,
+                            condition = condition,
+                            skipped_cols = "ONS_directorate")
+
+  expected <- data.frame(department = c("Office for National Statistics", "Other"),
+                         ONS_directorate = c("test1", NA))
+
+  expect_equal(got, expected)
+
+})
+
+################################################################################
+
+expected <- data.frame(highest_qualification = c("Any other qualification", "Other"),
+                       qual_1_subject = c(NA, "test2"),
+                       qual_1_level = c(NA, "test2"),
+                       qual_1_learn_code = c(NA, "test2"),
+                       qual_2_subject = c(NA, "test2"),
+                       qual_2_level = c(NA, "test2"),
+                       qual_2_learn_code = c(NA, "test2"),
+                       qual_3_subject = c(NA, "test2"),
+                       qual_3_level = c(NA, "test2"),
+                       qual_3_learn_code = c(NA, "test2"))
+
+skipped_cols = colnames(expected)[2:length(colnames(expected))]
+
+for(col in skipped_cols) {
+
+  dummy_data <- data.frame(highest_qualification = c("Any other qualification", "Other"),
+                           qual_1_subject = c(NA, "test2"),
+                           qual_1_level = c(NA, "test2"),
+                           qual_1_learn_code = c(NA, "test2"),
+                           qual_2_subject = c(NA, "test2"),
+                           qual_2_level = c(NA, "test2"),
+                           qual_2_learn_code = c(NA, "test2"),
+                           qual_3_subject = c(NA, "test2"),
+                           qual_3_level = c(NA, "test2"),
+                           qual_3_learn_code = c(NA, "test2"))
+
+  dummy_data[1, col] <- "test1"
+
+  condition <- dummy_data$highest_qualification != "Any other qualification"
+
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where highest_qualifcation is 'Any other qualification'", col), {
+
+    got <- enforce_skip_logic(data = dummy_data,
+                              condition = condition,
+                              skipped_cols = skipped_cols)
+
+    expect_equal(got, expected)
+
+  })
+
+}
+
+################################################################################
+
+expected <- data.frame(code_freq = c("Never", "Other"),
+                       prac_use_open_source = c(NA, "test2"),
+                       prac_open_source_own = c(NA, "test2"),
+                       prac_version_control = c(NA, "test2"),
+                       prac_review = c(NA, "test2"),
+                       prac_functions = c(NA, "test2"),
+                       prac_unit_test = c(NA, "test2"),
+                       prac_package = c(NA, "test2"),
+                       prac_dir_structure = c(NA, "test2"),
+                       prac_style = c(NA, "test2"),
+                       prac_automated_QA = c(NA, "test2"),
+                       prac_AQUA_book = c(NA, "test2"),
+                       doc_comments = c(NA, "test2"),
+                       doc_functions = c(NA, "test2"),
+                       doc_readme = c(NA, "test2"),
+                       doc_desk_notes = c(NA, "test2"),
+                       doc_registers = c(NA, "test2"),
+                       doc_AQA_logs = c(NA, "test2"),
+                       doc_flow_charts = c(NA, "test2"),
+                       doc_other = c(NA, "test2"),
+                       CI = c(NA, "test2"),
+                       dep_management = c(NA, "test2"),
+                       reproducible_workflow = c(NA, "test2"),
+                       misc_coding = c(NA, "test2"))
+
+skipped_cols = colnames(expected)[2:length(colnames(expected))]
+
+for(col in skipped_cols) {
+
+  dummy_data <- data.frame(code_freq = c("Never", "Other"),
+                           prac_use_open_source = c(NA, "test2"),
+                           prac_open_source_own = c(NA, "test2"),
+                           prac_version_control = c(NA, "test2"),
+                           prac_review = c(NA, "test2"),
+                           prac_functions = c(NA, "test2"),
+                           prac_unit_test = c(NA, "test2"),
+                           prac_package = c(NA, "test2"),
+                           prac_dir_structure = c(NA, "test2"),
+                           prac_style = c(NA, "test2"),
+                           prac_automated_QA = c(NA, "test2"),
+                           prac_AQUA_book = c(NA, "test2"),
+                           doc_comments = c(NA, "test2"),
+                           doc_functions = c(NA, "test2"),
+                           doc_readme = c(NA, "test2"),
+                           doc_desk_notes = c(NA, "test2"),
+                           doc_registers = c(NA, "test2"),
+                           doc_AQA_logs = c(NA, "test2"),
+                           doc_flow_charts = c(NA, "test2"),
+                           doc_other = c(NA, "test2"),
+                           CI = c(NA, "test2"),
+                           dep_management = c(NA, "test2"),
+                           reproducible_workflow = c(NA, "test2"),
+                           misc_coding = c(NA, "test2"))
+
+  dummy_data[1, col] <- "test1"
+
+  condition <- dummy_data$code_freq != "Never"
+
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where code_freq is 'Never'", col), {
+
+    got <- enforce_skip_logic(data = dummy_data,
+                              condition = condition,
+                              skipped_cols = skipped_cols)
+
+    expect_equal(got, expected)
+
+  })
+
+}
+
+################################################################################
+
+expected <- data.frame(other_coding_experience = c("No", "Yes"),
+                       coding_ability_change = c(NA, "test2"),
+                       prev_coding_experience = c(NA, "test2"),
+                       first_learned = c(NA, "test2"))
+
+skipped_cols = colnames(expected)[2:length(colnames(expected))]
+
+for(col in skipped_cols) {
+
+  dummy_data <- data.frame(other_coding_experience = c("No", "Yes"),
+                           coding_ability_change = c(NA, "test2"),
+                           prev_coding_experience = c(NA, "test2"),
+                           first_learned = c(NA, "test2"))
+
+  dummy_data[1, col] <- "test1"
+
+  condition <- dummy_data$other_coding_experience != "No"
+
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where other_coding_experience is 'No'", col), {
+
+    got <- enforce_skip_logic(data = dummy_data,
+                              condition = condition,
+                              skipped_cols = skipped_cols)
+
+    expect_equal(got, expected)
+
+  })
+
+}
+
+################################################################################
+
+test_that("enforce_skip_logic replaces first_learned with NAs where prev_coding_experience is 'No'", {
+
+  dummy_data <- data.frame(prev_coding_experience = c("No", "Yes"),
+                           first_learned = c("test1", "test2"))
+
+  condition <- dummy_data$prev_coding_experience != "No"
+
+  got <- enforce_skip_logic(data = dummy_data,
+                            condition = condition,
+                            skipped_cols = "first_learned")
+
+  expected <- data.frame(prev_coding_experience = c("No", "Yes"),
+                         first_learned = c(NA, "test2"))
+
+  expect_equal(got, expected)
+
+})
+
+################################################################################
+
+expected <- data.frame(heard_of_RAP = c("No", "yes"),
+                       know_RAP_champ = c(NA, "test2"),
+                       strategy_knowledge = c(NA, "test2"),
+                       RAP_confident = c(NA, "test2"),
+                       RAP_supported = c(NA, "test2"),
+                       RAP_resources = c(NA, "test2"),
+                       RAP_components = c(NA, "test2"),
+                       RAP_important = c(NA, "test2"),
+                       RAP_implementing = c(NA, "test2"),
+                       RAP_planning = c(NA, "test2"),
+                       RAP_comments = c(NA, "test2"))
+
+skipped_cols = colnames(expected)[2:length(colnames(expected))]
+
+for(col in skipped_cols) {
+
+  dummy_data <- data.frame(heard_of_RAP = c("No", "yes"),
+                           know_RAP_champ = c(NA, "test2"),
+                           strategy_knowledge = c(NA, "test2"),
+                           RAP_confident = c(NA, "test2"),
+                           RAP_supported = c(NA, "test2"),
+                           RAP_resources = c(NA, "test2"),
+                           RAP_components = c(NA, "test2"),
+                           RAP_important = c(NA, "test2"),
+                           RAP_implementing = c(NA, "test2"),
+                           RAP_planning = c(NA, "test2"),
+                           RAP_comments = c(NA, "test2"))
+
+  dummy_data[1, col] <- "test1"
+
+  condition <- dummy_data$heard_of_RAP != "No"
+
+  test_that(sprintf("enforce_skip_logic replaces %s. with NAs where heard_of_RAP is 'No'", col), {
+
+    got <- enforce_skip_logic(data = dummy_data,
+                              condition = condition,
+                              skipped_cols = skipped_cols)
+
+    expect_equal(got, expected)
+
+  })
+
+}
+
