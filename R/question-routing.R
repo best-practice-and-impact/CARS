@@ -1,5 +1,33 @@
 
 
+
+apply_skip_logic <- function(data) {
+
+  conditions <- list(data$workplace == "Civil service, including devolved administations",
+                     data$department == "Office for National Statistics",
+                     data$highest_qualification != "Any other qualification",
+                     data$code_freq != "Never",
+                     data$other_coding_experience != "No",
+                     data$prev_coding_experience != "No",
+                     data$heard_of_RAP != "No")
+
+  skipped_cols <- list(colnames(data)[which(colnames(data) == "cs_grade"):which(colnames(data) == "ONS_directorate")],
+                       colnames(data)[which(colnames(data) == "ONS_directorate")],
+                       colnames(data)[which(colnames(data) == "qual_1_subject"):which(colnames(data) == "qual_3_learn_code")],
+                       colnames(data)[which(colnames(data) == "prac_use_open_source"):which(colnames(data) == "misc_coding")],
+                       colnames(data)[which(colnames(data) == "coding_ability_change"):which(colnames(data) == "first_learned")],
+                       colnames(data)[which(colnames(data) == "first_learned")],
+                       colnames(data)[which(colnames(data) == "know_RAP_champ"):which(colnames(data) == "RAP_comments")])
+
+  for(i in 1:length(conditions)){
+    data <- enforce_skip_logic(data, conditions[[i]], skipped_cols[[i]])
+  }
+
+  return(data)
+
+}
+
+
 #' @title Check skip logic
 #'
 #' @description Checks whether the skip logic was followed correctly. Backtracking while filling the survey can result in inconsistent response sets.
@@ -23,7 +51,6 @@ check_skip_logic <- function(data, condition, skipped_cols) {
   return(
     which(row_failed)
   )
-
 
 }
 
