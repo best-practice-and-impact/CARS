@@ -1,10 +1,18 @@
 
-
+#' @title Apply skip logic
+#'
+#' @description Iteratively applies enforce_skip_logic to the necessary fields in the data.
+#'
+#' @param data data.frame
+#'
+#' @return cleaned data.frame
+#'
+#' @export
 
 apply_skip_logic <- function(data) {
 
-  conditions <- list(data$workplace == "Civil service, including devolved administations",
-                     data$department == "Office for National Statistics",
+  conditions <- list(!(data$workplace %in% unique(data$workplace[!(data$workplace %in% c("Civil service, including devolved administations", "test"))])),
+                     !(data$department %in% unique(data$department[!(data$department %in% c("Office for National Statistics", "test"))])),
                      data$highest_qualification != "Any other qualification",
                      data$code_freq != "Never",
                      data$other_coding_experience != "No",
