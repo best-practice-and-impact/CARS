@@ -11,8 +11,8 @@
 
 apply_skip_logic <- function(data) {
 
-  conditions <- list(!(data$workplace %in% unique(data$workplace[!(data$workplace %in% c("Civil service, including devolved administations", "test"))])),
-                     !(data$department %in% unique(data$department[!(data$department %in% c("Office for National Statistics", "test"))])),
+  conditions <- list(data$workplace %in% c("Civil service, including devolved administations", "test"),
+                     data$department %in% c("Office for National Statistics", "test"),
                      data$highest_qualification != "Any other qualification",
                      data$code_freq != "Never",
                      data$other_coding_experience != "No",
