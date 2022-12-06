@@ -11,7 +11,7 @@ check_skip_logic(data, condition, skipped_cols)
 
 \item{condition}{logical vector. Example: data$row == "skip response"}
 
-\item{skipped_cols}{character. questions that should have been skipped if condition == TRUE}
+\item{skipped_cols}{character. questions that should have been skipped if condition != TRUE}
 }
 \value{
 list of rows failing the check
