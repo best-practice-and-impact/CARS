@@ -8,15 +8,25 @@ dummy_data <- data.frame(heard_of_RAP = c("No", rep("Yes", 13)),
 
 dummy_output <- summarise_rap_knowledge(dummy_data)
 
-test_that("Check output is dataframe" , expect_s3_class(dummy_output, "data.frame"))
+test_that("Check output is dataframe" , {
+  expect_s3_class(dummy_output, "data.frame")
+})
 
-test_that("output does not contain missing values", expect_false(any(is.na(dummy_output))))
+test_that("output does not contain missing values", {
+  expect_false(any(is.na(dummy_output)))
+})
 
-test_that("Check number of rows in output", expect_equal(nrow(dummy_output), 5))
+test_that("Check number of rows in output", {
+  expect_equal(nrow(dummy_output), 5)
+})
 
-test_that("Check number of columns in output", expect_equal(ncol(dummy_output), 2))
+test_that("Check number of columns in output", {
+  expect_equal(ncol(dummy_output), 2)
+})
 
-test_that("Output column names are correct", expect_equal(colnames(dummy_output), c("RAP champion knowledge", "Count")))
+test_that("Output column names are correct", {
+  expect_equal(colnames(dummy_output), c("RAP champion knowledge", "Count"))
+})
 
 test_that("Labels are in correct order",{
   expect_identical(dummy_output[[1]],

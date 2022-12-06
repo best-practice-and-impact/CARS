@@ -15,21 +15,26 @@ test_that("Check output is dataframe" , {
   expect_s3_class(dummy_output, "data.frame")
 })
 
-test_that("output does not contain missing values", expect_false(any(is.na(dummy_output))))
+test_that("output does not contain missing values", {
+  expect_false(any(is.na(dummy_output)))
+})
 
-test_that("Check number of rows in output", expect_equal(nrow(dummy_output), 7))
+test_that("Check number of rows in output", {
+  expect_equal(nrow(dummy_output), 35)
+})
 
-test_that("Check number of columns in output", expect_equal(ncol(dummy_output), 6))
+test_that("Check number of columns in output", {
+  expect_equal(ncol(dummy_output), 3)
+})
 
-test_that("Output column names are correct", expect_equal(colnames(dummy_output), c("Question",
-                                                                                    "Strongly disagree",
-                                                                                    "Disagree",
-                                                                                    "Neutral",
-                                                                                    "Agree",
-                                                                                    "Strongly agree")))
+test_that("Output column names are correct", {
+  expect_equal(colnames(dummy_output), c("Question",
+                                         "Response",
+                                         "Count"))
+})
 
 test_that("Labels are in correct order",{
-  expect_identical(dummy_output[[1]],
+  expect_identical(unique(dummy_output[[1]]),
                    c("I feel confident implementing RAP in my work",
                      "I feel supported to implement RAP in my work",
                      "I know where to find resources to help me implement RAP",
@@ -41,10 +46,10 @@ test_that("Labels are in correct order",{
 
 
 test_that("Check output values are correct",{
-  expect_equal(dummy_output[[2]], c(1/4, 0, 1/4, 0, 0, 1/4, 0))
-  expect_equal(dummy_output[[3]], c(1/4, 1/4, 0, 1/2, 1/3, 1/4, 1/4))
-  expect_equal(dummy_output[[4]], c(1/4, 1/4, 1/4, 0, 0, 1/4, 1/4))
-  expect_equal(dummy_output[[5]], c(1/4, 1/4, 1/4, 1/4, 1/3, 1/4, 1/4))
-  expect_equal(dummy_output[[6]], c(0, 1/4, 1/4, 1/4, 1/3, 0, 1/4))
+  expect_true(all(subset(dummy_output, Response=="Strongly disagree", select=Count) == c(1, 0, 1, 0, 0, 1, 0)))
+  expect_true(all(subset(dummy_output, Response=="Disagree", select=Count) == c(1, 1, 0, 2, 1, 1, 1)))
+  expect_true(all(subset(dummy_output, Response=="Neutral", select=Count) == c(1, 1, 1, 0, 0, 1, 1)))
+  expect_true(all(subset(dummy_output, Response=="Agree", select=Count) == c(1, 1, 1, 1, 1, 1, 1)))
+  expect_true(all(subset(dummy_output, Response=="Strongly agree", select=Count) == c(0, 1, 1, 1, 1, 0, 1)))
 
 })

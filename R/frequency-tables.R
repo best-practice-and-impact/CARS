@@ -206,45 +206,6 @@ summarise_coding_practices <- function(data) {
 
 }
 
-#' @title Summarise basic rap score
-#'
-#' @description calculate frequency table for basic rap scores
-#'
-#' @param data full CARS wave 3 data.frame after preprocessing
-#'
-#' @return frequency table (data.frame)
-#'
-
-#' summarise_rap_basic <- function(data){
-#'
-#'   data <- data[data$code_freq != "Never", ]
-#'
-#'   basic_freqs <- data.frame(table(data$basic_rap_score))
-#'   colnames(basic_freqs) <- c("Basic RAP score", "Count")
-#'
-#'   return(basic_freqs)
-#'
-#' }
-#'
-#' #' @title Summarise Advanced rap score
-#' #'
-#' #' @description calculate frequency table for Advanced rap scores
-#' #'
-#' #' @param data full CARS wave 3 data.frame after preprocessing
-#' #'
-#' #' @return frequency table (data.frame)
-#' #'
-#'
-#' summarise_rap_advanced <- function(data){
-#'
-#'   data <- data[data$code_freq != "Never", ]
-#'
-#'   advanced_freqs <- data.frame(table(data$advanced_rap_score))
-#'   colnames(advanced_freqs) <- c("Advanced RAP score", "Count")
-#'
-#'   return(advanced_freqs)
-#
-# }
 
 #' @title Knowledge of RAP
 #'
@@ -286,6 +247,7 @@ summarise_rap_knowledge <- function(data){
   return(rap_knowledge)
 }
 
+
 #' @title Opinions of RAP
 #'
 #' @description Create frequency table of opinions of RAP
@@ -318,7 +280,7 @@ summarise_rap_opinions <- function(data) {
              "I and/or my team are currently implementing RAP",
              "I or my team are planning on implementing RAP in the next 12 months")
 
-  freq_rap_opinions <- calc_multi_col_freqs(opinion_rap_data, levels = levels, labels = labels, calc_props = TRUE)
+  freq_rap_opinions <- calc_multi_col_freqs(opinion_rap_data, levels = levels, labels = labels)
 
   colnames(freq_rap_opinions) <- c("Question",
                                    "Strongly disagree",
@@ -326,6 +288,10 @@ summarise_rap_opinions <- function(data) {
                                    "Neutral",
                                    "Agree",
                                    "Strongly agree")
+
+  freq_rap_opinions <- freq_rap_opinions %>%
+    pivot_longer("Strongly disagree":"Strongly agree", names_to = "Response", values_to = "Count") %>%
+    arrange("Question", "Response")
 
   return(freq_rap_opinions)
 
