@@ -40,15 +40,15 @@ summarise_code_freq <- function(data) {
 
 summarise_operations <- function(data) {
 
-  selected_data <- dplyr::select(data, .data$operations_analysis:.data$operations_modelling)
+  selected_data <- data %>% dplyr::select(ops_analysis:ops_other)
 
   frequencies <- apply(selected_data, 2, function(x) {
-    x <- factor(x, levels = c("I do some or all of this by coding", "I do this without coding"))
+    x <- factor(x, levels = c("I do some or all of this by coding", "I do this without coding", "I don't do this"))
 
     table(x)
   })
 
-  labels <- c("Analysis", "Data cleaning", "Data linking", "Data transfer", "Data visualisation", "Machine learning", "Modelling")
+  labels <- c("Data analysis", "Data cleaning", "Data linking", "Data transfer / migration", "Data visualisation", "Machine learning", "Modelling", "Quality assurance", "Other data operations")
 
   frequencies <- data.frame("Data operation" = labels, t(frequencies))
 
@@ -56,6 +56,10 @@ summarise_operations <- function(data) {
   colnames(frequencies) <- gsub("[.]", " ", colnames(frequencies))
 
   rownames(frequencies) <- NULL
+
+  frequencies <- frequencies %>%
+    pivot_longer("I do some or all of this by coding":"I don t do this", names_to = "Proportion of task done by coding", values_to = "Count") %>%
+    arrange("Data operation", "Frequency")
 
   return(frequencies)
 
