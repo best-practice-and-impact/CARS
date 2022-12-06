@@ -344,46 +344,6 @@ summarise_doc <- function(data) {
 
 }
 
-#' @title RAP score components
-#'
-#' @description Create frequency table of basic and advanced RAP score components
-#'
-#' @param data full CARS wave 3 data.frame after preprocessing
-#'
-#' @return frequency table (data.frame)
-
-summarise_rap_comp <- function(data){
-
-  labels <- c("use_open_source_score" = "Use open source software",
-              "open_code_score" = "Team open source code",
-              "version_control_score" = "Version control",
-              "peer_review_score" = "Peer review",
-              "AQUA_book_score" = "AQUA book guidance",
-              "doc_score" = "Documentation",
-              "function_score" = "Functions",
-              "unit_test_score" = "Unit testing",
-              "function_doc_score" = "Function documentation",
-              "package_score" = "Code packages",
-              "code_style_score" = "Follow code style guidelines",
-              "cont_integreation_score" = "Continuous integration",
-              "dep_management_score" = "Dependency management")
-
-  rap_score <- data[grepl("_score", colnames(data))]
-
-  components <- rap_score[!colnames(rap_score) %in% c("basic_rap_score", "advanced_rap_score")]
-  components[is.na(components)] <- 0
-  components <- data.frame(Component = labels,
-                           Type = c(rep("Basic", 6), rep("Advanced", 7)),
-                           Count = unname(colSums(components))
-  )
-
-  rownames(components) <- NULL
-  components <- components[order(-rank(components$Type),components$Component),]
-  components$Component <- factor(components$Component, levels = components$Component)
-
-  return(components)
-
-}
 
 #' @title Summarise continuous integration frequency
 #'
@@ -410,6 +370,7 @@ summarise_ci <- function(data) {
   return(freqs)
 }
 
+
 #' @title Summarise dependency management frequency
 #'
 #' @description calculate frequency table for dependency management.
@@ -421,21 +382,22 @@ summarise_ci <- function(data) {
 summarise_dep_man <- function(data) {
 
   # Validation checks
-  if (!"dependency_management" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'dependency_management")
+  if (!"dep_management" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'dep_management")
   }
 
-  data$dependency_management <- factor(data$dependency_management, levels = c("Yes",
-                                                                              "No",
-                                                                              "I don't know what dependency management is"))
+  data$dep_management <- factor(data$dep_management, levels = c("Yes",
+                                                                "No",
+                                                                "I don't know what dependency management is"))
 
-  freqs <- data.frame(table(data$dependency_management))
+  freqs <- data.frame(table(data$dep_management))
 
   colnames(freqs) <- c("Use dependency management software", "Count")
 
   return(freqs)
 
 }
+
 
 #' @title Summarise dependency_management frequency
 #'
