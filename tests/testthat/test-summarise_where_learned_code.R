@@ -1,9 +1,9 @@
 dummy_data <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
-                         learn_before_current_role = c(rep("Yes", 8), NA, "No"),
-                         where_learned_to_code = c(rep("Self-taught" , 3),
-                                                   rep( "In public sector employment", 3),
-                                                   rep("other" , 1),
-                                                   rep(NA , 3)))
+                         prev_coding_experience = c(rep("Yes", 8), NA, "No"),
+                         first_learned = c(rep("Self-taught" , 3),
+                                           rep( "In public sector employment", 3),
+                                           rep("other" , 1),
+                                           rep(NA , 3)))
 
 dummy_output <- summarise_where_learned_code(dummy_data)
 

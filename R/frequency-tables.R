@@ -127,18 +127,18 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 summarise_where_learned_code <- function(data){
 
   # Validation checks
-  if (!"where_learned_to_code" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'where_learned_to_code")
+  if (!"first_learned" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'first_learned")
   }
-  if (!"where_learned_to_code" %in% colnames(data)) {
+  if (!"code_freq" %in% colnames(data)) {
     stop("unexpected_input: no column called 'code_freq")
   }
-  if (!"where_learned_to_code" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'learn_before_current_role")
+  if (!"prev_coding_experience" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'prev_coding_experience")
   }
 
   #
-  data$where_learned_to_code[(is.na(data$learn_before_current_role) | (data$learn_before_current_role == "No")) &
+  data$first_learned[(is.na(data$prev_coding_experience) | (data$prev_coding_experience == "No")) &
                                data$code_freq != "Never"] <- "In current role"
 
   levels = c("In current role",
@@ -148,12 +148,12 @@ summarise_where_learned_code <- function(data){
              "Self-taught",
              "Other")
 
-  data$where_learned_to_code[!is.na(data$where_learned_to_code) &
-                               !(data$where_learned_to_code %in% levels)] <- "Other"
+  data$first_learned[!is.na(data$first_learned) &
+                               !(data$first_learned %in% levels)] <- "Other"
 
-  data$where_learned_to_code <- factor(data$where_learned_to_code, levels = levels)
+  data$first_learned <- factor(data$first_learned, levels = levels)
 
-  freqs <- data.frame(table(data$where_learned_to_code))
+  freqs <- data.frame(table(data$first_learned))
 
   colnames(freqs) <- c("First coding experience", "Count")
 
