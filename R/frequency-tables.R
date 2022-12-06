@@ -77,7 +77,7 @@ summarise_operations <- function(data) {
 #'
 
 summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
-  type <- match.arg(type, several.ok = FALSE)
+  type <- match.arg(type, several.ok = TRUE)
 
   selected_data <- data[grepl(paste0(type, "_"), colnames(data))]
 
@@ -106,6 +106,10 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
   frequencies <- data.frame("Programming language" = languages, t(frequencies), check.names = FALSE)
 
   rownames(frequencies) <- NULL
+
+  frequencies <- frequencies %>%
+    pivot_longer(Yes:No, names_to = "Response", values_to = "Count") %>%
+    arrange("Programming language", "Response")
 
   return(frequencies)
 }
