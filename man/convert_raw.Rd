@@ -2,7 +2,7 @@
 % Please edit documentation in R/ingest.R
 \name{convert_raw}
 \alias{convert_raw}
-\title{Convert raw data to data.frame}
+\title{Convert raw data to data frame}
 \usage{
 convert_raw(r)
 }
