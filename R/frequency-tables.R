@@ -194,9 +194,13 @@ summarise_coding_practices <- function(data) {
               "I write code to automatically quality assure data",
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
 
-  frequencies <- calc_multi_col_freqs(data = selected_data, levels = levels, labels = labels, calc_props = TRUE)
+  frequencies <- calc_multi_col_freqs(data = selected_data, levels = levels, labels = labels)
 
   colnames(frequencies) <- c("Question", levels)
+
+  frequencies <- frequencies %>%
+    pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
+    arrange("Question", "Response")
 
   return(frequencies)
 
