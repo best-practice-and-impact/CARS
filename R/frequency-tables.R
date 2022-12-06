@@ -297,6 +297,7 @@ summarise_rap_opinions <- function(data) {
 
 }
 
+
 #' @title Frequency of documentation use
 #'
 #' @description Create frequency table of documentation use
@@ -313,7 +314,7 @@ summarise_doc <- function(data) {
   }
 
   documentation_data <- data[data$code_freq != "Never", ]
-  documentation_data <- dplyr::select(documentation_data, "code_comments":"flow_charts")
+  documentation_data <- dplyr::select(documentation_data, "doc_comments":"doc_flow_charts")
 
   levels = c("I don't understand this question",
              "Never",
@@ -331,9 +332,13 @@ summarise_doc <- function(data) {
              "Flow charts")
 
 
-  freq_documentation_data <- calc_multi_col_freqs(documentation_data, levels = levels, labels = labels, calc_props = TRUE)
+  freq_documentation_data <- calc_multi_col_freqs(documentation_data, levels = levels, labels = labels)
 
   colnames(freq_documentation_data) <- c("Question", levels)
+
+  freq_documentation_data <- freq_documentation_data %>%
+    pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
+    arrange("Question", "Response")
 
   return(freq_documentation_data)
 
