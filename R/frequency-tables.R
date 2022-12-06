@@ -425,6 +425,7 @@ summarise_rep_workflow <- function(data) {
   return(freqs)
 }
 
+
 #' @title Summarise ability change frequency
 #'
 #' @description calculate frequency table for ability change
@@ -438,17 +439,17 @@ summarise_rep_workflow <- function(data) {
 summarise_ability_change <- function(data) {
 
   # Validation checks
-  if (!"ability_change" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'ability_change")
+  if (!"coding_ability_change" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'coding_ability_change")
   }
 
-  data$ability_change <- factor(data$ability_change,levels = c("Significantly worse",
+  data$coding_ability_change <- factor(data$coding_ability_change,levels = c("Significantly worse",
                                                                "Slightly worse",
                                                                "No change",
                                                                "Slightly better",
                                                                "Significantly better"))
 
-  freqs <- data.frame(table(data$ability_change))
+  freqs <- data.frame(table(data$coding_ability_change))
 
   colnames(freqs) <- c("Ability Change", "Count")
   return(freqs)
@@ -548,9 +549,9 @@ summarise_cap_change_by_freq <- function(data){
   )
 
   data$code_freq <- factor(data$code_freq, levels = freq_order)
-  data$ability_change <- factor(data$ability_change, levels = change_order)
+  data$coding_ability_change <- factor(data$coding_ability_change, levels = change_order)
 
-  capability_change <- data.frame(table(data$code_freq, data$ability_change)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
+  capability_change <- data.frame(table(data$code_freq, data$coding_ability_change)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
   capability_change <- data.frame(capability_change, check.names = FALSE)
   capability_change[2:6] <- t(apply(capability_change[2:6], 1, function(x) x / sum(x)))
 
