@@ -12,7 +12,8 @@ License: MIT + file LICENSE
 Imports:
     httr,
     magrittr,
-    stringr
+    stringr,
+    yaml
 Suggests:
     devtools,
     testthat (>= 3.0.0)
