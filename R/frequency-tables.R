@@ -509,11 +509,10 @@ summarise_cap_change_by_freq <- function(data){
   data$code_freq <- factor(data$code_freq, levels = freq_order)
   data$coding_ability_change <- factor(data$coding_ability_change, levels = change_order)
 
-  capability_change <- data.frame(table(data$code_freq, data$coding_ability_change)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
+  capability_change <- data.frame(table(data$code_freq, data$coding_ability_change))
   capability_change <- data.frame(capability_change, check.names = FALSE)
-  capability_change[2:6] <- t(apply(capability_change[2:6], 1, function(x) x / sum(x)))
 
-  colnames(capability_change)[1] <- "Coding frequency"
+  colnames(capability_change) <- c("Coding frequency", "Coding ability change", "Count")
 
   return(capability_change)
 }
