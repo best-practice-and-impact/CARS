@@ -12,7 +12,6 @@ read_site_yml <- function(filename) {
 
   yml <- yaml::read_yaml(filename)
 
-
   # Find relevant fields
   if (is.null(yml$navbar$title) | is.null(yml$navbar$left)) {
     stop("Required fields missing in yaml file.")

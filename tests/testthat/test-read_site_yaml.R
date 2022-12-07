@@ -1,6 +1,3 @@
-library(magrittr
-        )
-
 make_yml <- function(missing_line, filename = "test.yml") {
 
   yml <- list(
