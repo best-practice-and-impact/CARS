@@ -455,49 +455,6 @@ summarise_ability_change <- function(data) {
   return(freqs)
 }
 
-#' @title Summarise programming language status
-#'
-#' @description calculate counts of responents reporting access to, knowledge of, or both for each programming language.
-#'
-#' @param data full CARS wave 3 data.frame after preprocessing
-#'
-#' @return frequency table (data.frame)
-#'
-#' @importFrom rlang .data
-
-summarise_language_status <- function(data) {
-  selected_data <- dplyr::select(data, .data$status_R:.data$status_matlab)
-
-  select_data <- selected_data[order(colnames(selected_data))]
-
-  frequencies <- data.frame(apply(selected_data, 2, function(x) {
-    x <- factor(x, levels = c("access", "both", "knowledge"))
-
-    table(x)
-  }))
-
-  frequencies <- frequencies[order(colnames(frequencies))]
-
-  languages <- c(
-    "C++ / C#",
-    "Java / Scala",
-    "Javascript / Typescript",
-    "Matlab",
-    "Python",
-    "R",
-    "SAS",
-    "SPSS",
-    "SQL",
-    "Stata",
-    "VBA"
-  )
-
-  frequencies <- data.frame(languages, t(frequencies), check.names = FALSE)
-
-  colnames(frequencies) <- c("Programming language", "Access only", "Access and knowledge", "Knowledge only")
-
-  frequencies
-}
 
 #' @title Summarise manage someone who codes
 #'
@@ -509,16 +466,17 @@ summarise_language_status <- function(data) {
 
 summarise_line_manage <- function(data){
 
-  data$code_manage <- factor(data$code_manage,levels = c("Yes",
-                                                         "No",
-                                                         "I don't line manage anyone"))
+  data$management <- factor(data$management,levels = c("Yes",
+                                                       "No - I manage people who do not write code",
+                                                       "No - I don't line manage anyone"))
 
-  table <- data.frame(table(data$code_manage))
+  table <- data.frame(table(data$management))
   colnames(table) <- c("Line manage anyone who writes codes",
                        "count")
   return(table)
 
 }
+
 
 #' @title Summarise capability change by coding frequency
 #'
