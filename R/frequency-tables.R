@@ -58,8 +58,8 @@ summarise_operations <- function(data) {
   rownames(frequencies) <- NULL
 
   frequencies <- frequencies %>%
-    pivot_longer("I do some or all of this by coding":"I don t do this", names_to = "Proportion of task done by coding", values_to = "Count") %>%
-    arrange("Data operation", "Frequency")
+    tidyr::pivot_longer("I do some or all of this by coding":"I don t do this", names_to = "Proportion of task done by coding", values_to = "Count") %>%
+    dplyr::arrange("Data operation", "Frequency")
 
   return(frequencies)
 
@@ -108,8 +108,8 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
   rownames(frequencies) <- NULL
 
   frequencies <- frequencies %>%
-    pivot_longer(Yes:No, names_to = "Response", values_to = "Count") %>%
-    arrange("Programming language", "Response")
+    tidyr::pivot_longer(Yes:No, names_to = "Response", values_to = "Count") %>%
+    dplyr::arrange("Programming language", "Response")
 
   return(frequencies)
 }
@@ -199,8 +199,8 @@ summarise_coding_practices <- function(data) {
   colnames(frequencies) <- c("Question", levels)
 
   frequencies <- frequencies %>%
-    pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
-    arrange("Question", "Response")
+    tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
+    dplyr::arrange("Question", "Response")
 
   return(frequencies)
 
@@ -290,8 +290,8 @@ summarise_rap_opinions <- function(data) {
                                    "Strongly agree")
 
   freq_rap_opinions <- freq_rap_opinions %>%
-    pivot_longer("Strongly disagree":"Strongly agree", names_to = "Response", values_to = "Count") %>%
-    arrange("Question", "Response")
+    tidyr::pivot_longer("Strongly disagree":"Strongly agree", names_to = "Response", values_to = "Count") %>%
+    dplyr::arrange("Question", "Response")
 
   return(freq_rap_opinions)
 
@@ -337,8 +337,8 @@ summarise_doc <- function(data) {
   colnames(freq_documentation_data) <- c("Question", levels)
 
   freq_documentation_data <- freq_documentation_data %>%
-    pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
-    arrange("Question", "Response")
+    tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
+    dplyr::arrange("Question", "Response")
 
   return(freq_documentation_data)
 
