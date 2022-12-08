@@ -518,206 +518,6 @@ summarise_cap_change_by_freq <- function(data){
 }
 
 
-#' @title Compare basic RAP score to implementation of RAP
-#'
-#' @description calculate frequency table for basic rap score compared with implementation of RAP
-#'
-#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_basic_score_by_imp <- function(implementing_data){
-
-  rap_score_by_implementing <- data.frame(table(implementing_data$RAP_implementing, implementing_data$basic_rap_score)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
-  rap_score_by_implementing %<>% data.frame(check.names = FALSE)
-  rap_score_by_implementing[2:8] <- t(apply(rap_score_by_implementing[2:8], 1, function(x) x / sum(x) * 100))
-
-  colnames(rap_score_by_implementing)[1] <- "I am Currently Implementing RAP"
-
-  return(rap_score_by_implementing)
-}
-
-#' @title Compare advanced RAP score to implementation of RAP
-#'
-#' @description calculate frequency table for advanced rap score compared with implementation of RAP
-#'
-#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_adv_score_by_imp <- function(implementing_data){
-
-  advanced_score_by_implementing <- data.frame(table(implementing_data$RAP_implementing, implementing_data$advanced_rap_score)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
-  advanced_score_by_implementing %<>% data.frame(check.names = FALSE)
-  advanced_score_by_implementing[2:9] <- t(apply(advanced_score_by_implementing[2:9], 1, function(x) x / sum(x) * 100))
-
-  colnames(advanced_score_by_implementing)[1] <- "I am Currently Implementing RAP"
-
-  return(advanced_score_by_implementing)
-}
-
-#' @title Compare basic RAP score to understanding of key RAP components
-#'
-#' @description calculate frequency table for basic rap score compared with understanding of key RAP components
-#'
-#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_basic_score_by_understanding <- function(implementing_data){
-
-  rap_score_by_understanding <- data.frame(table(implementing_data$RAP_understand_key_components, implementing_data$basic_rap_score)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
-  rap_score_by_understanding %<>% data.frame(check.names = FALSE)
-  rap_score_by_understanding[2:8] <- t(apply(rap_score_by_understanding[2:8], 1, function(x) x / sum(x) * 100))
-
-  colnames(rap_score_by_understanding)[1] <- "I Understand Key concepts of RAP"
-
-  return(rap_score_by_understanding)
-}
-
-#' @title Compare advanced RAP score to understanding of key RAP components
-#'
-#' @description calculate frequency table for advanced rap score compared with understanding of key RAP components
-#'
-#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_adv_score_by_understanding <- function(implementing_data){
-
-  advanced_score_by_understanding <- data.frame(table(implementing_data$RAP_understand_key_components, implementing_data$advanced_rap_score)) %>% tidyr::pivot_wider(names_from = Var2, values_from = Freq)
-  advanced_score_by_understanding %<>% data.frame(check.names = FALSE)
-  advanced_score_by_understanding[2:9] <- t(apply(advanced_score_by_understanding[2:9], 1, function(x) x / sum(x) * 100))
-
-  colnames(advanced_score_by_understanding)[1] <- "I Understand Key concepts of RAP"
-
-  return(advanced_score_by_understanding)
-}
-
-#' @title  Compare coding frequency of ONS to other departments
-#'
-#' @description calculate frequency table for coding frequency for ONS and all other departments combined
-#'
-#' @param ons_data carsurvey data filter to ONS department
-#' @param other_deps_data lcarsurvey  data filter to all other department
-#' @param ons_tables list of tables made from summaries_all from carsurvey data filter to ONS department
-#' @param other_deps_tables list of tables made from summaries_all from carsurvey  data filter to all other department
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_coding_freq_comparison <- function(ons_data, other_deps_data, ons_tables, other_deps_tables){
-
-  ons_tables$code_freq[2] <- ons_tables$code_freq[2] / nrow(ons_data) * 100
-  other_deps_tables$code_freq[2] <- other_deps_tables$code_freq[2] / nrow(other_deps_data) * 100
-
-
-  freq_combined <- rbind(data.frame(other_deps_tables$code_freq, department = "Other departments", check.names = FALSE),
-                         data.frame(ons_tables$code_freq, department = "ONS", check.names = FALSE))
-
-  freq_combined <- freq_combined[c(1,3,2)]
-
-  freq_combined$department <- factor(freq_combined$department, levels = c("Other departments", "ONS"))
-
-  return(freq_combined)
-}
-
-#' @title  Compare coding tool frequency of ONS to other departments
-#'
-#' @description calculate frequency table for coding tool for ONS and all other departments combined
-#'
-#' @param ons_data carsurvey data filter to ONS department
-#' @param other_deps_data lcarsurvey  data filter to all other department
-#' @param ons_tables list of tables made from summaries_all from carsurvey data filter to ONS department
-#' @param other_deps_tables list of tables made from summaries_all from carsurvey  data filter to all other department
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_coding_tools_comparison <- function(ons_data, other_deps_data, ons_tables, other_deps_tables){
-
-  langs <- grep("knowledge_", colnames(data), value = TRUE)
-  lang_names <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "JavaScript", "Java/Scala", "C++/C#", "Matlab")
-
-  ons_tables$knowledge[2] <- ons_tables$knowledge[2] / nrow(ons_data) * 100
-  other_deps_tables$knowledge[2] <- other_deps_tables$knowledge[2] / nrow(other_deps_data) * 100
-
-  langs_combined <- rbind(data.frame(ons_tables$knowledge[1:2], department = "ONS", check.names = FALSE),
-                          data.frame(other_deps_tables$knowledge[1:2], department = "Other departments",  check.names = FALSE))
-
-  langs_combined <- langs_combined[c(1,3,2)]
-
-  return(langs_combined)
-}
-
-#' @title  Compare basic RAP scores frequency of ONS to other departments
-#'
-#' @description calculate frequency table for coding tool for ONS and all other departments combined
-#'
-#' @param ons_data carsurvey data filter to ONS department
-#' @param other_deps_data lcarsurvey  data filter to all other department
-#' @param ons_tables list of tables made from summaries_all from carsurvey data filter to ONS department
-#' @param other_deps_tables list of tables made from summaries_all from carsurvey  data filter to all other department
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_baisc_rap_scores_comparison <- function(ons_data, other_deps_data, ons_tables, other_deps_tables){
-
-  ons_tables$basic_rap_scores[2] <- ons_tables$basic_rap_scores[2] / sum(ons_data$code_freq != "Never") * 100
-  other_deps_tables$basic_rap_scores[2] <- other_deps_tables$basic_rap_scores[2] / sum(other_deps_data$code_freq != "Never") * 100
-
-  basic_scores_combined <- rbind(
-    data.frame(other_deps_tables$basic_rap_scores, department = "Other departments", check.names = FALSE),
-    data.frame(ons_tables$basic_rap_scores, department = "ONS", check.names = FALSE)
-  )
-
-  basic_scores_combined <- basic_scores_combined[c(1,3,2)]
-  basic_scores_combined$department <- factor(basic_scores_combined$department, levels = c("Other departments", "ONS"))
-
-  return(basic_scores_combined)
-}
-
-#' @title  Compare advanced RAP scores frequency of ONS to other departments
-#'
-#' @description calculate frequency table for coding tool for ONS and all other departments combined
-#'
-#' @param ons_data carsurvey data filter to ONS department
-#' @param other_deps_data lcarsurvey  data filter to all other department
-#' @param ons_tables list of tables made from summaries_all from carsurvey data filter to ONS department
-#' @param other_deps_tables list of tables made from summaries_all from carsurvey  data filter to all other department
-#'
-#' @return frequency table (data.frame)
-#'
-#' @export
-
-summarise_adv_rap_scores_comparison <- function(ons_data, other_deps_data, ons_tables, other_deps_tables){
-
-  ons_tables$advanced_rap_scores[2] <- ons_tables$advanced_rap_scores[2] / sum(ons_data$code_freq != "Never") * 100
-  other_deps_tables$advanced_rap_scores[2] <- other_deps_tables$advanced_rap_scores[2] / sum(other_deps_data$code_freq != "Never") * 100
-
-  advanced_scores_combined <- rbind(
-    data.frame(other_deps_tables$advanced_rap_scores, department = "Other departments", check.names = FALSE),
-    data.frame(ons_tables$advanced_rap_scores, department = "ONS", check.names = FALSE)
-  )
-
-  advanced_scores_combined <- advanced_scores_combined[c(1,3,2)]
-  advanced_scores_combined$department <- factor(advanced_scores_combined$department, levels = c("Other departments", "ONS"))
-
-  return(advanced_scores_combined)
-}
-
 #' Summarise programming language knowledge by profession
 #'
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
@@ -729,31 +529,33 @@ summarise_adv_rap_scores_comparison <- function(ons_data, other_deps_data, ons_t
 #' @export
 
 summarise_languages_by_prof <- function(data) {
-  data <- data[data$code_freq <= "Never", ]
+  data <- data[complete.cases(data),]
+  data <- data[data$code_freq != "Never", ]
 
-  data$prof_DS <- ifelse(data$prof_DS_GSG_GORS == "Yes" | data$prof_DS_other == "Yes", "Yes", "No")
-
-  profs <- c("prof_GAD", "prof_DDAT",  "prof_DS", "prof_GES", "prof_GORS", "prof_GSR", "prof_GSG")
-  langs <- c("knowledge_R", "knowledge_SQL", "knowledge_python", "knowledge_SAS", "knowledge_SPSS",
-             "knowledge_VBA", "knowledge_matlab", "knowledge_stata")
-  lang_names <- c("R", "SQL", "Python", "SAS", "SPSS", "VBA", "Matlab", "Stata")
+  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+             "prof_GORS", "prof_GSR", "prof_GSG")
+  langs <- c("knowledge_R", "knowledge_SQL", "knowledge_python", "knowledge_SAS",
+             "knowledge_SPSS", "knowledge_VBA", "knowledge_matlab", "knowledge_stata",
+             "knowledge_JS", "knowledge_java_scala", "knowledge_C")
+  lang_names <- c("R", "SQL", "Python", "SAS", "SPSS", "VBA", "Matlab", "Stata",
+                  "JavaScript", "Scala", "C#/C++")
 
   prof_counts <- colSums(data[profs] == "Yes")
 
   prof_langs <- sapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
-    freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
+    freqs <- as.vector(colSums(filtered_data[langs] == "Yes"))
 
     return(freqs)
   }) %>% data.frame
 
   prof_langs <- cbind(lang = lang_names, prof_langs)
 
-  colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
-                            "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
+  colnames(prof_langs) <- c("lang", "Data scientists", "Digital and data (DDAT)", "Actuaries", "Economists (GES)",
+                            "Geographers", "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
 
-  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
+  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:9]) %>% data.frame
   prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
   prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
 
