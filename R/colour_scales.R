@@ -73,7 +73,7 @@ get_2colour_gradients <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 10
   }
 
   if (colour_names) {
-    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255))
+    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
   }
 
   return(colours)
@@ -122,7 +122,7 @@ get_2colour_scale <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 105, 0
   }
 
   if (colour_names) {
-    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255))
+    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
   }
 
   return(colours)
@@ -168,7 +168,7 @@ get_gradient <- function(n, colour = c(0, 69, 86), colour_names = TRUE) {
     colours <- append(list(colour), colours)
 
     if (colour_names) {
-      colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255))
+      colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
     }
 
     return(colours)
@@ -198,7 +198,7 @@ get_3colour_scale <- function(n, colour_names = TRUE) {
   colours <- list(c(255,105,0), c(0, 69, 86), c(255, 211, 0))
 
   if (colour_names) {
-    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255))
+    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
   }
 
   return(colours)
