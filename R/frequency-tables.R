@@ -40,26 +40,11 @@ summarise_code_freq <- function(data) {
 
 summarise_operations <- function(data) {
 
-  selected_data <- data %>% dplyr::select(ops_analysis:ops_other)
+  questions <- c("ops_analysis", "ops_cleaning", "ops_linking", "ops_transfer_migration", "ops_vis", "ops_machine_learning", "ops_modelling", "ops_QA")
+  responses <- c("I do some or all of this by coding", "I do this without coding", "I don't do this")
+  labels <- c("Data analysis", "Data cleaning", "Data linking", "Data transfer / migration", "Data visualisation", "Machine learning", "Modelling", "Quality assurance")
 
-  frequencies <- apply(selected_data, 2, function(x) {
-    x <- factor(x, levels = c("I do some or all of this by coding", "I do this without coding", "I don't do this"))
-
-    table(x)
-  })
-
-  labels <- c("Data analysis", "Data cleaning", "Data linking", "Data transfer / migration", "Data visualisation", "Machine learning", "Modelling", "Quality assurance", "Other data operations")
-
-  frequencies <- data.frame("Data operation" = labels, t(frequencies))
-
-  # Replace full stops with spaces
-  colnames(frequencies) <- gsub("[.]", " ", colnames(frequencies))
-
-  rownames(frequencies) <- NULL
-
-  frequencies <- frequencies %>%
-    tidyr::pivot_longer("I do some or all of this by coding":"I don t do this", names_to = "Proportion of task done by coding", values_to = "Count") %>%
-    dplyr::arrange("Data operation", "Frequency")
+  frequencies <- create_tidy_freq_table(data, questions, responses, labels, order=TRUE)
 
   return(frequencies)
 

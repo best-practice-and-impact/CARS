@@ -76,6 +76,7 @@ test_that("Frequencies are correct", {
   knowledge_data <- dummy_data[12:22]
 
   expect_true(all(subset(dummy_knowledge_output, Response=="Yes", select=Count) == colSums(knowledge_data == "Yes")))
+  print(dummy_knowledge_output)
   expect_true(all(subset(dummy_knowledge_output, Response=="Don't Know", select=Count) == colSums(knowledge_data == "Don't Know")))
   expect_true(all(subset(dummy_knowledge_output, Response=="No", select=Count) == colSums(knowledge_data == "No")))
 
