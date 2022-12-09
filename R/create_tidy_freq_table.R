@@ -14,25 +14,25 @@
 
 create_tidy_freq_table <- function(data, questions, responses, labels, order=FALSE){
 
-  labels <- as.list(labels)
-  names(labels) <- questions
+  labels_list <- as.list(labels)
+  names(labels_list) <- questions
 
   selected_data <- data %>% dplyr::select(questions)
 
   selected_data[] <- lapply(selected_data, factor, levels = responses)
 
+  selected_data <- selected_data[complete.cases(selected_data),]
+
   frequencies <- selected_data %>%
     tidyr::pivot_longer(cols=questions) %>%
     dplyr::group_by(name) %>%
     dplyr::count(value, .drop=FALSE) %>%
-    dplyr::mutate(name = dplyr::recode(name, !!!labels))
+    dplyr::mutate(name = dplyr::recode(name, !!!labels_list))
 
   frequencies <- data.frame(frequencies)
 
-  frequencies <- frequencies[complete.cases(frequencies),]
-
   if(order){
-    frequencies <- frequencies[order(frequencies$name),]
+    frequencies <- frequencies[tolower(order(frequencies$name)),]
   }
 
   return(frequencies)

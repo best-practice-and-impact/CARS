@@ -40,11 +40,19 @@ summarise_code_freq <- function(data) {
 
 summarise_operations <- function(data) {
 
-  questions <- c("ops_analysis", "ops_cleaning", "ops_linking", "ops_transfer_migration", "ops_vis", "ops_machine_learning", "ops_modelling", "ops_QA")
-  responses <- c("I do some or all of this by coding", "I do this without coding", "I don't do this")
-  labels <- c("Data analysis", "Data cleaning", "Data linking", "Data transfer / migration", "Data visualisation", "Machine learning", "Modelling", "Quality assurance")
+  questions <- c("ops_analysis", "ops_cleaning", "ops_linking",
+                 "ops_transfer_migration", "ops_vis", "ops_machine_learning",
+                 "ops_modelling", "ops_QA")
 
-  frequencies <- create_tidy_freq_table(data, questions, responses, labels, order=TRUE)
+  responses <- c("I do some or all of this by coding",
+                 "I do this without coding", "I don't do this")
+
+  labels <- c("Data analysis", "Data cleaning", "Data linking",
+              "Data transfer / migration", "Data visualisation",
+              "Machine learning", "Modelling", "Quality assurance")
+
+  frequencies <- create_tidy_freq_table(data, questions, responses,
+                                        labels, order=TRUE)
 
   return(frequencies)
 
@@ -62,39 +70,25 @@ summarise_operations <- function(data) {
 #'
 
 summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
+
+  questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
+                 "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
+                 "knowledge_python", "access_python", "knowledge_SPSS",
+                 "access_SPSS", "knowledge_stata", "access_stata", "knowledge_JS",
+                 "access_JS", "knowledge_java", "access_java", "knowledge_C",
+                 "access_C", "knowledge_matlab", "access_matlab")
+
+  responses <- c("Yes", "No", "Don't Know")
+
+  labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
+              "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
+
   type <- match.arg(type, several.ok = TRUE)
 
-  selected_data <- data[grepl(paste0(type, "_"), colnames(data))]
+  questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- data.frame(apply(selected_data, 2, function(x) {
-    x <- factor(x, levels = c("Yes", "Don't Know", "No"))
-
-    table(x)
-  }))
-
-  frequencies <- frequencies[order(colnames(frequencies))]
-
-  languages <- c(
-    "C++ / C#",
-    "Java / Scala",
-    "Javascript / Typescript",
-    "Matlab",
-    "Python",
-    "R",
-    "SAS",
-    "SPSS",
-    "SQL",
-    "Stata",
-    "VBA"
-  )
-
-  frequencies <- data.frame("Programming language" = languages, t(frequencies), check.names = FALSE)
-
-  rownames(frequencies) <- NULL
-
-  frequencies <- frequencies %>%
-    tidyr::pivot_longer(Yes:No, names_to = "Response", values_to = "Count") %>%
-    dplyr::arrange("Programming language", "Response")
+  frequencies <- create_tidy_freq_table(data, questions, responses,
+                                        labels, order=TRUE)
 
   return(frequencies)
 }
@@ -123,8 +117,9 @@ summarise_where_learned_code <- function(data){
   }
 
   #
-  data$first_learned[(is.na(data$prev_coding_experience) | (data$prev_coding_experience == "No")) &
-                               data$code_freq != "Never"] <- "In current role"
+  data$first_learned[(is.na(data$prev_coding_experience) |
+                        (data$prev_coding_experience == "No")) &
+                       data$code_freq != "Never"] <- "In current role"
 
   levels = c("In current role",
              "In education",
@@ -158,14 +153,13 @@ summarise_where_learned_code <- function(data){
 
 summarise_coding_practices <- function(data) {
 
-  selected_data <- dplyr::select(data, .data$prac_use_open_source:.data$prac_AQUA_book)
+  questions <- c("prac_use_open_source", "prac_open_source_own",
+                 "prac_version_control", "prac_review", "prac_functions",
+                 "prac_unit_test", "prac_package", "prac_dir_structure",
+                 "prac_style", "prac_automated_QA", "prac_AQUA_book")
 
-  levels <- c("I don't understand this question",
-              "Never",
-              "Rarely",
-              "Sometimes",
-              "Regularly",
-              "All the time")
+  responses <- c("I don't understand this question", "Never", "Rarely",
+                 "Sometimes", "Regularly", "All the time")
 
   labels <- c("I use open source software when programming",
               "My team open sources its code",
@@ -179,13 +173,37 @@ summarise_coding_practices <- function(data) {
               "I write code to automatically quality assure data",
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
 
-  frequencies <- calc_multi_col_freqs(data = selected_data, levels = levels, labels = labels)
+  frequencies <- create_tidy_freq_table(data, questions, responses,
+                                        labels, order = TRUE)
 
-  colnames(frequencies) <- c("Question", levels)
-
-  frequencies <- frequencies %>%
-    tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
-    dplyr::arrange("Question", "Response")
+  # selected_data <- dplyr::select(data, .data$prac_use_open_source:.data$prac_AQUA_book)
+  #
+  # levels <- c("I don't understand this question",
+  #             "Never",
+  #             "Rarely",
+  #             "Sometimes",
+  #             "Regularly",
+  #             "All the time")
+  #
+  # labels <- c("I use open source software when programming",
+  #             "My team open sources its code",
+  #             "I use a source code version control system e.g. Git",
+  #             "Code my team writes is reviewed by a colleague",
+  #             "I write repetitive elements in my code as functions",
+  #             "I unit test my code",
+  #             "I collect my code and supporting material into packages",
+  #             "I follow a standard directory structure when programming",
+  #             "I follow coding guidelines or style guides when programming",
+  #             "I write code to automatically quality assure data",
+  #             "My team applies the principles set out in the Aqua book when carrying out analysis as code")
+  #
+  # frequencies <- calc_multi_col_freqs(data = selected_data, levels = levels, labels = labels)
+  #
+  # colnames(frequencies) <- c("Question", levels)
+  #
+  # frequencies <- frequencies %>%
+  #   tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
+  #   dplyr::arrange("Question", "Response")
 
   return(frequencies)
 

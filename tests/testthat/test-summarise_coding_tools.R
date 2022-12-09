@@ -17,8 +17,8 @@ dummy_data <- data.frame(
   access_stata = c(rep("Yes", 2), "No", rep("Don't Know", 3)),
   knowledge_JS = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
   access_JS = c("Yes", rep("No", 3), rep("Don't Know", 2)),
-  knowledge_java_scala = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  access_java_scala = c(rep("Yes", 3), "No", rep("Don't Know", 2)),
+  knowledge_java = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+  access_java = c(rep("Yes", 3), "No", rep("Don't Know", 2)),
   knowledge_C = c("Yes", rep("No", 2), rep("Don't Know", 3)),
   access_C = c(rep("Yes", 2), "No", rep("Don't Know", 3)),
   knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
@@ -61,8 +61,8 @@ test_that("output contains no missing values", {
 })
 
 test_that("output has the correct column names", {
-  expect_equal(colnames(dummy_access_output), c("Programming language", "Response", "Count"))
-  expect_equal(colnames(dummy_knowledge_output), c("Programming language", "Response", "Count"))
+  expect_equal(colnames(dummy_access_output), c("name", "value", "n"))
+  expect_equal(colnames(dummy_knowledge_output), c("name", "value", "n"))
 })
 
 test_that("programming language names are correct", {
@@ -75,12 +75,11 @@ test_that("Frequencies are correct", {
   access_data <- dummy_data[1:11]
   knowledge_data <- dummy_data[12:22]
 
-  expect_true(all(subset(dummy_knowledge_output, Response=="Yes", select=Count) == colSums(knowledge_data == "Yes")))
-  print(dummy_knowledge_output)
-  expect_true(all(subset(dummy_knowledge_output, Response=="Don't Know", select=Count) == colSums(knowledge_data == "Don't Know")))
-  expect_true(all(subset(dummy_knowledge_output, Response=="No", select=Count) == colSums(knowledge_data == "No")))
+  expect_equal(dummy_knowledge_output[dummy_knowledge_output$value == "Yes",]$n, c(1,2,3,3,3,1,2,2,3,1,1))
+  expect_equal(dummy_knowledge_output[dummy_knowledge_output$value == "Don't Know",]$n, c(3,1,1,1,1,3,1,1,1,3,3))
+  expect_equal(dummy_knowledge_output[dummy_knowledge_output$value == "No",]$n, c(2,3,2,2,2,2,3,3,2,2,2))
 
-  expect_true(all(subset(dummy_access_output, Response=="Yes", select=Count) == colSums(access_data == "Yes")))
-  expect_true(all(subset(dummy_access_output, Response=="Don't Know", select=Count) == colSums(access_data == "Don't Know")))
-  expect_true(all(subset(dummy_access_output, Response=="No", select=Count) == colSums(access_data == "No")))
+  expect_equal(dummy_access_output[dummy_access_output$value == "Yes",]$n, c(2,3,1,1,1,2,3,3,1,2,2))
+  expect_equal(dummy_access_output[dummy_access_output$value == "Don't Know",]$n, c(3,2,2,0,2,3,2,2,2,3,3))
+  expect_equal(dummy_access_output[dummy_access_output$value == "No",]$n, c(1,1,3,5,3,1,1,1,3,1,1))
 })
