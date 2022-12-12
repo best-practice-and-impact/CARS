@@ -6,7 +6,6 @@
 #' @param questions columns to filter data on
 #' @param levels all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers
-#' @param order default FALSE. orders data frame alphabetically by first column
 #'
 #' @return data.frame
 #'

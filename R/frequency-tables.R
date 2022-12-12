@@ -120,10 +120,7 @@ summarise_where_learned_code <- function(data){
     stop("unexpected_input: no column called 'prev_coding_experience")
   }
 
-  #
-  data$first_learned[(is.na(data$prev_coding_experience) |
-                        (data$prev_coding_experience == "No")) &
-                       data$code_freq != "Never"] <- "In current role"
+  questions = "first_learned"
 
   levels = c("In current role",
              "In education",
@@ -132,16 +129,19 @@ summarise_where_learned_code <- function(data){
              "Self-taught",
              "Other")
 
+  labels = "First coding experience"
+
+  data$first_learned[(is.na(data$prev_coding_experience) |
+                        (data$prev_coding_experience == "No")) &
+                       data$code_freq != "Never"] <- "In current role"
+
   data$first_learned[!is.na(data$first_learned) &
                                !(data$first_learned %in% levels)] <- "Other"
 
-  data$first_learned <- factor(data$first_learned, levels = levels)
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
 
-  freqs <- data.frame(table(data$first_learned))
-
-  colnames(freqs) <- c("First coding experience", "Count")
-
-  return(freqs)
+  return(frequencies)
 }
 
 

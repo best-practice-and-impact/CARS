@@ -17,6 +17,10 @@ test_that("output does not contain missing values", {
   expect_false(any(is.na.data.frame(dummy_output)))
 })
 
+test_that("Output column names are correct", {
+  expect_equal(colnames(dummy_output), c("names", "values", "n"))
+})
+
 test_that("names are in the correct order", {
   expect_identical(unique(dummy_output[[1]]), "Coding frequency")
 })
