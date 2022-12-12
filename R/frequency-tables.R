@@ -331,14 +331,19 @@ summarise_ci <- function(data) {
     stop("unexpected_input: no column called 'CI")
   }
 
-  data$CI <- factor(data$CI, levels = c("Yes",
-                                        "No",
-                                        "I don't know what continuous integration is"))
+  questions = "CI"
 
-  freqs <- data.frame(table(data$CI))
+  levels = c("Yes",
+             "No",
+             "I don't know what continuous integration is")
 
-  colnames(freqs) <- c("Continuous Integration Frequency", "Count")
-  return(freqs)
+  labels = "Continuous Integration Frequency"
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
 }
 
 
@@ -357,15 +362,18 @@ summarise_dep_man <- function(data) {
     stop("unexpected_input: no column called 'dep_management")
   }
 
-  data$dep_management <- factor(data$dep_management, levels = c("Yes",
-                                                                "No",
-                                                                "I don't know what dependency management is"))
+  questions <- "dep_management"
 
-  freqs <- data.frame(table(data$dep_management))
+  levels <- c("Yes",
+              "No",
+              "I don't know what dependency management is")
 
-  colnames(freqs) <- c("Use dependency management software", "Count")
+  labels <- "Use dependency management software"
 
-  return(freqs)
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
 
 }
 
@@ -385,15 +393,19 @@ summarise_rep_workflow <- function(data) {
     stop("unexpected_input: no column called 'reproducible_workflow")
   }
 
-  data$reproducible_workflow <- factor(data$reproducible_workflow, levels = c("Yes",
-                                                                              "No",
-                                                                              "I don't know what reproducible workflows are"))
+  questions <- "reproducible_workflow"
 
-  freqs <- data.frame(table(data$reproducible_workflow))
+  levels <- c("Yes",
+              "No",
+              "I don't know what reproducible workflows are")
 
-  colnames(freqs) <- c("Use reproducible workflow packages", "Count")
+  labels <- "Use reproducible workflow packages"
 
-  return(freqs)
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
 }
 
 
