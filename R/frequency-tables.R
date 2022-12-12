@@ -200,29 +200,22 @@ summarise_rap_knowledge <- function(data){
     stop("unexpected_input: no column called 'heard_of_RAP")
   }
 
-  data$RAP_knowledge[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
+  questions = "know_RAP_champ"
 
-  data$RAP_knowledge <- factor(data$RAP_knowledge, levels = c(
-    "Have not heard of RAP",
-    "I don't know what a RAP champion is",
-    "I know what a RAP champion is but don't know who the RAP champion in my department is",
-    "I know what a RAP champion is and there is no RAP champion in my department",
-    "I know who the RAP champion in my department is"
-  ))
+  levels = c("Have not heard of RAP",
+             "I don't know what a RAP champion is",
+             "I know what a RAP champion is but don't know who the RAP champion in my department is",
+             "I know what a RAP champion is and there is no RAP champion in my department",
+             "I know who the RAP champion in my department is")
 
-  rap_knowledge <- data.frame(table(data$RAP_knowledge))
+  labels = "RAP champion knowledge"
 
-  colnames(rap_knowledge) <- c("RAP champion knowledge", "Count")
+  data$know_RAP_champ[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
 
-  rap_knowledge[1] <- c("Have not heard of RAP",
-                        "Heard of RAP, have not heard of RAP champions",
-                        "Heard of RAP, does not know department champion",
-                        "Heard of RAP champions, no champion in department",
-                        "Knows department RAP champion")
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
 
-  rap_knowledge[[1]] <- factor(rap_knowledge[[1]], levels = rap_knowledge[[1]])
-
-  return(rap_knowledge)
+  return(frequencies)
 }
 
 
