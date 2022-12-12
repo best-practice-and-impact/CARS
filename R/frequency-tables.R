@@ -52,7 +52,7 @@ summarise_operations <- function(data) {
               "Machine learning", "Modelling", "Quality assurance")
 
   frequencies <- create_tidy_freq_table(data, questions, responses,
-                                        labels, order=TRUE)
+                                        labels)
 
   return(frequencies)
 
@@ -88,7 +88,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
   frequencies <- create_tidy_freq_table(data, questions, responses,
-                                        labels, order=TRUE)
+                                        labels)
 
   return(frequencies)
 }
@@ -174,36 +174,7 @@ summarise_coding_practices <- function(data) {
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
 
   frequencies <- create_tidy_freq_table(data, questions, responses,
-                                        labels, order = TRUE)
-
-  # selected_data <- dplyr::select(data, .data$prac_use_open_source:.data$prac_AQUA_book)
-  #
-  # levels <- c("I don't understand this question",
-  #             "Never",
-  #             "Rarely",
-  #             "Sometimes",
-  #             "Regularly",
-  #             "All the time")
-  #
-  # labels <- c("I use open source software when programming",
-  #             "My team open sources its code",
-  #             "I use a source code version control system e.g. Git",
-  #             "Code my team writes is reviewed by a colleague",
-  #             "I write repetitive elements in my code as functions",
-  #             "I unit test my code",
-  #             "I collect my code and supporting material into packages",
-  #             "I follow a standard directory structure when programming",
-  #             "I follow coding guidelines or style guides when programming",
-  #             "I write code to automatically quality assure data",
-  #             "My team applies the principles set out in the Aqua book when carrying out analysis as code")
-  #
-  # frequencies <- calc_multi_col_freqs(data = selected_data, levels = levels, labels = labels)
-  #
-  # colnames(frequencies) <- c("Question", levels)
-  #
-  # frequencies <- frequencies %>%
-  #   tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
-  #   dplyr::arrange("Question", "Response")
+                                        labels)
 
   return(frequencies)
 
@@ -267,13 +238,20 @@ summarise_rap_opinions <- function(data) {
   }
 
   opinion_rap_data <- data[data$heard_of_RAP == "Yes", ]
-  opinion_rap_data <- dplyr::select(opinion_rap_data, "RAP_confident":"RAP_planning_to_implement")
 
-  levels = c("Strongly Disagree",
-             "Disagree",
-             "Neutral",
-             "Agree",
-             "Strongly Agree")
+  questions = c("RAP_confident",
+                "RAP_supported",
+                "RAP_resources",
+                "RAP_components",
+                "RAP_important",
+                "RAP_implementing",
+                "RAP_planning")
+
+  responses = c("Strongly Disagree",
+                "Disagree",
+                "Neutral",
+                "Agree",
+                "Strongly Agree")
 
   labels = c("I feel confident implementing RAP in my work",
              "I feel supported to implement RAP in my work",
@@ -283,20 +261,11 @@ summarise_rap_opinions <- function(data) {
              "I and/or my team are currently implementing RAP",
              "I or my team are planning on implementing RAP in the next 12 months")
 
-  freq_rap_opinions <- calc_multi_col_freqs(opinion_rap_data, levels = levels, labels = labels)
 
-  colnames(freq_rap_opinions) <- c("Question",
-                                   "Strongly disagree",
-                                   "Disagree",
-                                   "Neutral",
-                                   "Agree",
-                                   "Strongly agree")
+  frequencies <- create_tidy_freq_table(opinion_rap_data, questions, responses,
+                                        labels)
 
-  freq_rap_opinions <- freq_rap_opinions %>%
-    tidyr::pivot_longer("Strongly disagree":"Strongly agree", names_to = "Response", values_to = "Count") %>%
-    dplyr::arrange("Question", "Response")
-
-  return(freq_rap_opinions)
+  return(frequencies)
 
 }
 

@@ -29,30 +29,30 @@ test_that("output does not contain missing values", {
 })
 
 test_that("output has the correct column order", {
-  expect_equal(colnames(dummy_output), c("Question",
-                                         "Response",
-                                         "Count"))
+  expect_equal(colnames(dummy_output), c("name",
+                                         "value",
+                                         "n"))
 })
 
 test_that("output has the correct question names", {
-  expect_equal(unique(dummy_output[[1]]), c("I use open source software when programming",
-                                            "My team open sources its code",
-                                            "I use a source code version control system e.g. Git",
-                                            "Code my team writes is reviewed by a colleague",
-                                            "I write repetitive elements in my code as functions",
-                                            "I unit test my code",
+  expect_equal(unique(dummy_output[[1]]), c("Code my team writes is reviewed by a colleague",
                                             "I collect my code and supporting material into packages",
                                             "I follow a standard directory structure when programming",
                                             "I follow coding guidelines or style guides when programming",
+                                            "I unit test my code",
+                                            "I use a source code version control system e.g. Git",
+                                            "I use open source software when programming",
                                             "I write code to automatically quality assure data",
-                                            "My team applies the principles set out in the Aqua book when carrying out analysis as code"))
+                                            "I write repetitive elements in my code as functions",
+                                            "My team applies the principles set out in the Aqua book when carrying out analysis as code",
+                                            "My team open sources its code"))
 })
 
 test_that("frequencies are correct", {
-  expect_true(all(subset(dummy_output, Response=="I don't understand this question", select=Count) == c(0, 2, 0, 0, 3, 0, 0, 0, 0, 0, 3)))
-  expect_true(all(subset(dummy_output, Response=="Never", select=Count) == c(3, 0, 1, 1, 2, 1, 3, 1, 2, 1, 2)))
-  expect_true(all(subset(dummy_output, Response=="Rarely", select=Count) == c(0, 0, 3, 0, 1, 2, 1, 2, 3, 0, 0)))
-  expect_true(all(subset(dummy_output, Response=="Sometimes", select=Count) == c(2, 3, 0, 0, 0, 0, 2, 3, 1, 2, 1)))
-  expect_true(all(subset(dummy_output, Response=="Regularly", select=Count) == c(0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0)))
-  expect_true(all(subset(dummy_output, Response=="All the time", select=Count) == c(0, 1, 2, 2, 0, 3, 0, 0, 0, 0, 0)))
+  expect_equal(dummy_output[dummy_output$value == "I don't understand this question",]$n, c(0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2))
+  expect_equal(dummy_output[dummy_output$value == "Never",]$n, c(1, 3, 1, 2, 1, 1, 3, 1, 2, 2, 0))
+  expect_equal(dummy_output[dummy_output$value == "Rarely",]$n, c(0, 1, 2, 3, 2, 3, 0, 0, 1, 0, 0))
+  expect_equal(dummy_output[dummy_output$value == "Sometimes",]$n, c(0, 2, 3, 1, 0, 0, 2, 2, 0, 1, 3))
+  expect_equal(dummy_output[dummy_output$value == "Regularly",]$n, c(3, 0, 0, 0, 0, 0, 0, 3, 0, 0 ,0))
+  expect_equal(dummy_output[dummy_output$value == "All the time",]$n, c(2, 0, 0, 0, 3, 2, 0, 0, 0, 0, 1))
 })

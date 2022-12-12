@@ -1,5 +1,5 @@
 
-dummy_data <- data.frame(Q1 = c("test1", "test2"),
+dummy_data <- data.frame(Q1 = c("test1", NA),
                          Q2 = c("test2", "test2"),
                          Q3 = c("test1", "test3"))
 
@@ -40,5 +40,5 @@ test_that("values are in the correct order", {
 })
 
 test_that("frequencies are correct", {
-  expect_equal(dummy_output[[3]], c(1, 1, 0, 0, 2, 0, 1, 0, 1))
+  expect_equal(dummy_output[[3]], c(1, 0, 0, 0, 2, 0, 1, 0, 1))
 })

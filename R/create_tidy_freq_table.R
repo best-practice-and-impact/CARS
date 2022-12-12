@@ -6,13 +6,13 @@
 #' @param questions columns to filter data on
 #' @param responses all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers
-#' @param labels default FALSE. orders data frame alphabetically by first column
+#' @param order default FALSE. orders data frame alphabetically by first column
 #'
 #' @return data.frame
 #'
 #' @export
 
-create_tidy_freq_table <- function(data, questions, responses, labels, order=FALSE){
+create_tidy_freq_table <- function(data, questions, responses, labels){
 
   labels_list <- as.list(labels)
   names(labels_list) <- questions
@@ -20,8 +20,6 @@ create_tidy_freq_table <- function(data, questions, responses, labels, order=FAL
   selected_data <- data %>% dplyr::select(questions)
 
   selected_data[] <- lapply(selected_data, factor, levels = responses)
-
-  selected_data <- selected_data[complete.cases(selected_data),]
 
   frequencies <- selected_data %>%
     tidyr::pivot_longer(cols=questions) %>%
@@ -31,9 +29,9 @@ create_tidy_freq_table <- function(data, questions, responses, labels, order=FAL
 
   frequencies <- data.frame(frequencies)
 
-  if(order){
-    frequencies <- frequencies[tolower(order(frequencies$name)),]
-  }
+  frequencies <- frequencies[tolower(order(frequencies$name)),]
+
+  frequencies <- frequencies[complete.cases(frequencies), ]
 
   return(frequencies)
 }
