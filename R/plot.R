@@ -1,4 +1,3 @@
-
 #'@title Plot frequency graph
 #'
 #'@description Produce bar chart (plotly) for single factor frequency data.
@@ -115,10 +114,12 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'@description Produce stacked bar chart (plotly).
 #'
 #'@param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
-#'@param colour_scale type of colour scale ("gradient", "scale" or "2gradients"). See get_gradient(), get_2colour_scale() and get_2colour_gradients().
+#'@param n sample size
+#'@param break_q_names_col applies break_q_names to the column. Not applied by default
+#'@param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
 #'@param xlab X axis title
 #'@param ylab Y axis title
-#'@param n sample size
+#'@param colour_scale type of colour scale ("gradient", "scale" or "2gradients"). See get_gradient(), get_2colour_scale() and get_2colour_gradients().
 #'@param font_size minimum font size for the plot (numeric).
 #'@param neutral_mid whether the midpoint of the colour scale should be neutral ("2gradients" scale only). TRUE by default
 #'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
@@ -128,7 +129,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'
 #'@export
 
-plot_stacked <- function(data, n, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
@@ -145,6 +146,16 @@ plot_stacked <- function(data, n, xlab = "", ylab = "", colour_scale = c("2gradi
   # Validate font size
   if (!is.numeric(font_size)) {
     stop("Unexpected input - font_size is not numeric.")
+  }
+
+  # Apply break_q_names to a column
+  if(!missing(break_q_names_col)) {
+    # Coerce to character type
+    data[[break_q_names_col]] <- as.character(data[[break_q_names_col]])
+
+    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines = max_lines)
+
+    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
   colour_scale <- match.arg(colour_scale)
@@ -248,7 +259,7 @@ plot_stacked <- function(data, n, xlab = "", ylab = "", colour_scale = c("2gradi
 #'
 #'@export
 
-plot_grouped <- function(data, n, xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
+plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
 
   # Set default bar colours
   n_groups <- length(unique(data[[2]]))
@@ -276,6 +287,16 @@ plot_grouped <- function(data, n, xlab = "", ylab = "", font_size = 12, orientat
   # Validate font size
   if (!is.numeric(font_size)) {
     stop("Unexpected input - font_size is not numeric.")
+  }
+
+  # Apply break_q_names to a column
+  if(!missing(break_q_names_col)) {
+    # Coerce to character type
+    data[[break_q_names_col]] <- as.character(data[[break_q_names_col]])
+
+    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines = max_lines)
+
+    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
   orientation <- match.arg(orientation)
@@ -330,6 +351,195 @@ plot_grouped <- function(data, n, xlab = "", ylab = "", font_size = 12, orientat
   return(fig)
 
 }
+
+
+#'@title Plot likert graph
+#'
+#'@description Produce likert stacked bar chart (plotly). At least 2 questions per plot.
+#'
+#'@param data Frequency data for likert quesitons (data frame). 3 columns: question, answer option, frequency.
+#'@param mid the mid-point of the scale. should be higher than 2 and lower than the number of answers.
+#'@param xlab X axis title
+#'@param ylab Y axis title
+#'@param n sample size
+#'@param max_lines changes maximum lines text can go over
+#'@param font_size minimum font size for the plot (numeric).
+#'@param neutral_mid whether the middle of the scale should be a neutral category (logical). TRUE by default
+#'@param break_q_names_col applies break_q_names to the column. Not applied by default
+#'@param ... additional plot_ly arguments
+#'
+#'@return bar chart
+#'
+#'@export
+
+plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
+
+  # Validate data
+  if (!is.data.frame(data)) {
+    stop("Unexpected input - data is not a data.frame.")
+  } else if (ncol(data) != 3) {
+    stop("Unexpected input - data should have at three columns.")
+  }
+
+  # Validate labels
+  if (!is.character(xlab) | !is.character(ylab) | length(xlab) > 1 | length(ylab) > 1) {
+    stop("Unexpected input - labels should be single character strings.")
+  }
+
+  # Validate font size
+  if (!is.numeric(font_size)) {
+    stop("Unexpected input - font_size is not numeric.")
+  }
+
+  n_questions <- length(unique(data[[1]]))
+  n_answers <- length(unique(data[[2]]))
+
+  # Validate mid
+  if (!is.numeric(mid)) {
+    stop("Unexpected input - mid is not numeric.")
+  } else if (mid < 2) {
+    stop("Unexpected inout - mid is smaller than 2.")
+  } else if (neutral_mid & mid > n_answers) {
+    stop("Unexpected input - mid >= the number of answers.")
+  }
+
+  # Validate neutral mid
+  if (!is.logical(neutral_mid)) {
+    stop("Unexpected input - mid is not logical (TRUE/FALSE)")
+  }
+
+  # Apply break_q_names to a column
+  if(!missing(break_q_names_col)) {
+    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines)
+    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = unique(data[[break_q_names_col]]))
+  }
+
+  x <- list(
+    title = xlab,
+    tickfont = list(size = font_size),
+    titlefont = list(size = font_size * 1.2),
+    range = list(-1, 1),
+    tickformat = ".0%", title = "Percent"
+  )
+
+  y <- list(
+    title = "",
+    tickfont = list(size = font_size),
+    titlefont = list(size = font_size * 1.2)
+  )
+
+  # Reorder data
+  data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
+
+  data[[2]] <- factor(data[[2]], levels = unique(data[[2]]))
+
+  # Calculate bases for bars
+  bases <- calculate_bases(data, mid, neutral_mid)
+
+  # Get bar colours
+  if (neutral_mid) {
+    colours <- get_2colour_gradients(n_answers, mid = mid, neutral_mid = neutral_mid)
+  } else {
+    colours <- get_2colour_gradients(n_answers, mid = mid-1, neutral_mid = neutral_mid)
+  }
+
+  colours <- unlist(lapply(colours, function(x) rep(x, n_questions)))
+
+  hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+
+  fig <- plotly::plot_ly(y = data[[1]],
+                         x=data[[3]],
+                         type="bar",
+                         color = data[[2]],
+                         orientation = "h",
+                         base = bases,
+                         hovertemplate = hovertext,
+                         marker = list(color = colours),
+                         ...)
+
+  fig <- plotly::config(fig, displayModeBar = F)
+
+  fig <- plotly::layout(fig,
+                        barmode = "stack",
+                        clickmode = "none",
+                        margin = list(b = 100),
+                        annotations = list(x = 1, y = 0, text = paste0("Sample size = ", n),
+                                           showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
+                                           xref='paper', yref='paper', font=list(size = font_size)),
+                        xaxis = x,
+                        yaxis = y,
+                        hoverlabel = list(bgcolor = "white", font = list(size = font_size)))
+
+  fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
+
+  fig <- plotly::layout(fig, legend = list(xanchor = "left",
+                                           yanchor = "bottom",
+                                           orientation = "h",
+                                           y = 1,
+                                           traceorder = "normal",
+                                           font = list(size = font_size))
+  )
+
+  # Disable interactive legend
+
+  id <- paste0("plot", stringi::stri_rand_strings(1, 10))
+  javascript <- paste0(id, ".on('plotly_legenddoubleclick', function(d, i) {return false});",
+                       id, ".on('plotly_legendclick', function(d, i) {return false});")
+
+  fig$elementId <- id
+  fig <- htmlwidgets::prependContent(fig, htmlwidgets::onStaticRenderComplete(javascript), data=list(''))
+
+  return(fig)
+
+}
+
+#'@title Calculate bases for Likert chart
+#'
+#'@description Calculates starting locations for bars on the Likert chart.
+#'
+#'@param data see @plot_likert
+#'@param mid see @plot_likert
+#'@param neutral_mid see @plot_likert
+#'
+#'@return bar starting locations
+
+calculate_bases <- function(data, mid, neutral_mid) {
+  # Bases are needed as a vector for plotly
+  data[[2]] <- factor(data[[2]], unique(data[[2]]))
+
+  # Remove the values corresponding to the last response option so the base for the final response option
+  # is the cumulative sum up to and including the previous response option.
+  filtered_data <- data[!data[[2]] %in%
+                 levels(data[[2]])[length(levels(data[[2]]))], ]
+
+  n_questions <- length(unique(data[[1]]))
+
+  cumulative_sums <- filtered_data %>%
+    dplyr::group_by_at(1) %>%
+    dplyr::mutate_at(3, cumsum)
+
+  # Add bases of 0 for the first response option, for each question
+  n_questions <- length(unique(data[[1]]))
+
+  bases <- split(cumulative_sums[[3]], ceiling(seq_along(cumulative_sums[[3]])/n_questions)) %>%
+    lapply(function(x) c(0, x)) %>% unlist %>% unname
+
+  get_neg_bases <- function(x, mid, neutral_mid) {
+    if (neutral_mid) {
+      sum(x[c(1:(mid-1))]) + x[mid]/2
+    } else {
+      sum(x[c(1:(mid-1))])
+    }
+  }
+
+  negative_bases <- data %>% dplyr::group_by_at(1) %>% dplyr::mutate_at(3, get_neg_bases, mid = mid, neutral_mid = neutral_mid) %>% data.frame
+
+  bases <- bases - negative_bases[[3]]
+
+  return(bases)
+}
+
+
 
 #'@title Create custom Y axis label
 #'

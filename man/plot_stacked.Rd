@@ -7,6 +7,8 @@
 plot_stacked(
   data,
   n,
+  break_q_names_col,
+  max_lines = 2,
   xlab = "",
   ylab = "",
   colour_scale = c("2gradients", "gradient", "scale", "3scale"),
@@ -20,6 +22,10 @@ plot_stacked(
 \item{data}{Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)}
 
 \item{n}{sample size}
+
+\item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
+
+\item{max_lines}{maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()}
 
 \item{xlab}{X axis title}
 

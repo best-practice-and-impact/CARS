@@ -7,6 +7,8 @@
 plot_grouped(
   data,
   n,
+  break_q_names_col,
+  max_lines = 2,
   xlab = "",
   ylab = "",
   font_size = 12,
