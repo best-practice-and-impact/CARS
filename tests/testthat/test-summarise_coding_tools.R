@@ -51,6 +51,11 @@ test_that("output is a dataframe", {
   expect_s3_class(dummy_access_output, "data.frame")
 })
 
+test_that("Output has thirty-three rows", {
+  expect_equal(nrow(dummy_knowledge_output), 33)
+  expect_equal(nrow(dummy_access_output), 33)
+})
+
 test_that("output has three columns", {
   expect_equal(ncol(dummy_knowledge_output), 3)
   expect_equal(ncol(dummy_access_output), 3)

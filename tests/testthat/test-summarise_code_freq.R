@@ -9,6 +9,10 @@ test_that("output is a dataframe", {
   expect_s3_class(dummy_output, "data.frame")
 })
 
+test_that("Output has five rows", {
+  expect_equal(nrow(dummy_output), 5)
+})
+
 test_that("output has three columns", {
   expect_equal(ncol(dummy_output), 3)
 })
@@ -18,7 +22,7 @@ test_that("output does not contain missing values", {
 })
 
 test_that("Output column names are correct", {
-  expect_equal(colnames(dummy_output), c("names", "values", "n"))
+  expect_equal(colnames(dummy_output), c("name", "value", "n"))
 })
 
 test_that("names are in the correct order", {

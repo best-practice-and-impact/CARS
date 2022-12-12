@@ -15,15 +15,15 @@ summarise_code_freq <- function(data) {
     stop("unexpected_input: no column called 'code_freq")
   }
 
-  questions = "code_freq"
+  questions <- "code_freq"
 
-  levels = c("Never",
-             "Rarely",
-             "Sometimes",
-             "Regularly",
-             "All the time")
+  levels <- c("Never",
+              "Rarely",
+              "Sometimes",
+              "Regularly",
+              "All the time")
 
-  labels = "Coding frequency"
+  labels <- "Coding frequency"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -120,16 +120,16 @@ summarise_where_learned_code <- function(data){
     stop("unexpected_input: no column called 'prev_coding_experience")
   }
 
-  questions = "first_learned"
+  questions <- "first_learned"
 
-  levels = c("In current role",
-             "In education",
-             "In private sector employment",
-             "In public sector employment",
-             "Self-taught",
-             "Other")
+  levels <- c("In current role",
+              "In education",
+              "In private sector employment",
+              "In public sector employment",
+              "Self-taught",
+              "Other")
 
-  labels = "First coding experience"
+  labels <- "First coding experience"
 
   data$first_learned[(is.na(data$prev_coding_experience) |
                         (data$prev_coding_experience == "No")) &
@@ -200,15 +200,15 @@ summarise_rap_knowledge <- function(data){
     stop("unexpected_input: no column called 'heard_of_RAP")
   }
 
-  questions = "know_RAP_champ"
+  questions <- "know_RAP_champ"
 
-  levels = c("Have not heard of RAP",
-             "I don't know what a RAP champion is",
-             "I know what a RAP champion is but don't know who the RAP champion in my department is",
-             "I know what a RAP champion is and there is no RAP champion in my department",
-             "I know who the RAP champion in my department is")
+  levels <- c("Have not heard of RAP",
+              "I don't know what a RAP champion is",
+              "I know what a RAP champion is but don't know who the RAP champion in my department is",
+              "I know what a RAP champion is and there is no RAP champion in my department",
+              "I know who the RAP champion in my department is")
 
-  labels = "RAP champion knowledge"
+  labels <- "RAP champion knowledge"
 
   data$know_RAP_champ[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
 
@@ -236,27 +236,27 @@ summarise_rap_opinions <- function(data) {
 
   opinion_rap_data <- data[data$heard_of_RAP == "Yes", ]
 
-  questions = c("RAP_confident",
-                "RAP_supported",
-                "RAP_resources",
-                "RAP_components",
-                "RAP_important",
-                "RAP_implementing",
-                "RAP_planning")
+  questions <- c("RAP_confident",
+                 "RAP_supported",
+                 "RAP_resources",
+                 "RAP_components",
+                 "RAP_important",
+                 "RAP_implementing",
+                 "RAP_planning")
 
-  levels = c("Strongly Disagree",
-                "Disagree",
-                "Neutral",
-                "Agree",
-                "Strongly Agree")
+  levels <- c("Strongly Disagree",
+              "Disagree",
+              "Neutral",
+              "Agree",
+              "Strongly Agree")
 
-  labels = c("I feel confident implementing RAP in my work",
-             "I feel supported to implement RAP in my work",
-             "I know where to find resources to help me implement RAP",
-             "I understand what the key components of the RAP methodology are",
-             "I think it is important to implement RAP in my work",
-             "I and/or my team are currently implementing RAP",
-             "I or my team are planning on implementing RAP in the next 12 months")
+  labels <- c("I feel confident implementing RAP in my work",
+              "I feel supported to implement RAP in my work",
+              "I know where to find resources to help me implement RAP",
+              "I understand what the key components of the RAP methodology are",
+              "I think it is important to implement RAP in my work",
+              "I and/or my team are currently implementing RAP",
+              "I or my team are planning on implementing RAP in the next 12 months")
 
 
   frequencies <- create_tidy_freq_table(opinion_rap_data, questions, levels,
@@ -292,20 +292,20 @@ summarise_doc <- function(data) {
                  "doc_AQA_logs",
                  "doc_flow_charts")
 
-  levels = c("I don't understand this question",
-             "Never",
-             "Rarely",
-             "Sometimes",
-             "Regularly",
-             "All the time")
+  levels <- c("I don't understand this question",
+              "Never",
+              "Rarely",
+              "Sometimes",
+              "Regularly",
+              "All the time")
 
-  labels = c("Code comments",
-             "Documentation for each function or class",
-             "README files",
-             "Desk notes",
-             "Analytical Quality Assurance (AQA) logs",
-             "Data or assumptions registers",
-             "Flow charts")
+  labels <- c("Code comments",
+              "Documentation for each function or class",
+              "README files",
+              "Desk notes",
+              "Analytical Quality Assurance (AQA) logs",
+              "Data or assumptions registers",
+              "Flow charts")
 
 
   frequencies <- create_tidy_freq_table(documentation_data, questions, levels,
@@ -331,13 +331,13 @@ summarise_ci <- function(data) {
     stop("unexpected_input: no column called 'CI")
   }
 
-  questions = "CI"
+  questions <- "CI"
 
-  levels = c("Yes",
-             "No",
-             "I don't know what continuous integration is")
+  levels <- c("Yes",
+              "No",
+              "I don't know what continuous integration is")
 
-  labels = "Continuous Integration Frequency"
+  labels <- "Continuous Integration Frequency"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -426,16 +426,21 @@ summarise_ability_change <- function(data) {
     stop("unexpected_input: no column called 'coding_ability_change")
   }
 
-  data$coding_ability_change <- factor(data$coding_ability_change,levels = c("Significantly worse",
-                                                               "Slightly worse",
-                                                               "No change",
-                                                               "Slightly better",
-                                                               "Significantly better"))
+  questions <- "coding_ability_change"
 
-  freqs <- data.frame(table(data$coding_ability_change))
+  levels <- c("Significantly worse",
+              "Slightly worse",
+              "No change",
+              "Slightly better",
+              "Significantly better")
 
-  colnames(freqs) <- c("Ability Change", "Count")
-  return(freqs)
+  labels <- "Ability Change"
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
 }
 
 
@@ -449,14 +454,18 @@ summarise_ability_change <- function(data) {
 
 summarise_line_manage <- function(data){
 
-  data$management <- factor(data$management,levels = c("Yes",
-                                                       "No - I manage people who do not write code",
-                                                       "No - I don't line manage anyone"))
+  questions <- "management"
 
-  table <- data.frame(table(data$management))
-  colnames(table) <- c("Line manage anyone who writes codes",
-                       "count")
-  return(table)
+  levels <- c("Yes",
+              "No - I manage people who do not write code",
+              "No - I don't line manage anyone")
+
+  labels <- "Line manage anyone who writes codes"
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
 
 }
 
