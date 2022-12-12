@@ -27,26 +27,26 @@ test_that("output does not contain missing values", {
 })
 
 test_that("output has the correct column order", {
-  expect_equal(colnames(dummy_output), c("Question",
-                                         "Response",
-                                         "Count"))
+  expect_equal(colnames(dummy_output), c("name",
+                                         "value",
+                                         "n"))
 })
 
 test_that("output has the correct question names", {
-  expect_equal(unique(dummy_output[[1]]), c("Code comments",
-                                            "Documentation for each function or class",
-                                            "README files",
-                                            "Desk notes",
-                                            "Analytical Quality Assurance (AQA) logs",
+  expect_equal(unique(dummy_output[[1]]), c("Analytical Quality Assurance (AQA) logs",
+                                            "Code comments",
                                             "Data or assumptions registers",
-                                            "Flow charts"))
+                                            "Desk notes",
+                                            "Documentation for each function or class",
+                                            "Flow charts",
+                                            "README files"))
 })
 
 test_that("frequencies are correct", {
-  expect_true(all(subset(dummy_output, Response=="I don't understand this question", select=Count) == c(1, 1, 1, 0, 1, 1, 0)))
-  expect_true(all(subset(dummy_output, Response=="Never", select=Count) == c(2, 1, 1, 1, 1, 1, 0)))
-  expect_true(all(subset(dummy_output, Response=="Rarely", select=Count) == c(0, 1, 1, 1, 0, 1, 1)))
-  expect_true(all(subset(dummy_output, Response=="Sometimes", select=Count) == c(0, 1, 1, 1, 1, 0, 1)))
-  expect_true(all(subset(dummy_output, Response=="Regularly", select=Count) == c(1, 1, 0, 1, 1, 1, 1)))
-  expect_true(all(subset(dummy_output, Response=="All the time", select=Count) == c(1, 0, 1, 1, 1, 1, 1)))
+  expect_equal(dummy_output[dummy_output$value == "I don't understand this question",]$n, c(1, 1, 1, 0, 1, 0, 1))
+  expect_equal(dummy_output[dummy_output$value == "Never",]$n, c(1, 2, 1, 1, 1, 0, 1))
+  expect_equal(dummy_output[dummy_output$value == "Rarely",]$n, c(0, 0, 1, 1, 1, 1, 1))
+  expect_equal(dummy_output[dummy_output$value == "Sometimes",]$n, c(1, 0, 0, 1, 1, 1, 1))
+  expect_equal(dummy_output[dummy_output$value == "Regularly",]$n, c(1, 1, 1, 1, 1, 1, 0))
+  expect_equal(dummy_output[dummy_output$value == "All the time",]$n, c(1, 1, 1, 1, 0, 1, 1))
 })

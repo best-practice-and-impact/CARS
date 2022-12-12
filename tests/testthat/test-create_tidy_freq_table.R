@@ -5,13 +5,13 @@ dummy_data <- data.frame(Q1 = c("test1", NA),
 
 questions <- c("Q1", "Q2", "Q3")
 
-responses <- c("test1", "test2", "test3")
+levels <- c("test1", "test2", "test3")
 
 labels <- c("Question 1", "Question 2", "Question 3")
 
 dummy_output <- create_tidy_freq_table(data = dummy_data,
                                        questions = questions,
-                                       responses = responses,
+                                       levels = levels,
                                        labels = labels)
 
 test_that("output is a dataframe", {

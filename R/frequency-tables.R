@@ -15,16 +15,20 @@ summarise_code_freq <- function(data) {
     stop("unexpected_input: no column called 'code_freq")
   }
 
-  data$code_freq <- factor(data$code_freq, levels = c("Never",
-                                                      "Rarely",
-                                                      "Sometimes",
-                                                      "Regularly",
-                                                      "All the time"))
+  questions = "code_freq"
 
-  freqs <- data.frame(table(data$code_freq))
+  levels = c("Never",
+             "Rarely",
+             "Sometimes",
+             "Regularly",
+             "All the time")
 
-  colnames(freqs) <- c("Coding frequency", "Count")
-  return(freqs)
+  labels = "Coding frequency"
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
 }
 
 
@@ -44,14 +48,14 @@ summarise_operations <- function(data) {
                  "ops_transfer_migration", "ops_vis", "ops_machine_learning",
                  "ops_modelling", "ops_QA")
 
-  responses <- c("I do some or all of this by coding",
+  levels <- c("I do some or all of this by coding",
                  "I do this without coding", "I don't do this")
 
   labels <- c("Data analysis", "Data cleaning", "Data linking",
               "Data transfer / migration", "Data visualisation",
               "Machine learning", "Modelling", "Quality assurance")
 
-  frequencies <- create_tidy_freq_table(data, questions, responses,
+  frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
   return(frequencies)
@@ -78,7 +82,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
                  "access_JS", "knowledge_java", "access_java", "knowledge_C",
                  "access_C", "knowledge_matlab", "access_matlab")
 
-  responses <- c("Yes", "No", "Don't Know")
+  levels <- c("Yes", "No", "Don't Know")
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
               "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
@@ -87,7 +91,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- create_tidy_freq_table(data, questions, responses,
+  frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
   return(frequencies)
@@ -158,7 +162,7 @@ summarise_coding_practices <- function(data) {
                  "prac_unit_test", "prac_package", "prac_dir_structure",
                  "prac_style", "prac_automated_QA", "prac_AQUA_book")
 
-  responses <- c("I don't understand this question", "Never", "Rarely",
+  levels <- c("I don't understand this question", "Never", "Rarely",
                  "Sometimes", "Regularly", "All the time")
 
   labels <- c("I use open source software when programming",
@@ -173,7 +177,7 @@ summarise_coding_practices <- function(data) {
               "I write code to automatically quality assure data",
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
 
-  frequencies <- create_tidy_freq_table(data, questions, responses,
+  frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
   return(frequencies)
@@ -247,7 +251,7 @@ summarise_rap_opinions <- function(data) {
                 "RAP_implementing",
                 "RAP_planning")
 
-  responses = c("Strongly Disagree",
+  levels = c("Strongly Disagree",
                 "Disagree",
                 "Neutral",
                 "Agree",
@@ -262,7 +266,7 @@ summarise_rap_opinions <- function(data) {
              "I or my team are planning on implementing RAP in the next 12 months")
 
 
-  frequencies <- create_tidy_freq_table(opinion_rap_data, questions, responses,
+  frequencies <- create_tidy_freq_table(opinion_rap_data, questions, levels,
                                         labels)
 
   return(frequencies)
@@ -286,7 +290,14 @@ summarise_doc <- function(data) {
   }
 
   documentation_data <- data[data$code_freq != "Never", ]
-  documentation_data <- dplyr::select(documentation_data, "doc_comments":"doc_flow_charts")
+
+  questions <- c("doc_comments",
+                 "doc_functions",
+                 "doc_readme",
+                 "doc_desk_notes",
+                 "doc_registers",
+                 "doc_AQA_logs",
+                 "doc_flow_charts")
 
   levels = c("I don't understand this question",
              "Never",
@@ -304,15 +315,10 @@ summarise_doc <- function(data) {
              "Flow charts")
 
 
-  freq_documentation_data <- calc_multi_col_freqs(documentation_data, levels = levels, labels = labels)
+  frequencies <- create_tidy_freq_table(documentation_data, questions, levels,
+                                        labels)
 
-  colnames(freq_documentation_data) <- c("Question", levels)
-
-  freq_documentation_data <- freq_documentation_data %>%
-    tidyr::pivot_longer("I don't understand this question":"All the time", names_to = "Response", values_to = "Count") %>%
-    dplyr::arrange("Question", "Response")
-
-  return(freq_documentation_data)
+  return(frequencies)
 
 }
 

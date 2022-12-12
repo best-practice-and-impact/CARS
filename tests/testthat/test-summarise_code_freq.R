@@ -9,16 +9,20 @@ test_that("output is a dataframe", {
   expect_s3_class(dummy_output, "data.frame")
 })
 
-test_that("output has two columns", {
-  expect_equal(ncol(dummy_output), 2)
+test_that("output has three columns", {
+  expect_equal(ncol(dummy_output), 3)
 })
 
 test_that("output does not contain missing values", {
   expect_false(any(is.na.data.frame(dummy_output)))
 })
 
-test_that("labels are in the correct order", {
-  expect_identical(dummy_output[[1]],
+test_that("names are in the correct order", {
+  expect_identical(unique(dummy_output[[1]]), "Coding frequency")
+})
+
+test_that("values are in the correct order", {
+  expect_identical(unique(dummy_output[[2]]),
                    factor(c("Never",
                             "Rarely",
                             "Sometimes",
@@ -33,5 +37,5 @@ test_that("labels are in the correct order", {
 })
 
 test_that("frequencies are correct", {
-  expect_equal(dummy_output[[2]], c(1, 0, 3, 0, 2))
+  expect_equal(dummy_output$n, c(1, 0, 3, 0, 2))
 })
