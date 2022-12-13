@@ -273,6 +273,33 @@ summarise_rap_basic <- function(data){
 }
 
 
+#' @title Summarise Advanced rap score
+#'
+#' @description calculate frequency table for Advanced rap scores
+#'
+#' @param data full CARS wave 3 data.frame after preprocessing
+#'
+#' @return frequency table (data.frame)
+#'
+
+summarise_rap_advanced <- function(data){
+
+  data <- data[data$code_freq != "Never", ]
+
+  questions <- "advanced_rap_score"
+
+  levels <- c(0:7)
+
+  labels <- "Advanced RAP score"
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
+}
+
+
 #' @title Knowledge of RAP
 #'
 #' @description Create a frequency table of knowledge of RAP
