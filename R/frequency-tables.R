@@ -557,6 +557,52 @@ summarise_ability_change <- function(data) {
 }
 
 
+#' @title Summarise programming language status
+#'
+#' @description calculate counts of responents reporting access to, knowledge of, or both for each programming language.
+#'
+#' @param data full CARS wave 3 data.frame after preprocessing
+#'
+#' @return frequency table (data.frame)
+#'
+#' @importFrom rlang .data
+
+summarise_language_status <- function(data) {
+
+  questions <- c("status_R",
+                 "status_SQL",
+                 "status_SAS",
+                 "status_VBA",
+                 "status_python",
+                 "status_SPSS",
+                 "status_stata",
+                 "status_JS",
+                 "status_java_scala",
+                 "status_C",
+                 "status_matlab")
+
+  levels <- c("both", "access", "knowledge", "neither")
+
+  labels <- c("R",
+              "SQL",
+              "SAS",
+              "VBA",
+              "Python",
+              "SPSS",
+              "Stata",
+              "Javascript / Typescript",
+              "Java / Scala",
+              "C++ / C#",
+              "Matlab")
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
+}
+
+
 #' @title Summarise manage someone who codes
 #'
 #' @description calculate frequency table for if someone line manages someone who codes
