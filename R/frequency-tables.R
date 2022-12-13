@@ -1,3 +1,71 @@
+#' Produce all summary tables
+#'
+#' @description Produce all summary tables and return as a named list.
+#'
+#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param all_tables logical: whether to produce all summary output tables. Defaults to FALSE.
+#'
+#' @return list of frequency tables
+#'
+#' @export
+
+summarise_all <- function(data, all_tables = FALSE) {
+
+  implementing_data <- data[data$heard_of_RAP == "Yes" & data$code_freq != "Never",]
+
+  implementing_data$RAP_implementing <- factor(implementing_data$RAP_implementing, levels = c(
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"))
+
+  implementing_data$RAP_understand_key_components <- factor(implementing_data$RAP_understand_key_components, levels = c(
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"))
+
+  output_list <- list(
+    code_freq = summarise_code_freq(data),
+    operations = summarise_operations(data),
+    knowledge = summarise_coding_tools(data, "knowledge"),
+    access = summarise_coding_tools(data, "access"),
+    #language_status = summarise_language_status(data),
+    where_learned = summarise_where_learned_code(data),
+    ability_change = summarise_ability_change(data),
+    coding_practices = summarise_coding_practices(data),
+    doc = summarise_doc(data),
+    rap_knowledge = summarise_rap_knowledge(data),
+    rap_opinions = summarise_rap_opinions(data),
+    #basic_rap_scores = summarise_rap_basic(data),
+    #advanced_rap_scores = summarise_rap_advanced(data),
+    #rap_components = summarise_rap_comp(data),
+    ci = summarise_ci(data),
+    dependency_management = summarise_dep_man(data),
+    rep_workflow = summarise_rep_workflow(data),
+    line_manage = summarise_line_manage(data)
+  )
+
+  if (all_tables) {
+
+    output_list <- c(output_list,
+                     list(
+                       capability_change_by_freq = summarise_cap_change_by_freq(data),
+                       #basic_score_by_implementation = summarise_basic_score_by_imp(implementing_data),
+                       #adv_score_by_implementation = summarise_adv_score_by_imp(implementing_data),
+                       #basic_score_by_understanding = summarise_basic_score_by_understanding(implementing_data),
+                       #adv_score_by_understanding = summarise_adv_score_by_understanding(implementing_data),
+                       languages_by_prof = summarise_languages_by_prof(data)
+                     ))
+
+  }
+
+  return(output_list)
+}
+
+
 
 #' Summarise coding frequency
 #'
@@ -6,7 +74,6 @@
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
 
 summarise_code_freq <- function(data) {
 
@@ -39,8 +106,6 @@ summarise_code_freq <- function(data) {
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @importFrom rlang .data
 
 summarise_operations <- function(data) {
 
@@ -71,7 +136,6 @@ summarise_operations <- function(data) {
 #' @param type type of table (knowledge or access)
 #'
 #' @return frequency table (data.frame)
-#'
 
 summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
@@ -105,7 +169,6 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
 
 summarise_where_learned_code <- function(data){
 
@@ -152,8 +215,6 @@ summarise_where_learned_code <- function(data){
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @importFrom rlang .data
 
 summarise_coding_practices <- function(data) {
 
@@ -176,6 +237,33 @@ summarise_coding_practices <- function(data) {
               "I follow coding guidelines or style guides when programming",
               "I write code to automatically quality assure data",
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
+
+  frequencies <- create_tidy_freq_table(data, questions, levels,
+                                        labels)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise basic rap score
+#'
+#' @description calculate frequency table for basic rap scores
+#'
+#' @param data full CARS wave 3 data.frame after preprocessing
+#'
+#' @return frequency table (data.frame)
+#'
+
+summarise_rap_basic <- function(data){
+
+  data <- data[data$code_freq != "Never", ]
+
+  questions <- "basic_rap_score"
+
+  levels <- c(0:6)
+
+  labels <- "Basic RAP score"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -416,8 +504,6 @@ summarise_rep_workflow <- function(data) {
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_ability_change <- function(data) {
 
@@ -477,8 +563,6 @@ summarise_line_manage <- function(data){
 #' @param data full CARS wave 3 data.frame after preprocessing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_cap_change_by_freq <- function(data){
 
@@ -517,8 +601,6 @@ summarise_cap_change_by_freq <- function(data){
 #' @param data CARS data (preprocessed)
 #'
 #' @return data.frame
-#'
-#' @export
 
 summarise_languages_by_prof <- function(data) {
   data <- data[complete.cases(data),]

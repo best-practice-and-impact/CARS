@@ -8,15 +8,13 @@
 #' @param labels labels to rename the column headers
 #'
 #' @return data.frame
-#'
-#' @export
 
 create_tidy_freq_table <- function(data, questions, levels, labels){
 
   labels_list <- as.list(labels)
   names(labels_list) <- questions
 
-  selected_data <- data %>% dplyr::select(questions)
+  selected_data <- data %>% dplyr::select(all_of(questions))
 
   selected_data[] <- lapply(selected_data, factor, levels = levels)
 
@@ -24,13 +22,10 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
     tidyr::pivot_longer(cols=questions) %>%
     dplyr::group_by(name) %>%
     dplyr::count(value, .drop=FALSE) %>%
-    dplyr::mutate(name = dplyr::recode(name, !!!labels_list))
-
-  frequencies <- data.frame(frequencies)
-
-  frequencies <- frequencies[tolower(order(frequencies$name)),]
-
-  frequencies <- frequencies[complete.cases(frequencies), ]
+    dplyr::mutate(name = dplyr::recode(name, !!!labels_list)) %>%
+    dplyr::arrange(name, by_group=TRUE) %>%
+    tidyr::drop_na() %>%
+    data.frame
 
   return(frequencies)
 }
