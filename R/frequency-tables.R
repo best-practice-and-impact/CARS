@@ -11,37 +11,37 @@
 
 summarise_all <- function(data, all_tables = FALSE) {
 
-  implementing_data <- data[data$heard_of_RAP == "Yes" & data$code_freq != "Never",]
-
-  implementing_data$RAP_implementing <- factor(implementing_data$RAP_implementing, levels = c(
-    "Strongly Disagree",
-    "Disagree",
-    "Neutral",
-    "Agree",
-    "Strongly Agree"))
-
-  implementing_data$RAP_understand_key_components <- factor(implementing_data$RAP_understand_key_components, levels = c(
-    "Strongly Disagree",
-    "Disagree",
-    "Neutral",
-    "Agree",
-    "Strongly Agree"))
+  # implementing_data <- data[data$heard_of_RAP == "Yes" & data$code_freq != "Never",]
+  #
+  # implementing_data$RAP_implementing <- factor(implementing_data$RAP_implementing, levels = c(
+  #   "Strongly Disagree",
+  #   "Disagree",
+  #   "Neutral",
+  #   "Agree",
+  #   "Strongly Agree"))
+  #
+  # implementing_data$RAP_understand_key_components <- factor(implementing_data$RAP_understand_key_components, levels = c(
+  #   "Strongly Disagree",
+  #   "Disagree",
+  #   "Neutral",
+  #   "Agree",
+  #   "Strongly Agree"))
 
   output_list <- list(
     code_freq = summarise_code_freq(data),
     operations = summarise_operations(data),
     knowledge = summarise_coding_tools(data, "knowledge"),
     access = summarise_coding_tools(data, "access"),
-    #language_status = summarise_language_status(data),
+    language_status = summarise_language_status(data),
     where_learned = summarise_where_learned_code(data),
     ability_change = summarise_ability_change(data),
     coding_practices = summarise_coding_practices(data),
     doc = summarise_doc(data),
     rap_knowledge = summarise_rap_knowledge(data),
     rap_opinions = summarise_rap_opinions(data),
-    #basic_rap_scores = summarise_rap_basic(data),
-    #advanced_rap_scores = summarise_rap_advanced(data),
-    #rap_components = summarise_rap_comp(data),
+    basic_rap_scores = summarise_rap_basic(data),
+    advanced_rap_scores = summarise_rap_advanced(data),
+    rap_components = summarise_rap_comp(data), # Needs refactoring
     ci = summarise_ci(data),
     dependency_management = summarise_dep_man(data),
     rep_workflow = summarise_rep_workflow(data),
@@ -52,12 +52,12 @@ summarise_all <- function(data, all_tables = FALSE) {
 
     output_list <- c(output_list,
                      list(
-                       capability_change_by_freq = summarise_cap_change_by_freq(data),
+                       capability_change_by_freq = summarise_cap_change_by_freq(data), # Needs refactoring
                        #basic_score_by_implementation = summarise_basic_score_by_imp(implementing_data),
                        #adv_score_by_implementation = summarise_adv_score_by_imp(implementing_data),
                        #basic_score_by_understanding = summarise_basic_score_by_understanding(implementing_data),
                        #adv_score_by_understanding = summarise_adv_score_by_understanding(implementing_data),
-                       languages_by_prof = summarise_languages_by_prof(data)
+                       languages_by_prof = summarise_languages_by_prof(data) # Needs refactoring
                      ))
 
   }
@@ -427,6 +427,48 @@ summarise_doc <- function(data) {
                                         labels)
 
   return(frequencies)
+
+}
+
+
+#' @title RAP score components
+#'
+#' @description Create frequency table of basic and advanced RAP score components
+#'
+#' @param data full CARS wave 3 data.frame after preprocessing
+#'
+#' @return frequency table (data.frame)
+
+summarise_rap_comp <- function(data){
+
+  labels <- c("use_open_source_score" = "Use open source software",
+              "open_code_score" = "Team open source code",
+              "version_control_score" = "Version control",
+              "peer_review_score" = "Peer review",
+              "AQUA_book_score" = "AQUA book guidance",
+              "doc_score" = "Documentation",
+              "function_score" = "Functions",
+              "unit_test_score" = "Unit testing",
+              "function_doc_score" = "Function documentation",
+              "package_score" = "Code packages",
+              "code_style_score" = "Follow code style guidelines",
+              "cont_integreation_score" = "Continuous integration",
+              "dep_management_score" = "Dependency management")
+
+  rap_score <- data[grepl("_score", colnames(data))]
+
+  components <- rap_score[!colnames(rap_score) %in% c("basic_rap_score", "advanced_rap_score")]
+  components[is.na(components)] <- 0
+  components <- data.frame(Component = labels,
+                           Type = c(rep("Basic", 6), rep("Advanced", 7)),
+                           Count = unname(colSums(components))
+  )
+
+  rownames(components) <- NULL
+  components <- components[order(-rank(components$Type),components$Component),]
+  components$Component <- factor(components$Component, levels = components$Component)
+
+  return(components)
 
 }
 
