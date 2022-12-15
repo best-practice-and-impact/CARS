@@ -709,6 +709,39 @@ summarise_cap_change_by_freq <- function(data){
 }
 
 
+#' @title Compare basic RAP score to implementation of RAP
+#'
+#' @description calculate frequency table for basic rap score compared with implementation of RAP
+#'
+#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
+#'
+#' @return frequency table (data.frame)
+#'
+#' @export
+
+summarise_basic_score_by_imp <- function(implementing_data){
+
+  selected_data <- implementing_data %>% dplyr::select(all_of(c("RAP_implementing", "basic_rap_score")))
+
+  selected_data$RAP_implementing <- factor(selected_data$RAP_implementing, levels = c(
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly agree"))
+
+  selected_data$basic_rap_score <- factor(selected_data$basic_rap_score, levels = c(0,1,2,3,4,5,6))
+
+  frequencies <- selected_data %>%
+    dplyr::count(RAP_implementing, basic_rap_score, .drop=FALSE) %>%
+    tidyr::drop_na() %>%
+    data.frame
+
+  return(frequencies)
+
+}
+
+
 #' Summarise programming language knowledge by profession
 #'
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
