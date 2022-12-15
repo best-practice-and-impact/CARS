@@ -11,22 +11,6 @@
 
 summarise_all <- function(data, all_tables = FALSE) {
 
-  # implementing_data <- data[data$heard_of_RAP == "Yes" & data$code_freq != "Never",]
-  #
-  # implementing_data$RAP_implementing <- factor(implementing_data$RAP_implementing, levels = c(
-  #   "Strongly Disagree",
-  #   "Disagree",
-  #   "Neutral",
-  #   "Agree",
-  #   "Strongly Agree"))
-  #
-  # implementing_data$RAP_understand_key_components <- factor(implementing_data$RAP_understand_key_components, levels = c(
-  #   "Strongly Disagree",
-  #   "Disagree",
-  #   "Neutral",
-  #   "Agree",
-  #   "Strongly Agree"))
-
   output_list <- list(
     code_freq = summarise_code_freq(data),
     operations = summarise_operations(data),
@@ -52,9 +36,9 @@ summarise_all <- function(data, all_tables = FALSE) {
 
     output_list <- c(output_list,
                      list(
-                       capability_change_by_freq = summarise_cap_change_by_freq(data), # Needs refactoring
-                       #basic_score_by_implementation = summarise_basic_score_by_imp(implementing_data),
-                       #adv_score_by_implementation = summarise_adv_score_by_imp(implementing_data),
+                       capability_change_by_freq = summarise_cap_change_by_freq(data),
+                       basic_score_by_implementation = summarise_basic_score_by_imp(data),
+                       adv_score_by_implementation = summarise_adv_score_by_imp(data),
                        #basic_score_by_understanding = summarise_basic_score_by_understanding(implementing_data),
                        #adv_score_by_understanding = summarise_adv_score_by_understanding(implementing_data),
                        languages_by_prof = summarise_languages_by_prof(data) # Needs refactoring
@@ -732,6 +716,39 @@ summarise_basic_score_by_imp <- function(implementing_data){
 
   frequencies <- selected_data %>%
     dplyr::count(RAP_implementing, basic_rap_score, .drop=FALSE) %>%
+    tidyr::drop_na() %>%
+    data.frame
+
+  return(frequencies)
+
+}
+
+
+#' @title Compare advanced RAP score to implementation of RAP
+#'
+#' @description calculate frequency table for advanced rap score compared with implementation of RAP
+#'
+#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
+#'
+#' @return frequency table (data.frame)
+#'
+#' @export
+
+summarise_adv_score_by_imp <- function(implementing_data){
+
+  selected_data <- implementing_data %>% dplyr::select(all_of(c("RAP_implementing", "advanced_rap_score")))
+
+  selected_data$RAP_implementing <- factor(selected_data$RAP_implementing, levels = c(
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly agree"))
+
+  selected_data$advanced_rap_score <- factor(selected_data$advanced_rap_score, levels = c(0,1,2,3,4,5,6,7))
+
+  frequencies <- selected_data %>%
+    dplyr::count(RAP_implementing, advanced_rap_score, .drop=FALSE) %>%
     tidyr::drop_na() %>%
     data.frame
 
