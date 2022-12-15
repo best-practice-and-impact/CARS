@@ -681,31 +681,29 @@ summarise_line_manage <- function(data){
 
 summarise_cap_change_by_freq <- function(data){
 
-  freq_order <- c(
+  selected_data <- data %>% dplyr::select(all_of(c("code_freq", "coding_ability_change")))
+
+  selected_data$code_freq <- factor(selected_data$code_freq, levels = c(
     "Never",
     "Rarely",
     "Sometimes",
     "Regularly",
-    "All the time"
-  )
+    "All the time"))
 
-  change_order <- c(
+  selected_data$coding_ability_change <- factor(selected_data$coding_ability_change, levels = c(
     "Significantly worse",
     "Slightly worse",
     "No change",
     "Slightly better",
-    "Significantly better"
-  )
+    "Significantly better"))
 
-  data$code_freq <- factor(data$code_freq, levels = freq_order)
-  data$coding_ability_change <- factor(data$coding_ability_change, levels = change_order)
+  frequencies <- selected_data %>%
+    dplyr::count(code_freq, coding_ability_change, .drop=FALSE) %>%
+    tidyr::drop_na() %>%
+    data.frame
 
-  capability_change <- data.frame(table(data$code_freq, data$coding_ability_change))
-  capability_change <- data.frame(capability_change, check.names = FALSE)
+  return(frequencies)
 
-  colnames(capability_change) <- c("Coding frequency", "Coding ability change", "Count")
-
-  return(capability_change)
 }
 
 

@@ -30,7 +30,7 @@ test_that("Output has three columns", {
 })
 
 test_that("Output column names are correct", {
-  expect_equal(colnames(dummy_output), c("Coding frequency", "Coding ability change", "Count"))
+  expect_equal(colnames(dummy_output), c("code_freq", "coding_ability_change", "n"))
 })
 
 test_that("labels for first column are in the correct order", {
@@ -64,9 +64,9 @@ test_that("labels for second column are in the correct order", {
 })
 
 test_that("frequencies are correct", {
-  expect_equal(dummy_output[dummy_output["Coding ability change"] == "Significantly worse",]$Count, c(0, 0, 2, 0, 0))
-  expect_equal(dummy_output[dummy_output["Coding ability change"] == "Slightly worse",]$Count, c(0, 0, 3, 0, 0))
-  expect_equal(dummy_output[dummy_output["Coding ability change"] == "No change",]$Count, c(0, 0, 1, 0, 3))
-  expect_equal(dummy_output[dummy_output["Coding ability change"] == "Slightly better",]$Count, c(3, 0, 0, 0, 2))
-  expect_equal(dummy_output[dummy_output["Coding ability change"] == "Significantly better",]$Count, c(0, 4, 0, 2, 0))
+  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly worse",]$n, c(0, 0, 2, 0, 0))
+  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly worse",]$n, c(0, 0, 3, 0, 0))
+  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "No change",]$n, c(0, 0, 1, 0, 3))
+  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly better",]$n, c(3, 0, 0, 0, 2))
+  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly better",]$n, c(0, 4, 0, 2, 0))
 })
