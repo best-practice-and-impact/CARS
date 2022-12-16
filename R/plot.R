@@ -504,25 +504,24 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 #'@return bar starting locations
 
 calculate_bases <- function(data, mid, neutral_mid) {
-  # Bases are needed as a vector for plotly
+
   data[[2]] <- factor(data[[2]], unique(data[[2]]))
 
-  # Remove the values corresponding to the last response option so the base for the final response option
-  # is the cumulative sum up to and including the previous response option.
-  filtered_data <- data[!data[[2]] %in%
-                 levels(data[[2]])[length(levels(data[[2]]))], ]
-
   n_questions <- length(unique(data[[1]]))
 
-  cumulative_sums <- filtered_data %>%
+  modified_cumsum <- function(x) {
+    slice <- x[1:(length(x)-1)]
+
+    return(
+      c(0, cumsum(slice))
+    )
+  }
+
+  cumulative_sums <- data %>%
     dplyr::group_by_at(1) %>%
-    dplyr::mutate_at(3, cumsum)
+    dplyr::mutate_at(3, modified_cumsum)
 
-  # Add bases of 0 for the first response option, for each question
-  n_questions <- length(unique(data[[1]]))
-
-  bases <- split(cumulative_sums[[3]], ceiling(seq_along(cumulative_sums[[3]])/n_questions)) %>%
-    lapply(function(x) c(0, x)) %>% unlist %>% unname
+  bases <- cumulative_sums[[3]]
 
   get_neg_bases <- function(x, mid, neutral_mid) {
     if (neutral_mid) {
