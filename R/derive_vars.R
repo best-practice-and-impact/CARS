@@ -10,11 +10,13 @@
 
 derive_vars <- function(data) {
   data <- data %>%
-    derive_language_status %>%
-    derive_rap_score
+    derive_language_status() %>%
+    derive_rap_score()
 
   return(data)
 }
+
+
 
 #' Derive language status
 #'
@@ -39,13 +41,14 @@ derive_language_status <- function(data) {
     dplyr::case_when(access_col == "Yes" & knowledge_col == "Yes" ~ "both",
                      access_col == "Yes" & knowledge_col != "Yes" ~ "access",
                      access_col != "Yes" & knowledge_col == "Yes" ~ "knowledge",
-                     access_col != "Yes" & knowledge_col!= "Yes" ~ "neither")
+                     access_col != "Yes" & knowledge_col != "Yes" ~ "neither")
   })
 
   colnames(new_vars) <- paste0("status_", lang_list)
 
   return(data.frame(data, new_vars))
 }
+
 
 #'@title Derive RAP scores
 #'

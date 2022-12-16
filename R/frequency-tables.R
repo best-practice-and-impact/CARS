@@ -112,7 +112,7 @@ summarise_operations <- function(data) {
 }
 
 
-#' Summarise coding tools
+#' @title Summarise coding tools
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
 #'
@@ -245,7 +245,7 @@ summarise_rap_basic <- function(data){
 
   questions <- "basic_rap_score"
 
-  levels <- c(0:6)
+  levels <- 0:6
 
   labels <- "Basic RAP score"
 
@@ -272,7 +272,7 @@ summarise_rap_advanced <- function(data){
 
   questions <- "advanced_rap_score"
 
-  levels <- c(0:7)
+  levels <- 0:7
 
   labels <- "Advanced RAP score"
 
@@ -665,26 +665,25 @@ summarise_line_manage <- function(data){
 
 summarise_cap_change_by_freq <- function(data){
 
-  selected_data <- data %>% dplyr::select(all_of(c("code_freq", "coding_ability_change")))
+  col1 <- "code_freq"
 
-  selected_data$code_freq <- factor(selected_data$code_freq, levels = c(
+  col2 <- "coding_ability_change"
+
+  levels1 <- c(
     "Never",
     "Rarely",
     "Sometimes",
     "Regularly",
-    "All the time"))
+    "All the time")
 
-  selected_data$coding_ability_change <- factor(selected_data$coding_ability_change, levels = c(
+  levels2 <- c(
     "Significantly worse",
     "Slightly worse",
     "No change",
     "Slightly better",
-    "Significantly better"))
+    "Significantly better")
 
-  frequencies <- selected_data %>%
-    dplyr::count(code_freq, coding_ability_change, .drop=FALSE) %>%
-    tidyr::drop_na() %>%
-    data.frame
+  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -701,23 +700,22 @@ summarise_cap_change_by_freq <- function(data){
 #'
 #' @export
 
-summarise_basic_score_by_imp <- function(implementing_data){
+summarise_basic_score_by_imp <- function(data){
 
-  selected_data <- implementing_data %>% dplyr::select(all_of(c("RAP_implementing", "basic_rap_score")))
+  col1 <- "RAP_implementing"
 
-  selected_data$RAP_implementing <- factor(selected_data$RAP_implementing, levels = c(
+  col2 <- "basic_rap_score"
+
+  levels1 <- c(
     "Strongly disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree"))
+    "Strongly agree")
 
-  selected_data$basic_rap_score <- factor(selected_data$basic_rap_score, levels = c(0,1,2,3,4,5,6))
+  levels2 <- c(0,1,2,3,4,5,6)
 
-  frequencies <- selected_data %>%
-    dplyr::count(RAP_implementing, basic_rap_score, .drop=FALSE) %>%
-    tidyr::drop_na() %>%
-    data.frame
+  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -734,23 +732,22 @@ summarise_basic_score_by_imp <- function(implementing_data){
 #'
 #' @export
 
-summarise_adv_score_by_imp <- function(implementing_data){
+summarise_adv_score_by_imp <- function(data){
 
-  selected_data <- implementing_data %>% dplyr::select(all_of(c("RAP_implementing", "advanced_rap_score")))
+  col1 <- "RAP_implementing"
 
-  selected_data$RAP_implementing <- factor(selected_data$RAP_implementing, levels = c(
+  col2 <- "advanced_rap_score"
+
+  levels1 <- c(
     "Strongly disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree"))
+    "Strongly agree")
 
-  selected_data$advanced_rap_score <- factor(selected_data$advanced_rap_score, levels = c(0,1,2,3,4,5,6,7))
+  levels2 <- c(0,1,2,3,4,5,6,7)
 
-  frequencies <- selected_data %>%
-    dplyr::count(RAP_implementing, advanced_rap_score, .drop=FALSE) %>%
-    tidyr::drop_na() %>%
-    data.frame
+  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
