@@ -39,8 +39,8 @@ summarise_all <- function(data, all_tables = FALSE) {
                        capability_change_by_freq = summarise_cap_change_by_freq(data),
                        basic_score_by_implementation = summarise_basic_score_by_imp(data),
                        adv_score_by_implementation = summarise_adv_score_by_imp(data),
-                       #basic_score_by_understanding = summarise_basic_score_by_understanding(implementing_data),
-                       #adv_score_by_understanding = summarise_adv_score_by_understanding(implementing_data),
+                       basic_score_by_understanding = summarise_basic_score_by_understanding(data),
+                       adv_score_by_understanding = summarise_adv_score_by_understanding(data),
                        languages_by_prof = summarise_languages_by_prof(data) # Needs refactoring
                      ))
 
