@@ -713,7 +713,7 @@ summarise_basic_score_by_imp <- function(data){
     "Agree",
     "Strongly agree")
 
-  levels2 <- c(0,1,2,3,4,5,6)
+  levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
   frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
 
@@ -745,7 +745,71 @@ summarise_adv_score_by_imp <- function(data){
     "Agree",
     "Strongly agree")
 
-  levels2 <- c(0,1,2,3,4,5,6,7)
+  levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
+
+  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+
+  return(frequencies)
+
+}
+
+
+#' @title Compare basic RAP score to understanding of key RAP components
+#'
+#' @description calculate frequency table for basic rap score compared with understanding of key RAP components
+#'
+#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
+#'
+#' @return frequency table (data.frame)
+#'
+#' @export
+
+summarise_basic_score_by_understanding <- function(data){
+
+  col1 <- "RAP_components"
+
+  col2 <- "basic_rap_score"
+
+  levels1 <- c(
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly agree")
+
+  levels2 <- c(0, 1, 2, 3, 4, 5, 6)
+
+  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+
+  return(frequencies)
+
+}
+
+
+#' @title Compare advanced RAP score to understanding of key RAP components
+#'
+#' @description calculate frequency table for advanced rap score compared with understanding of key RAP components
+#'
+#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
+#'
+#' @return frequency table (data.frame)
+#'
+#' @export
+
+summarise_adv_score_by_understanding <- function(data){
+
+  col1 <- "RAP_components"
+
+  col2 <- "advanced_rap_score"
+
+  levels1 <- c(
+    "Strongly disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly agree")
+
+  levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
   frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
 
