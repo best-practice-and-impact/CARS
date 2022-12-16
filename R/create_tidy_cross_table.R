@@ -9,6 +9,8 @@
 #' @param levels2 factor levels for col2
 #'
 #' @return data.frame
+#'
+#' @importFrom dplyr all_of across
 
 create_tidy_cross_table <- function(data, col1, col2, levels1, levels2){
 

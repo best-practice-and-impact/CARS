@@ -178,12 +178,14 @@ summarise_where_learned_code <- function(data){
 
   labels <- "First coding experience"
 
-  data$first_learned[(is.na(data$prev_coding_experience) |
-                        (data$prev_coding_experience == "No")) &
-                       data$code_freq != "Never"] <- "In current role"
-
-  data$first_learned[!is.na(data$first_learned) &
-                               !(data$first_learned %in% levels)] <- "Other"
+  data <- data %>%
+    dplyr::select(first_learned, prev_coding_experience, code_freq) %>%
+    dplyr::mutate(
+      first_learned = dplyr::case_when((is.na(data$prev_coding_experience) |
+                                        (data$prev_coding_experience == "No")) &
+                                          data$code_freq != "Never" ~ "In current role",
+                                       !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
+                                       TRUE ~ first_learned))
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -827,7 +829,7 @@ summarise_adv_score_by_understanding <- function(data){
 #' @return data.frame
 
 summarise_languages_by_prof <- function(data) {
-  data <- data[complete.cases(data),]
+  data <- data[stats::complete.cases(data),]
   data <- data[data$code_freq != "Never", ]
 
   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",

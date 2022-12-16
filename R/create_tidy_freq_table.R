@@ -8,6 +8,8 @@
 #' @param labels labels to rename the column headers
 #'
 #' @return data.frame
+#'
+#' @importFrom dplyr all_of across
 
 create_tidy_freq_table <- function(data, questions, levels, labels){
 
@@ -19,7 +21,9 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
   selected_data[] <- lapply(selected_data, factor, levels = levels)
 
   frequencies <- selected_data %>%
-    tidyr::pivot_longer(cols=questions) %>%
+    tidyr::pivot_longer(cols = questions,
+                        names_to = "name",
+                        values_to = "value") %>%
     dplyr::group_by(name) %>%
     dplyr::count(value, .drop=FALSE) %>%
     dplyr::mutate(name = dplyr::recode(name, !!!labels_list)) %>%
