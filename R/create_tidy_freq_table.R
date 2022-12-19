@@ -2,7 +2,7 @@
 #'
 #' @description Returns a frequency table in tidy data format.
 #'
-#' @param data pre-processed CARS data set
+#' @param data full CARS wave 3 data.frame after pre-processing
 #' @param questions columns to filter data on
 #' @param levels all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers

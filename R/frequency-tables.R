@@ -1,8 +1,8 @@
-#' Produce all summary tables
+#' @title Summarise all
 #'
 #' @description Produce all summary tables and return as a named list.
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #' @param all_tables logical: whether to produce all summary output tables. Defaults to FALSE.
 #'
 #' @return list of frequency tables
@@ -51,11 +51,11 @@ summarise_all <- function(data, all_tables = FALSE) {
 
 
 
-#' Summarise coding frequency
+#' @title Summarise coding frequency
 #'
 #' @description calculate frequency table for coding frequency.
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -83,11 +83,11 @@ summarise_code_freq <- function(data) {
 }
 
 
-#' Summarise data operations
+#' @title Summarise data operations
 #'
 #' @description calculate frequency table for data operations
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -116,7 +116,7 @@ summarise_operations <- function(data) {
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #' @param type type of table (knowledge or access)
 #'
 #' @return frequency table (data.frame)
@@ -150,7 +150,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 #'
 #' @description calculate frequency table of where respondents learned to code
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -198,7 +198,7 @@ summarise_where_learned_code <- function(data){
 #'
 #' @description calculate frequency table for data practices
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -236,7 +236,7 @@ summarise_coding_practices <- function(data) {
 #'
 #' @description calculate frequency table for basic rap scores
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
@@ -263,7 +263,7 @@ summarise_rap_basic <- function(data){
 #'
 #' @description calculate frequency table for Advanced rap scores
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
@@ -290,7 +290,7 @@ summarise_rap_advanced <- function(data){
 #'
 #' @description Create a frequency table of knowledge of RAP
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -324,7 +324,7 @@ summarise_rap_knowledge <- function(data){
 #'
 #' @description Create frequency table of opinions of RAP
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -372,7 +372,7 @@ summarise_rap_opinions <- function(data) {
 #'
 #' @description Create frequency table of documentation use
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -421,7 +421,7 @@ summarise_doc <- function(data) {
 #'
 #' @description Create frequency table of basic and advanced RAP score components
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -463,7 +463,7 @@ summarise_rap_comp <- function(data){
 #'
 #' @description calculate frequency table for continuous integration
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -494,7 +494,7 @@ summarise_ci <- function(data) {
 #'
 #' @description calculate frequency table for dependency management.
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -525,7 +525,7 @@ summarise_dep_man <- function(data) {
 #'
 #' @description calculate frequency table for dependency_management.
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -556,7 +556,7 @@ summarise_rep_workflow <- function(data) {
 #'
 #' @description calculate frequency table for ability change
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -589,7 +589,7 @@ summarise_ability_change <- function(data) {
 #'
 #' @description calculate counts of responents reporting access to, knowledge of, or both for each programming language.
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
@@ -635,7 +635,7 @@ summarise_language_status <- function(data) {
 #'
 #' @description calculate frequency table for if someone line manages someone who codes
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -661,7 +661,7 @@ summarise_line_manage <- function(data){
 #'
 #' @description calculate the cross tab of coding frequency by capability change
 #'
-#' @param data full CARS wave 3 data.frame after preprocessing
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -696,11 +696,9 @@ summarise_cap_change_by_freq <- function(data){
 #'
 #' @description calculate frequency table for basic rap score compared with implementation of RAP
 #'
-#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_basic_score_by_imp <- function(data){
 
@@ -728,11 +726,9 @@ summarise_basic_score_by_imp <- function(data){
 #'
 #' @description calculate frequency table for advanced rap score compared with implementation of RAP
 #'
-#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_adv_score_by_imp <- function(data){
 
@@ -760,11 +756,9 @@ summarise_adv_score_by_imp <- function(data){
 #'
 #' @description calculate frequency table for basic rap score compared with understanding of key RAP components
 #'
-#' @param implementing_data carsurvey data filter to people who have heard of RAP and code at least rarely
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_basic_score_by_understanding <- function(data){
 
@@ -792,11 +786,9 @@ summarise_basic_score_by_understanding <- function(data){
 #'
 #' @description calculate frequency table for advanced rap score compared with understanding of key RAP components
 #'
-#' @param implementing_data carsurvey data filtered to people who have heard of RAP and code at least rarely
+#' @param data full CARS wave 3 data.frame after pre-processing
 #'
 #' @return frequency table (data.frame)
-#'
-#' @export
 
 summarise_adv_score_by_understanding <- function(data){
 
@@ -820,11 +812,11 @@ summarise_adv_score_by_understanding <- function(data){
 }
 
 
-#' Summarise programming language knowledge by profession
+#' @title Summarise programming language knowledge by profession
 #'
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
 #'
-#' @param data CARS data (preprocessed)
+#' @param data CARS data (pre-processed)
 #'
 #' @return data.frame
 
