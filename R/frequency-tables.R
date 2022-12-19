@@ -443,16 +443,16 @@ summarise_rap_comp <- function(data){
 
   rap_score <- data[grepl("_score", colnames(data))]
 
-  components <- rap_score[!colnames(rap_score) %in% c("basic_rap_score", "advanced_rap_score")]
-  components[is.na(components)] <- 0
-  components <- data.frame(Component = labels,
-                           Type = c(rep("Basic", 6), rep("Advanced", 7)),
-                           Count = unname(colSums(components))
-  )
-
-  rownames(components) <- NULL
-  components <- components[order(-rank(components$Type),components$Component),]
-  components$Component <- factor(components$Component, levels = components$Component)
+  components <- rap_score %>%
+    dplyr::select(!c("basic_rap_score", "advanced_rap_score")) %>%
+    dplyr::summarise(across(everything(), ~ sum(., is.na(.), 0))) %>%
+    tidyr::pivot_longer(everything(), names_to = "Component", values_to = "Count") %>%
+    dplyr::mutate(Component = dplyr::recode(Component, !!!labels)) %>%
+    dplyr::mutate(Type = c(rep("Basic", 6), rep("Advanced", 7))) %>%
+    dplyr::relocate(Count, .after = Type) %>%
+    dplyr::arrange(desc(Type), Component) %>%
+    dplyr::mutate(Component = factor(Component, levels = Component)) %>%
+    data.frame
 
   return(components)
 
