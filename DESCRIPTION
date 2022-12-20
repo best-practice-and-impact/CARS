@@ -14,7 +14,9 @@ Imports:
     magrittr,
     stringr,
     yaml,
-    glue
+    glue,
+    htmltools,
+    htmlwidgets
 Suggests:
     devtools,
     testthat (>= 3.0.0)
