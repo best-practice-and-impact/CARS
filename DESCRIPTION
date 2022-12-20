@@ -15,6 +15,10 @@ Imports:
     stringr,
     dplyr,
     tidyr
+    yaml,
+    glue,
+    htmltools,
+    htmlwidgets
 Suggests:
     devtools,
     testthat (>= 3.0.0)
