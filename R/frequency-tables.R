@@ -63,7 +63,7 @@ summarise_code_freq <- function(data) {
 
   # Validation checks
   if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq")
+    stop("unexpected_input: no column called 'code_freq'")
   }
 
   questions <- "code_freq"
@@ -158,13 +158,13 @@ summarise_where_learned_code <- function(data){
 
   # Validation checks
   if (!"first_learned" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'first_learned")
+    stop("unexpected_input: no column called 'first_learned'")
   }
   if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq")
+    stop("unexpected_input: no column called 'code_freq'")
   }
   if (!"prev_coding_experience" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'prev_coding_experience")
+    stop("unexpected_input: no column called 'prev_coding_experience'")
   }
 
   questions <- "first_learned"
@@ -298,7 +298,7 @@ summarise_rap_knowledge <- function(data){
 
   # Validation checks
   if (!"heard_of_RAP" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'heard_of_RAP")
+    stop("unexpected_input: no column called 'heard_of_RAP'")
   }
 
   questions <- "know_RAP_champ"
@@ -332,7 +332,7 @@ summarise_rap_opinions <- function(data) {
 
   # Validation checks
   if (!"heard_of_RAP" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'heard_of_RAP")
+    stop("unexpected_input: no column called 'heard_of_RAP'")
   }
 
   opinion_rap_data <- data[data$heard_of_RAP == "Yes", ]
@@ -380,7 +380,7 @@ summarise_doc <- function(data) {
 
   # Validation checks
   if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq")
+    stop("unexpected_input: no column called 'code_freq'")
   }
 
   documentation_data <- data[data$code_freq != "Never", ]
@@ -471,7 +471,7 @@ summarise_ci <- function(data) {
 
   # Validation checks
   if (!"CI" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'CI")
+    stop("unexpected_input: no column called 'CI'")
   }
 
   questions <- "CI"
@@ -502,7 +502,7 @@ summarise_dep_man <- function(data) {
 
   # Validation checks
   if (!"dep_management" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'dep_management")
+    stop("unexpected_input: no column called 'dep_management'")
   }
 
   questions <- "dep_management"
@@ -533,7 +533,7 @@ summarise_rep_workflow <- function(data) {
 
   # Validation checks
   if (!"reproducible_workflow" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'reproducible_workflow")
+    stop("unexpected_input: no column called 'reproducible_workflow'")
   }
 
   questions <- "reproducible_workflow"
@@ -564,7 +564,7 @@ summarise_ability_change <- function(data) {
 
   # Validation checks
   if (!"coding_ability_change" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'coding_ability_change")
+    stop("unexpected_input: no column called 'coding_ability_change'")
   }
 
   questions <- "coding_ability_change"

@@ -7,18 +7,26 @@ test_that("Output is as expected", {
 
   got <- summarise_code_freq(dummy_data)
 
-  expected <- data.frame("name" = c(rep("Coding frequency", 5)),
-                         "value" = factor(c("Never",
-                                            "Rarely",
-                                            "Sometimes",
-                                            "Regularly",
-                                            "All the time"),
+  expected <- data.frame(name = c(rep("Coding frequency", 5)),
+                         value = factor(c("Never",
+                                          "Rarely",
+                                          "Sometimes",
+                                          "Regularly",
+                                          "All the time"),
                                           levels = c("Never",
                                                      "Rarely",
                                                      "Sometimes",
                                                      "Regularly",
                                                      "All the time")),
-                         "n"=c(1, 0, 3, 0, 2))
+                         n=c(1, 0, 3, 0, 2))
 
   expect_equal(got, expected)
+})
+
+test_that("Validation checks work", {
+
+  dummy_data <- data.frame(Test = c("test1", "test2"))
+
+  expect_error(summarise_code_freq(dummy_data), "unexpected_input: no column called 'code_freq'")
+
 })
