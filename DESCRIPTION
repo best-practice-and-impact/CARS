@@ -14,7 +14,7 @@ Imports:
     magrittr,
     stringr,
     dplyr,
-    tidyr
+    tidyr,
     yaml,
     glue,
     htmltools,
