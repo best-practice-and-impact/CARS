@@ -13,6 +13,8 @@ Imports:
     httr,
     magrittr,
     stringr,
+    dplyr,
+    tidyr,
     yaml,
     glue,
     htmltools,
