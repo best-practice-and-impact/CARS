@@ -10,8 +10,7 @@ test_that("Output is as expected", {
 
   got <- summarise_rap_knowledge(dummy_data)
 
-  expected <- data.frame(name = c(rep("RAP champion knowledge", 5)),
-                         value = factor(c("Have not heard of RAP",
+  expected <- data.frame(value = factor(c("Have not heard of RAP",
                                           "I don't know what a RAP champion is",
                                           "I know what a RAP champion is but don't know who the RAP champion in my department is",
                                           "I know what a RAP champion is and there is no RAP champion in my department",

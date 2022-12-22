@@ -8,8 +8,7 @@ test_that("Output is as expected", {
 
   got <- summarise_dep_man(dummy_data)
 
-  expected <- data.frame(name = c(rep("Use dependency management software", 3)),
-                         value = factor(c("Yes",
+  expected <- data.frame(value = factor(c("Yes",
                                           "No",
                                           "I don't know what dependency management is"),
                                         levels = c("Yes",

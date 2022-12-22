@@ -684,7 +684,6 @@ axis_settings <- function(xlab, ylab, font_size) {
         title = ylab,
         tickfont = list(size = font_size),
         titlefont = list(size = font_size * 1.2),
-        range = list(0, 1),
         tickformat = ".0%",
         title = "Percent"
       ),

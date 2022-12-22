@@ -17,20 +17,16 @@ test_that("Output has three rows", {
   expect_equal(nrow(dummy_output), 3)
 })
 
-test_that("Output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
+test_that("Output has two columns", {
+  expect_equal(ncol(dummy_output), 2)
 })
 
 test_that("Output column names are correct", {
-  expect_equal(colnames(dummy_output), c("name", "value", "n"))
-})
-
-test_that("names are in the correct order", {
-  expect_identical(unique(dummy_output[[1]]), "Line manage anyone who writes codes")
+  expect_equal(colnames(dummy_output), c("value", "n"))
 })
 
 test_that("labels are in the correct order", {
-  expect_identical(unique(dummy_output[[2]]),
+  expect_identical(unique(dummy_output[[1]]),
                    factor(c("Yes",
                             "No - I manage people who do not write code",
                             "No - I don't line manage anyone"),

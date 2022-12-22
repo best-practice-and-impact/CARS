@@ -10,19 +10,18 @@ test_that("Output is as expected", {
 
   got <- summarise_where_learned_code(dummy_data)
 
-  expected <- data.frame(name = c(rep("First coding experience", 6)),
-                         value = factor(c("In current role",
+  expected <- data.frame(value = factor(c("In current role",
                                           "In education",
                                           "In private sector employment",
                                           "In public sector employment",
                                           "Self-taught",
                                           "Other"),
-                                        levels = c("In current role",
-                                                   "In education",
-                                                   "In private sector employment",
-                                                   "In public sector employment",
-                                                   "Self-taught",
-                                                   "Other")),
+                         levels = c("In current role",
+                                    "In education",
+                                    "In private sector employment",
+                                    "In public sector employment",
+                                    "Self-taught",
+                                    "Other")),
                          n = c(2, 0, 0, 3, 3, 1))
 
   expect_equal(got, expected)

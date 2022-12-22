@@ -10,8 +10,7 @@ test_that("Output is as expected", {
 
   got <- summarise_ability_change(dummy_data)
 
-  expected <- data.frame(name = c(rep("Ability Change", 5)),
-                         value = factor(c("Significantly worse",
+  expected <- data.frame(value = factor(c("Significantly worse",
                                           "Slightly worse",
                                           "No change",
                                           "Slightly better",

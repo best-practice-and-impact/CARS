@@ -8,8 +8,7 @@ test_that("Output is as expected", {
 
   got <- summarise_rep_workflow(dummy_data)
 
-  expected <- data.frame(name = c(rep("Use reproducible workflow packages", 3)),
-                         value = factor(c("Yes",
+  expected <- data.frame(value = factor(c("Yes",
                                           "No",
                                           "I don't know what reproducible workflows are"),
                                         levels = c("Yes",

@@ -8,8 +8,7 @@ test_that("Output is as expected", {
 
   got <- summarise_ci(dummy_data)
 
-  expected <- data.frame(name = c(rep("Continuous Integration Frequency", 3)),
-                         value = factor(c("Yes",
+  expected <- data.frame(value = factor(c("Yes",
                                           "No",
                                           "I don't know what continuous integration is"),
                                         levels = c("Yes",

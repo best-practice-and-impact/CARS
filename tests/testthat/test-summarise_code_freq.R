@@ -7,8 +7,7 @@ test_that("Output is as expected", {
 
   got <- summarise_code_freq(dummy_data)
 
-  expected <- data.frame(name = c(rep("Coding frequency", 5)),
-                         value = factor(c("Never",
+  expected <- data.frame(value = factor(c("Never",
                                           "Rarely",
                                           "Sometimes",
                                           "Regularly",
@@ -20,7 +19,9 @@ test_that("Output is as expected", {
                                                      "All the time")),
                          n=c(1, 0, 3, 0, 2))
 
-  expect_equal(got, expected)
+  expected$n <- expected$n / nrow(dummy_data)
+
+  expect_equal(got, expected, tolerance = .1)
 })
 
 test_that("Validation checks work", {
