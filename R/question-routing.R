@@ -19,7 +19,7 @@ apply_skip_logic <- function(data) {
                      data$prev_coding_experience != "No",
                      data$heard_of_RAP != "No")
 
-  skipped_cols <- list(colnames(data)[which(colnames(data) == "cs_grade"):which(colnames(data) == "ONS_directorate")],
+  skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "qual_1_subject"):which(colnames(data) == "qual_3_learn_code")],
                        colnames(data)[which(colnames(data) == "prac_use_open_source"):which(colnames(data) == "misc_coding")],

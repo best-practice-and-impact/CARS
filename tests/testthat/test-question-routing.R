@@ -68,7 +68,7 @@ conditions = c("NHS",
                "No")
 
 data_template <- data.frame(workplace = rep("test", 7),
-                         cs_grade = rep("test", 7),
+                         CS_grade = rep("test", 7),
                          department = rep("test", 7),
                          other_department_name = rep("test", 7),
                          prof_DS = rep("test", 7),
@@ -132,7 +132,7 @@ data_template <- data.frame(workplace = rep("test", 7),
                          reproducible_workflow = rep("test", 7),
                          misc_coding = rep("test", 7))
 
-skipped_cols <- list(colnames(data_template)[which(colnames(data_template) == "cs_grade"):which(colnames(data_template) == "ONS_directorate")],
+skipped_cols <- list(colnames(data_template)[which(colnames(data_template) == "CS_grade"):which(colnames(data_template) == "ONS_directorate")],
                      "ONS_directorate",
                      colnames(data_template)[which(colnames(data_template) == "qual_1_subject"):which(colnames(data_template) == "qual_3_learn_code")],
                      colnames(data_template)[which(colnames(data_template) == "prac_use_open_source"):which(colnames(data_template) == "misc_coding")],
