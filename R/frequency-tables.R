@@ -76,8 +76,9 @@ summarise_code_freq <- function(data) {
 
   labels <- "Coding frequency"
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
+
+  frequencies$n <- frequencies$n / nrow(data)
 
   return(frequencies)
 }
@@ -854,3 +855,46 @@ summarise_languages_by_prof <- function(data) {
   return(prof_langs_long)
 
 }
+
+#' @title Create tidy frequency table
+#'
+#' @description Returns a frequency table in tidy data format.
+#'
+#' @param data full CARS wave 3 data.frame after pre-processing
+#' @param questions columns to filter data on
+#' @param levels all possible factor values in the filtered columns
+#' @param labels labels to rename the column headers
+#'
+#' @return data.frame
+#'
+#' @importFrom dplyr all_of across
+
+create_tidy_freq_table <- function(data, questions, levels, labels){
+
+  labels_list <- as.list(labels)
+  names(labels_list) <- questions
+
+  selected_data <- data %>% dplyr::select(all_of(questions))
+
+  selected_data[] <- lapply(selected_data, factor, levels = levels)
+
+  if (length(questions) == 1) {
+    frequencies <- data.frame(table(selected_data[questions]))
+
+    colnames(frequencies) <- c("value", "n")
+  } else {
+    frequencies <- selected_data %>%
+      tidyr::pivot_longer(cols = questions,
+                          names_to = "name",
+                          values_to = "value") %>%
+      dplyr::group_by(name) %>%
+      dplyr::count(value, .drop=FALSE) %>%
+      dplyr::mutate(name = dplyr::recode(name, !!!labels_list)) %>%
+      dplyr::arrange(name, by_group=TRUE) %>%
+      tidyr::drop_na() %>%
+      data.frame
+  }
+
+  return(frequencies)
+}
+
