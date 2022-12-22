@@ -53,8 +53,8 @@ get_2colour_gradients <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 10
     c2_shades <- floor(n - mid)
   }
 
-  c1_gradient <- get_gradient(c1_shades, colour = colour1)
-  c2_gradient <- rev(get_gradient(c2_shades, colour = colour2))
+  c1_gradient <- get_gradient(c1_shades, colour = colour1, colour_names = FALSE)
+  c2_gradient <- rev(get_gradient(c2_shades, colour = colour2, colour_names = FALSE))
 
   # Calculate brightness for neutral middle
   if (neutral_mid) {
@@ -100,7 +100,7 @@ get_2colour_scale <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 105, 0
   if (!is.numeric(n) | length(n) > 1) {
     stop("n is not a numeric value")
   } else if (n < 2) {
-    stop("Unexpected value - n should be >= 2")
+    stop("Unexpected value - n should be > 2")
   } else if (class(colour1) != "numeric" | class(colour2) != "numeric") {
     stop("colours are not a vector of three integers")
   } else if (length(colour1) != 3 | length(colour2) != 3) {
@@ -150,9 +150,7 @@ get_gradient <- function(n, colour = c(0, 69, 86), colour_names = TRUE) {
     stop("colour is not a vector of three integers")
   }
 
-  if (n == 1){
-    return(list(colour))
-  } else {
+  if (n != 1){
     # Calculate lighter shade of original colour
     c2 <- colour + (255 - colour) * 0.5
 
@@ -166,13 +164,15 @@ get_gradient <- function(n, colour = c(0, 69, 86), colour_names = TRUE) {
     )
 
     colours <- append(list(colour), colours)
-
-    if (colour_names) {
-      colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
-    }
-
-    return(colours)
+  } else {
+    colours <- list(colour)
   }
+
+  if (colour_names) {
+    colours <- lapply(colours, function(x) grDevices::rgb(x[1], x[2], x[3], max = 255)) %>% unlist
+  }
+
+  return(colours)
 }
 
 

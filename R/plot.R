@@ -21,7 +21,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 
   # Set default bar colour
   if (missing(bar_colour)) {
-    c <- get_gradient(1)
+    bar_colour <- get_gradient(1)[[1]]
   } else if (!is.character(bar_colour) | length(bar_colour) != 1) {
     stop("Unexpected input - bar_colour should be a single colour name.")
   }
@@ -57,26 +57,20 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
-  x_axis <- list(
-    title = xlab,
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
-
-  y_axis <- list(
-    title = ylab,
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
+  axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
     data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
     x_vals <- data[[1]]
     y_vals <- data[[2]]
+    x_axis <- axes$cat_axis
+    y_axis <- axes$scale_axis
   } else if (orientation == "h") {
     data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
     x_vals <- data[[2]]
     y_vals <- data[[1]]
+    x_axis <- axes$scale_axis
+    y_axis <- axes$cat_axis
   }
 
   y_axis$title <- "" # Y axis title is created as a caption instead
@@ -84,13 +78,16 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
   fig <- plotly::plot_ly(
     x = x_vals,
     y = y_vals,
-   # marker = list(color = bar_colour),
+    marker = list(color = bar_colour),
     type = "bar",
     orientation = orientation,
+    hovertemplate = hovertext,
     ...
   )
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+
+  hovertext <- paste0(data[[1]], ": ", round(abs(data[[2]]) * 100, 1), "%", " <extra></extra>")
 
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
@@ -162,19 +159,6 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   orientation <- match.arg(orientation)
 
-  x <- list(
-    title = xlab,
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
-
-  y <- list(
-    title = "",
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
-
-
   # Get bar colours
   ncolours <- length(unique(data[[2]]))
   if (colour_scale == "gradient") {
@@ -190,18 +174,25 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   colours <- rep(colours, length(unique(data[[1]])))
 
-  hovertext <- paste0(data[[2]], ": ", data[[3]], " <extra></extra>")
+  axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
     data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
     x_vals <- data[[1]]
     y_vals <- data[[3]]
+    x_axis <- axes$cat_axis
+    y_axis <- axes$scale_axis
   } else if (orientation == "h") {
     data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
     x_vals <- data[[3]]
     y_vals <- data[[1]]
+    x_axis <- axes$scale_axis
+    y_axis <- axes$cat_axis
   }
 
+  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+
+  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
   fig <- plotly::plot_ly(data,
                          y = y_vals,
@@ -214,7 +205,6 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   fig <- plotly::config(fig, displayModeBar = F)
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
   fig <- plotly::layout(fig,
                         barmode = "stack",
@@ -227,8 +217,8 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
                                       traceorder = "normal",
                                       font = list(size = font_size)),
                         margin = list(b = 100),
-                        xaxis = x,
-                        yaxis = y,
+                        xaxis = x_axis,
+                        yaxis = y_axis,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
@@ -301,44 +291,42 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   orientation <- match.arg(orientation)
 
-  x <- list(
-    title = xlab,
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
-
-  y <- list(
-    tickfont = list(size = font_size),
-    titlefont = list(size = font_size * 1.2)
-  )
+  axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
     data <- dplyr::arrange(data, data[,1])
     data[,1] <- factor(data[,1], levels = data[,1])
     x_vals <- data[[1]]
     y_vals <- data[[3]]
+    x_axis <- axes$cat_axis
+    y_axis <- axes$scale_axis
   } else if (orientation == "h") {
     data <- dplyr::arrange(data, dplyr::desc(data[,1]))
     data[,1] <- factor(data[,1], levels = data[,1])
     x_vals <- data[[3]]
     y_vals <- data[[1]]
+    x_axis <- axes$scale_axis
+    y_axis <- axes$cat_axis
   }
+
+  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+
+  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
   fig <- plotly::plot_ly(
     x = x_vals,
     y = y_vals,
     color = data[[2]],
-    marker = list(color = c("#004556","#004556", "#FF6900", "#FF6900")),
+    marker = list(color = colours),
     type = "bar",
+   # hovertemplate = hovertext,
     ...
   )
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
-
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
-                        xaxis = x,
-                        yaxis = y,
+                        xaxis = x_axis,
+                        yaxis = y_axis,
                         margin = list(b = 100),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
@@ -447,6 +435,8 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
+  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+
   fig <- plotly::plot_ly(y = data[[1]],
                          x=data[[3]],
                          type="bar",
@@ -463,7 +453,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                         barmode = "stack",
                         clickmode = "none",
                         margin = list(b = 100),
-                        annotations = list(x = 1, y = 0, text = paste0("Sample size = ", n),
+                        annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
                                            xref='paper', yref='paper', font=list(size = font_size)),
                         xaxis = x,
@@ -567,3 +557,32 @@ create_y_lab <- function(ylab, font_size) {
 
 }
 
+#' @title Axis settings
+#'
+#' @description Standard X (categorical) and Y (percentage scale) axis settings for use with the plotting functions.
+#'
+#' @param xlab see @plot_freqs
+#' @param ylab see @plot_freqs
+#' @param font_size see @plot_freqs
+#'
+#' @return list of axis settings.
+
+axis_settings <- function(xlab, ylab, font_size) {
+  return(
+    list(
+      scale_axis = list(
+        title = xlab,
+        tickfont = list(size = font_size),
+        titlefont = list(size = font_size * 1.2),
+        range = list(0, 1),
+        tickformat = ".0%",
+        title = "Percent"
+      ),
+      cat_axis = list(
+        title = ylab,
+        tickfont = list(size = font_size),
+        titlefont = list(size = font_size * 1.2)
+      )
+    )
+  )
+}
