@@ -605,7 +605,7 @@ summarise_language_status <- function(data) {
                  "status_SPSS",
                  "status_stata",
                  "status_JS",
-                 "status_java_scala",
+                 "status_java",
                  "status_C",
                  "status_matlab")
 
@@ -828,9 +828,9 @@ summarise_languages_by_prof <- function(data) {
              "prof_GORS", "prof_GSR", "prof_GSG")
   langs <- c("knowledge_R", "knowledge_SQL", "knowledge_python", "knowledge_SAS",
              "knowledge_SPSS", "knowledge_VBA", "knowledge_matlab", "knowledge_stata",
-             "knowledge_JS", "knowledge_java_scala", "knowledge_C")
+             "knowledge_JS", "knowledge_java", "knowledge_C")
   lang_names <- c("R", "SQL", "Python", "SAS", "SPSS", "VBA", "Matlab", "Stata",
-                  "JavaScript", "Scala", "C#/C++")
+                  "JavaScript", "Java / scala", "C#/C++")
 
   prof_counts <- colSums(data[profs] == "Yes")
 
