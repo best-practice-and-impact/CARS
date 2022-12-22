@@ -21,6 +21,10 @@ plot_grouped(
 
 \item{n}{sample size}
 
+\item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
+
+\item{max_lines}{maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()}
+
 \item{xlab}{X axis title}
 
 \item{ylab}{Y axis title}

@@ -12,7 +12,13 @@ License: MIT + file LICENSE
 Imports:
     httr,
     magrittr,
-    stringr
+    stringr,
+    dplyr,
+    glue,
+    htmltools,
+    htmlwidgets,
+    plotly,
+    stringi
 Suggests:
     devtools,
     testthat (>= 3.0.0)

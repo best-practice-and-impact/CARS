@@ -347,6 +347,8 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 #'
 #'@param data Frequency data (data frame). 3 columns - cateogry names, groups and frequencies.
 #'@param n sample size
+#'@param break_q_names_col applies break_q_names to the column. Not applied by default
+#'@param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
 #'@param xlab X axis title
 #'@param ylab Y axis title
 #'@param font_size minimum font size for the plot (numeric).
@@ -427,7 +429,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     color = data[[2]],
     marker = list(color = colours),
     type = "bar",
-   # hovertemplate = hovertext,
+    hovertemplate = hovertext,
     ...
   )
 
