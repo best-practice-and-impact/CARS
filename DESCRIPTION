@@ -1,5 +1,5 @@
 Package: CARS
-Title: Coding in Analysis and Research Survey (CARS).
+Title: Coding in Analysis and Research Survey (CARS)
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -10,6 +10,7 @@ Authors@R:
 Description: Analysis code for the coding in analysis and research survey (CARS).
 License: MIT + file LICENSE
 Imports:
+    rlang,
     httr,
     magrittr,
     stringr,
@@ -18,7 +19,9 @@ Imports:
     htmltools,
     htmlwidgets,
     plotly,
-    stringi
+    stringi,
+    tidyr,
+    yaml
 Suggests:
     devtools,
     testthat (>= 3.0.0)
