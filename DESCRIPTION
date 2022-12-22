@@ -1,5 +1,5 @@
 Package: CARS
-Title: Coding in Analysis and Research Survey (CARS).
+Title: Coding in Analysis and Research Survey (CARS)
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -10,20 +10,23 @@ Authors@R:
 Description: Analysis code for the coding in analysis and research survey (CARS).
 License: MIT + file LICENSE
 Imports:
+    rlang,
     httr,
     magrittr,
     stringr,
     dplyr,
-    tidyr,
-    yaml,
     glue,
     htmltools,
-    htmlwidgets
+    htmlwidgets,
+    plotly,
+    stringi,
+    tidyr,
+    yaml
 Suggests:
     devtools,
     testthat (>= 3.0.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Config/testthat/edition: 3
