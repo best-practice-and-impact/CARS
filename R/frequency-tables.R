@@ -903,5 +903,7 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
 #' @return input data with the third column as proportion (0-1)
 
 perc_by_group <- function(data) {
-  da
+
+  data %>% dplyr::group_by(name) %>% dplyr::mutate(n = n/sum(n)) %>% data.frame
+
 }

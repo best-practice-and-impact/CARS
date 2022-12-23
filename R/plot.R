@@ -280,7 +280,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     colours <- get_3colour_scale(ncolours)
   }
 
-  colours <- rep(colours, length(unique(data[[1]])))
+  colours <- lapply(colours, rep, length(unique(data[[1]]))) %>% unlist
 
   axes <- axis_settings(xlab, ylab, font_size)
 
@@ -298,13 +298,13 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_axis <- axes$cat_axis
   }
 
-  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+  hovertext <- glue::glue("{data[[1]]}, {data[[2]]}: {round(abs(data[[3]]) * 100, 1)}% <extra></extra>")
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
-  fig <- plotly::plot_ly(data,
-                         y = y_vals,
+  fig <- plotly::plot_ly(y = y_vals,
                          x = x_vals,
+                         color = data[[2]],
                          type = "bar",
                          orientation = orientation,
                          hovertemplate = hovertext,
@@ -313,10 +313,10 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   fig <- plotly::config(fig, displayModeBar = F)
 
-
   fig <- plotly::layout(fig,
                         barmode = "stack",
                         clickmode = "none",
+                        showlegend = TRUE,
                         legend = list(orientation = orientation,   # show entries horizontally
                                       xanchor = "center",  # use center of legend as anchor
                                       yanchor = "bottom",
