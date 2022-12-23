@@ -3,6 +3,7 @@
 export("%>%")
 export(apply_skip_logic)
 export(build_navbar)
+export(calculate_freqs)
 export(check_skip_logic)
 export(convert_raw)
 export(create_y_lab)

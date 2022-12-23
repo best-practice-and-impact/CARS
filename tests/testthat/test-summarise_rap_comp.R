@@ -1,4 +1,4 @@
-# TODO: rrewrite tests now that output order is different
+# TODO: rewrite tests now that output order is different
 
 
 # test_that("Outcome is as expected", {

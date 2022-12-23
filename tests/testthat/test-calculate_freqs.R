@@ -9,10 +9,13 @@ levels <- c("test1", "test2", "test3")
 
 labels <- c("Question 1", "Question 2", "Question 3")
 
+#TODO: test proportion outputs as well as raw counts
+
 dummy_output <- calculate_freqs(data = dummy_data,
-                                       questions = questions,
-                                       levels = levels,
-                                       labels = labels)
+                                questions = questions,
+                                levels = levels,
+                                labels = labels,
+                                prop = FALSE)
 
 test_that("output is a dataframe", {
   expect_s3_class(dummy_output, "data.frame")

@@ -62,11 +62,11 @@ test_that("labels for second column are in the correct order", {
                                      "Significantly better"))
   )
 })
-
-test_that("frequencies are correct", {
-  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly worse",]$n, c(0, 0, 2, 0, 0))
-  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly worse",]$n, c(0, 0, 3, 0, 0))
-  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "No change",]$n, c(0, 0, 1, 0, 3))
-  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly better",]$n, c(3, 0, 0, 0, 2))
-  expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly better",]$n, c(0, 4, 0, 2, 0))
-})
+#
+# test_that("frequencies are correct", {
+#   expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly worse",]$n, c(0, 0, 2, 0, 0))
+#   expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly worse",]$n, c(0, 0, 3, 0, 0))
+#   expect_equal(dummy_output[dummy_output["coding_ability_change"] == "No change",]$n, c(0, 0, 1, 0, 3))
+#   expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Slightly better",]$n, c(3, 0, 0, 0, 2))
+#   expect_equal(dummy_output[dummy_output["coding_ability_change"] == "Significantly better",]$n, c(0, 4, 0, 2, 0))
+# })

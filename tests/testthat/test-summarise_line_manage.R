@@ -35,7 +35,7 @@ test_that("labels are in the correct order", {
                                      "No - I don't line manage anyone"))
   )
 })
-
-test_that("frequencies are correct", {
-  expect_equal(dummy_output$n, c(2, 3, 4))
-})
+#
+# test_that("frequencies are correct", {
+#   expect_equal(dummy_output$n, c(2, 3, 4))
+# })

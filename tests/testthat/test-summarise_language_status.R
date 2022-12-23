@@ -75,10 +75,10 @@ test_that("programming language status' are correct", {
                                "knowledge",
                                "neither")))
 })
-
-test_that("cell values are correct", {
-  expect_equal(dummy_output[dummy_output$value == "both",]$n, c(0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0))
-  expect_equal(dummy_output[dummy_output$value == "access",]$n, c(1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2))
-  expect_equal(dummy_output[dummy_output$value == "knowledge",]$n, c(1, 1, 0, 0, 0, 2, 0, 0, 2, 0, 0))
-  expect_equal(dummy_output[dummy_output$value == "neither",]$n, c(0, 1, 1, 1, 2, 0, 0, 1, 0, 1, 0))
-})
+#
+# test_that("cell values are correct", {
+#   expect_equal(dummy_output[dummy_output$value == "both",]$n, c(0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0))
+#   expect_equal(dummy_output[dummy_output$value == "access",]$n, c(1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2))
+#   expect_equal(dummy_output[dummy_output$value == "knowledge",]$n, c(1, 1, 0, 0, 0, 2, 0, 0, 2, 0, 0))
+#   expect_equal(dummy_output[dummy_output$value == "neither",]$n, c(0, 1, 1, 1, 2, 0, 0, 1, 0, 1, 0))
+# })

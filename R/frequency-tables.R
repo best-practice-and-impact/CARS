@@ -843,12 +843,13 @@ summarise_languages_by_prof <- function(data) {
 #' @param questions columns to filter data on
 #' @param levels all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers. Only needed for multi-column frequencies
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #'
 #' @return data.frame
 #'
 #' @export
 
-calculate_freqs <- function(data, questions, levels, labels){
+calculate_freqs <- function(data, questions, levels, labels, prop = TRUE){
 
   if (!missing(labels)) {
     labels_list <- as.list(labels)
@@ -865,6 +866,11 @@ calculate_freqs <- function(data, questions, levels, labels){
     frequencies <- data.frame(table(selected_data[questions]))
 
     colnames(frequencies) <- c("value", "n")
+
+    if (prop) {
+      frequencies$n <- frequencies$n / sum(frequencies$n)
+    }
+
   } else {
     frequencies <- selected_data %>%
       tidyr::pivot_longer(cols = questions,
@@ -876,6 +882,10 @@ calculate_freqs <- function(data, questions, levels, labels){
       dplyr::arrange(name, by_group=TRUE) %>%
       tidyr::drop_na() %>%
       data.frame
+
+    if (prop) {
+      frequencies <- prop_by_group(frequencies)
+    }
   }
 
   return(frequencies)
@@ -919,7 +929,7 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
 #'
 #' @return input data with the third column as proportion (0-1)
 
-perc_by_group <- function(data) {
+prop_by_group <- function(data) {
 
   data %>% dplyr::group_by_at(1) %>% dplyr::mutate(n = n/sum(n)) %>% data.frame
 
