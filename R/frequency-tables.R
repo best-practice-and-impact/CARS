@@ -105,8 +105,7 @@ summarise_operations <- function(data) {
               "Data transfer / migration", "Data visualisation",
               "Machine learning", "Modelling", "Quality assurance")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
 
   return(frequencies)
 
@@ -140,8 +139,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
 
   return(frequencies)
 }
@@ -898,3 +896,12 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
   return(frequencies)
 }
 
+#' @title Convert frequencies to proportions
+#'
+#' @param data frequency table with three columns (can be of any name): name, value and count
+#'
+#' @return input data with the third column as proportion (0-1)
+
+perc_by_group <- function(data) {
+  da
+}
