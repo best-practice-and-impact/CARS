@@ -74,8 +74,6 @@ summarise_code_freq <- function(data) {
               "Regularly",
               "All the time")
 
-  labels <- "Coding frequency"
-
   frequencies <- create_tidy_freq_table(data, questions, levels, labels)
 
   frequencies$n <- frequencies$n / nrow(data)
@@ -175,8 +173,6 @@ summarise_where_learned_code <- function(data){
               "Self-taught",
               "Other")
 
-  labels <- "First coding experience"
-
   data <- data %>%
     dplyr::select(first_learned, prev_coding_experience, code_freq) %>%
     dplyr::mutate(
@@ -248,8 +244,6 @@ summarise_rap_basic <- function(data){
 
   levels <- 0:6
 
-  labels <- "Basic RAP score"
-
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
@@ -274,8 +268,6 @@ summarise_rap_advanced <- function(data){
   questions <- "advanced_rap_score"
 
   levels <- 0:7
-
-  labels <- "Advanced RAP score"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -307,8 +299,6 @@ summarise_rap_knowledge <- function(data){
               "I know what a RAP champion is but don't know who the RAP champion in my department is",
               "I know what a RAP champion is and there is no RAP champion in my department",
               "I know who the RAP champion in my department is")
-
-  labels <- "RAP champion knowledge"
 
   data$know_RAP_champ[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
 
@@ -479,8 +469,6 @@ summarise_ci <- function(data) {
               "No",
               "I don't know what continuous integration is")
 
-  labels <- "Continuous Integration Frequency"
-
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
@@ -510,8 +498,6 @@ summarise_dep_man <- function(data) {
               "No",
               "I don't know what dependency management is")
 
-  labels <- "Use dependency management software"
-
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
 
@@ -540,8 +526,6 @@ summarise_rep_workflow <- function(data) {
   levels <- c("Yes",
               "No",
               "I don't know what reproducible workflows are")
-
-  labels <- "Use reproducible workflow packages"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -573,8 +557,6 @@ summarise_ability_change <- function(data) {
               "No change",
               "Slightly better",
               "Significantly better")
-
-  labels <- "Ability Change"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -622,10 +604,7 @@ summarise_language_status <- function(data) {
               "C++ / C#",
               "Matlab")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
-
-  return(frequencies)
+    return(frequencies)
 
 }
 
@@ -645,8 +624,6 @@ summarise_line_manage <- function(data){
   levels <- c("Yes",
               "No - I manage people who do not write code",
               "No - I don't line manage anyone")
-
-  labels <- "Line manage anyone who writes codes"
 
   frequencies <- create_tidy_freq_table(data, questions, levels,
                                         labels)
@@ -861,7 +838,7 @@ summarise_languages_by_prof <- function(data) {
 #' @param data full CARS wave 3 data.frame after pre-processing
 #' @param questions columns to filter data on
 #' @param levels all possible factor values in the filtered columns
-#' @param labels labels to rename the column headers
+#' @param labels labels to rename the column headers. Only needed for multi-column frequencies
 #'
 #' @return data.frame
 #'
@@ -869,8 +846,12 @@ summarise_languages_by_prof <- function(data) {
 
 create_tidy_freq_table <- function(data, questions, levels, labels){
 
-  labels_list <- as.list(labels)
-  names(labels_list) <- questions
+  if (!missing(labels)) {
+    labels_list <- as.list(labels)
+    names(labels_list) <- questions
+  } else if (length(questions) > 1) {
+    stop("Missing input: labels needed for mutli-column frequencies.")
+  }
 
   selected_data <- data %>% dplyr::select(all_of(questions))
 
@@ -895,6 +876,38 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
 
   return(frequencies)
 }
+
+#' @title Create tidy cross table
+#'
+#' @description Returns a cross table in tidy data format.
+#'
+#' @param data pre-processed CARS data set
+#' @param col1 first column of interest
+#' @param col2 column to cross-tabulate first column against
+#' @param levels1 factor levels for col1
+#' @param levels2 factor levels for col2
+#'
+#' @return data.frame
+#'
+#' @importFrom dplyr all_of across
+
+create_tidy_cross_table <- function(data, col1, col2, levels1, levels2){
+
+  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
+
+  selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
+
+  selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
+
+  frequencies <- selected_data %>%
+    dplyr::count(across(c(col1, col2)), .drop=FALSE) %>%
+    tidyr::drop_na() %>%
+    data.frame
+
+  return(frequencies)
+
+}
+
 
 #' @title Convert frequencies to proportions
 #'
