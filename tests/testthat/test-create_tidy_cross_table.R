@@ -1,4 +1,4 @@
-test_that("create_tidy_cross_table works", {
+test_that("calculate_multi_table_freqs works", {
 
   dummy_data <- data.frame(Q1 = c(NA,
                                   "test1",
@@ -22,7 +22,7 @@ test_that("create_tidy_cross_table works", {
                                      levels = levels2),
                          n = c(0, 0, 1, 1, 0, 0, 0, 1, 0))
 
-  got <- create_tidy_cross_table(data = dummy_data,
+  got <- calculate_multi_table_freqs(data = dummy_data,
                                  col1 = col1,
                                  col2 = col2,
                                  levels1 = levels1,

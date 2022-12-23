@@ -21,7 +21,8 @@ Imports:
     plotly,
     stringi,
     tidyr,
-    yaml
+    yaml,
+    knitr
 Suggests:
     devtools,
     testthat (>= 3.0.0)

@@ -9,7 +9,7 @@ levels <- c("test1", "test2", "test3")
 
 labels <- c("Question 1", "Question 2", "Question 3")
 
-dummy_output <- create_tidy_freq_table(data = dummy_data,
+dummy_output <- calculate_freqs(data = dummy_data,
                                        questions = questions,
                                        levels = levels,
                                        labels = labels)

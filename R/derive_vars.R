@@ -131,8 +131,8 @@ derive_advanced_rap_scores <- function(data) {
                         "doc_functions",
                         "prac_package",
                         "prac_style",
-                        "prac_automated_QA",
-                        "prac_dir_structure")
+                        "CI",
+                        "dep_management")
 
   if (!is.data.frame(data)) {
     stop("Unexpected input - data should be a data frame")
@@ -150,8 +150,8 @@ derive_advanced_rap_scores <- function(data) {
   data$function_doc_score <- ifelse(data$doc_functions %in% high_vals, 1, 0)
   data$package_score <- ifelse(data$prac_package %in% high_vals, 1, 0)
   data$code_style_score <- ifelse(data$prac_style %in% high_vals, 1, 0)
-  data$cont_integreation_score <- ifelse(data$prac_automated_QA == "Yes", 1, 0)
-  data$dep_management_score <- ifelse(data$prac_dir_structure == "Yes", 1, 0)
+  data$cont_integreation_score <- ifelse(data$CI == "Yes", 1, 0)
+  data$dep_management_score <- ifelse(data$dep_management == "Yes", 1, 0)
 
   data$advanced_rap_score <- rowSums(data[,c("function_score",
                                              "unit_test_score",

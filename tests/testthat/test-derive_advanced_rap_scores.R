@@ -3,8 +3,8 @@ dummy_data <- data.frame(prac_functions = c("All the time", "Regularly", "Someti
                          doc_functions = c("Rarely", "Never", "All the time", "Regularly", "Sometimes"),
                          prac_package = c("Sometimes", "Rarely", "Never", "All the time", "Regularly"),
                          prac_style = c("Regularly", "Sometimes", "Rarely", "Never", "All the time"),
-                         prac_automated_QA = c("Yes", "No", "Yes", "No", "I don't know what continuous integration is"),
-                         prac_dir_structure = c("I don't know what continuous integration is", "Yes", "No", "Yes", "No"))
+                         CI = c("Yes", "No", "Yes", "No", "I don't know what dependency management is"),
+                         dep_management = c("I don't know what continuous integration is", "Yes", "No", "Yes", "No"))
 
 dummy_output <- derive_advanced_rap_scores(dummy_data)
 

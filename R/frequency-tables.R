@@ -74,7 +74,7 @@ summarise_code_freq <- function(data) {
               "Regularly",
               "All the time")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   frequencies$n <- frequencies$n / nrow(data)
 
@@ -103,7 +103,7 @@ summarise_operations <- function(data) {
               "Data transfer / migration", "Data visualisation",
               "Machine learning", "Modelling", "Quality assurance")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels)
 
   return(frequencies)
 
@@ -137,7 +137,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- create_tidy_freq_table(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels)
 
   return(frequencies)
 }
@@ -182,8 +182,7 @@ summarise_where_learned_code <- function(data){
                                        !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
                                        TRUE ~ first_learned))
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 }
@@ -219,8 +218,7 @@ summarise_coding_practices <- function(data) {
               "I write code to automatically quality assure data",
               "My team applies the principles set out in the Aqua book when carrying out analysis as code")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels)
 
   return(frequencies)
 
@@ -244,8 +242,7 @@ summarise_rap_basic <- function(data){
 
   levels <- 0:6
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -269,8 +266,7 @@ summarise_rap_advanced <- function(data){
 
   levels <- 0:7
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -302,9 +298,7 @@ summarise_rap_knowledge <- function(data){
 
   data$know_RAP_champ[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
-
+  frequencies <- calculate_freqs(data, questions, levels)
   return(frequencies)
 }
 
@@ -349,8 +343,7 @@ summarise_rap_opinions <- function(data) {
               "I or my team are planning on implementing RAP in the next 12 months")
 
 
-  frequencies <- create_tidy_freq_table(opinion_rap_data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(opinion_rap_data, questions, levels, labels)
 
   return(frequencies)
 
@@ -398,50 +391,60 @@ summarise_doc <- function(data) {
               "Flow charts")
 
 
-  frequencies <- create_tidy_freq_table(documentation_data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(documentation_data, questions, levels, labels)
 
   return(frequencies)
 
 }
 
-
 #' @title RAP score components
 #'
 #' @description Create frequency table of basic and advanced RAP score components
 #'
-#' @param data full CARS wave 3 data.frame after pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
-summarise_rap_comp <- function(data){
+summarise_rap_comp <- function(data) {
 
-  labels <- c("use_open_source_score" = "Use open source software",
-              "open_code_score" = "Team open source code",
-              "version_control_score" = "Version control",
-              "peer_review_score" = "Peer review",
-              "AQUA_book_score" = "AQUA book guidance",
-              "doc_score" = "Documentation",
-              "function_score" = "Functions",
-              "unit_test_score" = "Unit testing",
-              "function_doc_score" = "Function documentation",
-              "package_score" = "Code packages",
-              "code_style_score" = "Follow code style guidelines",
-              "cont_integreation_score" = "Continuous integration",
-              "dep_management_score" = "Dependency management")
+  labels <- c("Use open source software",
+              "Team open source code",
+              "Version control",
+              "Peer review",
+              "AQUA book guidance",
+              "Documentation",
+              "Functions",
+              "Unit testing",
+              "Function documentation",
+              "Code packages",
+              "Follow code style guidelines",
+              "Continuous integration",
+              "Dependency management")
 
-  rap_score <- data[grepl("_score", colnames(data))]
+  questions <- c("use_open_source_score",
+                 "open_code_score",
+                 "version_control_score",
+                 "peer_review_score",
+                 "AQUA_book_score",
+                 "doc_score",
+                 "function_score",
+                 "unit_test_score",
+                 "function_doc_score",
+                 "package_score",
+                 "code_style_score",
+                 "cont_integreation_score",
+                 "dep_management_score")
 
-  components <- rap_score %>%
-    dplyr::select(!c("basic_rap_score", "advanced_rap_score")) %>%
-    dplyr::summarise(across(everything(), ~ sum(., is.na(.), 0))) %>%
-    tidyr::pivot_longer(everything(), names_to = "Component", values_to = "Count") %>%
-    dplyr::mutate(Component = dplyr::recode(Component, !!!labels)) %>%
-    dplyr::mutate(Type = c(rep("Basic", 6), rep("Advanced", 7))) %>%
-    dplyr::relocate(Count, .after = Type) %>%
-    dplyr::arrange(desc(Type), Component) %>%
-    dplyr::mutate(Component = factor(Component, levels = Component)) %>%
-    data.frame
+  levels <- c(1)
+
+  components <- calculate_freqs(data, questions, levels, labels)
+  components[[1]] <- factor(components[[1]], levels = labels)
+
+  components <- components[order(components[[1]]), ]
+
+  components[[2]] <- c(rep("Basic", 6), rep("Advanced", 7))
+
+  names(components) <- NULL
 
   return(components)
 
@@ -469,8 +472,7 @@ summarise_ci <- function(data) {
               "No",
               "I don't know what continuous integration is")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -498,8 +500,7 @@ summarise_dep_man <- function(data) {
               "No",
               "I don't know what dependency management is")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -527,8 +528,7 @@ summarise_rep_workflow <- function(data) {
               "No",
               "I don't know what reproducible workflows are")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -558,8 +558,7 @@ summarise_ability_change <- function(data) {
               "Slightly better",
               "Significantly better")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -604,7 +603,9 @@ summarise_language_status <- function(data) {
               "C++ / C#",
               "Matlab")
 
-    return(frequencies)
+  frequencies <- calculate_freqs(data, questions, levels, labels)
+
+  return(frequencies)
 
 }
 
@@ -625,8 +626,7 @@ summarise_line_manage <- function(data){
               "No - I manage people who do not write code",
               "No - I don't line manage anyone")
 
-  frequencies <- create_tidy_freq_table(data, questions, levels,
-                                        labels)
+  frequencies <- calculate_freqs(data, questions, levels)
 
   return(frequencies)
 
@@ -661,7 +661,7 @@ summarise_cap_change_by_freq <- function(data){
     "Slightly better",
     "Significantly better")
 
-  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -691,7 +691,7 @@ summarise_basic_score_by_imp <- function(data){
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
-  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -721,7 +721,7 @@ summarise_adv_score_by_imp <- function(data){
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
-  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -751,7 +751,7 @@ summarise_basic_score_by_understanding <- function(data){
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
-  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -781,7 +781,7 @@ summarise_adv_score_by_understanding <- function(data){
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
-  frequencies <- create_tidy_cross_table(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
   return(frequencies)
 
@@ -797,54 +797,58 @@ summarise_adv_score_by_understanding <- function(data){
 #' @return data.frame
 
 summarise_languages_by_prof <- function(data) {
-  data <- data[stats::complete.cases(data),]
-  data <- data[data$code_freq != "Never", ]
 
   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
-  langs <- c("knowledge_R", "knowledge_SQL", "knowledge_python", "knowledge_SAS",
-             "knowledge_SPSS", "knowledge_VBA", "knowledge_matlab", "knowledge_stata",
-             "knowledge_JS", "knowledge_java", "knowledge_C")
-  lang_names <- c("R", "SQL", "Python", "SAS", "SPSS", "VBA", "Matlab", "Stata",
-                  "JavaScript", "Java / scala", "C#/C++")
 
-  prof_counts <- colSums(data[profs] == "Yes")
+  prof_names <- c("Data scientists",
+                  "Digital and data (DDAT)",
+                  "Actuaries",
+                  "Economists (GES)",
+                  "Geographers",
+                  "Operational researchers (GORS)",
+                  "Social researchers (GSR)",
+                  "Statisticians (GSG)")
 
-  prof_langs <- sapply(profs, function(prof) {
+  names(prof_names) <- profs
+
+  outputs <- lapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
-    freqs <- as.vector(colSums(filtered_data[langs] == "Yes"))
+     output <- summarise_coding_tools(filtered_data, "knowledge")
 
-    return(freqs)
-  }) %>% data.frame
+     # Retain frequencies for "Yes" responses only
+     output <- output[output[[2]] == "Yes", ]
 
-  prof_langs <- cbind(lang = lang_names, prof_langs)
+     output$value <- prof
 
-  colnames(prof_langs) <- c("lang", "Data scientists", "Digital and data (DDAT)", "Actuaries", "Economists (GES)",
-                            "Geographers", "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
+     return(output)
+  })
 
-  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:9]) %>% data.frame
-  prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
-  prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
+  outputs <- do.call(rbind, outputs)
 
-  return(prof_langs_long)
+  colnames(outputs) <- c("lang", "prof", "n")
+  rownames(outputs) <- NULL
 
+  outputs$prof <- dplyr::recode(outputs$prof, !!!prof_names)
+
+  return(outputs)
 }
 
-#' @title Create tidy frequency table
+#' @title Calculate frequencies
 #'
 #' @description Returns a frequency table in tidy data format.
 #'
-#' @param data full CARS wave 3 data.frame after pre-processing
+#' @param data full CARS data frame  after pre-processing
 #' @param questions columns to filter data on
 #' @param levels all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers. Only needed for multi-column frequencies
 #'
 #' @return data.frame
 #'
-#' @importFrom dplyr all_of across
+#' @export
 
-create_tidy_freq_table <- function(data, questions, levels, labels){
+calculate_freqs <- function(data, questions, levels, labels){
 
   if (!missing(labels)) {
     labels_list <- as.list(labels)
@@ -891,7 +895,7 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
 #'
 #' @importFrom dplyr all_of across
 
-create_tidy_cross_table <- function(data, col1, col2, levels1, levels2){
+calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
 
   selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
 
@@ -917,6 +921,6 @@ create_tidy_cross_table <- function(data, col1, col2, levels1, levels2){
 
 perc_by_group <- function(data) {
 
-  data %>% dplyr::group_by(name) %>% dplyr::mutate(n = n/sum(n)) %>% data.frame
+  data %>% dplyr::group_by_at(1) %>% dplyr::mutate(n = n/sum(n)) %>% data.frame
 
 }
