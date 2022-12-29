@@ -22,7 +22,8 @@ Imports:
     stringi,
     tidyr,
     yaml,
-    knitr
+    knitr,
+    quarto
 Suggests:
     devtools,
     testthat (>= 3.0.0)
