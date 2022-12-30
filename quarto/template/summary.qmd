@@ -1,7 +1,24 @@
 ---
-title: "Summary statistics"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    self-contained: true 
 output:
-  html_document
+  theme: cosmo
+  css: styles.css
+  toc: true
+website:
+  title: "DRAFT: Coding in Analysis and Research Survey 2022"
+execute:
+  echo: false
+  warning: false
+params: 
+  title: "NA"
+title: "`r params$title`"
+project:
+  output-dir: ../../docs/professions/
 ---
 
 ```{r echo=FALSE}

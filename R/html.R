@@ -120,10 +120,10 @@ insert_table_toggle <- function(output_name) {
   table_name <- glue::glue("{output_name}-table")
 
   toggle_chart_button <- glue::glue(
-    '<a role="button" class="toggle-button" id="{chart_button_name}" href="#{output_name}" onclick=show_chart(\'{output_name},\')"> Show chart </a>')
+    '<a role="button" class="toggle-button" id="{chart_button_name}" href="#{output_name}" onclick="show_chart(\'{output_name}\')"> Show chart </a>')
 
   toggle_table_button <- glue::glue(
-    '<a role="button" class="toggle-button" id="{table_button_name}" href="#{output_name}" onclick=show_chart(\'{output_name},\')"> Show table </a>')
+    '<a role="button" class="toggle-button" id="{table_button_name}" href="#{output_name}" onclick="show_table(\'{output_name}\')"> Show table </a>')
 
   # Add style to hide table and show chart button by default
   open <- "{"

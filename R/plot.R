@@ -179,6 +179,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    ylab <- xlab
   }
 
   y_axis$title <- "" # Y axis title is created as a caption instead
@@ -296,7 +297,10 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    ylab <- xlab
   }
+
+  y_axis$title <- "" # Y axis title is created as a caption instead
 
   hovertext <- glue::glue("{data[[1]]}, {data[[2]]}: {round(abs(data[[3]]) * 100, 1)}% <extra></extra>")
 
@@ -365,7 +369,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   n_groups <- length(unique(data[[2]]))
   colours <- get_2colour_scale(n_groups)
 
-  colour_list <- as.list(colours)
+  colour_list <- rev(as.list(colours))
   names(colour_list) <- unique(data[[2]])
 
   colours <- dplyr::recode(data[[2]], !!!colour_list)
@@ -410,6 +414,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[3]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
+    legend = list(traceorder = 'normal')
   } else if (orientation == "h") {
     data <- dplyr::arrange(data, dplyr::desc(data[,1]))
     data[,1] <- factor(data[,1], levels = data[,1])
@@ -417,7 +422,13 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    legend = list(traceorder = 'reversed')
+    ylab <- xlab
   }
+
+  y_axis$title <- ""
+
+  colours <- rev(colours)
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
@@ -441,7 +452,8 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                           xref='paper', yref='paper', font=list(size = font_size))
+                                           xref='paper', yref='paper', font=list(size = font_size)),
+                        legend = list(traceorder= 'reversed')
   )
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))

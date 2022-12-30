@@ -7,7 +7,7 @@
 summarise_coding_tools(data, type = list("knowledge", "access"))
 }
 \arguments{
-\item{data}{full CARS wave 3 data.frame after pre-processing}
+\item{data}{full CARS datasetafter pre-processing}
 
 \item{type}{type of table (knowledge or access)}
 }

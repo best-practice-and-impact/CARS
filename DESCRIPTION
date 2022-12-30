@@ -23,7 +23,8 @@ Imports:
     tidyr,
     yaml,
     knitr,
-    quarto
+    quarto,
+    kableExtra
 Suggests:
     devtools,
     testthat (>= 3.0.0)

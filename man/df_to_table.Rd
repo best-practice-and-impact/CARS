@@ -4,13 +4,15 @@
 \alias{df_to_table}
 \title{Data frame to html table}
 \usage{
-df_to_table(data, column_headers, crosstab = FALSE)
+df_to_table(data, column_headers, n, crosstab = FALSE)
 }
 \arguments{
 \item{data}{frequency table in tidy format. Last column should contain proportions.
 First one or two columns should contain factors.}
 
 \item{column_headers}{optional: list of column headers for the output table}
+
+\item{n}{optional: sample size}
 
 \item{crosstab}{whether to create a cross tabulation. FALSE by default}
 }

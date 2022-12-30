@@ -7,7 +7,7 @@
 summarise_where_learned_code(data)
 }
 \arguments{
-\item{data}{full CARS wave 3 data.frame after pre-processing}
+\item{data}{full CARS datasetafter pre-processing}
 }
 \value{
 frequency table (data.frame)

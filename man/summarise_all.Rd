@@ -7,7 +7,7 @@
 summarise_all(data, all_tables = FALSE)
 }
 \arguments{
-\item{data}{full CARS wave 3 data.frame after pre-processing}
+\item{data}{full CARS datasetafter pre-processing}
 
 \item{all_tables}{logical: whether to produce all summary output tables. Defaults to FALSE.}
 }
