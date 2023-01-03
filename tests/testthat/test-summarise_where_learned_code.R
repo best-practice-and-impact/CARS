@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_where_learned_code works", {
 
   dummy_data <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
                            prev_coding_experience = c(rep("Yes", 8), NA, "No"),
@@ -23,7 +23,7 @@ test_that("Output is as expected", {
                                                    "In public sector employment",
                                                    "Self-taught",
                                                    "Other")),
-                         n = c(2, 0, 0, 3, 3, 1))
+                         n = c(0.22, 0.00, 0.00, 0.33, 0.33, 0.11))
 
   expect_equal(got, expected)
 

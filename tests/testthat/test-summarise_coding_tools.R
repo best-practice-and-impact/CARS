@@ -1,6 +1,6 @@
 # Coding tools frequency tables (access or knowledge)
 
-test_that("Outcome is as expected", {
+test_that("summarise_coding_tools works", {
 
   dummy_data <- data.frame(
     knowledge_R = c("Yes", rep("No", 2), rep("Don't Know", 3)),
@@ -47,16 +47,16 @@ test_that("Outcome is as expected", {
                                               rep("VBA", 3)),
                                    "value" = factor(rep(c("Yes", "No", "Don't Know"), 11),
                                                     levels = c("Yes", "No", "Don't Know")),
-                                   "n" = c(1, 2, 3, 2, 3, 1, 3, 2, 1, 3, 2,
-                                           1, 3, 2, 1, 1, 2, 3, 2, 3, 1, 2,
-                                           3, 1, 3, 2, 1, 1, 2, 3, 1, 2, 3))
+                                   "n" = c(0.17, 0.33, 0.50, 0.33, 0.50, 0.17, 0.50, 0.33, 0.17, 0.50, 0.33,
+                                           0.17, 0.50, 0.33, 0.17, 0.17, 0.33, 0.50, 0.33, 0.50, 0.17, 0.33,
+                                           0.50, 0.17, 0.50, 0.33, 0.17, 0.17, 0.33, 0.50, 0.17, 0.33, 0.50))
 
   expect_equal(got_knowledge, expected_knowledge)
 
   expected_access <- expected_knowledge
-  expected_access$n <- c(2, 1, 3, 3, 1, 2, 1, 3, 2, 1, 5,
-                         0, 1, 3, 2, 2, 1, 3, 3, 1, 2, 3,
-                         1, 2, 1, 3, 2, 2, 1, 3, 2, 1, 3)
+  expected_access$n <- c(0.33, 0.17, 0.50, 0.50, 0.17, 0.33, 0.17, 0.50, 0.33, 0.17, 0.83,
+                         0.00, 0.17, 0.50, 0.33, 0.33, 0.17, 0.50, 0.50, 0.17, 0.33, 0.50,
+                         0.17, 0.33, 0.17, 0.50, 0.33, 0.33, 0.17, 0.50, 0.33, 0.17, 0.50)
 
   expect_equal(got_access, expected_access)
 
