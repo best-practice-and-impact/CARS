@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_doc works", {
 
   dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 5)),
                            doc_comments = c("Sometimes", "Never", "Never", "Regularly", "All the time", "I don't understand this question"),
@@ -12,6 +12,8 @@ test_that("Output is as expected", {
   )
 
   got <- summarise_doc(dummy_data)
+
+  expect_false(any(is.na.data.frame(got)))
 
   expected <- data.frame(name = c(rep("Analytical Quality Assurance (AQA) logs", 6),
                                   rep("Code comments", 6),
@@ -32,12 +34,12 @@ test_that("Output is as expected", {
                                                    "Sometimes",
                                                    "Regularly",
                                                    "All the time")),
-                         n = c(1, 1, 0, 1, 1, 1, 1,
-                               2, 0, 0, 1, 1, 1, 1,
-                               1, 0, 1, 1, 0, 1, 1,
-                               1, 1, 1, 1, 1, 1, 1,
-                               1, 0, 0, 0, 1, 1, 1,
-                               1, 1, 1, 1, 1, 0, 1))
+                         n = c(0.20, 0.20, 0.00, 0.20, 0.20, 0.20, 0.20,
+                               0.40, 0.00, 0.00, 0.20, 0.20, 0.20, 0.20,
+                               0.20, 0.00, 0.20, 0.20, 0.00, 0.20, 0.20,
+                               0.20, 0.20, 0.20, 0.20, 0.20, 0.20, 0.20,
+                               0.20, 0.00, 0.00, 0.00, 0.25, 0.25, 0.25,
+                               0.25, 0.20, 0.20, 0.20, 0.20, 0.00, 0.20))
 
   expect_equal(got, expected)
 

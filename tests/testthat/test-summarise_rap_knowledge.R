@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_rap_knowledge works", {
 
   dummy_data <- data.frame(heard_of_RAP = c("No", rep("Yes", 13)),
                            know_RAP_champ = c(rep("I don't know what a RAP champion is", 2),
@@ -21,7 +21,7 @@ test_that("Output is as expected", {
                                                    "I know what a RAP champion is but don't know who the RAP champion in my department is",
                                                    "I know what a RAP champion is and there is no RAP champion in my department",
                                                    "I know who the RAP champion in my department is")),
-                         n = c(1, 1, 3, 4, 5))
+                         n = c(0.07, 0.07, 0.21, 0.29, 0.36))
 
   expect_equal(got, expected)
 

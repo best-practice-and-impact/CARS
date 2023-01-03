@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_rap_opinions works", {
 
   dummy_data <- data.frame(heard_of_RAP = c("No", "Yes", "Yes", "Yes", "Yes"),
                            RAP_confident = c("Strongly Agree" , "Agree", "Neutral", "Disagree", "Strongly Disagree"),
@@ -12,6 +12,8 @@ test_that("Output is as expected", {
 
 
   got <- summarise_rap_opinions(dummy_data)
+
+  expect_false(any(is.na.data.frame(got)))
 
   expected <- data.frame(name = c(rep("I and/or my team are currently implementing RAP", 5),
                                   rep("I feel confident implementing RAP in my work", 5),
@@ -30,11 +32,11 @@ test_that("Output is as expected", {
                                                    "Neutral",
                                                    "Agree",
                                                    "Strongly Agree")),
-                         n = c(1 ,1 ,1, 1, 0, 1, 1,
-                               1, 1, 0, 0, 1, 1, 1,
-                               1, 1, 0, 1, 1, 1, 0,
-                               1, 1, 1, 1, 0, 1, 0,
-                               1, 1, 0, 2, 0, 1, 1))
+                         n = c(0.25, 0.25, 0.25, 0.25, 0.00, 0.25, 0.25,
+                               0.25, 0.25, 0.00, 0.00, 0.25, 0.25, 0.25,
+                               0.25, 0.25, 0.00, 0.25, 0.25, 0.25, 0.00,
+                               0.25, 0.25, 0.25, 0.25, 0.00, 0.33, 0.00,
+                               0.33, 0.33, 0.00, 0.50, 0.00, 0.25, 0.25))
 
   expect_equal(got, expected)
 

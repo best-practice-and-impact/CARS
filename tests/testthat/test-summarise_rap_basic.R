@@ -1,29 +1,18 @@
-dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4), rep("All the time", 6)),
-                         basic_rap_score = c(0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6))
 
-dummy_output <- summarise_rap_basic(dummy_data)
+test_that("summarise_rap_basic works", {
 
-test_that("Check output is dataframe" , {
-  expect_s3_class(dummy_output, "data.frame")
-})
+  dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4), rep("All the time", 6)),
+                           basic_rap_score = c(0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6))
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na(dummy_output)))
-})
+  got <- summarise_rap_basic(dummy_data)
 
-test_that("Check number of rows in output", {
-  expect_equal(nrow(dummy_output), 7)
-})
+  expect_false(any(is.na.data.frame(got)))
 
-test_that("Check number of columns in output", {
-  expect_equal(ncol(dummy_output), 3)
-})
+  expected <- data.frame(name = rep("Basic RAP score", 7),
+                         value = factor(0:6,
+                                        levels = c(0:6)),
+                         n = c(0.00, 0.10, 0.20, 0.30, 0.20, 0.10, 0.10))
 
-test_that("Output column names are correct", {
-  expect_equal(colnames(dummy_output), c("name", "value", "n"))
-})
+  expect_equal(got, expected)
 
-
-test_that("Values in output are correct", {
-  expect_equal(dummy_output[[3]], c(0, 1, 2, 3, 2, 1, 1))
 })
