@@ -29,6 +29,7 @@ create_tidy_freq_table <- function(data, questions, levels, labels){
     dplyr::mutate(name = dplyr::recode(name, !!!labels_list)) %>%
     dplyr::arrange(name, by_group=TRUE) %>%
     tidyr::drop_na() %>%
+    dplyr::mutate(n = round((n / sum(n)), 2)) %>%
     data.frame
 
   return(frequencies)

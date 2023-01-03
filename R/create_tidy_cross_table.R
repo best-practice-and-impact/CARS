@@ -21,8 +21,10 @@ create_tidy_cross_table <- function(data, col1, col2, levels1, levels2){
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
+    dplyr::group_by(across(col1)) %>%
     dplyr::count(across(c(col1, col2)), .drop=FALSE) %>%
     tidyr::drop_na() %>%
+    dplyr::mutate(n = round((n / sum(n)), 2)) %>%
     data.frame
 
   return(frequencies)
