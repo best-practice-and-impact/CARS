@@ -20,8 +20,8 @@ test_that("Output is as expected", {
     access_stata = c("Yes", "No"),
     knowledge_JS = c("Don't know", "Yes"),
     access_JS = c("No", "Yes"),
-    knowledge_java_scala = c("Don't know", "Yes"),
-    access_java_scala = c("Don't know", "No"),
+    knowledge_java = c("Don't know", "Yes"),
+    access_java = c("Don't know", "No"),
     knowledge_C = c("Yes", "Don't know"),
     access_C = c("No", "Yes"),
     knowledge_matlab = c("Yes", "No"),
@@ -40,7 +40,7 @@ test_that("Output is as expected", {
     status_SPSS = c("neither", "access"),
     status_stata = c("access", "neither"),
     status_JS = c("neither", "both"),
-    status_java_scala = c("neither", "knowledge"),
+    status_java = c("neither", "knowledge"),
     status_C = c("knowledge", "access"),
     status_matlab = c("both", "neither")
   )

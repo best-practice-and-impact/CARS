@@ -605,7 +605,7 @@ summarise_language_status <- function(data) {
                  "status_SPSS",
                  "status_stata",
                  "status_JS",
-                 "status_java_scala",
+                 "status_java",
                  "status_C",
                  "status_matlab")
 
