@@ -1,5 +1,5 @@
 
-test_that("Outcome is as expected", {
+test_that("summarise_rap_comp works", {
 
   dummy_data <- data.frame(use_open_source_score = c(1, 3, 5, 7),
                            open_code_score = c(2, 4, 6, 8),
@@ -18,6 +18,8 @@ test_that("Outcome is as expected", {
                            advanced_rap_score = c(3, 7, 5, 6))
 
   got <-summarise_rap_comp(dummy_data)
+
+  expect_false(any(is.na.data.frame(got)))
 
   expected <- data.frame(Component = factor(c("AQUA book guidance",
                                               "Documentation",

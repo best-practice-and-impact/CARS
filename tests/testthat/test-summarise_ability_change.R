@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_ability_change works", {
 
   dummy_data <- data.frame(coding_ability_change = c(NA,
                                                      rep("Significantly worse", 2),
@@ -9,6 +9,8 @@ test_that("Output is as expected", {
                                                      rep("Significantly better", 6)))
 
   got <- summarise_ability_change(dummy_data)
+
+  expect_false(any(is.na.data.frame(got)))
 
   expected <- data.frame(name = c(rep("Ability Change", 5)),
                          value = factor(c("Significantly worse",
@@ -21,7 +23,7 @@ test_that("Output is as expected", {
                                                    "No change",
                                                    "Slightly better",
                                                    "Significantly better")),
-                         n=c(2, 3, 4, 5, 6))
+                         n=c(0.10, 0.15, 0.20, 0.25, 0.30))
 
   expect_equal(got, expected)
 })

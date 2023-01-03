@@ -1,88 +1,74 @@
 # Coding tools frequency tables (access or knowledge)
 
-dummy_data <- data.frame(
-  code_freq = c(rep("Sometimes", 2), rep("All the time", 2), "Never", NA),
-  knowledge_R = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  knowledge_SQL = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  knowledge_SAS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  knowledge_VBA = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  knowledge_python = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  knowledge_stata = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  knowledge_JS = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  knowledge_java_scala = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  knowledge_C = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  prof_DS = c(rep("Yes", 3), rep("No", 3)),
-  prof_DDAT = c("No", rep("Yes", 4), rep("No", 1)),
-  prof_GAD = c(rep("No", 2), rep("Yes", 4)),
-  prof_GES = c(rep("No", 2), rep("Yes", 2), rep("No", 2)),
-  prof_geog = c(rep("No", 3), rep("Yes", 3)),
-  prof_GORS = c(rep("No", 1), rep("Yes", 5)),
-  prof_GSR = c(rep("Yes", 1), rep("No", 5)),
-  prof_GSG = c(rep("Yes", 6)))
+test_that("summarise_languages_by_prof works", {
 
-dummy_output <- summarise_languages_by_prof(dummy_data)
+  dummy_data <- data.frame(
+    code_freq = c(rep("Sometimes", 2), rep("All the time", 2), "Never", NA),
+    knowledge_R = c("Yes", rep("No", 2), rep("Don't Know", 3)),
+    knowledge_SQL = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
+    knowledge_SAS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+    knowledge_VBA = c("Yes", rep("No", 2), rep("Don't Know", 3)),
+    knowledge_python = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
+    knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+    knowledge_stata = c("Yes", rep("No", 2), rep("Don't Know", 3)),
+    knowledge_JS = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
+    knowledge_java_scala = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+    knowledge_C = c("Yes", rep("No", 2), rep("Don't Know", 3)),
+    knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
+    prof_DS = c(rep("Yes", 3), rep("No", 3)),
+    prof_DDAT = c("No", rep("Yes", 4), rep("No", 1)),
+    prof_GAD = c(rep("No", 2), rep("Yes", 4)),
+    prof_GES = c(rep("No", 2), rep("Yes", 2), rep("No", 2)),
+    prof_geog = c(rep("No", 3), rep("Yes", 3)),
+    prof_GORS = c(rep("No", 1), rep("Yes", 5)),
+    prof_GSR = c(rep("Yes", 1), rep("No", 5)),
+    prof_GSG = c(rep("Yes", 6)))
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
-})
+  got <- summarise_languages_by_prof(dummy_data)
 
-test_that("output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
-})
+  expect_false(any(is.na.data.frame(got)))
 
-test_that("output has eighty-eight rows", {
-  expect_equal(nrow(dummy_output), 88)
-})
+  expected <- data.frame(lang = factor(c(rep("R", 8),
+                                         rep("SQL", 8),
+                                         rep("Python", 8),
+                                         rep("SAS", 8),
+                                         rep("SPSS", 8),
+                                         rep("VBA", 8),
+                                         rep("Matlab", 8),
+                                         rep("Stata", 8),
+                                         rep("JavaScript", 8),
+                                         rep("Scala", 8),
+                                         rep("C#/C++", 8)),
+                                       levels = c("C#/C++", "JavaScript", "Matlab", "Python", "R",
+                                                  "SAS", "SPSS", "SQL", "Scala", "Stata", "VBA")),
+                         name = factor(rep(c("Data scientists",
+                                             "Digital and data (DDAT)",
+                                             "Actuaries",
+                                             "Economists (GES)",
+                                             "Geographers",
+                                             "Operational researchers (GORS)",
+                                             "Social researchers (GSR)",
+                                             "Statisticians (GSG)"), 11),
+                                       levels = c("Data scientists",
+                                                  "Digital and data (DDAT)",
+                                                  "Actuaries",
+                                                  "Economists (GES)",
+                                                  "Geographers",
+                                                  "Operational researchers (GORS)",
+                                                  "Social researchers (GSR)",
+                                                  "Statisticians (GSG)")),
+                         value = c(0.33, 0.00, 0.00, 0.00, 0.00, 0.00, 0.33, 0.33,
+                                   0.23, 0.15, 0.08, 0.08, 0.00, 0.15, 0.08, 0.23,
+                                   0.23, 0.15, 0.08, 0.08, 0.00, 0.15, 0.08, 0.23,
+                                   0.29, 0.14, 0.00, 0.00, 0.00, 0.14, 0.14, 0.29,
+                                   0.29, 0.14, 0.00, 0.00, 0.00, 0.14, 0.14, 0.29,
+                                   0.33, 0.00, 0.00, 0.00, 0.00, 0.00, 0.33, 0.33,
+                                   0.23, 0.15, 0.08, 0.08, 0.00, 0.15, 0.08, 0.23,
+                                   0.33, 0.00, 0.00 ,0.00, 0.00, 0.00, 0.33, 0.33,
+                                   0.23, 0.15, 0.08, 0.08, 0.00, 0.15, 0.08, 0.23,
+                                   0.29, 0.14, 0.00, 0.00, 0.00, 0.14, 0.14, 0.29,
+                                   0.33, 0.00, 0.00, 0.00, 0.00, 0.00, 0.33, 0.33))
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na.data.frame(dummy_output)))
-})
+  expect_equal(got, expected)
 
-test_that("output has the correct column order", {
-  expect_equal(colnames(dummy_output), c("lang",
-                                         "name",
-                                         "value"))
-})
-
-test_that("output has the correct programming language names in order", {
-  expect_equal(unique(dummy_output[[1]]),
-               factor(c("R", "SQL", "Python", "SAS", "SPSS",
-                        "VBA", "Matlab", "Stata",
-                        "JavaScript","Scala", "C#/C++"),
-                      levels = c("R", "SQL", "Python", "SAS", "SPSS",
-                                 "VBA", "Matlab", "Stata",
-                                 "JavaScript","Scala", "C#/C++")))
-})
-
-test_that("output has the correct profession names in order", {
-  expect_equal(unique(dummy_output[[2]]),
-               factor(c("Data scientists",
-                        "Digital and data (DDAT)",
-                        "Actuaries",
-                        "Economists (GES)",
-                        "Geographers",
-                        "Operational researchers (GORS)",
-                        "Social researchers (GSR)",
-                        "Statisticians (GSG)"),
-                      levels = c("Data scientists",
-                                 "Digital and data (DDAT)",
-                                 "Actuaries",
-                                 "Economists (GES)",
-                                 "Geographers",
-                                 "Operational researchers (GORS)",
-                                 "Social researchers (GSR)",
-                                 "Statisticians (GSG)")))
-})
-
-test_that("frequencies are correct", {
-  expect_equal(dummy_output[dummy_output$name == "Data scientists",]$value, c(1,3,3,2,2,1,3,1,3,2,1))
-  expect_equal(dummy_output[dummy_output$name == "Digital and data (DDAT)",]$value, c(0,2,2,1,1,0,2,0,2,1,0))
-  expect_equal(dummy_output[dummy_output$name == "Actuaries",]$value, c(0,1,1,0,0,0,1,0,1,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Economists (GES)",]$value, c(0,1,1,0,0,0,1,0,1,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Geographers",]$value, c(0,0,0,0,0,0,0,0,0,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Operational researchers (GORS)",]$value, c(0,2,2,1,1,0,2,0,2,1,0))
-  expect_equal(dummy_output[dummy_output$name == "Social researchers (GSR)",]$value, c(1,1,1,1,1,1,1,1,1,1,1))
-  expect_equal(dummy_output[dummy_output$name == "Statisticians (GSG)",]$value, c(1,3,3,2,2,1,3,1,3,2,1))
 })

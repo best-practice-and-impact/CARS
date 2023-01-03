@@ -452,6 +452,7 @@ summarise_rap_comp <- function(data){
     dplyr::relocate(Count, .after = Type) %>%
     dplyr::arrange(desc(Type), Component) %>%
     dplyr::mutate(Component = factor(Component, levels = Component)) %>%
+    tidyr::drop_na() %>%
     data.frame
 
   return(components)
@@ -821,8 +822,8 @@ summarise_adv_score_by_understanding <- function(data){
 #' @return data.frame
 
 summarise_languages_by_prof <- function(data) {
-  data <- data[stats::complete.cases(data),]
-  data <- data[data$code_freq != "Never", ]
+
+  data <- data[!(data$code_freq %in% c("Never", NA)), ]
 
   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
@@ -847,9 +848,14 @@ summarise_languages_by_prof <- function(data) {
   colnames(prof_langs) <- c("lang", "Data scientists", "Digital and data (DDAT)", "Actuaries", "Economists (GES)",
                             "Geographers", "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
 
-  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:9]) %>% data.frame
-  prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
-  prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
+  prof_langs_long <- prof_langs %>%
+    tidyr::pivot_longer(cols = colnames(prof_langs)[2:9]) %>%
+    dplyr::group_by(lang) %>%
+    dplyr::mutate(lang = factor(lang, levels = unique(lang))) %>%
+    dplyr::mutate(name = factor(name, levels = unique(name))) %>%
+    tidyr::drop_na() %>%
+    dplyr::mutate(value = round((value / sum(value)), 2)) %>%
+    data.frame
 
   return(prof_langs_long)
 

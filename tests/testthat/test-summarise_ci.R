@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("summarise_ci works", {
 
   dummy_data <- data.frame(CI = c(NA,
                                   rep("Yes", 2),
@@ -8,6 +8,8 @@ test_that("Output is as expected", {
 
   got <- summarise_ci(dummy_data)
 
+  expect_false(any(is.na.data.frame(got)))
+
   expected <- data.frame(name = c(rep("Continuous Integration Frequency", 3)),
                          value = factor(c("Yes",
                                           "No",
@@ -15,7 +17,7 @@ test_that("Output is as expected", {
                                         levels = c("Yes",
                                                    "No",
                                                    "I don't know what continuous integration is")),
-                         n = c(2, 3, 4))
+                         n = c(0.22, 0.33, 0.44))
 
   expect_equal(got, expected)
 

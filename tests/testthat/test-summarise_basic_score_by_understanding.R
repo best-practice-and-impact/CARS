@@ -1,4 +1,4 @@
-test_that("Outcome is as expected", {
+test_that("summarise_basic_rap_score_by_understanding works", {
 
   dummy_data <- data.frame(RAP_components = c(NA,
                                               rep("Strongly disagree", 2),
@@ -17,6 +17,8 @@ test_that("Outcome is as expected", {
 
   got <- summarise_basic_score_by_understanding(dummy_data)
 
+  expect_false(any(is.na.data.frame(got)))
+
   expected <- data.frame(RAP_components = factor(c(rep("Strongly disagree", 7),
                                                    rep("Disagree", 7),
                                                    rep("Neutral", 7),
@@ -29,11 +31,11 @@ test_that("Outcome is as expected", {
                                                             "Strongly agree")),
                          basic_rap_score = factor(rep(c(0,1,2,3,4,5,6), 5),
                                                   levels = c(0,1,2,3,4,5,6)),
-                         n = c(1, 1, 0, 0, 0, 0, 0,
-                               0, 1, 2, 0, 0, 0, 0,
-                               0, 0, 1, 3, 0, 0, 0,
-                               0, 0, 0, 1, 4, 0, 0,
-                               0, 0, 0, 0, 0, 2, 1))
+                         n = c(0.50, 0.50, 0.00, 0.00, 0.00, 0.00, 0.00,
+                               0.00, 0.33, 0.67, 0.00, 0.00, 0.00, 0.00,
+                               0.00, 0.00, 0.25, 0.75, 0.00, 0.00, 0.00,
+                               0.00, 0.00, 0.00, 0.20, 0.80, 0.00, 0.00,
+                               0.00, 0.00, 0.00, 0.00, 0.00, 0.67, 0.33))
 
   expect_equal(got, expected)
 

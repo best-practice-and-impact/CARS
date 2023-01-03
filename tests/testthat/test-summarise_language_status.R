@@ -1,7 +1,7 @@
 # Data operations table
 # Frequency table should not include missing values and should include counts of 0
 
-test_that("Output is as expected", {
+test_that("summarise_language_status works", {
 
   dummy_data <- data.frame(
     knowledge_R = c("Yes", "Yes"),
@@ -32,6 +32,8 @@ test_that("Output is as expected", {
 
   got <- summarise_language_status(dummy_data)
 
+  expect_false(any(is.na.data.frame(got)))
+
   expected <- data.frame(name = c(rep("C++ / C#", 4),
                                   rep("Java / Scala", 4),
                                   rep("Javascript / Typescript", 4),
@@ -52,10 +54,10 @@ test_that("Output is as expected", {
                                                  "access",
                                                  "knowledge",
                                                  "neither")),
-                         n = c(0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0,
-                               1, 1, 0, 0, 1, 0, 0, 0, 2, 0, 0,
-                               2, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0,
-                               0, 2, 0, 0, 1, 0, 1, 0, 2, 0, 0))
+                         n = c(0.00, 0.50, 0.50, 0.00, 0.00, 0.00, 0.50, 0.50, 0.50, 0.00, 0.00,
+                               0.50, 0.50, 0.00, 0.00, 0.50, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00,
+                               1.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.50, 0.00, 0.50, 0.00,
+                               0.00, 1.00, 0.00, 0.00, 0.50, 0.00, 0.50, 0.00, 1.00, 0.00, 0.00))
 
   expect_equal(got, expected)
 
