@@ -453,6 +453,7 @@ summarise_rap_comp <- function(data){
     dplyr::arrange(desc(Type), Component) %>%
     dplyr::mutate(Component = factor(Component, levels = Component)) %>%
     tidyr::drop_na() %>%
+    dplyr::mutate(Count = round((Count / sum(Count)), 2)) %>%
     data.frame
 
   return(components)

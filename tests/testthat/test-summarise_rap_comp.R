@@ -51,7 +51,8 @@ test_that("summarise_rap_comp works", {
                          Type = c("Basic", "Basic", "Basic", "Basic", "Basic", "Basic",
                                   "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced"),
 
-                         Count = c(20, 16, 16, 20, 16, 20, 16, 16, 20, 20, 20, 20, 16)
+                         Count = c(0.08, 0.07, 0.07, 0.08, 0.07, 0.08, 0.07,
+                                   0.07, 0.08, 0.08, 0.08, 0.08, 0.07)
   )
 
   expect_equal(got, expected)
