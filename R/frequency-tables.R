@@ -130,7 +130,7 @@ summarise_operations <- function(data) {
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #' @param type type of table (knowledge or access)
 #'
 #' @return frequency table (data.frame)
