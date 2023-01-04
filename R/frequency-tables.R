@@ -163,7 +163,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 #'
 #' @description calculate frequency table of where respondents learned to code
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
