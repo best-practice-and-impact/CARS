@@ -2,7 +2,7 @@
 #'
 #' @description Produce all summary tables and return as a named list.
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #' @param all_tables logical: whether to produce all summary output tables. Defaults to FALSE.
 #'
 #' @return list of frequency tables
