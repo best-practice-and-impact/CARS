@@ -73,7 +73,7 @@ sample_sizes <- function(data) {
 #'
 #' @description calculate frequency table for coding frequency.
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
