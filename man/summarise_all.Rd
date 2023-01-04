@@ -7,7 +7,7 @@
 summarise_all(data, all_tables = FALSE)
 }
 \arguments{
-\item{data}{full CARS datasetafter pre-processing}
+\item{data}{full CARS dataset after pre-processing}
 
 \item{all_tables}{logical: whether to produce all summary output tables. Defaults to FALSE.}
 }

@@ -7,7 +7,7 @@
 summarise_cap_change_by_freq(data)
 }
 \arguments{
-\item{data}{full CARS datasetafter pre-processing}
+\item{data}{full CARS dataset after pre-processing}
 }
 \value{
 frequency table (data.frame)

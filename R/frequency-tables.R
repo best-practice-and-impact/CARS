@@ -166,6 +166,8 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 #' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
+#'
+#' @importFrom dplyr select mutate case_when
 
 summarise_where_learned_code <- function(data){
 
@@ -190,13 +192,13 @@ summarise_where_learned_code <- function(data){
               "Other")
 
   data <- data %>%
-    dplyr::select(first_learned, prev_coding_experience, code_freq) %>%
-    dplyr::mutate(
-      first_learned = dplyr::case_when((is.na(data$prev_coding_experience) |
-                                        (data$prev_coding_experience == "No")) &
-                                          data$code_freq != "Never" ~ "In current role",
-                                       !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
-                                       TRUE ~ first_learned))
+    select(first_learned, prev_coding_experience, code_freq) %>%
+    mutate(
+      first_learned = case_when((is.na(data$prev_coding_experience) |
+                                   (data$prev_coding_experience == "No")) &
+                                  data$code_freq != "Never" ~ "In current role",
+                                !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
+                                TRUE ~ first_learned))
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -420,6 +422,8 @@ summarise_doc <- function(data) {
 #' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
+#'
+#' @importFrom dplyr mutate arrange
 
 summarise_rap_comp <- function(data) {
 
@@ -453,16 +457,11 @@ summarise_rap_comp <- function(data) {
 
   levels <- c(1)
 
-  components <- calculate_freqs(data, questions, levels, labels, prop = FALSE)
-  components$n <- components$n / sum(data$code_freq != "Never")
-
-  components[[1]] <- factor(components[[1]], levels = labels)
-
-  components <- components[order(components[[1]]), ]
-
-  components[[2]] <- c(rep("Basic", 6), rep("Advanced", 7))
-
-  rownames(components) <- NULL
+  components <- components %>%
+    mutate(n = n/sum(data$code_freq != "Never")) %>%
+    mutate(name = factor(name, levels = labels)) %>%
+    arrange(name) %>%
+    mutate(value = c(rep("Basic", 6), rep("Advanced", 7)))
 
   return(components)
 
@@ -813,6 +812,8 @@ summarise_adv_score_by_understanding <- function(data){
 #' @param data CARS data (pre-processed)
 #'
 #' @return data.frame
+#'
+#' @importFrom dplyr recode
 
 summarise_languages_by_prof <- function(data) {
 
@@ -848,7 +849,7 @@ summarise_languages_by_prof <- function(data) {
   colnames(outputs) <- c("lang", "prof", "n")
   rownames(outputs) <- NULL
 
-  outputs$prof <- dplyr::recode(outputs$prof, !!!prof_names)
+  outputs$prof <- recode(outputs$prof, !!!prof_names)
 
   return(outputs)
 }
@@ -866,17 +867,20 @@ summarise_languages_by_prof <- function(data) {
 #' @return data.frame
 #'
 #' @export
+#'
+#' @importFrom dplyr select all_of group_by count mutate recode arrange
+#' @importFrom tidyr pivot_longer drop_na
 
-calculate_freqs <- function(data, questions, levels, labels, prop = TRUE){
+calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE){
 
-  if (!missing(labels)) {
+  if (!is.null(labels)) {
     labels_list <- as.list(labels)
     names(labels_list) <- questions
   } else if (length(questions) > 1) {
     stop("Missing input: labels needed for mutli-column frequencies.")
   }
 
-  selected_data <- data %>% dplyr::select(all_of(questions))
+  selected_data <- data %>% select(all_of(questions))
 
   selected_data[] <- lapply(selected_data, factor, levels = levels)
 
@@ -891,15 +895,15 @@ calculate_freqs <- function(data, questions, levels, labels, prop = TRUE){
 
   } else {
     frequencies <- selected_data %>%
-      tidyr::pivot_longer(cols = questions,
-                          names_to = "name",
-                          values_to = "value") %>%
-      dplyr::group_by(name) %>%
-      dplyr::count(value, .drop=FALSE) %>%
-      dplyr::mutate(name = dplyr::recode(name, !!!labels_list)) %>%
-      dplyr::arrange(name, by_group=TRUE) %>%
-      tidyr::drop_na() %>%
-      data.frame
+      pivot_longer(cols = questions,
+                   names_to = "name",
+                   values_to = "value") %>%
+      group_by(name) %>%
+      count(value, .drop=FALSE) %>%
+      mutate(name = recode(name, !!!labels_list)) %>%
+      arrange(name, by_group=TRUE) %>%
+      drop_na() %>%
+      data.frame()
 
     colnames(frequencies) <- c("name", "value", "n")
 
@@ -923,20 +927,22 @@ calculate_freqs <- function(data, questions, levels, labels, prop = TRUE){
 #'
 #' @return data.frame
 #'
-#' @importFrom dplyr all_of across
+#' @importFrom dplyr select all_of count across
+#' @importFrom tidyr drop_na
+
 
 calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
 
-  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
+  selected_data <- data %>% select(all_of(c(col1, col2)))
 
   selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
 
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
-    dplyr::count(across(c(col1, col2)), .drop=FALSE) %>%
-    tidyr::drop_na() %>%
-    data.frame
+    count(across(c(col1, col2)), .drop=FALSE) %>%
+    drop_na() %>%
+    data.frame()
 
   return(frequencies)
 
@@ -948,9 +954,11 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
 #' @param data frequency table with three columns (can be of any name): name, value and count
 #'
 #' @return input data with the third column as proportion (0-1)
+#'
+#' @importFrom dplyr group_by_at mutate
 
 prop_by_group <- function(data) {
 
-  data %>% dplyr::group_by_at(1) %>% dplyr::mutate(n = n/sum(n)) %>% data.frame
+  data %>% group_by_at(1) %>% mutate(n = n/sum(n)) %>% data.frame()
 
 }

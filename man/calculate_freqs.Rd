@@ -4,7 +4,7 @@
 \alias{calculate_freqs}
 \title{Calculate frequencies}
 \usage{
-calculate_freqs(data, questions, levels, labels, prop = TRUE)
+calculate_freqs(data, questions, levels, labels = NULL, prop = TRUE)
 }
 \arguments{
 \item{data}{full CARS data frame  after pre-processing}
