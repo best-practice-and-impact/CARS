@@ -208,7 +208,7 @@ summarise_where_learned_code <- function(data){
 #'
 #' @description calculate frequency table for data practices
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
