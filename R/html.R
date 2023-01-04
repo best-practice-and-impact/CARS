@@ -1,65 +1,3 @@
-# A set of functions that create raw html/JS
-
-#'@title Build navigation bar
-#'
-#'@description  build rmarkdown site navbar
-#'
-#'@details Build rmarkdown site navbar using arguments from the site yaml file (use the output from read_site_yml() as the navbar_info argument)
-#'
-#'@param navbar_info list of arguments - use output from read_site_yml()
-#'
-#'@return navbar html as string
-#'
-#'@export
-
-build_navbar <- function(navbar_info) {
-
-  if (!is.list(navbar_info)) {
-    stop("Unexpected input - navbar_info should be a list")
-  }
-
-  # Navbar main contents HTML
-  tryCatch (
-    {
-      nav_tags <-
-        sapply(navbar_info$pages, function(info) {
-          glue::glue('
-                  <li>\n
-                    <a href="{info["href"]}">{info["text"]}</a>\n
-                  </li>\n
-          ')
-        })
-
-      nav_tags <- paste0(nav_tags, collapse = "")
-    },
-    error = function(e) {
-      stop("Enter valid navbar info")
-    }
-  )
-
-  # Full navigation bad HTML
-  html <- glue::glue('
-  <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="nav-primary" aria-label="Display main menu">
-          Main menu
-        </button>
-        <a class="navbar-brand" href="index.html">{navbar_info$title},</a>
-          </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                {nav_tags}
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container -->
-        </div><!--/.navbar -->
-  ')
-
-  return(html)
-
-}
-
 
 #'@title Wrap outputs
 #'
@@ -182,10 +120,10 @@ insert_table_toggle <- function(output_name) {
   table_name <- glue::glue("{output_name}-table")
 
   toggle_chart_button <- glue::glue(
-    '<a role="button" class="toggle-button" id="{chart_button_name}" href="#{output_name}" onclick=show_chart(\'{output_name},\')"> Show chart </a>')
+    '<a role="button" class="toggle-button" id="{chart_button_name}" href="#{output_name}" onclick="show_chart(\'{output_name}\')"> Show chart </a>')
 
   toggle_table_button <- glue::glue(
-    '<a role="button" class="toggle-button" id="{table_button_name}" href="#{output_name}" onclick=show_chart(\'{output_name},\')"> Show table </a>')
+    '<a role="button" class="toggle-button" id="{table_button_name}" href="#{output_name}" onclick="show_table(\'{output_name}\')"> Show table </a>')
 
   # Add style to hide table and show chart button by default
   open <- "{"

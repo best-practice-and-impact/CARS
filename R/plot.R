@@ -179,6 +179,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    ylab <- xlab
   }
 
   y_axis$title <- "" # Y axis title is created as a caption instead
@@ -280,7 +281,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     colours <- get_3colour_scale(ncolours)
   }
 
-  colours <- rep(colours, length(unique(data[[1]])))
+  colours <- lapply(colours, rep, length(unique(data[[1]]))) %>% unlist
 
   axes <- axis_settings(xlab, ylab, font_size)
 
@@ -296,15 +297,18 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    ylab <- xlab
   }
 
-  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+  y_axis$title <- "" # Y axis title is created as a caption instead
+
+  hovertext <- glue::glue("{data[[1]]}, {data[[2]]}: {round(abs(data[[3]]) * 100, 1)}% <extra></extra>")
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
-  fig <- plotly::plot_ly(data,
-                         y = y_vals,
+  fig <- plotly::plot_ly(y = y_vals,
                          x = x_vals,
+                         color = data[[2]],
                          type = "bar",
                          orientation = orientation,
                          hovertemplate = hovertext,
@@ -313,10 +317,10 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   fig <- plotly::config(fig, displayModeBar = F)
 
-
   fig <- plotly::layout(fig,
                         barmode = "stack",
                         clickmode = "none",
+                        showlegend = TRUE,
                         legend = list(orientation = orientation,   # show entries horizontally
                                       xanchor = "center",  # use center of legend as anchor
                                       yanchor = "bottom",
@@ -365,7 +369,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   n_groups <- length(unique(data[[2]]))
   colours <- get_2colour_scale(n_groups)
 
-  colour_list <- as.list(colours)
+  colour_list <- rev(as.list(colours))
   names(colour_list) <- unique(data[[2]])
 
   colours <- dplyr::recode(data[[2]], !!!colour_list)
@@ -410,6 +414,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[3]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
+    legend = list(traceorder = 'normal')
   } else if (orientation == "h") {
     data <- dplyr::arrange(data, dplyr::desc(data[,1]))
     data[,1] <- factor(data[,1], levels = data[,1])
@@ -417,7 +422,13 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
+    legend = list(traceorder = 'reversed')
+    ylab <- xlab
   }
+
+  y_axis$title <- ""
+
+  colours <- rev(colours)
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
@@ -441,7 +452,8 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                           xref='paper', yref='paper', font=list(size = font_size))
+                                           xref='paper', yref='paper', font=list(size = font_size)),
+                        legend = list(traceorder= 'reversed')
   )
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
@@ -684,7 +696,6 @@ axis_settings <- function(xlab, ylab, font_size) {
         title = ylab,
         tickfont = list(size = font_size),
         titlefont = list(size = font_size * 1.2),
-        range = list(0, 1),
         tickformat = ".0%",
         title = "Percent"
       ),

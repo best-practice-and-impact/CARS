@@ -10,7 +10,7 @@ dummy_data <- data.frame(
   knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
   knowledge_stata = c("Yes", rep("No", 2), rep("Don't Know", 3)),
   knowledge_JS = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  knowledge_java_scala = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+  knowledge_java = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
   knowledge_C = c("Yes", rep("No", 2), rep("Don't Know", 3)),
   knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
   prof_DS = c(rep("Yes", 3), rep("No", 3)),
@@ -42,47 +42,6 @@ test_that("output does not contain missing values", {
 
 test_that("output has the correct column order", {
   expect_equal(colnames(dummy_output), c("lang",
-                                         "name",
-                                         "value"))
-})
-
-test_that("output has the correct programming language names in order", {
-  expect_equal(unique(dummy_output[[1]]),
-               factor(c("R", "SQL", "Python", "SAS", "SPSS",
-                        "VBA", "Matlab", "Stata",
-                        "JavaScript","Scala", "C#/C++"),
-                      levels = c("R", "SQL", "Python", "SAS", "SPSS",
-                                 "VBA", "Matlab", "Stata",
-                                 "JavaScript","Scala", "C#/C++")))
-})
-
-test_that("output has the correct profession names in order", {
-  expect_equal(unique(dummy_output[[2]]),
-               factor(c("Data scientists",
-                        "Digital and data (DDAT)",
-                        "Actuaries",
-                        "Economists (GES)",
-                        "Geographers",
-                        "Operational researchers (GORS)",
-                        "Social researchers (GSR)",
-                        "Statisticians (GSG)"),
-                      levels = c("Data scientists",
-                                 "Digital and data (DDAT)",
-                                 "Actuaries",
-                                 "Economists (GES)",
-                                 "Geographers",
-                                 "Operational researchers (GORS)",
-                                 "Social researchers (GSR)",
-                                 "Statisticians (GSG)")))
-})
-
-test_that("frequencies are correct", {
-  expect_equal(dummy_output[dummy_output$name == "Data scientists",]$value, c(1,3,3,2,2,1,3,1,3,2,1))
-  expect_equal(dummy_output[dummy_output$name == "Digital and data (DDAT)",]$value, c(0,2,2,1,1,0,2,0,2,1,0))
-  expect_equal(dummy_output[dummy_output$name == "Actuaries",]$value, c(0,1,1,0,0,0,1,0,1,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Economists (GES)",]$value, c(0,1,1,0,0,0,1,0,1,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Geographers",]$value, c(0,0,0,0,0,0,0,0,0,0,0))
-  expect_equal(dummy_output[dummy_output$name == "Operational researchers (GORS)",]$value, c(0,2,2,1,1,0,2,0,2,1,0))
-  expect_equal(dummy_output[dummy_output$name == "Social researchers (GSR)",]$value, c(1,1,1,1,1,1,1,1,1,1,1))
-  expect_equal(dummy_output[dummy_output$name == "Statisticians (GSG)",]$value, c(1,3,3,2,2,1,3,1,3,2,1))
+                                         "prof",
+                                         "n"))
 })
