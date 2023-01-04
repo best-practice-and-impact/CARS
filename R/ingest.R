@@ -32,8 +32,6 @@ get_tidy_data <- function(...) {
 #'@param export the export ID (character string/numeric).
 
 #'@return the exported data as a dataframe
-#'
-#'@export
 
 ingest <- function(survey = "1167489",
                    token = Sys.getenv("CARS_TOKEN"),
@@ -97,8 +95,6 @@ ingest <- function(survey = "1167489",
 #'@param r api response object
 #'
 #'@return response content as a data.frame
-#'
-#'@export
 
 convert_raw <- function(r) {
 
@@ -130,8 +126,6 @@ convert_raw <- function(r) {
 #' @param raw_data data frame returned by convert_raw()
 #'
 #' @return data frame with empty rows removed and tidied column names
-#'
-#' @export
 
 tidy_colnames <- function(raw_data) {
 
