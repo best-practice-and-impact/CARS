@@ -269,7 +269,7 @@ summarise_rap_basic <- function(data){
 #'
 #' @description calculate frequency table for Advanced rap scores
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
@@ -293,7 +293,7 @@ summarise_rap_advanced <- function(data){
 #'
 #' @description Create a frequency table of knowledge of RAP
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -323,7 +323,7 @@ summarise_rap_knowledge <- function(data){
 #'
 #' @description Create frequency table of opinions of RAP
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -370,7 +370,7 @@ summarise_rap_opinions <- function(data) {
 #'
 #' @description Create frequency table of documentation use
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -473,7 +473,7 @@ summarise_rap_comp <- function(data) {
 #'
 #' @description calculate frequency table for continuous integration
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -501,7 +501,7 @@ summarise_ci <- function(data) {
 #'
 #' @description calculate frequency table for dependency management.
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -529,7 +529,7 @@ summarise_dep_man <- function(data) {
 #'
 #' @description calculate frequency table for dependency_management.
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -557,7 +557,7 @@ summarise_rep_workflow <- function(data) {
 #'
 #' @description calculate frequency table for ability change
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -587,7 +587,7 @@ summarise_ability_change <- function(data) {
 #'
 #' @description calculate counts of responents reporting access to, knowledge of, or both for each programming language.
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
@@ -632,7 +632,7 @@ summarise_language_status <- function(data) {
 #'
 #' @description calculate frequency table for if someone line manages someone who codes
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -655,7 +655,7 @@ summarise_line_manage <- function(data){
 #'
 #' @description calculate the cross tab of coding frequency by capability change
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -690,7 +690,7 @@ summarise_cap_change_by_freq <- function(data){
 #'
 #' @description calculate frequency table for basic rap score compared with implementation of RAP
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
@@ -720,7 +720,7 @@ summarise_basic_score_by_imp <- function(data){
 #'
 #' @description calculate frequency table for advanced rap score compared with implementation of RAP
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 
