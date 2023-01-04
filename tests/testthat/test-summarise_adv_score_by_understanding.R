@@ -1,11 +1,11 @@
 test_that("summarise_adv_score_by_understanding works", {
 
   dummy_data <- data.frame(RAP_components = c(NA,
-                                              rep("Strongly disagree", 2),
+                                              rep("Strongly Disagree", 2),
                                               rep("Disagree", 3),
                                               rep("Neutral", 4),
                                               rep("Agree", 7),
-                                              rep("Strongly agree", 5)),
+                                              rep("Strongly Agree", 5)),
                            advanced_rap_score = c(NA,
                                                   0,
                                                   rep(1, 2),
@@ -20,16 +20,16 @@ test_that("summarise_adv_score_by_understanding works", {
 
   expect_false(any(is.na.data.frame(got)))
 
-  expected <- data.frame(RAP_components = factor(c(rep("Strongly disagree", 8),
+  expected <- data.frame(RAP_components = factor(c(rep("Strongly Disagree", 8),
                                                    rep("Disagree", 8),
                                                    rep("Neutral", 8),
                                                    rep("Agree", 8),
-                                                   rep("Strongly agree", 8)),
-                                                 levels = c("Strongly disagree",
+                                                   rep("Strongly Agree", 8)),
+                                                 levels = c("Strongly Disagree",
                                                             "Disagree",
                                                             "Neutral",
                                                             "Agree",
-                                                            "Strongly agree")),
+                                                            "Strongly Agree")),
                          advanced_rap_score = factor(rep(c(0,1,2,3,4,5,6,7), 5),
                                                      levels = c(0,1,2,3,4,5,6,7)),
                          n = c(0.50, 0.50, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,

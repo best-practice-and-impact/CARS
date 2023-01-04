@@ -12,7 +12,7 @@ test_that("summarise_languages_by_prof works", {
     knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
     knowledge_stata = c("Yes", rep("No", 2), rep("Don't Know", 3)),
     knowledge_JS = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-    knowledge_java_scala = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
+    knowledge_java = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
     knowledge_C = c("Yes", rep("No", 2), rep("Don't Know", 3)),
     knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
     prof_DS = c(rep("Yes", 3), rep("No", 3)),

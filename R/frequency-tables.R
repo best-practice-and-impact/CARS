@@ -708,11 +708,11 @@ summarise_basic_score_by_imp <- function(data){
   col2 <- "basic_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
@@ -738,11 +738,11 @@ summarise_adv_score_by_imp <- function(data){
   col2 <- "advanced_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
@@ -768,11 +768,11 @@ summarise_basic_score_by_understanding <- function(data){
   col2 <- "basic_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
@@ -798,11 +798,11 @@ summarise_adv_score_by_understanding <- function(data){
   col2 <- "advanced_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
@@ -829,16 +829,14 @@ summarise_languages_by_prof <- function(data) {
              "prof_GORS", "prof_GSR", "prof_GSG")
   langs <- c("knowledge_R", "knowledge_SQL", "knowledge_python", "knowledge_SAS",
              "knowledge_SPSS", "knowledge_VBA", "knowledge_matlab", "knowledge_stata",
-             "knowledge_JS", "knowledge_java_scala", "knowledge_C")
+             "knowledge_JS", "knowledge_java", "knowledge_C")
   lang_names <- c("R", "SQL", "Python", "SAS", "SPSS", "VBA", "Matlab", "Stata",
                   "JavaScript", "Scala", "C#/C++")
-
-  prof_counts <- colSums(data[profs] == "Yes")
 
   prof_langs <- sapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
-    freqs <- as.vector(colSums(filtered_data[langs] == "Yes"))
+    freqs <- as.vector(colSums(filtered_data[langs] == "Yes", na.rm = TRUE))
 
     return(freqs)
   }) %>% data.frame

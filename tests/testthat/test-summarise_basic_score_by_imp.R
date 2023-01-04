@@ -1,11 +1,11 @@
 test_that("summarise_basic_score_by_imp works", {
 
   dummy_data <- data.frame(RAP_implementing = c(NA,
-                                                rep("Strongly disagree", 2),
+                                                rep("Strongly Disagree", 2),
                                                 rep("Disagree", 3),
                                                 rep("Neutral", 4),
                                                 rep("Agree", 5),
-                                                rep("Strongly agree", 3)),
+                                                rep("Strongly Agree", 3)),
                            basic_rap_score = c(NA,
                                                0,
                                                rep(0.50, 2),
@@ -19,16 +19,16 @@ test_that("summarise_basic_score_by_imp works", {
 
   expect_false(any(is.na.data.frame(got)))
 
-  expected <- data.frame(RAP_implementing = factor(c(rep("Strongly disagree", 7),
+  expected <- data.frame(RAP_implementing = factor(c(rep("Strongly Disagree", 7),
                                                      rep("Disagree", 7),
                                                      rep("Neutral", 7),
                                                      rep("Agree", 7),
-                                                     rep("Strongly agree", 7)),
-                                                   levels = c("Strongly disagree",
+                                                     rep("Strongly Agree", 7)),
+                                                   levels = c("Strongly Disagree",
                                                               "Disagree",
                                                               "Neutral",
                                                               "Agree",
-                                                              "Strongly agree")),
+                                                              "Strongly Agree")),
                          basic_rap_score = factor(rep(c(0,1,2,3,4,5,6), 5),
                                                   levels = c(0,1,2,3,4,5,6)),
                          n = c(1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
