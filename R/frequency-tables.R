@@ -245,7 +245,7 @@ summarise_coding_practices <- function(data) {
 #'
 #' @description calculate frequency table for basic rap scores
 #'
-#' @param data full CARS datasetafter pre-processing
+#' @param data full CARS dataset after pre-processing
 #'
 #' @return frequency table (data.frame)
 #'
