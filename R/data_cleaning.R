@@ -1,23 +1,4 @@
 
-#' @title Clean data
-#'
-#' @description API function for data cleaning. Replaces column names with more suitable names and fixes incorrect apostrophes.
-#'
-#' @param data tidy CARS dataset
-#'
-#' @return clean CARS dataset
-#'
-#' @export
-
-clean_data <- function(data) {
-
-  data <- data %>%
-    rename_cols() %>%
-    replace_apostrophes()
-
-  return(data)
-}
-
 #' @title Rename columns
 #'
 #' @description Renames columns and removes unnecessary columns
@@ -25,6 +6,8 @@ clean_data <- function(data) {
 #' @param data tidy CARS dataset
 #'
 #' @return data.frame
+#'
+#' @export
 
 rename_cols <- function(data) {
   if (ncol(data) != 112) {
@@ -142,21 +125,6 @@ rename_cols <- function(data) {
   )
 
   data <- data[!colnames(data) %in% c("UserNo", "Name", "Email", "IP.Address", "Unique.ID")]
-
-  return(data)
-}
-
-#' @title Replace apostrophes
-#'
-#' @description Replaces @SQ@ in the data with '.
-#'
-#' @param data tidy CARS dataset
-#'
-#' @return data.frame
-
-replace_apostrophes <- function(data) {
-  data <- data %>%
-    dplyr::mutate(across(everything(), function(x){gsub("@SQ@", "'", x)}))
 
   return(data)
 }

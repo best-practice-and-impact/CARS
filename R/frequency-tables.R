@@ -456,13 +456,15 @@ summarise_rap_comp <- function(data) {
 
   levels <- c(1)
 
-  components <- calculate_freqs(data, questions, levels, labels, prop = FALSE)
+  components <- calculate_freqs(data, questions, levels, labels)
 
   components <- components %>%
-    mutate(n = n/sum(data$code_freq != "Never")) %>%
     mutate(name = factor(name, levels = labels)) %>%
     arrange(name) %>%
-    mutate(value = c(rep("Basic", 6), rep("Advanced", 7)))
+    mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
+    mutate(n = round(colSums(data[questions]/sum(colSums(data[questions]))), 2))
+
+  names(components$n) <- NULL
 
   return(components)
 

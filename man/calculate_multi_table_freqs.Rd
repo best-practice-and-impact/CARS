@@ -4,7 +4,7 @@
 \alias{calculate_multi_table_freqs}
 \title{Create tidy cross table}
 \usage{
-calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
+calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop = TRUE)
 }
 \arguments{
 \item{data}{pre-processed CARS data set}
