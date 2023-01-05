@@ -16,7 +16,7 @@
 #'@param x_margin margin between columns (chart proportion). 0.1 by default.
 #'@param bar_colour Colour name. Defaults to blue (see carsurvey2::get_gradient())
 #'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Vertical by default
+#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Horizonal by default
 #'
 #'@return subplots
 #'
@@ -126,7 +126,8 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #'@export
 
-plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
+plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,
+                       xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
 
   # Set default bar colour
   if (missing(bar_colour)) {
