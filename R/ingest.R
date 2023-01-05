@@ -111,9 +111,12 @@ convert_raw <- function(r) {
     sep = ",",
     header = TRUE,
     fill = TRUE,
-    quote = "\"\"",
+    quote = c("\"\"", "'"),
     na.strings = c("", ".", "NA", "-", "\"\"", "\".\"", "\"NA\"", "\"-\"")
   )
+
+  # Fix apostrophes
+  data[] <- lapply(data, function(x) gsub("@SQ@", "'", x))
 
   return(data)
 }

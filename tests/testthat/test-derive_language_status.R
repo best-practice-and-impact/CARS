@@ -1,5 +1,5 @@
 
-test_that("Output is as expected", {
+test_that("derive_language_status output is as expected", {
 
   # Data operations table
   # Frequency table should not include missing values and should include counts of 0

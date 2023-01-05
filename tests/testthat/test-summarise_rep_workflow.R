@@ -1,17 +1,22 @@
 
-test_that("summarise_rep_workflow works", {
+dummy_data <- data.frame(reproducible_workflow = c(NA,
+                                                   rep("Yes", 2),
+                                                   rep("No", 3),
+                                                   rep("I don't know what reproducible workflows are", 4)))
 
-  dummy_data <- data.frame(reproducible_workflow = c(NA,
-                                                     rep("Yes", 2),
-                                                     rep("No", 3),
-                                                     rep("I don't know what reproducible workflows are", 4)))
+test_that("summarise_rep_workflow missing data is handled correctly", {
 
   got <- summarise_rep_workflow(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
 
-  expected <- data.frame(name = c(rep("Use reproducible workflow packages", 3)),
-                         value = factor(c("Yes",
+})
+
+test_that("summarise_rep_workflow output is as expected", {
+
+  got <- summarise_rep_workflow(dummy_data)
+
+  expected <- data.frame(value = factor(c("Yes",
                                           "No",
                                           "I don't know what reproducible workflows are"),
                                         levels = c("Yes",
@@ -23,7 +28,7 @@ test_that("summarise_rep_workflow works", {
 
 })
 
-test_that("Validation checks work", {
+test_that("summarise_rep_workflow validation works", {
 
   dummy_data <- data.frame(Test = c("test1", "test2"))
 

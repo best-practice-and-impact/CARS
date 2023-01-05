@@ -1,19 +1,24 @@
 
-test_that("summarise_rap_opinions works", {
+dummy_data <- data.frame(heard_of_RAP = c("No", "Yes", "Yes", "Yes", "Yes"),
+                         RAP_confident = c("Strongly Agree" , "Agree", "Neutral", "Disagree", "Strongly Disagree"),
+                         RAP_supported = c("Strongly Disagree", "Strongly Agree" , "Agree", "Neutral", "Disagree"),
+                         RAP_resources = c("Disagree", "Strongly Disagree", "Strongly Agree" , "Agree", "Neutral"),
+                         RAP_components = c("Neutral", "Disagree", "Disagree", "Strongly Agree" , "Agree"),
+                         RAP_important = c("Strongly Agree" , "Agree", NA, "Disagree", "Strongly Agree" ),
+                         RAP_implementing = c("Strongly Agree" , "Agree", "Neutral", "Disagree", "Strongly Disagree"),
+                         RAP_planning = c("Strongly Disagree", "Strongly Agree" , "Agree", "Neutral", "Disagree"))
 
-  dummy_data <- data.frame(heard_of_RAP = c("No", "Yes", "Yes", "Yes", "Yes"),
-                           RAP_confident = c("Strongly Agree" , "Agree", "Neutral", "Disagree", "Strongly Disagree"),
-                           RAP_supported = c("Strongly Disagree", "Strongly Agree" , "Agree", "Neutral", "Disagree"),
-                           RAP_resources = c("Disagree", "Strongly Disagree", "Strongly Agree" , "Agree", "Neutral"),
-                           RAP_components = c("Neutral", "Disagree", "Disagree", "Strongly Agree" , "Agree"),
-                           RAP_important = c("Strongly Agree" , "Agree", NA, "Disagree", "Strongly Agree" ),
-                           RAP_implementing = c("Strongly Agree" , "Agree", "Neutral", "Disagree", "Strongly Disagree"),
-                           RAP_planning = c("Strongly Disagree", "Strongly Agree" , "Agree", "Neutral", "Disagree"))
-
+test_that("summarise_rap_opinions missing data is handled correctly", {
 
   got <- summarise_rap_opinions(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
+
+})
+
+test_that("summarise_rap_opinions output is as expected", {
+
+  got <- summarise_rap_opinions(dummy_data)
 
   expected <- data.frame(name = c(rep("I and/or my team are currently implementing RAP", 5),
                                   rep("I feel confident implementing RAP in my work", 5),
@@ -42,7 +47,7 @@ test_that("summarise_rap_opinions works", {
 
 })
 
-test_that("Validation checks work", {
+test_that("summarise_rap_opinions validation works", {
 
   dummy_data <- data.frame(Test = c("test1", "test2"))
 

@@ -1,21 +1,27 @@
 
-test_that("summarise_coding_practises works", {
+dummy_data <- data.frame(prac_use_open_source = c(rep("Never", 3), rep("Sometimes", 2), rep(NA, 1)),
+                         prac_open_source_own = c(rep("Sometimes", 3), rep("I don't understand this question", 2), rep("All the time", 1)),
+                         prac_version_control = c(rep("Rarely", 3), rep("All the time", 2), rep("Never", 1)),
+                         prac_review = c(rep("Regularly", 3), rep("All the time", 2), rep("Never", 1)),
+                         prac_functions = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Rarely", 1)),
+                         prac_unit_test = c(rep("All the time", 3), rep("Rarely", 2), rep("Never", 1)),
+                         prac_package = c(rep("Never", 3), rep("Sometimes", 2), rep("Rarely", 1)),
+                         prac_dir_structure = c(rep("Sometimes", 3), rep("Rarely", 2), rep("Never", 1)),
+                         prac_style = c(rep("Rarely", 3), rep("Never", 2), rep("Sometimes", 1)),
+                         prac_automated_QA = c(rep("Regularly", 3), rep("Sometimes", 2), rep("Never", 1)),
+                         prac_AQUA_book = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Sometimes", 1)))
 
-  dummy_data <- data.frame(prac_use_open_source = c(rep("Never", 3), rep("Sometimes", 2), rep(NA, 1)),
-                           prac_open_source_own = c(rep("Sometimes", 3), rep("I don't understand this question", 2), rep("All the time", 1)),
-                           prac_version_control = c(rep("Rarely", 3), rep("All the time", 2), rep("Never", 1)),
-                           prac_review = c(rep("Regularly", 3), rep("All the time", 2), rep("Never", 1)),
-                           prac_functions = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Rarely", 1)),
-                           prac_unit_test = c(rep("All the time", 3), rep("Rarely", 2), rep("Never", 1)),
-                           prac_package = c(rep("Never", 3), rep("Sometimes", 2), rep("Rarely", 1)),
-                           prac_dir_structure = c(rep("Sometimes", 3), rep("Rarely", 2), rep("Never", 1)),
-                           prac_style = c(rep("Rarely", 3), rep("Never", 2), rep("Sometimes", 1)),
-                           prac_automated_QA = c(rep("Regularly", 3), rep("Sometimes", 2), rep("Never", 1)),
-                           prac_AQUA_book = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Sometimes", 1)))
+test_that("summarise_coding_practises missing data is handled correctly", {
 
   got <- summarise_coding_practices(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
+
+})
+
+test_that("summarise_coding_practises output is as expected", {
+
+  got <- summarise_coding_practices(dummy_data)
 
   expected <- data.frame(name = c(rep("Code my team writes is reviewed by a colleague", 6),
                                   rep("I collect my code and supporting material into packages", 6),

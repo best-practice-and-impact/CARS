@@ -3,47 +3,45 @@ dummy_data <- data.frame(prac_functions = c("All the time", "Regularly", "Someti
                          doc_functions = c("Rarely", "Never", "All the time", "Regularly", "Sometimes"),
                          prac_package = c("Sometimes", "Rarely", "Never", "All the time", "Regularly"),
                          prac_style = c("Regularly", "Sometimes", "Rarely", "Never", "All the time"),
-                         prac_automated_QA = c("Yes", "No", "Yes", "No", "I don't know what continuous integration is"),
-                         prac_dir_structure = c("I don't know what continuous integration is", "Yes", "No", "Yes", "No"))
+                         CI = c("Yes", "No", "Yes", "No", "I don't know what dependency management is"),
+                         dep_management = c("I don't know what continuous integration is", "Yes", "No", "Yes", "No"))
 
-dummy_output <- derive_advanced_rap_scores(dummy_data)
+test_that("derive_advanced_rap_scores validation works", {
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  dummy_data <- data.frame()
+
+  expect_error(derive_advanced_rap_scores(dummy_data), "Unexpected input - missing column names: prac_functions\nprac_unit_test\ndoc_functions\nprac_package\nprac_style\nCI\ndep_management")
+
 })
 
-new_cols <- c("function_score",
-              "unit_test_score",
-              "function_doc_score",
-              "package_score",
-              "code_style_score",
-              "cont_integreation_score",
-              "dep_management_score",
-              "advanced_rap_score")
+test_that("derive_advanced_rap_scores missing data is handled correctly", {
+  dummy_data[1] <- NA
 
-test_that("output has new columns", {
-  expect_true(identical(new_cols, colnames(dummy_output[8:15])))
+  got <- derive_advanced_rap_scores(dummy_data)
+
+  expect_false(any(is.na.data.frame(got[8:15])))
 })
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na(dummy_output)))
-})
+test_that("derive_advanced_rap_scores output is as expected", {
 
-test_that("Check number of rows in output", {
-  expect_equal(nrow(dummy_output), 5)
-})
+  got <- derive_advanced_rap_scores(dummy_data)
 
-test_that("Check number of columns in output", {
-  expect_equal(ncol(dummy_output), 15)
-})
+  expected <- data.frame(prac_functions = c("All the time", "Regularly", "Sometimes", "Rarely", "Never"),
+                         prac_unit_test = c("Never", "All the time", "Regularly", "Sometimes", "Rarely"),
+                         doc_functions = c("Rarely", "Never", "All the time", "Regularly", "Sometimes"),
+                         prac_package = c("Sometimes", "Rarely", "Never", "All the time", "Regularly"),
+                         prac_style = c("Regularly", "Sometimes", "Rarely", "Never", "All the time"),
+                         CI = c("Yes", "No", "Yes", "No", "I don't know what dependency management is"),
+                         dep_management = c("I don't know what continuous integration is", "Yes", "No", "Yes", "No"),
+                         function_score = c(1, 1, 0, 0, 0),
+                         unit_test_score = c(0, 1, 1, 0, 0),
+                         function_doc_score = c(0, 0, 1, 1, 0),
+                         package_score = c(0, 0, 0, 1, 1),
+                         code_style_score = c(1, 0, 0, 0, 1),
+                         cont_integreation_score = c(1, 0, 1, 0, 0),
+                         dep_management_score = c(0, 1, 0, 1, 0),
+                         advanced_rap_score = c(3, 3, 3, 3, 2))
 
-test_that("output values are correct", {
-  expect_equal(dummy_output[[8]], c(1, 1, 0, 0, 0))
-  expect_equal(dummy_output[[9]], c(0, 1, 1, 0, 0))
-  expect_equal(dummy_output[[10]], c(0, 0, 1, 1, 0))
-  expect_equal(dummy_output[[11]], c(0, 0, 0, 1, 1))
-  expect_equal(dummy_output[[12]], c(1, 0, 0, 0, 1))
-  expect_equal(dummy_output[[13]], c(1, 0, 1, 0, 0))
-  expect_equal(dummy_output[[14]], c(0, 1, 0, 1, 0))
-  expect_equal(dummy_output[[15]], c(3, 3, 3, 3, 2))
+  expect_equal(got, expected)
+
 })

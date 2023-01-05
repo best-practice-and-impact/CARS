@@ -1,15 +1,20 @@
 
-test_that("summarise_rap_advanced works", {
+dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4), rep("regularly", 2), rep("All the time", 6)),
+                         advanced_rap_score = c(0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7))
 
-  dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4), rep("regularly", 2), rep("All the time", 6)),
-                           advanced_rap_score = c(0, 1, 2, 2, 3, 3, 3, 4, 4, 5, 6, 7, 7))
+test_that("summarise_rap_advanced missing data is handled correctly", {
 
   got <- summarise_rap_advanced(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
 
-  expected <- data.frame(name = rep("Advanced RAP score", 8),
-                         value = factor(0:7,
+})
+
+test_that("summarise_rap_advanced output is as expected", {
+
+  got <- summarise_rap_advanced(dummy_data)
+
+  expected <- data.frame(value = factor(0:7,
                                         levels = c(0:7)),
                          n = c(0.00, 0.08, 0.17, 0.25, 0.17, 0.08, 0.08, 0.17))
 

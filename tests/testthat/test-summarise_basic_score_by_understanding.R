@@ -1,23 +1,30 @@
-test_that("summarise_basic_rap_score_by_understanding works", {
 
-  dummy_data <- data.frame(RAP_components = c(NA,
-                                              rep("Strongly Disagree", 2),
-                                              rep("Disagree", 3),
-                                              rep("Neutral", 4),
-                                              rep("Agree", 5),
-                                              rep("Strongly Agree", 3)),
-                           basic_rap_score = c(NA,
-                                               0,
-                                               rep(1, 2),
-                                               rep(2, 3),
-                                               rep(3, 4),
-                                               rep(4, 4),
-                                               rep(5, 2),
-                                               6))
+dummy_data <- data.frame(RAP_components = c(NA,
+                                            rep("Strongly Disagree", 2),
+                                            rep("Disagree", 3),
+                                            rep("Neutral", 4),
+                                            rep("Agree", 5),
+                                            rep("Strongly Agree", 3)),
+                         basic_rap_score = c(NA,
+                                             0,
+                                             rep(1, 2),
+                                             rep(2, 3),
+                                             rep(3, 4),
+                                             rep(4, 4),
+                                             rep(5, 2),
+                                             6))
+
+test_that("summarise_basic_rap_score_by_understanding missing data is handled correctly", {
 
   got <- summarise_basic_score_by_understanding(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
+
+})
+
+test_that("summarise_basic_rap_score_by_understanding output is as expected", {
+
+  got <- summarise_basic_score_by_understanding(dummy_data)
 
   expected <- data.frame(RAP_components = factor(c(rep("Strongly Disagree", 7),
                                                    rep("Disagree", 7),

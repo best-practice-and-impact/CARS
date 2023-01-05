@@ -1,17 +1,24 @@
 
-test_that("summarise_where_learned_code works", {
+dummy_data <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
+                         prev_coding_experience = c(rep("Yes", 8), NA, "No"),
+                         first_learned = c(rep("Self-taught" , 3),
+                                           rep( "In public sector employment", 3),
+                                           rep("other" , 1),
+                                           rep(NA , 3)))
 
-  dummy_data <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
-                           prev_coding_experience = c(rep("Yes", 8), NA, "No"),
-                           first_learned = c(rep("Self-taught" , 3),
-                                             rep( "In public sector employment", 3),
-                                             rep("other" , 1),
-                                             rep(NA , 3)))
+test_that("summarise_where_learned_code missing data is handled correctly", {
 
   got <- summarise_where_learned_code(dummy_data)
 
-  expected <- data.frame(name = c(rep("First coding experience", 6)),
-                         value = factor(c("In current role",
+  expect_false(any(is.na.data.frame(got)))
+
+})
+
+test_that("summarise_where_learned_code output is as expected", {
+
+  got <- summarise_where_learned_code(dummy_data)
+
+  expected <- data.frame(value = factor(c("In current role",
                                           "In education",
                                           "In private sector employment",
                                           "In public sector employment",
@@ -29,7 +36,7 @@ test_that("summarise_where_learned_code works", {
 
 })
 
-test_that("Validation checks work", {
+test_that("summarise_where_learned_code validation works", {
 
   dummy_data_1 <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
                              prev_coding_experience = c(rep("Yes", 8), NA, "No"))

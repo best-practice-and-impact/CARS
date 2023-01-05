@@ -1,22 +1,28 @@
 
-test_that("summarise_cap_change_by_freq", {
+dummy_data <- data.frame(coding_ability_change = c(NA,
+                                                   rep("Significantly worse", 2),
+                                                   rep("Slightly worse", 3),
+                                                   rep("No change", 4),
+                                                   rep("Slightly better", 5),
+                                                   rep("Significantly better", 6)),
+                         code_freq = c(NA,
+                                       rep("Sometimes", 6),
+                                       rep("All the time", 5),
+                                       rep("Never", 3),
+                                       rep("Rarely", 4),
+                                       rep("Regularly", 2)))
 
-  dummy_data <- data.frame(coding_ability_change = c(NA,
-                                                     rep("Significantly worse", 2),
-                                                     rep("Slightly worse", 3),
-                                                     rep("No change", 4),
-                                                     rep("Slightly better", 5),
-                                                     rep("Significantly better", 6)),
-                           code_freq = c(NA,
-                                         rep("Sometimes", 6),
-                                         rep("All the time", 5),
-                                         rep("Never", 3),
-                                         rep("Rarely", 4),
-                                         rep("Regularly", 2)))
+test_that("summarise_cap_change_by_freq missing data is handled correctly", {
 
   got <- summarise_cap_change_by_freq(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
+
+})
+
+test_that("summarise_cap_change_by_freq output is as expected", {
+
+  got <- summarise_cap_change_by_freq(dummy_data)
 
   expected <- data.frame(code_freq = factor(c(rep("Never", 5),
                                               rep("Rarely", 5),

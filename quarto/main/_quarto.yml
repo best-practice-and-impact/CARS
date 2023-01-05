@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: ../../docs/
+
+website:
+  title: "DRAFT: Coding in Analysis and Research Survey 2022"
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Home
+      - href: summary.qmd
+        text: Summary statistics
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+editor: visual
+execute:
+  echo: false
+  warning: false

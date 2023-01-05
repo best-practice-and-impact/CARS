@@ -35,7 +35,7 @@ NA,-\r\n
   got <- convert_raw(r)
 
   exp <- data.frame(col1 = c("test", rep(NA, 4)),
-                    col2 = c(11, rep(NA, 4))
+                    col2 = c("11", rep(NA, 4))
   )
 
   expect_equal(got, exp)
