@@ -6,7 +6,7 @@
 #'Incomplete validation checks: some combinations of number of plots and number of rows/columns will fail:
 #'Each column should contain at least two charts.
 #'
-#'@param data Frequency table (data frame). Expects a tidy dataset with 3 columns: factor 1 (categorical axes), factor 2 (one plot per factor level) and values.
+#'@param data Frequency table (data frame). Expects a tidy data set with 3 columns: factor 1 (categorical axes), factor 2 (one plot per factor level) and values.
 #'@param xlab X axis title
 #'@param ylab Y axis title
 #'@param height plot height in pixels
@@ -16,13 +16,14 @@
 #'@param x_margin margin between columns (chart proportion). 0.1 by default.
 #'@param bar_colour Colour name. Defaults to blue (see carsurvey2::get_gradient())
 #'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Vertical by default
 #'
 #'@return subplots
 #'
 #'@export
 
-freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3, y_margin = .1, x_margin = .1, font_size = 12, orientation = "h") {
+freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3,
+                          y_margin = .1, x_margin = .1, font_size = 12, orientation = "h") {
 
   if (nrows == 1) {
     stop("Unexpected input: n_rows should be 2 or greater.")
@@ -118,7 +119,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'@param xlab X axis title (optional)
 #'@param ylab Y axis title (optional)
 #'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Vertical by default
 #'@param ... additional plotly_ly arguments
 #'
 #'@return bar chart
@@ -228,7 +229,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'@param colour_scale type of colour scale ("gradient", "scale" or "2gradients"). See get_gradient(), get_2colour_scale() and get_2colour_gradients().
 #'@param font_size minimum font size for the plot (numeric).
 #'@param neutral_mid whether the midpoint of the colour scale should be neutral ("2gradients" scale only). TRUE by default
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Vertical by default
 #'@param ... additional plotly_ly arguments
 #'
 #'@return bar chart
@@ -356,7 +357,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 #'@param xlab X axis title
 #'@param ylab Y axis title
 #'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default.
+#'@param orientation plot orientation ("h" = horizontal, "v" = vertical). Vertical by default.
 #'@param ... additional plotly_ly arguments
 #'
 #'@return bar chart
