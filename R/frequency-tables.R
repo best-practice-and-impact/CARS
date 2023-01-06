@@ -131,10 +131,11 @@ summarise_operations <- function(data) {
 #'
 #' @param data full CARS dataset after pre-processing
 #' @param type type of table (knowledge or access)
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #'
 #' @return frequency table (data.frame)
 
-summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
+summarise_coding_tools <- function(data, type = list("knowledge", "access"), prop = TRUE) {
 
   questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
                  "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
@@ -152,7 +153,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- calculate_freqs(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop)
 
   return(frequencies)
 }
@@ -837,14 +838,16 @@ summarise_languages_by_prof <- function(data) {
   outputs <- lapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
-     output <- summarise_coding_tools(filtered_data, "knowledge")
+    output <- summarise_coding_tools(filtered_data, "knowledge", prop = FALSE)
 
-     # Retain frequencies for "Yes" responses only
-     output <- output[output[[2]] == "Yes", ]
+    # Retain frequencies for "Yes" responses only
+    output <- output[output[[2]] == "Yes", ]
 
-     output$value <- prof
+    output$value <- prof
 
-     return(output)
+    output$n <- round(output$n / ifelse(sum(output$n)==0, 1, sum(output$n)), 2)
+
+    return(output)
   })
 
   outputs <- do.call(rbind, outputs)
