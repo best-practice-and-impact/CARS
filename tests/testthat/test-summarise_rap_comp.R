@@ -1,6 +1,6 @@
 
 dummy_data <- data.frame(code_freq = c(rep("Somtimes", 4)),
-                         use_open_source_score = c(6, 3, 5, 7),
+                         use_open_source_score = c(6, NA, 5, 7),
                          open_code_score = c(2, 4, 6, 8),
                          version_control_score = c(2, 4, 6, 8),
                          peer_review_score = c(6, 5, 5, 7),
@@ -58,7 +58,7 @@ test_that("summarise_rap_comp output is as expected", {
                          value = c("Basic", "Basic", "Basic", "Basic", "Basic", "Basic",
                                    "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced"),
 
-                         n = c(0.09, 0.08, 0.08, 0.10, 0.05, 0.07, 0.11,
+                         n = c(0.08, 0.08, 0.08, 0.10, 0.05, 0.07, 0.11,
                                0.07, 0.08, 0.07, 0.08, 0.07, 0.06)
   )
 

@@ -463,7 +463,10 @@ summarise_rap_comp <- function(data) {
     mutate(name = factor(name, levels = labels)) %>%
     arrange(name) %>%
     mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
-    mutate(n = round(colSums(data[questions]/sum(colSums(data[questions]))), 2))
+    mutate(n = round(colSums(data[questions], na.rm = TRUE) / ifelse(sum(colSums(data[questions], na.rm = TRUE))==0,
+                                                                     1,
+                                                                     sum(colSums(data[questions], na.rm = TRUE))),
+                     2))
 
   names(components$n) <- NULL
 
@@ -972,6 +975,6 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
 
 prop_by_group <- function(data) {
 
-  data %>% group_by_at(1) %>% mutate(n = round(n/sum(n), 2)) %>% data.frame()
+  data %>% group_by_at(1) %>% mutate(n = round(n/ifelse(sum(n)==0,1,sum(n)), 2)) %>% data.frame()
 
 }
