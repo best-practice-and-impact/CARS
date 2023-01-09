@@ -27,6 +27,8 @@ derive_vars <- function(data) {
 #' @return data.frame
 
 derive_language_status <- function(data) {
+  data[is.na(data)] <- "MISSING"
+
   lang_list <- colnames(data)[grepl("access_", colnames(data))]
 
   lang_list <- lang_list[!grepl("other", lang_list)]
@@ -126,7 +128,8 @@ derive_basic_rap_scores <- function(data) {
 
 derive_advanced_rap_scores <- function(data) {
 
-  expected_columns <- c("prac_functions",
+  expected_columns <- c("code_freq",
+                        "prac_functions",
                         "prac_unit_test",
                         "doc_functions",
                         "prac_package",
@@ -143,6 +146,8 @@ derive_advanced_rap_scores <- function(data) {
     )
   }
 
+  data <- dplyr::filter(data, code_freq != "Never")
+
   high_vals <- c("Regularly", "All the time")
 
   data$function_score <- ifelse(data$prac_functions %in% high_vals, 1, 0)
@@ -150,7 +155,7 @@ derive_advanced_rap_scores <- function(data) {
   data$function_doc_score <- ifelse(data$doc_functions %in% high_vals, 1, 0)
   data$package_score <- ifelse(data$prac_package %in% high_vals, 1, 0)
   data$code_style_score <- ifelse(data$prac_style %in% high_vals, 1, 0)
-  data$cont_integreation_score <- ifelse(data$CI == "Yes", 1, 0)
+  data$cont_integration_score <- ifelse(data$CI == "Yes", 1, 0)
   data$dep_management_score <- ifelse(data$dep_management == "Yes", 1, 0)
 
   data$advanced_rap_score <- rowSums(data[,c("function_score",
@@ -158,8 +163,9 @@ derive_advanced_rap_scores <- function(data) {
                                              "function_doc_score",
                                              "package_score",
                                              "code_style_score",
-                                             "cont_integreation_score",
-                                             "dep_management_score")])
+                                             "cont_integration_score",
+                                             "dep_management_score")],
+                                     na.rm = TRUE)
   return(data)
 
 }

@@ -13,9 +13,10 @@ col2 <- "Q2"
 levels1 <- c("test1", "test2", "test3")
 levels2 <- c(1, 2, 3)
 
-expected <- data.frame(Q1 = factor(c(rep("test1", 3),
-                                     rep("test2", 3),
-                                     rep("test3", 3)),
+expected <- data.frame(Q1 = factor(rep(c("test1",
+                                         "test2",
+                                         "test3"),
+                                       each=3),
                                    levels = levels1),
                        Q2 = factor(c(rep(c(1,2,3), 3)),
                                    levels = levels2),

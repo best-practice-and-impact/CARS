@@ -27,11 +27,12 @@ test_that("summarise_adv_score_by_imp output is as expected", {
 
   got <- summarise_adv_score_by_imp(dummy_data)
 
-  expected <- data.frame(RAP_implementing = factor(c(rep("Strongly Disagree", 8),
-                                                     rep("Disagree", 8),
-                                                     rep("Neutral", 8),
-                                                     rep("Agree", 8),
-                                                     rep("Strongly Agree", 8)),
+  expected <- data.frame(RAP_implementing = factor(rep(c("Strongly Disagree",
+                                                         "Disagree",
+                                                         "Neutral",
+                                                         "Agree",
+                                                         "Strongly Agree"),
+                                                       each=8),
                                                    levels = c("Strongly Disagree",
                                                               "Disagree",
                                                               "Neutral",

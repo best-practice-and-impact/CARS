@@ -12,11 +12,13 @@ dummy_data <- data.frame(code_freq = c(rep("Somtimes", 4)),
                          function_doc_score = c(2, 4, 6, 8),
                          package_score = c(1, 3, 5, 7),
                          code_style_score = c(2, 4, 6, 8),
-                         cont_integreation_score = c(1, 3, 5, 7),
+                         cont_integration_score = c(1, 3, 5, 7),
                          dep_management_score = c(2, 4, 5, 3),
                          advanced_rap_score = c(3, 7, 5, 6))
 
 test_that("summarise_rap_comp missing data is handled correctly", {
+
+  dummy_data[5] <- NA
 
   got <-summarise_rap_comp(dummy_data)
 

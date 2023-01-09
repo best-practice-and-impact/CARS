@@ -4,6 +4,8 @@ dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4), rep("All th
 
 test_that("summarise_rap_basic missing data is handled correctly", {
 
+  dummy_data[3,1] <- NA
+
   got <- summarise_rap_basic(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))

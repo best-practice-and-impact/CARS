@@ -452,7 +452,7 @@ summarise_rap_comp <- function(data) {
                  "function_doc_score",
                  "package_score",
                  "code_style_score",
-                 "cont_integreation_score",
+                 "cont_integration_score",
                  "dep_management_score")
 
   levels <- c(1)
@@ -901,7 +901,10 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
     colnames(frequencies) <- c("value", "n")
 
     if (prop) {
-      frequencies$n <- round(frequencies$n / sum(frequencies$n), 2)
+      frequencies$n <- round(frequencies$n / ifelse(sum(frequencies$n, na.rm = TRUE)==0,
+                                                    1,
+                                                    sum(frequencies$n, na.rm = TRUE)),
+                             2)
     }
 
   } else {

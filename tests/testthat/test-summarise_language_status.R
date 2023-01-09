@@ -26,15 +26,7 @@ dummy_data <- data.frame(
   access_matlab = c("Yes", "No")
 )
 
-dummy_data <- derive_language_status(dummy_data)
-
-test_that("summarise_language_status missing data is handled correctly", {
-
-  got <- summarise_language_status(dummy_data)
-
-  expect_false(any(is.na.data.frame(got)))
-
-})
+dummy_data <- derive_language_status(dummy_data) # Will never return NAs
 
 test_that("summarise_language_status output is as expected", {
 

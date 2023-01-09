@@ -26,11 +26,12 @@ test_that("summarise_basic_rap_score_by_understanding output is as expected", {
 
   got <- summarise_basic_score_by_understanding(dummy_data)
 
-  expected <- data.frame(RAP_components = factor(c(rep("Strongly Disagree", 7),
-                                                   rep("Disagree", 7),
-                                                   rep("Neutral", 7),
-                                                   rep("Agree", 7),
-                                                   rep("Strongly Agree", 7)),
+  expected <- data.frame(RAP_components = factor(rep(c("Strongly Disagree",
+                                                       "Disagree",
+                                                       "Neutral",
+                                                       "Agree",
+                                                       "Strongly Agree"),
+                                                     each=7),
                                                  levels = c("Strongly Disagree",
                                                             "Disagree",
                                                             "Neutral",

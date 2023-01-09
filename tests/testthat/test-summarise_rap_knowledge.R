@@ -8,6 +8,8 @@ dummy_data <- data.frame(heard_of_RAP = c("No", rep("Yes", 13)),
 
 test_that("summarise_rap_knowledge missing data is handled correctly", {
 
+  dummy_data[5, 1] <- NA
+
   got <- summarise_rap_knowledge(dummy_data)
 
   expect_false(any(is.na.data.frame(got)))
