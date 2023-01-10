@@ -98,16 +98,14 @@ derive_basic_rap_scores <- function(data) {
     )
   }
 
-  data <- dplyr::filter(data, code_freq != "Never")
-
   high_vals <- c("Regularly", "All the time")
 
-  data$use_open_source_score <- ifelse(data$prac_use_open_source %in% high_vals, 1, 0)
-  data$open_code_score <- ifelse(data$prac_open_source_own %in% high_vals, 1, 0)
-  data$version_control_score <- ifelse(data$prac_version_control %in% high_vals, 1, 0)
-  data$peer_review_score <- ifelse(data$prac_review %in% high_vals, 1, 0)
-  data$AQUA_book_score <- ifelse(data$prac_AQUA_book %in% high_vals, 1, 0)
-  data$doc_score <- ifelse(data$doc_readme %in% high_vals & data$doc_comments %in% high_vals, 1, 0)
+  data$use_open_source_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_use_open_source %in% high_vals, 1, 0), NA)
+  data$open_code_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_open_source_own %in% high_vals, 1, 0), NA)
+  data$version_control_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_version_control %in% high_vals, 1, 0), NA)
+  data$peer_review_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_review %in% high_vals, 1, 0), NA)
+  data$AQUA_book_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_AQUA_book %in% high_vals, 1, 0), NA)
+  data$doc_score <- ifelse(data$code_freq != "Never", ifelse(data$doc_readme %in% high_vals & data$doc_comments %in% high_vals, 1, 0), NA)
 
   data$basic_rap_score <- rowSums(data[,c("use_open_source_score",
                                           "open_code_score",
@@ -149,17 +147,15 @@ derive_advanced_rap_scores <- function(data) {
     )
   }
 
-  data <- dplyr::filter(data, code_freq != "Never")
-
   high_vals <- c("Regularly", "All the time")
 
-  data$function_score <- ifelse(data$prac_functions %in% high_vals, 1, 0)
-  data$unit_test_score <- ifelse(data$prac_unit_test %in% high_vals, 1, 0)
-  data$function_doc_score <- ifelse(data$doc_functions %in% high_vals, 1, 0)
-  data$package_score <- ifelse(data$prac_package %in% high_vals, 1, 0)
-  data$code_style_score <- ifelse(data$prac_style %in% high_vals, 1, 0)
-  data$cont_integration_score <- ifelse(data$CI == "Yes", 1, 0)
-  data$dep_management_score <- ifelse(data$dep_management == "Yes", 1, 0)
+  data$function_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_functions %in% high_vals, 1, 0), NA)
+  data$unit_test_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_unit_test %in% high_vals, 1, 0), NA)
+  data$function_doc_score <- ifelse(data$code_freq != "Never", ifelse(data$doc_functions %in% high_vals, 1, 0), NA)
+  data$package_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_package %in% high_vals, 1, 0), NA)
+  data$code_style_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_style %in% high_vals, 1, 0), NA)
+  data$cont_integration_score <- ifelse(data$code_freq != "Never", ifelse(data$CI == "Yes", 1, 0), NA)
+  data$dep_management_score <- ifelse(data$code_freq != "Never", ifelse(data$dep_management == "Yes", 1, 0), NA)
 
   data$advanced_rap_score <- rowSums(data[,c("function_score",
                                              "unit_test_score",
@@ -167,8 +163,7 @@ derive_advanced_rap_scores <- function(data) {
                                              "package_score",
                                              "code_style_score",
                                              "cont_integration_score",
-                                             "dep_management_score")],
-                                     na.rm = TRUE)
+                                             "dep_management_score")])
   return(data)
 
 }
