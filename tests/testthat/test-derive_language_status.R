@@ -1,6 +1,6 @@
 
 # Data operations table
-# Frequency table should not include missing values and should include counts of 0
+# Input data should never include missing data.
 dummy_data <- data.frame(
   knowledge_R = c("Yes", "Yes"),
   access_R = c("No", "No"),
@@ -25,16 +25,6 @@ dummy_data <- data.frame(
   knowledge_matlab = c("Yes", "No"),
   access_matlab = c("Yes", "No")
 )
-
-test_that("derive_language_status missing data is handled correctly", {
-
-  dummy_data[1,1] <- NA
-
-  got <- derive_language_status(dummy_data)
-
-  expect_false(any(is.na.data.frame(got)))
-
-})
 
 test_that("derive_language_status output is as expected", {
 

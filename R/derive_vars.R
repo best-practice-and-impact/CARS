@@ -27,7 +27,6 @@ derive_vars <- function(data) {
 #' @return data.frame
 
 derive_language_status <- function(data) {
-  data[is.na(data)] <- "MISSING"
 
   lang_list <- colnames(data)[grepl("access_", colnames(data))]
 
