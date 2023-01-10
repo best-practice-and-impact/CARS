@@ -33,7 +33,7 @@ test_that("summarise_code_freq output is as expected", {
                                                      "Sometimes",
                                                      "Regularly",
                                                      "All the time")),
-                         n=c(0.17, 0, 0.5, 0, 0.33))
+                         n=c(1/6, 0, 0.5, 0, 1/3))
 
   expect_equal(got, expected)
 })

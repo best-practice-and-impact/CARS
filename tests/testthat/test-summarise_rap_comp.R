@@ -60,8 +60,8 @@ test_that("summarise_rap_comp output is as expected", {
                          value = c("Basic", "Basic", "Basic", "Basic", "Basic", "Basic",
                                    "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced"),
 
-                         n = c(0.08, 0.08, 0.08, 0.10, 0.05, 0.07, 0.11,
-                               0.07, 0.08, 0.07, 0.08, 0.07, 0.06)
+                         n = c(18/236, 20/236, 20/236, 23/236, 11/236, 16/236, 26/236,
+                               16/236, 20/236, 16/236, 20/236, 16/236, 14/236)
   )
 
   expect_equal(got, expected)

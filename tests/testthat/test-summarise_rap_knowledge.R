@@ -30,7 +30,7 @@ test_that("summarise_rap_knowledge output is as expected", {
                                                    "I know what a RAP champion is but don't know who the RAP champion in my department is",
                                                    "I know what a RAP champion is and there is no RAP champion in my department",
                                                    "I know who the RAP champion in my department is")),
-                         n = c(0.07, 0.07, 0.21, 0.29, 0.36))
+                         n = c(1/14, 1/14, 3/14, 4/14, 5/14))
 
   expect_equal(got, expected)
 

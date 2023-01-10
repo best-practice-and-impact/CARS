@@ -80,7 +80,8 @@ derive_rap_score <- function(data){
 
 derive_basic_rap_scores <- function(data) {
 
-  expected_columns <- c("prac_use_open_source",
+  expected_columns <- c("code_freq",
+                        "prac_use_open_source",
                         "prac_open_source_own",
                         "prac_version_control",
                         "prac_review",
@@ -96,6 +97,8 @@ derive_basic_rap_scores <- function(data) {
       paste0("Unexpected input - missing column names: ", missing)
     )
   }
+
+  data <- dplyr::filter(data, code_freq != "Never")
 
   high_vals <- c("Regularly", "All the time")
 

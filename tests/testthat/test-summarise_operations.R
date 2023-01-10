@@ -37,8 +37,8 @@ test_that("summarise_operations output is as expected", {
                                           levels = c("I do some or all of this by coding",
                                                      "I do this without coding",
                                                      "I don't do this")),
-                         "n" = c(0.50, 0.17, 0.33, 0.29, 0.29, 0.43, 0.14, 0.57, 0.29, 0.57, 0.00, 0.43,
-                                 0.43, 0.29, 0.29, 0.29, 0.29, 0.43, 0.43, 0.29, 0.29, 0.14, 0.43, 0.43))
+                         "n" = c(1/2, 1/6, 1/3, 2/7, 2/7, 3/7, 1/7, 4/7, 2/7, 4/7, 0, 3/7,
+                                 3/7, 2/7, 2/7, 2/7, 2/7, 3/7, 3/7, 2/7, 2/7, 1/7, 3/7, 3/7))
 
   expect_equal(got, expected)
 

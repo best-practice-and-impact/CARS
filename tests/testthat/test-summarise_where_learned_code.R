@@ -30,7 +30,7 @@ test_that("summarise_where_learned_code output is as expected", {
                                                    "In public sector employment",
                                                    "Self-taught",
                                                    "Other")),
-                         n = c(0.22, 0.00, 0.00, 0.33, 0.33, 0.11))
+                         n = c(2/9, 0, 0, 1/3, 1/3, 1/9))
 
   expect_equal(got, expected)
 

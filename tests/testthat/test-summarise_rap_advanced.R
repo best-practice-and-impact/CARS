@@ -18,7 +18,7 @@ test_that("summarise_rap_advanced output is as expected", {
 
   expected <- data.frame(value = factor(0:7,
                                         levels = c(0:7)),
-                         n = c(0.00, 0.08, 0.17, 0.25, 0.17, 0.08, 0.08, 0.17))
+                         n = c(0, 1/12, 1/6, 1/4, 1/6, 1/12, 1/12, 1/6))
 
   expect_equal(got, expected)
 

@@ -22,7 +22,7 @@ test_that("summarise_line_manage output is as expected", {
                                          levels = c("Yes",
                                                     "No - I manage people who do not write code",
                                                     "No - I don't line manage anyone")),
-                         n = c(0.22, 0.33, 0.44))
+                         n = c(2/9, 1/3, 4/9))
 
   expect_equal(got, expected)
 
