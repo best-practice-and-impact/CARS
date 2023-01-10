@@ -1,33 +1,26 @@
 ---
-format:
-  html:
-    theme: cosmo
-    css: styles.css
-    toc: true
-    self-contained: true 
+title: "{{{title}}}"
 output:
-  theme: cosmo
-  css: styles.css
-  toc: true
-website:
-  title: "DRAFT: Coding in Analysis and Research Survey 2022"
-execute:
-  echo: false
-  warning: false
-params: 
-  title: "NA"
-title: "`r params$title`"
-project:
-  output-dir: ../../docs/professions/
+  html_document
 ---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() ("{{{" and "}}}", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/summary.qmd)
 
 ```{r echo=FALSE}
 
-load("temp/summary_tables.Rda")
-
 library(magrittr)
 
+load("../temp/data.Rda")
+
+data <- {{{filter}}}
+
+tables <- CARS::summarise_all(data, all_tables = FALSE)
+
+samples <- CARS::sample_sizes(data)
+
 ```
+
 
 ## Draft notice
 

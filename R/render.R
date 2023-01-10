@@ -12,12 +12,8 @@
 render_site <- function(data, path = "quarto/main", output_path = "docs/") {
   unlink(output_path, recursive = TRUE)
 
-  tables <- CARS::summarise_all(data, all_tables = TRUE)
-
-  samples <- CARS::sample_sizes(data)
-
   dir.create(paste0(path, "/temp"))
-  save(tables, samples, file = paste0(path, "/temp/summary_tables.Rda"))
+  save(data, file = paste0(path, "/temp/data.rda"))
 
   quarto::quarto_render(input = path, as_job = FALSE)
 
@@ -25,31 +21,75 @@ render_site <- function(data, path = "quarto/main", output_path = "docs/") {
 }
 
 
-
-#' @title render profession page
+#' @title Create profession page
 #'
-#' @description render CARS publication from quarto
+#' @description Create profession breakdown pages from template
 #'
-#' @param data full pre-processed CARS dataset
-#' @param prof profession to include in the report
-#' @param title page title
-#' @param output_path output path (will overwrite existing outputs)
-#' @param path quarto input
+#' @param template_path location of the quarto template
+#' @param output_path output folder. Do not end with "\". Proceed with caution:
+#' existing folders will be overwritten, including any files
+#'
 #'
 #' @export
 
-render_prof_page <- function(data, prof, title, output_path, path = "quarto/template") {
+create_prof_pages <- function(template_path = "quarto/templates/summary.qmd", output_path = "quarto/main/professions") {
 
-  data <- data[data[prof] == "Yes", ]
+  unlink(output_path, recursive = TRUE)
 
-  tables <- CARS::summarise_all(data, all_tables = TRUE)
+  dir.create(output_path)
 
-  samples <- CARS::sample_sizes(data)
+  prof_cols <- c(
+    "prof_DS",
+    "prof_DDAT",
+    "prof_GAD",
+    "prof_GES",
+    "prof_geog",
+    "prof_GORS",
+    "prof_GSR",
+    "prof_GSG"
+  )
 
-  dir.create(paste0(path, "/temp"))
-  save(tables, samples, file = paste0(path, "/temp/", "summary_tables.Rda"))
+  prof_names <- c(
+    "government data scientists",
+    "digital and data profession (DDAT)",
+    "government actuary's department (GAD)",
+    "government economic service (GES)",
+    "governmebt geography profession",
+    "government operational research (GORS)",
+    "government social research (GSR)",
+    "government statician group (GSG)"
+  )
 
-  quarto::quarto_render(input = paste0(path, "/summary.qmd"), output_file = output_path, as_job = FALSE, execute_params = list("title" = title))
+  filenames <- c(
+    "data-scientists.qmd",
+    "digital-and-data.qmd",
+    "government-actuarys-department.qmd",
+    "government-economic-service.qmd",
+    "government-geography.qmd",
+    "government-operational-research.qmd",
+    "government-social-research.qmd",
+    "government-statician-group.qmd"
+  )
 
-  unlink(paste0(path, "/temp"), recursive = TRUE)
+  template <- readr::read_file(template_path)
+
+  # read_file replaces new lines with double new lines
+  template <- gsub("\r", "", template)
+
+  for (i in 1:length(prof_cols)) {
+    filter <- glue::glue('data[data${prof_cols[[i]]} == "Yes", ]')
+
+    title <- paste0("Profession summary: ", prof_names[[i]])
+
+    # Custom open and close tags are used here to avoid clashes with quarto syntax
+    contents <- glue::glue(template, .open = "{{{", .close = "}}}") %>% as.character()
+
+    path <- paste0(output_path, "/", filenames[[i]])
+
+    write(contents, path)
+  }
+
 }
+
+
+
