@@ -76,7 +76,7 @@ derive_rap_score <- function(data){
 #'
 #' @return dataframe containing the additional basic RAP score columns
 #'
-#' @importFrom dplyr mutate across case_when rename_at all_of
+#' @importFrom dplyr mutate across case_when rename_with all_of
 
 derive_basic_rap_scores <- function(data) {
 
@@ -107,6 +107,8 @@ derive_basic_rap_scores <- function(data) {
 
   high_vals <- c("Regularly", "All the time")
 
+  prac_cols <- expected_columns[!(expected_columns %in% c("code_freq", "doc_comments", "doc_readme"))]
+
   data <- data %>%
     mutate(across(.cols = expected_columns[expected_columns != "code_freq"],
                   ~ case_when(code_freq == "Never" ~ NA_real_,
@@ -115,11 +117,9 @@ derive_basic_rap_scores <- function(data) {
                   .names = "{.col}_score")) %>%
     mutate(doc_score = as.integer(doc_comments_score & doc_readme_score)) %>%
     select(-c(doc_comments_score, doc_readme_score)) %>%
-    rename_at(paste0(expected_columns[!(expected_columns %in% c("code_freq",
-                                                                "doc_comments",
-                                                                "doc_readme"))],
-                     "_score"),
-              ~ score_col_names[score_col_names != "doc_score"]) %>%
+    rename_with(~ score_col_names[which(paste0(prac_cols, "_score") == .x)],
+                .cols = paste0(prac_cols,
+                               "_score")) %>%
     mutate(basic_rap_score = rowSums(across(all_of(score_col_names))))
 
   return(data)
@@ -135,7 +135,7 @@ derive_basic_rap_scores <- function(data) {
 #'
 #' @return dataframe containing the additional advanced RAP score columns
 #'
-#' @importFrom dplyr mutate across case_when rename_at all_of
+#' @importFrom dplyr mutate across case_when rename_with all_of
 
 derive_advanced_rap_scores <- function(data) {
 
@@ -174,9 +174,9 @@ derive_advanced_rap_scores <- function(data) {
                               .x == "Yes" ~ 1,
                               TRUE ~ 0),
                   .names = "{.col}_score")) %>%
-    rename_at(paste0(expected_columns[expected_columns != c("code_freq")],
-                     "_score"),
-              ~ score_col_names[score_col_names != "doc_score"]) %>%
+    rename_with(~ score_col_names[which(paste0(expected_columns[expected_columns != "code_freq"], "_score") == .x)],
+                .cols = paste0(expected_columns[expected_columns != "code_freq"],
+                               "_score")) %>%
     mutate(advanced_rap_score = rowSums(across(all_of(score_col_names))))
 
   return(data)
