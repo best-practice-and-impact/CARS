@@ -68,14 +68,15 @@ derive_rap_score <- function(data){
 }
 
 
-#'@title Derive basic RAP scores
+#' @title Derive basic RAP scores
 #'
-#'@description Derive basic RAP score columns from existing variables and add to the dataframe.
+#' @description Derive basic RAP score columns from existing variables and add to the dataframe.
 #'
-#'@param data a date frame containing cleaned CARS wave 3 data
+#' @param data a date frame containing cleaned CARS wave 3 data
 #'
-#'@return dataframe containing the additional basic RAP score columns
+#' @return dataframe containing the additional basic RAP score columns
 #'
+#' @importFrom dplyr mutate across case_when rename_at all_of
 
 derive_basic_rap_scores <- function(data) {
 
@@ -97,34 +98,44 @@ derive_basic_rap_scores <- function(data) {
     )
   }
 
+  score_col_names <- c("use_open_source_score",
+                       "open_code_score",
+                       "version_control_score",
+                       "peer_review_score",
+                       "AQUA_book_score",
+                       "doc_score")
+
   high_vals <- c("Regularly", "All the time")
 
-  data$use_open_source_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_use_open_source %in% high_vals, 1, 0), NA)
-  data$open_code_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_open_source_own %in% high_vals, 1, 0), NA)
-  data$version_control_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_version_control %in% high_vals, 1, 0), NA)
-  data$peer_review_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_review %in% high_vals, 1, 0), NA)
-  data$AQUA_book_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_AQUA_book %in% high_vals, 1, 0), NA)
-  data$doc_score <- ifelse(data$code_freq != "Never", ifelse(data$doc_readme %in% high_vals & data$doc_comments %in% high_vals, 1, 0), NA)
+  data <- data %>%
+    mutate(across(.cols = expected_columns[expected_columns != "code_freq"],
+                  ~ case_when(code_freq == "Never" ~ NA_real_,
+                              .x %in% high_vals ~ 1,
+                              TRUE ~ 0),
+                  .names = "{.col}_score")) %>%
+    mutate(doc_score = as.integer(doc_comments_score & doc_readme_score)) %>%
+    select(-c(doc_comments_score, doc_readme_score)) %>%
+    rename_at(paste0(expected_columns[!(expected_columns %in% c("code_freq",
+                                                                "doc_comments",
+                                                                "doc_readme"))],
+                     "_score"),
+              ~ score_col_names[score_col_names != "doc_score"]) %>%
+    mutate(basic_rap_score = rowSums(across(all_of(score_col_names))))
 
-  data$basic_rap_score <- rowSums(data[,c("use_open_source_score",
-                                          "open_code_score",
-                                          "version_control_score",
-                                          "peer_review_score",
-                                          "AQUA_book_score",
-                                          "doc_score")])
   return(data)
 
 }
 
 
-#'@title Derive advanced RAP scores
+#' @title Derive advanced RAP scores
 #'
-#'@description Derive advanced RAP score columns from existing variables and add to the dataframe.
+#' @description Derive advanced RAP score columns from existing variables and add to the dataframe.
 #'
-#'@param data a date frame containing cleaned CARS wave 3 data
+#' @param data a date frame containing cleaned CARS wave 3 data
 #'
-#'@return dataframe containing the additional advanced RAP score columns
+#' @return dataframe containing the additional advanced RAP score columns
 #'
+#' @importFrom dplyr mutate across case_when rename_at all_of
 
 derive_advanced_rap_scores <- function(data) {
 
@@ -146,23 +157,28 @@ derive_advanced_rap_scores <- function(data) {
     )
   }
 
+  score_col_names <- c("function_score",
+                       "unit_test_score",
+                       "function_doc_score",
+                       "package_score",
+                       "code_style_score",
+                       "cont_integration_score",
+                       "dep_management_score")
+
   high_vals <- c("Regularly", "All the time")
 
-  data$function_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_functions %in% high_vals, 1, 0), NA)
-  data$unit_test_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_unit_test %in% high_vals, 1, 0), NA)
-  data$function_doc_score <- ifelse(data$code_freq != "Never", ifelse(data$doc_functions %in% high_vals, 1, 0), NA)
-  data$package_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_package %in% high_vals, 1, 0), NA)
-  data$code_style_score <- ifelse(data$code_freq != "Never", ifelse(data$prac_style %in% high_vals, 1, 0), NA)
-  data$cont_integration_score <- ifelse(data$code_freq != "Never", ifelse(data$CI == "Yes", 1, 0), NA)
-  data$dep_management_score <- ifelse(data$code_freq != "Never", ifelse(data$dep_management == "Yes", 1, 0), NA)
+  data <- data %>%
+    mutate(across(.cols = expected_columns[expected_columns != "code_freq"],
+                  ~ case_when(code_freq == "Never" ~ NA_real_,
+                              .x %in% high_vals ~ 1,
+                              .x == "Yes" ~ 1,
+                              TRUE ~ 0),
+                  .names = "{.col}_score")) %>%
+    rename_at(paste0(expected_columns[expected_columns != c("code_freq")],
+                     "_score"),
+              ~ score_col_names[score_col_names != "doc_score"]) %>%
+    mutate(advanced_rap_score = rowSums(across(all_of(score_col_names))))
 
-  data$advanced_rap_score <- rowSums(data[,c("function_score",
-                                             "unit_test_score",
-                                             "function_doc_score",
-                                             "package_score",
-                                             "code_style_score",
-                                             "cont_integration_score",
-                                             "dep_management_score")])
   return(data)
 
 }

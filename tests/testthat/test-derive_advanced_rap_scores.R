@@ -4,8 +4,8 @@ dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4)),
                          doc_functions = c(NA, "Never", "All the time", "Regularly", "Sometimes"),
                          prac_package = c(NA, "Rarely", "Never", "All the time", "Regularly"),
                          prac_style = c(NA, "Sometimes", "Rarely", "Never", "All the time"),
-                         CI = c(NA, "No", "Yes", "No", "I don't know what dependency management is"),
-                         dep_management = c(NA, "I don't know what continuous integration is", "No", "Yes", "No"))
+                         CI = c(NA, "No", "Yes", "No", "I don't know what continuous integration is"),
+                         dep_management = c(NA, "I don't know what dependency management is", "No", "Yes", "No"))
 
 test_that("derive_advanced_rap_scores validation works", {
 
@@ -25,8 +25,8 @@ test_that("derive_advanced_rap_scores output is as expected", {
                          doc_functions = c(NA, "Never", "All the time", "Regularly", "Sometimes"),
                          prac_package = c(NA, "Rarely", "Never", "All the time", "Regularly"),
                          prac_style = c(NA, "Sometimes", "Rarely", "Never", "All the time"),
-                         CI = c(NA, "No", "Yes", "No", "I don't know what dependency management is"),
-                         dep_management = c(NA, "I don't know what continuous integration is", "No", "Yes", "No"),
+                         CI = c(NA, "No", "Yes", "No", "I don't know what continuous integration is"),
+                         dep_management = c(NA, "I don't know what dependency management is", "No", "Yes", "No"),
                          function_score = c(NA, 1, 0, 0, 0),
                          unit_test_score = c(NA, 1, 1, 0, 0),
                          function_doc_score = c(NA, 0, 1, 1, 0),
