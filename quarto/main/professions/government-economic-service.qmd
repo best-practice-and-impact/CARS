@@ -1,0 +1,93 @@
+---
+title: "Profession summary: government economic service (GES)"
+output:
+  html_document
+---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() (" and ", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/summary.qmd)
+
+```{r echo=FALSE}
+
+library(magrittr)
+
+load("../temp/data.Rda")
+
+data <- data[data$prof_GES == "Yes", ]
+
+tables <- CARS::summarise_all(data, all_tables = FALSE)
+
+samples <- CARS::sample_sizes(data)
+
+```
+
+
+## Draft notice
+
+Please note that all outputs are provisional and presented here for feedback purposes. We do not recommend using the summary statistics in their current form for any other purpose. Please revisit this page in future to see the finalised outputs, including explanatory text. 
+
+This is a living document. We want our users to get as much value as possible from our analysis. Because of that, we will be updating these pages with additional outputs and insights when possible. To make sure you always access the latest insights, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
+
+
+## Coding frequency and tools
+
+### Coding frequency
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$code_freq, n = samples$all, xlab = "Coding frequency", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$code_freq, n = samples$all, column_headers = c("Coding frequency", "Percent"))
+
+CARS::wrap_outputs("coding-freq", plot, table)
+
+```
+
+
+### Code operations
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$operations, n = samples$all, xlab = "%", ylab = "Operation", font_size = 14)
+table <- CARS::df_to_table(tables$operations, n = samples$all, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
+
+CARS::wrap_outputs("operations", plot, table)
+
+```
+
+
+## Coding practices
+
+### Good analysis coding practices
+
+```{r}
+plot <- CARS::plot_likert(tables$coding_practices, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 3, xlab = "%", font_size = 14, height = 1200)
+table <- CARS::df_to_table(tables$coding_practices, 
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)", 
+                             "Rarely (%)", 
+                             "Sometimes (%)",
+                             "Regularly (%)", 
+                             "All the time (%)"
+                             ),
+                           n = samples$code_at_work,
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("good-practices", plot, table)
+
+```
+
+
+## RAP scores
+
+### RAP components
+
+```{r}
+
+plot <- CARS::plot_grouped(tables$rap_components, n = samples$code_at_work, orientation = "h", ylab = "%", xlab = "RAP component", font_size = 14)
+table <- CARS::df_to_table(tables$rap_components, n = samples$code_at_work, column_headers = c("RAP component", "Type", "Percentage of analysts who code in their work"))
+
+CARS::wrap_outputs("rap-comp", plot, table)
+
+```

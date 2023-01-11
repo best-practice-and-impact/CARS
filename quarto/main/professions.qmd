@@ -1,0 +1,28 @@
+---
+title: Profession breakdowns
+output:
+  html_document
+---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() (" and ", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/professions.qmd)
+
+Below are links to profession-specific reports These contain summary statistics, filtered by profession. Only professions with 20 or more respondents are included.
+
+- [Government data scientists](professions/data-scientists.html)
+
+- [Digital and data profession (DDAT)](professions/digital-and-data.html)
+
+- [Government actuary's department (GAD)](professions/government-actuarys-department.html)
+
+- [Government economic service (GES)](professions/government-economic-service.html)
+
+- [Government geography profession](professions/government-geography.html)
+
+- [Government operational research (GORS)](professions/government-operational-research.html)
+
+- [Government social research (GSR)](professions/government-social-research.html)
+
+- [Government statician group (GSG)](professions/government-statician-group.html)
+
+

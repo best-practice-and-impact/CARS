@@ -11,6 +11,8 @@ website:
         text: Home
       - href: summary.qmd
         text: Summary statistics
+      - href: professions.qmd
+	text: Profession summaries
 format:
   html:
     theme: cosmo

@@ -4,16 +4,7 @@
 \alias{create_prof_pages}
 \title{Create profession page}
 \usage{
-create_prof_pages(
-  template_path = "quarto/templates/summary.qmd",
-  output_path = "quarto/main/professions"
-)
-}
-\arguments{
-\item{template_path}{location of the quarto template}
-
-\item{output_path}{output folder. Do not end with "\". Proceed with caution:
-existing folders will be overwritten, including any files}
+create_prof_pages()
 }
 \description{
 Create profession breakdown pages from template

@@ -25,18 +25,13 @@ render_site <- function(data, path = "quarto/main", output_path = "docs/") {
 #'
 #' @description Create profession breakdown pages from template
 #'
-#' @param template_path location of the quarto template
-#' @param output_path output folder. Do not end with "\". Proceed with caution:
-#' existing folders will be overwritten, including any files
-#'
-#'
 #' @export
 
-create_prof_pages <- function(template_path = "quarto/templates/summary.qmd", output_path = "quarto/main/professions") {
+create_prof_pages <- function() {
 
-  unlink(output_path, recursive = TRUE)
+  unlink("quarto/main/professions", recursive = TRUE)
 
-  dir.create(output_path)
+  dir.create("quarto/main/professions")
 
   prof_cols <- c(
     "prof_DS",
@@ -54,7 +49,7 @@ create_prof_pages <- function(template_path = "quarto/templates/summary.qmd", ou
     "digital and data profession (DDAT)",
     "government actuary's department (GAD)",
     "government economic service (GES)",
-    "governmebt geography profession",
+    "government geography profession",
     "government operational research (GORS)",
     "government social research (GSR)",
     "government statician group (GSG)"
@@ -71,10 +66,12 @@ create_prof_pages <- function(template_path = "quarto/templates/summary.qmd", ou
     "government-statician-group.qmd"
   )
 
-  template <- readr::read_file(template_path)
+  template <- readr::read_file("quarto/templates/summary.qmd")
 
   # read_file replaces new lines with double new lines
   template <- gsub("\r", "", template)
+
+  paths <- c()
 
   for (i in 1:length(prof_cols)) {
     filter <- glue::glue('data[data${prof_cols[[i]]} == "Yes", ]')
@@ -84,10 +81,28 @@ create_prof_pages <- function(template_path = "quarto/templates/summary.qmd", ou
     # Custom open and close tags are used here to avoid clashes with quarto syntax
     contents <- glue::glue(template, .open = "{{{", .close = "}}}") %>% as.character()
 
-    path <- paste0(output_path, "/", filenames[[i]])
+    path <- paste0("quarto/main/professions", "/", filenames[[i]])
 
     write(contents, path)
+
+    html_path <- gsub(".qmd", ".html", filenames[[i]])
+    html_path <- paste0("professions/", html_path)
+
+    paths <- append(paths, glue::glue("- [{to_upper_first(prof_names[[i]])}]({html_path})\n\n\n"))
   }
+
+  prof_links <- paste0(paths, collapse = "")
+
+  prof_page_template <- readr::read_file("quarto/templates/professions.qmd")
+
+  # read_file replaces new lines with double new lines
+  prof_page_template <- gsub("\r", "", prof_page_template)
+
+  prof_page_contents <- glue::glue(prof_page_template, .open = "{{{", .close = "}}}") %>% as.character()
+
+  write(prof_page_contents, "quarto/main/professions.qmd")
+
+  return(paths)
 
 }
 
