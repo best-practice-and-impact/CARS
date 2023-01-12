@@ -2,10 +2,7 @@
 % Please edit documentation in R/colour_scales.R
 \name{get_2colour_scale}
 \alias{get_2colour_scale}
-\title{Create 2 colour scale palette
-
-Creates a list of  colour names (RGB). Generates a scale between two colours. By default these are the
-shades of orange and blue used in the analysis function colour scheme.}
+\title{Create 2 colour scale palette}
 \usage{
 get_2colour_scale(
   n,
@@ -27,8 +24,6 @@ get_2colour_scale(
 vector of hexadecimal colours containing shades between the two selected colours
 }
 \description{
-Create 2 colour scale palette
-
 Creates a list of  colour names (RGB). Generates a scale between two colours. By default these are the
 shades of orange and blue used in the analysis function colour scheme.
 }

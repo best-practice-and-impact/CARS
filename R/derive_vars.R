@@ -1,4 +1,4 @@
-#' Derive variables
+#' @title Derive variables
 #'
 #' @description API function for deriving additional variables.
 #'
@@ -18,7 +18,7 @@ derive_vars <- function(data) {
 
 
 
-#' Derive language status
+#' @title Derive language status
 #'
 #' @description Derve the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
 #'
@@ -115,8 +115,8 @@ derive_basic_rap_scores <- function(data) {
                               .x %in% high_vals ~ 1,
                               TRUE ~ 0),
                   .names = "{.col}_score")) %>%
-    mutate(doc_score = as.integer(doc_comments_score & doc_readme_score)) %>%
-    select(-c(doc_comments_score, doc_readme_score)) %>%
+    mutate(doc_score = as.integer(.data$doc_comments_score & .data$doc_readme_score)) %>%
+    select(-c(.data$doc_comments_score, .data$doc_readme_score)) %>%
     rename_with(~ score_col_names[which(paste0(prac_cols, "_score") == .x)],
                 .cols = paste0(prac_cols,
                                "_score")) %>%

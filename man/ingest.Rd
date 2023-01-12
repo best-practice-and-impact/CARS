@@ -13,9 +13,8 @@ ingest(
 )
 }
 \arguments{
-\item{survey}{the survey ID (character string/numeric). Defaults to "1167489".}
-
-\item{token}{the API token (character string). Loaded from environment variable by default.}
+\item{survey}{the survey ID (character string/numeric). Defaults to "1167489".
+@param token the API token (character string). Loaded from environment variable by default.}
 
 \item{secret}{the secret API token (character string). Loaded from environment variable by default.}
 
