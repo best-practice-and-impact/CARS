@@ -26,7 +26,7 @@ get_tidy_data <- function(...) {
 #' Note: the first API request in a session will typically fail.
 #'
 #' @param survey the survey ID (character string/numeric). Defaults to "1167489".
-#'  @param token the API token (character string). Loaded from environment variable by default.
+#' @param token the API token (character string). Loaded from environment variable by default.
 #' @param secret the secret API token (character string). Loaded from environment variable by default.
 #' @param proxies proxy addresses (string). Loads from the user environment by default. Expects a string in the format "ip.address:port; alt.ip.address:port".
 #' @param export the export ID (character string/numeric).
