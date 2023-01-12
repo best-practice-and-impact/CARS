@@ -58,6 +58,10 @@
   background-color: #004556;
 }
 
+.navbar-collapse > ul > li > a {
+  border-bottom: 4px solid #004556;
+}
+
 .navbar-collapse > ul > li > a:hover {
   border-bottom: 4px solid #ff6900;
 }
