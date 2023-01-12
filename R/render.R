@@ -5,6 +5,7 @@
 #'
 #' @param data full pre-processed CARS dataset
 #' @param path quarto input
+#' @param path execute directory
 #' @param output_path output path (will overwrite existing outputs). Should match the path set in the quarto site yaml
 #'
 #' @export
@@ -15,6 +16,7 @@ render_site <- function(data, path = "quarto/main", output_path = "docs/") {
   dir.create(paste0(path, "/temp"))
   save(data, file = paste0(path, "/temp/data.rda"))
 
+  # executes in higher directory level to avoid issues with .quarto stopping package from building
   quarto::quarto_render(input = path, as_job = FALSE)
 
   unlink(paste0(path, "/temp"), recursive = TRUE)
@@ -104,7 +106,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
 
   for (i in 1:n_pages) {
     if (type == "professions") {
-      filter <- glue::glue('data[!ia.ns(data${prof_cols[[i]]}) & data${prof_cols[[i]]} == "Yes", ]')
+      filter <- glue::glue('data[!is.na(data${prof_cols[[i]]}) & data${prof_cols[[i]]} == "Yes", ]')
 
       title <- paste0("Profession summary: ", prof_names[[i]])
     } else if (type == "departments") {

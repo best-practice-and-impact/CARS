@@ -4,3 +4,6 @@
 ^\.github$
 ^docs$
 ^quarto$
+^quarto/main$
+^R/test\.R$
+^main\.R$
