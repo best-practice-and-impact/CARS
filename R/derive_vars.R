@@ -165,13 +165,12 @@ derive_advanced_rap_scores <- function(data) {
                        "cont_integration_score",
                        "dep_management_score")
 
-  high_vals <- c("Regularly", "All the time")
+  high_vals <- c("Regularly", "All the time", "Yes")
 
   data <- data %>%
     mutate(across(.cols = expected_columns[expected_columns != "code_freq"],
                   ~ case_when(code_freq == "Never" ~ NA_real_,
                               .x %in% high_vals ~ 1,
-                              .x == "Yes" ~ 1,
                               TRUE ~ 0),
                   .names = "{.col}_score")) %>%
     rename_with(~ score_col_names[which(paste0(expected_columns[expected_columns != "code_freq"], "_score") == .x)],

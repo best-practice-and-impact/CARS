@@ -1,4 +1,3 @@
-
 dummy_data <- data.frame(RAP_implementing = c(NA,
                                               rep("Strongly Disagree", 2),
                                               rep("Disagree", 3),

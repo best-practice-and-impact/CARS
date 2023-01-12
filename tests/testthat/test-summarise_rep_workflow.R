@@ -1,4 +1,3 @@
-
 dummy_data <- data.frame(reproducible_workflow = c(NA,
                                                    rep("Yes", 2),
                                                    rep("No", 3),
@@ -27,6 +26,7 @@ test_that("summarise_rep_workflow output is as expected", {
   expect_equal(got, expected)
 
 })
+
 
 test_that("summarise_rep_workflow validation works", {
 

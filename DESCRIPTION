@@ -24,7 +24,8 @@ Imports:
     yaml,
     knitr,
     quarto,
-    kableExtra
+    kableExtra,
+    readr
 Suggests:
     devtools,
     testthat (>= 3.0.0)

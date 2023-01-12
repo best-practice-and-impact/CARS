@@ -4,7 +4,7 @@
 \alias{calculate_multi_table_freqs}
 \title{Create tidy cross table}
 \usage{
-calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop = TRUE)
+calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 }
 \arguments{
 \item{data}{pre-processed CARS data set}
@@ -16,8 +16,6 @@ calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop = TRUE)
 \item{levels1}{factor levels for col1}
 
 \item{levels2}{factor levels for col2}
-
-\item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}
 }
 \value{
 data.frame
