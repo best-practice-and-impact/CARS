@@ -22,26 +22,47 @@ dummy_data <- data.frame(
   prof_GSR = c(rep("Yes", 1), rep("No", 5)),
   prof_GSG = c(rep("Yes", 6)))
 
-dummy_output <- summarise_languages_by_prof(dummy_data)
+test_that("summarise_languages_by_prof missing data is handled correctly", {
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  got <- summarise_languages_by_prof(dummy_data)
+
+
+  expect_false(any(is.na.data.frame(got)))
+
 })
 
-test_that("output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
-})
+test_that("summarise_languages_by_prof output is as expected", {
 
-test_that("output has eighty-eight rows", {
-  expect_equal(nrow(dummy_output), 88)
-})
+  got <- summarise_languages_by_prof(dummy_data)
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na.data.frame(dummy_output)))
-})
+  expected <- data.frame(prof = c(rep("Data scientists", 11),
+                                  rep("Digital and data (DDAT)", 11),
+                                  rep("Actuaries", 11),
+                                  rep("Economists (GES)", 11),
+                                  rep("Geographers", 11),
+                                  rep("Operational researchers (GORS)", 11),
+                                  rep("Social researchers (GSR)", 11),
+                                  rep("Statisticians (GSG)", 11)),
+                         lang = rep(c("C++ / C#",
+                                      "Java / Scala",
+                                      "Javascript / Typescript",
+                                      "Matlab",
+                                      "Python",
+                                      "R",
+                                      "SAS",
+                                      "SPSS",
+                                      "SQL",
+                                      "Stata",
+                                      "VBA"), 8),
+                         n = c(1/22, 2/22, 3/22, 3/22, 3/22, 1/22, 2/22, 2/22, 3/22, 1/22, 1/22,
+                               0, 1/11, 2/11, 2/11, 2/11, 0, 1/11, 1/11, 2/11, 0, 0,
+                               0, 0, 1/4, 1/4, 1/4, 0, 0, 0, 1/4, 0, 0,
+                               0, 0, 1/4, 1/4, 1/4, 0, 0, 0, 1/4, 0, 0,
+                               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                               0, 1/11, 2/11, 2/11, 2/11, 0, 1/11, 1/11, 2/11, 0, 0,
+                               1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11,
+                               1/22, 2/22, 3/22, 3/22, 3/22, 1/22, 2/22, 2/22, 3/22, 1/22, 1/22))
 
-test_that("output has the correct column order", {
-  expect_equal(colnames(dummy_output), c("lang",
-                                         "prof",
-                                         "n"))
+  expect_equal(got, expected)
+
 })

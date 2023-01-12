@@ -13,7 +13,7 @@ insert_table_toggle(output_name)
 html buttons and CSS
 }
 \description{
-Add table toggle buttons to rmarkdowndown site
+Add table toggle buttons to rmarkdown site
 }
 \details{
 Add "show table" and "show chart" buttons to rmarkdown site (html). Expects table contaners to be named "name-table" and chart containers to be named "name-chart"

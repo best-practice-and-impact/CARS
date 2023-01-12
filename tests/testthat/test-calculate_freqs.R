@@ -9,39 +9,46 @@ levels <- c("test1", "test2", "test3")
 
 labels <- c("Question 1", "Question 2", "Question 3")
 
-#TODO: test proportion outputs as well as raw counts
+expected <- data.frame(name = rep(c("Question 1",
+                                    "Question 2",
+                                    "Question 3"),
+                                  each=3),
+                       value = factor(rep(c("test1", "test2", "test3"), 3),
+                                      levels = c("test1", "test2", "test3")),
+                       n = c(1, 0, 0, 0, 1, 0, 0.5, 0, 0.5))
 
-dummy_output <- calculate_freqs(data = dummy_data,
-                                questions = questions,
-                                levels = levels,
-                                labels = labels,
-                                prop = FALSE)
+test_that("create_tidy_freq_table missing data is handled correctly", {
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  got <- calculate_freqs(data = dummy_data,
+                         questions = questions,
+                         levels = levels,
+                         labels = labels)
+
+  expect_false(any(is.na.data.frame(got)))
+
 })
 
-test_that("output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
+test_that("create_tidy_freq_table proportion output is as expected", {
+
+  got <- calculate_freqs(data = dummy_data,
+                         questions = questions,
+                         levels = levels,
+                         labels = labels)
+
+  expect_equal(got, expected)
+
 })
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na.data.frame(dummy_output)))
-})
+test_that("create_tidy_freq_table count output is as expected", {
 
-test_that("names are in the correct order", {
-  expect_identical(unique(dummy_output[[1]]),
-                   c("Question 1", "Question 2", "Question 3")
-  )
-})
+  got <- calculate_freqs(data = dummy_data,
+                         questions = questions,
+                         levels = levels,
+                         labels = labels,
+                         prop = FALSE)
 
-test_that("values are in the correct order", {
-  expect_identical(unique(dummy_output[[2]]),
-                   factor(c("test1", "test2", "test3"),
-                          levels = c("test1", "test2", "test3"))
-  )
-})
+  expected$n <- c(1, 0, 0, 0, 2, 0, 1, 0, 1)
 
-test_that("frequencies are correct", {
-  expect_equal(dummy_output[[3]], c(1, 0, 0, 0, 2, 0, 1, 0, 1))
+  expect_equal(got, expected)
+
 })

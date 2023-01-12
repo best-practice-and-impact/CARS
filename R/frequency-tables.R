@@ -112,14 +112,13 @@ summarise_operations <- function(data) {
                  "ops_transfer_migration", "ops_vis", "ops_machine_learning",
                  "ops_modelling", "ops_QA")
 
-  levels <- c("I do some or all of this by coding", "I do this without coding")
+  levels <- c("I do some or all of this by coding", "I do this without coding", "I don't do this")
 
   labels <- c("Data analysis", "Data cleaning", "Data linking",
               "Data transfer / migration", "Data visualisation",
               "Machine learning", "Modelling", "Quality assurance")
 
-  frequencies <- calculate_freqs(data, questions, levels, labels, prop = FALSE)
-  frequencies$n <- frequencies$n / nrow(data)
+  frequencies <- calculate_freqs(data, questions, levels, labels)
 
   return(frequencies)
 
@@ -132,10 +131,11 @@ summarise_operations <- function(data) {
 #'
 #' @param data full CARS dataset after pre-processing
 #' @param type type of table (knowledge or access)
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #'
 #' @return frequency table (data.frame)
 
-summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
+summarise_coding_tools <- function(data, type = list("knowledge", "access"), prop = TRUE) {
 
   questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
                  "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
@@ -153,7 +153,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access")) {
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- calculate_freqs(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop)
 
   return(frequencies)
 }
@@ -192,13 +192,13 @@ summarise_where_learned_code <- function(data){
               "Other")
 
   data <- data %>%
-    select(first_learned, prev_coding_experience, code_freq) %>%
+    select(.data$first_learned, .data$prev_coding_experience, .data$code_freq) %>%
     mutate(
       first_learned = case_when((is.na(data$prev_coding_experience) |
                                    (data$prev_coding_experience == "No")) &
                                   data$code_freq != "Never" ~ "In current role",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
-                                TRUE ~ first_learned))
+                                TRUE ~ .data$first_learned))
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -452,16 +452,22 @@ summarise_rap_comp <- function(data) {
                  "function_doc_score",
                  "package_score",
                  "code_style_score",
-                 "cont_integreation_score",
+                 "cont_integration_score",
                  "dep_management_score")
 
   levels <- c(1)
 
+  components <- calculate_freqs(data, questions, levels, labels)
+
   components <- components %>%
-    mutate(n = n/sum(data$code_freq != "Never")) %>%
-    mutate(name = factor(name, levels = labels)) %>%
-    arrange(name) %>%
-    mutate(value = c(rep("Basic", 6), rep("Advanced", 7)))
+    mutate(name = factor(.data$name, levels = labels)) %>%
+    arrange(.data$name) %>%
+    mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
+    mutate(n = colSums(data[questions], na.rm = TRUE) / ifelse(sum(colSums(data[questions], na.rm = TRUE))==0,
+                                                               1,
+                                                               sum(colSums(data[questions], na.rm = TRUE))))
+
+  names(components$n) <- NULL
 
   return(components)
 
@@ -700,11 +706,11 @@ summarise_basic_score_by_imp <- function(data){
   col2 <- "basic_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
@@ -730,11 +736,11 @@ summarise_adv_score_by_imp <- function(data){
   col2 <- "advanced_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
@@ -760,11 +766,11 @@ summarise_basic_score_by_understanding <- function(data){
   col2 <- "basic_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6)
 
@@ -790,11 +796,11 @@ summarise_adv_score_by_understanding <- function(data){
   col2 <- "advanced_rap_score"
 
   levels1 <- c(
-    "Strongly disagree",
+    "Strongly Disagree",
     "Disagree",
     "Neutral",
     "Agree",
-    "Strongly agree")
+    "Strongly Agree")
 
   levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
 
@@ -834,25 +840,29 @@ summarise_languages_by_prof <- function(data) {
   outputs <- lapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
-     output <- summarise_coding_tools(filtered_data, "knowledge")
+    output <- summarise_coding_tools(filtered_data, "knowledge", prop = FALSE)
 
-     # Retain frequencies for "Yes" responses only
-     output <- output[output[[2]] == "Yes", ]
+    # Retain frequencies for "Yes" responses only
+    output <- output[output[[2]] == "Yes", ]
 
-     output$value <- prof
+    output$value <- prof
 
-     return(output)
+    output$n <- output$n / ifelse(sum(output$n)==0, 1, sum(output$n))
+
+    return(output)
   })
 
   outputs <- do.call(rbind, outputs)
 
   colnames(outputs) <- c("lang", "prof", "n")
+  outputs <- outputs[, c("prof", "lang", "n")]
   rownames(outputs) <- NULL
 
   outputs$prof <- recode(outputs$prof, !!!prof_names)
 
   return(outputs)
 }
+
 
 #' @title Calculate frequencies
 #'
@@ -890,7 +900,9 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
     colnames(frequencies) <- c("value", "n")
 
     if (prop) {
-      frequencies$n <- frequencies$n / sum(frequencies$n)
+      frequencies$n <- frequencies$n / ifelse(sum(frequencies$n, na.rm = TRUE)==0,
+                                              1,
+                                              sum(frequencies$n, na.rm = TRUE))
     }
 
   } else {
@@ -898,10 +910,10 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
       pivot_longer(cols = questions,
                    names_to = "name",
                    values_to = "value") %>%
-      group_by(name) %>%
-      count(value, .drop=FALSE) %>%
-      mutate(name = recode(name, !!!labels_list)) %>%
-      arrange(name, by_group=TRUE) %>%
+      group_by(.data$name) %>%
+      count(.data$value, .drop=FALSE) %>%
+      mutate(name = recode(.data$name, !!!labels_list)) %>%
+      arrange(.data$name, by_group=TRUE) %>%
       drop_na() %>%
       data.frame()
 
@@ -924,6 +936,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #' @param col2 column to cross-tabulate first column against
 #' @param levels1 factor levels for col1
 #' @param levels2 factor levels for col2
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #'
 #' @return data.frame
 #'
@@ -931,7 +944,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #' @importFrom tidyr drop_na
 
 
-calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
+calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE){
 
   selected_data <- data %>% select(all_of(c(col1, col2)))
 
@@ -943,6 +956,10 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
     count(across(c(col1, col2)), .drop=FALSE) %>%
     drop_na() %>%
     data.frame()
+
+  if(prop){
+    frequencies <- prop_by_group(frequencies)
+  }
 
   return(frequencies)
 
@@ -959,6 +976,9 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
 
 prop_by_group <- function(data) {
 
-  data %>% group_by_at(1) %>% mutate(n = n/sum(n)) %>% data.frame()
+  data %>%
+    group_by_at(1) %>%
+    mutate(n = .data$n / ifelse(sum(.data$n)==0, 1, sum(.data$n))) %>%
+    data.frame()
 
 }

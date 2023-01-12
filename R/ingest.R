@@ -20,20 +20,18 @@ get_tidy_data <- function(...) {
   return(data)
 }
 
-#'@title Ingest smartsurvey data
+#' @title Ingest smartsurvey data
 #'
-#'@description Download smartsurvey export via the API. Download the exported data from smartsurvey using the API. Use convert_raw() to convert the API response to a data.frame.
+#' @description Download smartsurvey export via the API. Download the exported data from smartsurvey using the API. Use convert_raw() to convert the API response to a data.frame.
 #' Note: the first API request in a session will typically fail.
 #'
-#'@param survey the survey ID (character string/numeric). Defaults to "1167489".
-#'@param token the API token (character string). Loaded from environment variable by default.
-#'@param secret the secret API token (character string). Loaded from environment variable by default.
-#'@param proxies proxy addresses (string). Loads from the user environment by default. Expects a string in the format "ip.address:port; alt.ip.address:port".
-#'@param export the export ID (character string/numeric).
+#' @param survey the survey ID (character string/numeric). Defaults to "1167489".
+#' @param token the API token (character string). Loaded from environment variable by default.
+#' @param secret the secret API token (character string). Loaded from environment variable by default.
+#' @param proxies proxy addresses (string). Loads from the user environment by default. Expects a string in the format "ip.address:port; alt.ip.address:port".
+#' @param export the export ID (character string/numeric).
 
-#'@return the exported data as a dataframe
-#'
-#'@export
+#' @return the exported data as a dataframe
 
 ingest <- function(survey = "1167489",
                    token = Sys.getenv("CARS_TOKEN"),
@@ -90,15 +88,13 @@ ingest <- function(survey = "1167489",
   return(r)
 }
 
-#'@title Convert raw data to data frame
+#' @title Convert raw data to data frame
 #'
-#'@description Convert raw smartsurvey data to data.frame . Extract contents (raw csv) from smartsurvey API request and convert to data.frame
+#' @description Convert raw smartsurvey data to data.frame . Extract contents (raw csv) from smartsurvey API request and convert to data.frame
 #'
-#'@param r api response object
+#' @param r api response object
 #'
-#'@return response content as a data.frame
-#'
-#'@export
+#' @return response content as a data.frame
 
 convert_raw <- function(r) {
 
@@ -133,8 +129,6 @@ convert_raw <- function(r) {
 #' @param raw_data data frame returned by convert_raw()
 #'
 #' @return data frame with empty rows removed and tidied column names
-#'
-#' @export
 
 tidy_colnames <- function(raw_data) {
 
