@@ -1,27 +1,27 @@
 #TOC > ul > li > a.active {
   background-color: white;
-  border-bottom: none; 
+  border-bottom: none;
   border-left: 1px solid #ff6900 !important;
   color: black !important;
 }
 
 #TOC > ul > li > a.active {
   background-color: white;
-  border-bottom: none; 
+  border-bottom: none;
   border-left: 1px solid #ff6900 !important;
   color: black !important;
 }
 
 #TOC > ul > li > ul > li > a.active {
   background-color: white;
-  border-bottom: none; 
+  border-bottom: none;
   border-left: 1px solid #ff6900 !important;
   color: black !important;
 }
 
 #TOC > ul > li > ul > li > a.active {
   background-color: white;
-  border-bottom: none; 
+  border-bottom: none;
   border-left: 1px solid #ff6900 !important;
   color: black !important;
 }
@@ -79,7 +79,7 @@
 
 .navbar-toggle:hover {
   background-color: black;
-  border-color: #ff6900; 
+  border-color: #ff6900;
 }
 
 .navbar-toggle:focus {
@@ -90,7 +90,7 @@
 
 
 .toggle-button {
-  text-decoration: underline; 
+  text-decoration: underline;
 }
 
 .toggle-button:focus {

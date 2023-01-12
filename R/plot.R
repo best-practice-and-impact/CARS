@@ -1,26 +1,26 @@
 
-#'@title Plot frequency subplots
+#' @title Plot frequency subplots
 #'
-#'@description Produce multiple bar chart (plotly) for single factor frequency data.
+#' @description Produce multiple bar chart (plotly) for single factor frequency data.
 #'Intended for use with frequencies represented as percentages.
 #'Incomplete validation checks: some combinations of number of plots and number of rows/columns will fail:
 #'Each column should contain at least two charts.
 #'
-#'@param data Frequency table (data frame). Expects a tidy dataset with 3 columns: factor 1 (categorical axes), factor 2 (one plot per factor level) and values.
-#'@param xlab X axis title
-#'@param ylab Y axis title
-#'@param height plot height in pixels
-#'@param width plot width in pixels
-#'@param nrows number of rows in plot (min 2, 3 by default)
-#'@param y_margin margin between rows (chart proportion), 0.1 by default.
-#'@param x_margin margin between columns (chart proportion). 0.1 by default.
-#'@param bar_colour Colour name. Defaults to blue (see carsurvey2::get_gradient())
-#'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#' @param data Frequency table (data frame). Expects a tidy dataset with 3 columns: factor 1 (categorical axes), factor 2 (one plot per factor level) and values.
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param height plot height in pixels
+#' @param width plot width in pixels
+#' @param nrows number of rows in plot (min 2, 3 by default)
+#' @param y_margin margin between rows (chart proportion), 0.1 by default.
+#' @param x_margin margin between columns (chart proportion). 0.1 by default.
+#' @param bar_colour Colour name. Defaults to blue (see carsurvey2::get_gradient())
+#' @param font_size minimum font size for the plot (numeric).
+#' @param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
 #'
-#'@return subplots
+#' @return subplots
 #'
-#'@export
+#' @export
 
 freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3, y_margin = .1, x_margin = .1, font_size = 12, orientation = "h") {
 
@@ -106,24 +106,24 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 
 }
 
-#'@title Plot frequency graph
+#' @title Plot frequency graph
 #'
-#'@description Produce bar chart (plotly) for single factor frequency data.
+#' @description Produce bar chart (plotly) for single factor frequency data.
 #'
-#'@param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
-#'@param n sample size (optional)
-#'@param bar_colour Colour name. Defaults to blue (see @get_gradient())
-#'@param break_q_names_col applies break_q_names to the column. Not applied by default
-#'@param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
-#'@param xlab X axis title (optional)
-#'@param ylab Y axis title (optional)
-#'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
-#'@param ... additional plotly_ly arguments
+#' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
+#' @param n sample size (optional)
+#' @param bar_colour Colour name. Defaults to blue (see @get_gradient())
+#' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
+#' @param xlab X axis title (optional)
+#' @param ylab Y axis title (optional)
+#' @param font_size minimum font size for the plot (numeric).
+#' @param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#' @param ... additional plotly_ly arguments
 #'
-#'@return bar chart
+#' @return bar chart
 #'
-#'@export
+#' @export
 
 plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
 
@@ -215,25 +215,25 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 
 }
 
-#'@title Plot stacked bar graph
+#' @title Plot stacked bar graph
 #'
-#'@description Produce stacked bar chart (plotly).
+#' @description Produce stacked bar chart (plotly).
 #'
-#'@param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
-#'@param n sample size
-#'@param break_q_names_col applies break_q_names to the column. Not applied by default
-#'@param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
-#'@param xlab X axis title
-#'@param ylab Y axis title
-#'@param colour_scale type of colour scale ("gradient", "scale" or "2gradients"). See get_gradient(), get_2colour_scale() and get_2colour_gradients().
-#'@param font_size minimum font size for the plot (numeric).
-#'@param neutral_mid whether the midpoint of the colour scale should be neutral ("2gradients" scale only). TRUE by default
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
-#'@param ... additional plotly_ly arguments
+#' @param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
+#' @param n sample size
+#' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param colour_scale type of colour scale ("gradient", "scale" or "2gradients"). See get_gradient(), get_2colour_scale() and get_2colour_gradients().
+#' @param font_size minimum font size for the plot (numeric).
+#' @param neutral_mid whether the midpoint of the colour scale should be neutral ("2gradients" scale only). TRUE by default
+#' @param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default
+#' @param ... additional plotly_ly arguments
 #'
-#'@return bar chart
+#' @return bar chart
 #'
-#'@export
+#' @export
 
 plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
@@ -345,23 +345,23 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 }
 
 
-#'@title Plot grouped frequency graph
+#' @title Plot grouped frequency graph
 #'
-#'@description Produce bar chart (plotly) for frequency data with grouping variable.
+#' @description Produce bar chart (plotly) for frequency data with grouping variable.
 #'
-#'@param data Frequency data (data frame). 3 columns - cateogry names, groups and frequencies.
-#'@param n sample size
-#'@param break_q_names_col applies break_q_names to the column. Not applied by default
-#'@param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
-#'@param xlab X axis title
-#'@param ylab Y axis title
-#'@param font_size minimum font size for the plot (numeric).
-#'@param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default.
-#'@param ... additional plotly_ly arguments
+#' @param data Frequency data (data frame). 3 columns - cateogry names, groups and frequencies.
+#' @param n sample size
+#' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param font_size minimum font size for the plot (numeric).
+#' @param orientation plot orientation ("h" = horizontal, "v" = verical). Vertical by default.
+#' @param ... additional plotly_ly arguments
 #'
-#'@return bar chart
+#' @return bar chart
 #'
-#'@export
+#' @export
 
 plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
 
@@ -463,24 +463,24 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 }
 
 
-#'@title Plot likert graph
+#' @title Plot likert graph
 #'
-#'@description Produce likert stacked bar chart (plotly). At least 2 questions per plot.
+#' @description Produce likert stacked bar chart (plotly). At least 2 questions per plot.
 #'
-#'@param data Frequency data for likert quesitons (data frame). 3 columns: question, answer option, frequency.
-#'@param mid the mid-point of the scale. should be higher than 2 and lower than the number of answers.
-#'@param xlab X axis title
-#'@param ylab Y axis title
-#'@param n sample size
-#'@param max_lines changes maximum lines text can go over
-#'@param font_size minimum font size for the plot (numeric).
-#'@param neutral_mid whether the middle of the scale should be a neutral category (logical). TRUE by default
-#'@param break_q_names_col applies break_q_names to the column. Not applied by default
-#'@param ... additional plot_ly arguments
+#' @param data Frequency data for likert quesitons (data frame). 3 columns: question, answer option, frequency.
+#' @param mid the mid-point of the scale. should be higher than 2 and lower than the number of answers.
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param n sample size
+#' @param max_lines changes maximum lines text can go over
+#' @param font_size minimum font size for the plot (numeric).
+#' @param neutral_mid whether the middle of the scale should be a neutral category (logical). TRUE by default
+#' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param ... additional plot_ly arguments
 #'
-#'@return bar chart
+#' @return bar chart
 #'
-#'@export
+#' @export
 
 plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
 
@@ -605,15 +605,15 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
 }
 
-#'@title Calculate bases for Likert chart
+#' @title Calculate bases for Likert chart
 #'
-#'@description Calculates starting locations for bars on the Likert chart.
+#' @description Calculates starting locations for bars on the Likert chart.
 #'
-#'@param data see @plot_likert
-#'@param mid see @plot_likert
-#'@param neutral_mid see @plot_likert
+#' @param data see @plot_likert
+#' @param mid see @plot_likert
+#' @param neutral_mid see @plot_likert
 #'
-#'@return bar starting locations
+#' @return bar starting locations
 
 calculate_bases <- function(data, mid, neutral_mid) {
 
@@ -652,17 +652,17 @@ calculate_bases <- function(data, mid, neutral_mid) {
 
 
 
-#'@title Create custom Y axis label
+#' @title Create custom Y axis label
 #'
-#'@description Create a custom y axis label (plotly annotation). This label is placed just above the y axis
-#' and is horizontal, to replace the vertically flipped label produced by default.
+#' @description Create a custom y axis label (plotly annotation). This label is placed just above the y axis
+#'  and is horizontal, to replace the vertically flipped label produced by default.
 #'
-#'@param ylab Y axis label
-#'@param font_size font size used in the chart. This function will return a slightly larger font.
+#' @param ylab Y axis label
+#' @param font_size font size used in the chart. This function will return a slightly larger font.
 #'
-#'@return list of parameters for plotly annotation
+#' @return list of parameters for plotly annotation
 #'
-#'@export
+#' @export
 
 create_y_lab <- function(ylab, font_size) {
   annotation <- list(text = ylab, # Custom Y axis label

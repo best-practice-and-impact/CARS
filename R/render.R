@@ -17,11 +17,11 @@ render_site <- function(data, path = "quarto/main", output_path = "docs/") {
   save(data, file = paste0(path, "/temp/data.rda"))
 
   # executes in higher directory level to avoid issues with .quarto stopping package from building
+
   quarto::quarto_render(input = path, as_job = FALSE)
 
   unlink(paste0(path, "/temp"), recursive = TRUE)
 }
-
 
 #' @title create filtered pages
 #'

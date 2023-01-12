@@ -4,12 +4,14 @@
 \alias{summarise_coding_tools}
 \title{Summarise coding tools}
 \usage{
-summarise_coding_tools(data, type = list("knowledge", "access"))
+summarise_coding_tools(data, type = list("knowledge", "access"), prop = TRUE)
 }
 \arguments{
-\item{data}{full CARS datasetafter pre-processing}
+\item{data}{full CARS dataset after pre-processing}
 
 \item{type}{type of table (knowledge or access)}
+
+\item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}
 }
 \value{
 frequency table (data.frame)

@@ -26,59 +26,37 @@ dummy_data <- data.frame(
   access_matlab = c("Yes", "No")
 )
 
-languages <- c(
-  "C++ / C#",
-  "Java / Scala",
-  "Javascript / Typescript",
-  "Matlab",
-  "Python",
-  "R",
-  "SAS",
-  "SPSS",
-  "SQL",
-  "Stata",
-  "VBA"
-)
+dummy_data <- derive_language_status(dummy_data) # Will never return NAs
 
-dummy_data <- derive_language_status(dummy_data)
+test_that("summarise_language_status output is as expected", {
 
-dummy_output <- summarise_language_status(dummy_data)
+  got <- summarise_language_status(dummy_data)
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  expected <- data.frame(name = c(rep("C++ / C#", 4),
+                                  rep("Java / Scala", 4),
+                                  rep("Javascript / Typescript", 4),
+                                  rep("Matlab", 4),
+                                  rep("Python", 4),
+                                  rep("R", 4),
+                                  rep("SAS", 4),
+                                  rep("SPSS", 4),
+                                  rep("SQL", 4),
+                                  rep("Stata", 4),
+                                  rep("VBA", 4)),
+                         value = factor(rep(c("both",
+                                              "access",
+                                              "knowledge",
+                                              "neither"),
+                                            11),
+                                        levels=c("both",
+                                                 "access",
+                                                 "knowledge",
+                                                 "neither")),
+                         n = c(0.00, 0.50, 0.50, 0.00, 0.00, 0.00, 0.50, 0.50, 0.50, 0.00, 0.00,
+                               0.50, 0.50, 0.00, 0.00, 0.50, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00,
+                               1.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.50, 0.00, 0.50, 0.00,
+                               0.00, 1.00, 0.00, 0.00, 0.50, 0.00, 0.50, 0.00, 1.00, 0.00, 0.00))
+
+  expect_equal(got, expected)
+
 })
-
-test_that("output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
-})
-
-test_that("output does not contain missing values", {
-  expect_false(any(is.na.data.frame(dummy_output)))
-})
-
-test_that("column names are correct", {
-  expect_equal(colnames(dummy_output), c("name", "value", "n"))
-})
-
-test_that("programming language names are correct", {
-  expect_equal(unique(dummy_output[[1]]), languages)
-})
-
-test_that("programming language status' are correct", {
-  expect_equal(unique(dummy_output[[2]]),
-               factor(c("both",
-                        "access",
-                        "knowledge",
-                        "neither"),
-                      levels=c("both",
-                               "access",
-                               "knowledge",
-                               "neither")))
-})
-#
-# test_that("cell values are correct", {
-#   expect_equal(dummy_output[dummy_output$value == "both",]$n, c(0, 0, 1, 1, 0, 0, 2, 0, 0, 0, 0))
-#   expect_equal(dummy_output[dummy_output$value == "access",]$n, c(1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2))
-#   expect_equal(dummy_output[dummy_output$value == "knowledge",]$n, c(1, 1, 0, 0, 0, 2, 0, 0, 2, 0, 0))
-#   expect_equal(dummy_output[dummy_output$value == "neither",]$n, c(0, 1, 1, 1, 2, 0, 0, 1, 0, 1, 0))
-# })
