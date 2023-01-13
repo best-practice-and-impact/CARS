@@ -6,9 +6,13 @@ output:
 
 ```{r echo=FALSE}
 
-load("temp/summary_tables.Rda")
-
 library(magrittr)
+
+load("temp/data.Rda")
+
+tables <- CARS::summarise_all(data, all_tables = TRUE)
+
+samples <- CARS::sample_sizes(data)
 
 ```
 

@@ -1,0 +1,12 @@
+---
+title: Department summaries
+output:
+  html_document
+---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() ("{{{" and "}}}", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/departments.qmd)
+
+Below are links to profession-specific reports These contain summary statistics, filtered by department. Only departments with 20 or more respondents are included.
+
+{{{links}}}

@@ -23,22 +23,20 @@ test_that("summarise_operations output is as expected", {
 
   got <- summarise_operations(dummy_data)
 
-  expected <- data.frame("name" = c(rep("Data analysis",3),
-                                    rep("Data cleaning",3),
-                                    rep("Data linking",3),
-                                    rep("Data transfer / migration",3),
-                                    rep("Data visualisation", 3),
-                                    rep("Machine learning",3),
-                                    rep("Modelling",3),
-                                    rep("Quality assurance",3)),
+  expected <- data.frame("name" = rep(c("Data analysis",
+                                        "Data cleaning",
+                                        "Data linking",
+                                        "Data transfer / migration",
+                                        "Data visualisation",
+                                        "Machine learning",
+                                        "Modelling",
+                                        "Quality assurance"), each=2),
                          "value" = factor(rep(c("I do some or all of this by coding",
-                                                "I do this without coding",
-                                                "I don't do this"), 8),
+                                                "I do this without coding"), 8),
                                           levels = c("I do some or all of this by coding",
-                                                     "I do this without coding",
-                                                     "I don't do this")),
-                         "n" = c(1/2, 1/6, 1/3, 2/7, 2/7, 3/7, 1/7, 4/7, 2/7, 4/7, 0, 3/7,
-                                 3/7, 2/7, 2/7, 2/7, 2/7, 3/7, 3/7, 2/7, 2/7, 1/7, 3/7, 3/7))
+                                                     "I do this without coding")),
+                         "n" = c(3/4, 1/4, 1/2, 1/2, 1/5, 4/5, 1, 0,
+                                 3/5, 2/5, 1/2, 1/2, 3/5, 2/5, 1/4, 3/4))
 
   expect_equal(got, expected)
 

@@ -41,7 +41,6 @@ test_that("calculate_multi_table_freqs output is as expected", {
                                      col2 = col2,
                                      levels1 = levels1,
                                      levels2 = levels2)
-
   expect_equal(got, expected)
 
 })
