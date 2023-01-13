@@ -21,7 +21,9 @@ This is a living document. We want our users to get as much value as possible fr
 
 ## Coding frequency and tools
 
-### Coding frequency
+### How often do respondents use code
+
+We asked respondents "In your current role, how often do you write code to complete your work objectives?"
 
 ```{r}
 
@@ -33,7 +35,9 @@ CARS::wrap_outputs("coding-freq", plot, table)
 ```
 
 
-### Code operations
+### What is code being used for
+
+We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note we did not ask how much of each data operation is done with code, or how often.
 
 ```{r}
 
@@ -44,8 +48,49 @@ CARS::wrap_outputs("operations", plot, table)
 
 ```
 
+### Access to and knowledge of programming languages
+
+Given a list of programming tools, we asked respondents to answer “Yes”, “No” or “Don’t know” for the following questions;  
+
+- Do you know how to program with this tool to a level suitable for your work?  
+- Is this tool available to use for your work?  
+
+Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
+
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested
+
+### Access to coding tools
+
+### Knowledge of coding tools
+
+### Access and knowledge gaps
+
+**Not sure if this is part of the initial publication or will go in later**
+
+Using the data presented above we calculated the number of respondents with:
+
+Access to tools they do not have the capability to use (access only),
+Access to tools they are able to use (access and knowledge)
+Or capability to use tools they cannot access at work (knowledge only)
+
+
+## Coding capability
+
+### Change in coding ability during current role
+
+This question was only asked of respondents with coding experience outside of their current role. This means analysts who first learned to code in their current role are not included in the data.
+
+
+### Where respondents first learned to code
+
+Respondents with coding experience outside their current role were asked when they first learned to code. This output also includes analysts who code in their current role but reported no other coding experience.
+
+These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
+
 
 ## Coding practices
+
+We asked respondents who said they currently use code in their work how often they carry out various coding practices. For more information on the practices presented below, please read our guidance on [Quality Assurance of Code for Analysis and Research] (https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Good analysis coding practices
 
@@ -67,6 +112,34 @@ table <- CARS::df_to_table(tables$coding_practices,
 CARS::wrap_outputs("good-practices", plot, table)
 
 ```
+
+### Documentation
+
+[Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
+
+### Dependency Management
+
+Respondents who currently use code in their work were asked whether they use any tools for dependency management. We provided examples of tools that may be used for dependency management:
+
+- Requirements files, e.g. python requirements.txt or R DESCRIPTION files  
+- Virtual environments (e.g. venv or renv) or virtual machines  
+- Containers e.g. Docker  
+
+### Continuous intergration
+
+Respondents were asked whether they use continuous integration technologies. As above, respondents were provided with examples of what those might be:
+
+- GitHub actions  
+- Jenkins  
+- Travis  
+
+### Reproducible workflow packages
+Respondents were asked whether they use reproducible workflow packages. Respondents were provided with the following examples:
+
+- drake  
+- make  
+- pymake  
+
 
 
 ## RAP scores
