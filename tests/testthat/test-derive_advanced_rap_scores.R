@@ -1,3 +1,4 @@
+
 dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4)),
                          prac_functions = c(NA, "Regularly", "Sometimes", "Rarely", "Never"),
                          prac_unit_test = c(NA, "All the time", "Regularly", "Sometimes", "Rarely"),

@@ -1,20 +1,26 @@
 ---
-title: "Summary statistics"
+title: "Department summary: Scottish Government (excl. agencies)"
 output:
   html_document
 ---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() (" and ", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/summary.qmd)
 
 ```{r echo=FALSE}
 
 library(magrittr)
 
-load("temp/data.Rda")
+load("../temp/data.Rda")
 
-tables <- CARS::summarise_all(data, all_tables = TRUE)
+data <- data[!is.na(data$department) & data$department == "Scottish Government (excl. agencies)", ]
+
+tables <- CARS::summarise_all(data, all_tables = FALSE)
 
 samples <- CARS::sample_sizes(data)
 
 ```
+
 
 ## Draft notice
 

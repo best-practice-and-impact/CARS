@@ -37,3 +37,4 @@ test_that("summarise_code_freq output is as expected", {
 
   expect_equal(got, expected)
 })
+

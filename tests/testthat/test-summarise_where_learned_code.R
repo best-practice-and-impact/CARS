@@ -1,4 +1,3 @@
-
 dummy_data <- data.frame(code_freq = c(rep("Never", 8), "Sometimes", "Regularly"),
                          prev_coding_experience = c(rep("Yes", 8), NA, "No"),
                          first_learned = c(rep("Self-taught" , 3),
@@ -35,6 +34,7 @@ test_that("summarise_where_learned_code output is as expected", {
   expect_equal(got, expected)
 
 })
+
 
 test_that("summarise_where_learned_code validation works", {
 

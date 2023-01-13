@@ -112,7 +112,7 @@ summarise_operations <- function(data) {
                  "ops_transfer_migration", "ops_vis", "ops_machine_learning",
                  "ops_modelling", "ops_QA")
 
-  levels <- c("I do some or all of this by coding", "I do this without coding", "I don't do this")
+  levels <- c("I do some or all of this by coding", "I do this without coding")
 
   labels <- c("Data analysis", "Data cleaning", "Data linking",
               "Data transfer / migration", "Data visualisation",
@@ -712,7 +712,7 @@ summarise_basic_score_by_imp <- function(data){
     "Agree",
     "Strongly Agree")
 
-  levels2 <- c(0, 1, 2, 3, 4, 5, 6)
+  levels2 <- 0:6
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
@@ -772,7 +772,7 @@ summarise_basic_score_by_understanding <- function(data){
     "Agree",
     "Strongly Agree")
 
-  levels2 <- c(0, 1, 2, 3, 4, 5, 6)
+  levels2 <- 0:6
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
@@ -802,7 +802,7 @@ summarise_adv_score_by_understanding <- function(data){
     "Agree",
     "Strongly Agree")
 
-  levels2 <- c(0, 1, 2, 3, 4, 5, 6, 7)
+  levels2 <- 0:7
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
@@ -892,6 +892,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 
   selected_data <- data %>% select(all_of(questions))
 
+
   selected_data[] <- lapply(selected_data, factor, levels = levels)
 
   if (length(questions) == 1) {
@@ -900,6 +901,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
     colnames(frequencies) <- c("value", "n")
 
     if (prop) {
+
       frequencies$n <- frequencies$n / ifelse(sum(frequencies$n, na.rm = TRUE)==0,
                                               1,
                                               sum(frequencies$n, na.rm = TRUE))
@@ -940,13 +942,11 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #'
 #' @return data.frame
 #'
-#' @importFrom dplyr select all_of count across
-#' @importFrom tidyr drop_na
-
+#' @importFrom dplyr all_of across
 
 calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE){
 
-  selected_data <- data %>% select(all_of(c(col1, col2)))
+  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
 
   selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
 
@@ -964,7 +964,6 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
   return(frequencies)
 
 }
-
 
 #' @title Convert frequencies to proportions
 #'
