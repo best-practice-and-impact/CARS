@@ -236,7 +236,23 @@ CARS::wrap_outputs("rep-workflow", plot, table)
 
 ```
 
+## RAP knowledge and opinions
+
+We asked respondents about their knowledge of and opinions on [reproducible analytical pipelines (RAP)](https://gss.civilservice.gov.uk/reproducible-analytical-pipelines/). RAP refers to the use of practices from software engineering to make analysis more reproducible. These practices build on the advantages of writing analysis as code by ensuring increased quality, trust, efficiency, business continuity and knowledge management. The [RAP champions](https://gss.civilservice.gov.uk/about-us/champion-networks/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments.
+
+### Knowledge of RAP
+
+We asked our respondents whether they had heard of RAP and what their knowledge is of their own department RAP champion.
+
+### Opinions on RAP
+
+We asked respondents who had heard of RAP whether they agreed with a series of statements.
+
 ## RAP scores
+
+RAP component scores “regularly” or “all the time” to the relevant questions. For documentation, this includes both code comments and README files. For the continuous integration and dependency management components we only collected “yes”, “no” or “I don’t understand the question” responses. As such, we gave “yes” responses a score of 1. The sum total of each respondent’s scores is presented here as “RAP scores”.
+
+A score of one for each RAP component is derived where respondents answered “regularly” or “all the time” to the relevant questions. For documentation, this includes both code comments and README files. For the continuous integration and dependency management components we only collected “yes”, “no” or “I don’t understand the question” responses. As such, we gave “yes” responses a score of 1. The sum total of each respondent’s scores is presented here as “RAP scores”. “Basic components” are the components which make up the RAP MVP. “Advanced components” are components that help improve reproducibility, but were are considered part of the minimum standard.
 
 ### RAP components
 
@@ -248,3 +264,8 @@ table <- CARS::df_to_table(tables$rap_components, n = samples$code_at_work, colu
 CARS::wrap_outputs("rap-comp", plot, table)
 
 ```
+
+### Basic RAP scores
+
+### Advanced RAP scores
+
