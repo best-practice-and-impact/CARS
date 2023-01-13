@@ -943,7 +943,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #'
 #' @importFrom dplyr all_of across
 
-calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2){
+calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE){
 
   selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
 
