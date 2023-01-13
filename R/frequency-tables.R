@@ -938,6 +938,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #' @param col2 column to cross-tabulate first column against
 #' @param levels1 factor levels for col1
 #' @param levels2 factor levels for col2
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #'
 #' @return data.frame
 #'
