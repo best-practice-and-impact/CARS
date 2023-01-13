@@ -45,7 +45,7 @@ We asked respondents what data operations they carry out in their work, and whet
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$operations, n = samples$all, xlab = "%", ylab = "Operation", font_size = 14)
+plot <- CARS::plot_stacked(tables$operations, n = samples$all, xlab = "Operation", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$operations, n = samples$all, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
 
 CARS::wrap_outputs("operations", plot, table)
@@ -65,7 +65,25 @@ Please note that capability in programming languages is self-reported here and w
 
 ### Access to coding tools
 
+```{r}
+
+plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+
+CARS::wrap_outputs("access", plot, table)
+
+```
+
 ### Knowledge of coding tools
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+
+CARS::wrap_outputs("knowledge", plot, table)
+
+```
 
 ### Access and knowledge gaps
 
@@ -77,6 +95,15 @@ Access to tools they do not have the capability to use (access only),
 Access to tools they are able to use (access and knowledge)
 Or capability to use tools they cannot access at work (knowledge only)
 
+```{r}
+
+plot <- CARS::plot_stacked(tables$language_status, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$language_status, n = samples$all, column_headers = c("Programming tool", "Both", "Access", "Knowledge", "Neither"), crosstab = TRUE)
+
+CARS::wrap_outputs("langauge-status", plot, table)
+
+```
+
 
 ## Coding capability
 
@@ -84,12 +111,29 @@ Or capability to use tools they cannot access at work (knowledge only)
 
 This question was only asked of respondents with coding experience outside of their current role. This means analysts who first learned to code in their current role are not included in the data.
 
+```{r}
+
+plot <- CARS::plot_freqs(tables$ability_change, n = samples$all, xlab = "Ability change", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ability_change, n = samples$all, column_headers = c("Ability change", "Percent"))
+
+CARS::wrap_outputs("ability-change", plot, table)
+
+```
 
 ### Where respondents first learned to code
 
 Respondents with coding experience outside their current role were asked when they first learned to code. This output also includes analysts who code in their current role but reported no other coding experience.
 
 These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$where_learned, n = samples$all, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$where_learned, n = samples$all, column_headers = c("Where learned", "Percent"))
+
+CARS::wrap_outputs("where-learned", plot, table)
+
+```
 
 
 ## Coding practices
@@ -99,6 +143,7 @@ We asked respondents who said they currently use code in their work how often th
 ### Good analysis coding practices
 
 ```{r}
+
 plot <- CARS::plot_likert(tables$coding_practices, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 3, xlab = "%", font_size = 14, height = 1200)
 table <- CARS::df_to_table(tables$coding_practices, 
                            column_headers = c(
@@ -121,13 +166,42 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 [Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
 
+```{r}
+
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 3, xlab = "%", font_size = 14, height = 1200)
+table <- CARS::df_to_table(tables$doc, 
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)", 
+                             "Rarely (%)", 
+                             "Sometimes (%)",
+                             "Regularly (%)", 
+                             "All the time (%)"
+                             ),
+                           n = samples$code_at_work,
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("doc", plot, table)
+
+```
+
 ### Dependency Management
 
 Respondents who currently use code in their work were asked whether they use any tools for dependency management. We provided examples of tools that may be used for dependency management:
 
 - Requirements files, e.g. python requirements.txt or R DESCRIPTION files  
 - Virtual environments (e.g. venv or renv) or virtual machines  
-- Containers e.g. Docker  
+- Containers e.g. Docker
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$dependency_management, n = samples$all, xlab = "Use dependency management software", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$dependency_management, n = samples$all, column_headers = c("Use dependency management software", "Percent"))
+
+CARS::wrap_outputs("dependency-management", plot, table)
+
+```
 
 ### Continuous intergration
 
@@ -135,7 +209,16 @@ Respondents were asked whether they use continuous integration technologies. As 
 
 - GitHub actions  
 - Jenkins  
-- Travis  
+- Travis
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$ci, n = samples$all, xlab = "Use continuous integration", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ci, n = samples$all, column_headers = c("Use continuous integration", "Percent"))
+
+CARS::wrap_outputs("ci", plot, table)
+
+```
 
 ### Reproducible workflow packages
 Respondents were asked whether they use reproducible workflow packages. Respondents were provided with the following examples:
@@ -144,7 +227,14 @@ Respondents were asked whether they use reproducible workflow packages. Responde
 - make  
 - pymake  
 
+```{r}
 
+plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$all, xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$rep_workflow, n = samples$all, column_headers = c("Use reproduciable workflow packages", "Percent"))
+
+CARS::wrap_outputs("rep-workflow", plot, table)
+
+```
 
 ## RAP scores
 
