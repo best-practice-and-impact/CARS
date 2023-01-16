@@ -144,7 +144,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
                  "access_JS", "knowledge_java", "access_java", "knowledge_C",
                  "access_C", "knowledge_matlab", "access_matlab")
 
-  levels <- c("Yes", "No", "Don't Know")
+  levels <- c("Yes", "Don't Know", "No")
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
               "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
