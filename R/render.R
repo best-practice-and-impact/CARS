@@ -88,6 +88,10 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   } else if (type == "departments") {
     dep_freqs <- table(data$department)
     dep_list <- names(dep_freqs[dep_freqs >= 20])
+    dep_list <- append(dep_list,
+                       "Department for Environment, Food and Rural Affairs (including agencies)")
+
+    dep_list <- sort(dep_list)
 
     filenames <- gsub("[[:punct:]]", " ", dep_list) %>% tolower()
     filenames <- gsub(" ", "-", filenames)
@@ -110,7 +114,11 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
 
       title <- paste0("Profession summary: ", prof_names[[i]])
     } else if (type == "departments") {
-      filter <- glue::glue('data[!is.na(data$department) & data$department == "{dep_list[i]}", ]')
+      if (dep_list[i] == "Department for Environment, Food and Rural Affairs (including agencies)") {
+        filter <- glue::glue('data[data$defra, ]')
+      } else {
+        filter <- glue::glue('data[!is.na(data$department) & data$department == "{dep_list[i]}", ]')
+      }
 
       title <- paste0("Department summary: ", dep_list[i])
     }
