@@ -244,7 +244,7 @@ We asked our respondents whether they had heard of RAP and what their knowledge 
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$all, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$all, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
 table <- CARS::df_to_table(tables$rap_knowledge, n = samples$all, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-knowledge", plot, table)
