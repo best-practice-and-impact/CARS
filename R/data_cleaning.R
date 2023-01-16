@@ -128,3 +128,36 @@ rename_cols <- function(data) {
 
   return(data)
 }
+
+#' @title Clean department data
+#'
+#' @description add NHS to department list and merge departments where needed.
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_departments <- function(data) {
+
+  data$department[grepl("forest research", tolower(data$other_department_name))] <- "Forestry Commission"
+
+  data$department[data$workplace == "NHS"] <- "NHS"
+
+  defra_orgs <- c(
+    "Department for Environment, Food and Rural Affairs (excl. agencies)",
+    "Forestry Commission",
+    "Animal and Plant Health Agency",
+    "Centre for Environment, Fisheries and Aquaculture Science",
+    "Rural Payments Agency",
+    "Environment Agency",
+    "Marine Management Organisation",
+    "Natural England"
+  )
+
+  data$defra <- data$department %in% defra_orgs
+
+  return(data)
+
+}
+
