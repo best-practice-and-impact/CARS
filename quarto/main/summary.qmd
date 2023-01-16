@@ -68,7 +68,7 @@ Please note that capability in programming languages is self-reported here and w
 ```{r}
 
 plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
@@ -79,7 +79,7 @@ CARS::wrap_outputs("access", plot, table)
 ```{r}
 
 plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
