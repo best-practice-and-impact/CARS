@@ -41,7 +41,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ### What is code being used for
 
-We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note we did not ask how much of each data operation is done with code, or how often.
+We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note, we did not ask how much of each data operation is done with code or how often.
 
 ```{r}
 
@@ -89,9 +89,9 @@ CARS::wrap_outputs("knowledge", plot, table)
 
 Using the data presented above we calculated the number of respondents with:
 
-Access to tools they do not have the capability to use (access only),
-Access to tools they are able to use (access and knowledge)
-Or capability to use tools they cannot access at work (knowledge only)
+- Access to tools they do not have the capability to use (access only)  
+- Access to tools they are able to use (access and knowledge)  
+- Or capability to use tools they cannot access at work (knowledge only)  
 
 ```{r}
 
@@ -107,6 +107,8 @@ CARS::wrap_outputs("langauge-status", plot, table)
 
 ### Change in coding ability during current role
 
+We asked "Has your coding ability changed during your current role?"
+
 This question was only asked of respondents with coding experience outside of their current role. This means analysts who first learned to code in their current role are not included in the data.
 
 ```{r}
@@ -120,7 +122,7 @@ CARS::wrap_outputs("ability-change", plot, table)
 
 ### Where respondents first learned to code
 
-Respondents with coding experience outside their current role were asked when they first learned to code. This output also includes analysts who code in their current role but reported no other coding experience.
+Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'.
 
 These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
 
@@ -136,7 +138,7 @@ CARS::wrap_outputs("where-learned", plot, table)
 
 ## Coding practices
 
-We asked respondents who said they currently use code in their work how often they carry out various coding practices. For more information on the practices presented below, please read our guidance on [Quality Assurance of Code for Analysis and Research] (https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
+We asked respondents who said they currently use code in their work, how often they carry out various coding practices. For more information on the practices presented below, please read our guidance on [Quality Assurance of Code for Analysis and Research](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Good analysis coding practices
 
@@ -186,7 +188,7 @@ CARS::wrap_outputs("doc", plot, table)
 
 ### Dependency Management
 
-Respondents who currently use code in their work were asked whether they use any tools for dependency management. We provided examples of tools that may be used for dependency management:
+We provided examples of tools that may be used for dependency management:
 
 - Requirements files, e.g. python requirements.txt or R DESCRIPTION files  
 - Virtual environments (e.g. venv or renv) or virtual machines  
@@ -201,9 +203,9 @@ CARS::wrap_outputs("dependency-management", plot, table)
 
 ```
 
-### Continuous intergration
+### Continuous integration
 
-Respondents were asked whether they use continuous integration technologies. As above, respondents were provided with examples of what those might be:
+As above, respondents were provided with examples of continuous integration technologies:
 
 - GitHub actions  
 - Jenkins  
@@ -236,11 +238,14 @@ CARS::wrap_outputs("rep-workflow", plot, table)
 
 ## RAP knowledge and opinions
 
-We asked respondents about their knowledge of and opinions on [reproducible analytical pipelines (RAP)](https://gss.civilservice.gov.uk/reproducible-analytical-pipelines/). RAP refers to the use of practices from software engineering to make analysis more reproducible. These practices build on the advantages of writing analysis as code by ensuring increased quality, trust, efficiency, business continuity and knowledge management. The [RAP champions](https://gss.civilservice.gov.uk/about-us/champion-networks/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments.
+We asked respondents about their knowledge of and opinions on [reproducible analytical pipelines (RAP)](https://gss.civilservice.gov.uk/reproducible-analytical-pipelines/). RAP refers to the use of practices from software engineering to make analysis more reproducible. These practices build on the advantages of writing analysis as code by ensuring increased quality, trust, efficiency, business continuity and knowledge management. The [RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments.
 
 ### Knowledge of RAP
 
-We asked our respondents whether they had heard of RAP and what their knowledge is of their own department RAP champion.
+We asked respondents:
+
+- Do you know who the reproducible analytical pipelines (RAP) champion in your department is?  
+- Do you know who the reproducible analytical pipelines (RAP) champion in your department is?  
 
 ```{r}
 
@@ -276,9 +281,11 @@ CARS::wrap_outputs("doc", plot, table)
 
 ## RAP scores
 
-RAP component scores “regularly” or “all the time” to the relevant questions. For documentation, this includes both code comments and README files. For the continuous integration and dependency management components we only collected “yes”, “no” or “I don’t understand the question” responses. As such, we gave “yes” responses a score of 1. The sum total of each respondent’s scores is presented here as “RAP scores”.
+In this section we present RAP components and RAP scores.
 
-A score of one for each RAP component is derived where respondents answered “regularly” or “all the time” to the relevant questions. For documentation, this includes both code comments and README files. For the continuous integration and dependency management components we only collected “yes”, “no” or “I don’t understand the question” responses. As such, we gave “yes” responses a score of 1. The sum total of each respondent’s scores is presented here as “RAP scores”. “Basic components” are the components which make up the RAP MVP. “Advanced components” are components that help improve reproducibility, but were are considered part of the minimum standard.
+For each RAP component a percent positive was calculated. Positive responses were recorded where an answer of "regularly" or "all the time" was given. For documentation, a positive response was recorded if both code comments and README files questions received positive responses. For the continuous integration and dependency management components, responses of "yes" were recorded as positive.
+
+The count of each respondent’s scores is presented here as “RAP scores”. “Basic components” are the components which make up the RAP MVP. “Advanced components” are components that help improve reproducibility, but were are considered part of the minimum standard.
 
 ### RAP components
 
