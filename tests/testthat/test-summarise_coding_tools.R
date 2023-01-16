@@ -40,22 +40,22 @@ test_that("summarise_coding_tools knowledge output is as expected", {
 
   got_knowledge <- summarise_coding_tools(dummy_data, "knowledge")
 
-  expected_knowledge <- data.frame("name" = c(rep("C++ / C#", 3),
-                                              rep("Java / Scala", 3),
-                                              rep("Javascript / Typescript", 3),
-                                              rep("Matlab", 3),
-                                              rep("Python", 3),
-                                              rep("R", 3),
-                                              rep("SAS", 3),
-                                              rep("SPSS", 3),
-                                              rep("SQL", 3),
-                                              rep("Stata", 3),
-                                              rep("VBA", 3)),
-                                   "value" = factor(rep(c("Yes", "No", "Don't Know"), 11),
-                                                    levels = c("Yes", "No", "Don't Know")),
-                                   "n" = c(1/6, 1/3, 1/2, 1/3, 1/2, 1/6, 1/2, 1/3, 1/6, 1/2, 1/3,
-                                           1/6, 1/2, 1/3, 1/6, 1/6, 1/3, 1/2, 1/3, 1/2, 1/6, 1/3,
-                                           1/2, 1/6, 1/2, 1/3, 1/6, 1/6, 1/3, 1/2, 1/6, 1/3, 1/2))
+  expected_knowledge <- data.frame("name" = rep(c("C++ / C#",
+                                                  "Java / Scala",
+                                                  "Javascript / Typescript",
+                                                  "Matlab",
+                                                  "Python",
+                                                  "R",
+                                                  "SAS",
+                                                  "SPSS",
+                                                  "SQL",
+                                                  "Stata",
+                                                  "VBA"), each=3),
+                                   "value" = factor(rep(c("Yes", "Don't Know", "No"), 11),
+                                                    levels = c("Yes", "Don't Know", "No")),
+                                   "n" = c(1/6, 1/2, 1/3, 1/3, 1/6, 1/2, 1/2, 1/6, 1/3, 1/2, 1/6,
+                                           1/3, 1/2, 1/6, 1/3, 1/6, 1/2, 1/3, 1/3, 1/6, 1/2, 1/3,
+                                           1/6, 1/2, 1/2, 1/6, 1/3, 1/6, 1/2, 1/3, 1/6, 1/2, 1/3))
 
   expect_equal(got_knowledge, expected_knowledge)
 
@@ -65,22 +65,22 @@ test_that("summarise_coding_tools access output is as expected", {
 
   got_access <- summarise_coding_tools(dummy_data, "access")
 
-  expected_access <- data.frame("name" = c(rep("C++ / C#", 3),
-                                           rep("Java / Scala", 3),
-                                           rep("Javascript / Typescript", 3),
-                                           rep("Matlab", 3),
-                                           rep("Python", 3),
-                                           rep("R", 3),
-                                           rep("SAS", 3),
-                                           rep("SPSS", 3),
-                                           rep("SQL", 3),
-                                           rep("Stata", 3),
-                                           rep("VBA", 3)),
-                                "value" = factor(rep(c("Yes", "No", "Don't Know"), 11),
-                                                 levels = c("Yes", "No", "Don't Know")),
-                                "n" = c(1/3, 1/6, 1/2, 1/2, 1/6, 1/3, 1/6, 1/2, 1/3, 1/6, 5/6,
-                                        0, 1/6, 1/2, 1/3, 1/3, 1/6, 1/2, 1/2, 1/6, 1/3, 1/2,
-                                        1/6, 1/3, 1/6, 1/2, 1/3, 1/3, 1/6, 1/2, 1/3, 1/6, 1/2))
+  expected_access <- data.frame("name" = rep(c("C++ / C#",
+                                               "Java / Scala",
+                                               "Javascript / Typescript",
+                                               "Matlab",
+                                               "Python",
+                                               "R",
+                                               "SAS",
+                                               "SPSS",
+                                               "SQL",
+                                               "Stata",
+                                               "VBA"), each=3),
+                                "value" = factor(rep(c("Yes", "Don't Know", "No"), 11),
+                                                 levels = c("Yes", "Don't Know", "No")),
+                                "n" = c(1/3, 1/2, 1/6, 1/2, 1/3, 1/6, 1/6, 1/3, 1/2, 1/6, 0,
+                                        5/6, 1/6, 1/3, 1/2, 1/3, 1/2, 1/6, 1/2, 1/3, 1/6, 1/2,
+                                        1/3, 1/6, 1/6, 1/3, 1/2, 1/3, 1/2, 1/6, 1/3, 1/2, 1/6))
 
   expect_equal(got_access, expected_access)
 

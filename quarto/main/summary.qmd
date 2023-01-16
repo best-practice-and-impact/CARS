@@ -67,8 +67,8 @@ Please note that capability in programming languages is self-reported here and w
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", ylab = "%", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
@@ -78,8 +78,8 @@ CARS::wrap_outputs("access", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't Know"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", ylab = "%", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -96,7 +96,7 @@ Using the data presented above we calculated the number of respondents with:
 ```{r}
 
 plot <- CARS::plot_stacked(tables$language_status, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$language_status, n = samples$all, column_headers = c("Programming tool", "Both", "Access", "Knowledge", "Neither"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$language_status, n = samples$all, column_headers = c("Programming tool", "Both", "Access only", "Knowledge only", "Neither"), crosstab = TRUE)
 
 CARS::wrap_outputs("langauge-status", plot, table)
 
@@ -168,7 +168,7 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 3, xlab = "%", font_size = 14, height = 1200)
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = 600)
 table <- CARS::df_to_table(tables$doc, 
                            column_headers = c(
                              "Statement",
@@ -196,7 +196,7 @@ We provided examples of tools that may be used for dependency management:
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$dependency_management, n = samples$all, xlab = "Use dependency management software", ylab = "%", font_size = 14)
+plot <- CARS::plot_freqs(tables$dependency_management, n = samples$all, break_q_names_col = "value", xlab = "Use dependency management software", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$dependency_management, n = samples$all, column_headers = c("Use dependency management software", "Percent"))
 
 CARS::wrap_outputs("dependency-management", plot, table)
@@ -213,7 +213,7 @@ As above, respondents were provided with examples of continuous integration tech
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$ci, n = samples$all, xlab = "Use continuous integration", ylab = "%", font_size = 14)
+plot <- CARS::plot_freqs(tables$ci, n = samples$all, break_q_names_col = "value", xlab = "Use continuous integration", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$ci, n = samples$all, column_headers = c("Use continuous integration", "Percent"))
 
 CARS::wrap_outputs("ci", plot, table)
@@ -229,7 +229,7 @@ Respondents were asked whether they use reproducible workflow packages. Responde
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$all, xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
+plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$all, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$rep_workflow, n = samples$all, column_headers = c("Use reproduciable workflow packages", "Percent"))
 
 CARS::wrap_outputs("rep-workflow", plot, table)
@@ -249,7 +249,7 @@ We asked respondents:
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$all, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$all, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
 table <- CARS::df_to_table(tables$rap_knowledge, n = samples$all, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-knowledge", plot, table)
@@ -262,7 +262,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 3, xlab = "%", font_size = 14, height = 1200)
+plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = 600)
 table <- CARS::df_to_table(tables$rap_opinions, 
                            column_headers = c(
                              "Statement",
@@ -275,7 +275,7 @@ table <- CARS::df_to_table(tables$rap_opinions,
                            n = samples$heard_of_RAP,
                            crosstab = TRUE)
 
-CARS::wrap_outputs("doc", plot, table)
+CARS::wrap_outputs("rap-opinions", plot, table)
 
 ```
 
