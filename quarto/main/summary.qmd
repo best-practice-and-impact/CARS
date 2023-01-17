@@ -249,8 +249,8 @@ We asked respondents:
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$rap_knowledge, n = samples$heard_of_RAP, column_headers = c("Knowledge", "Percent"))
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$not_RAP_champ, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$rap_knowledge, n = samples$not_RAP_champ, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-knowledge", plot, table)
 
