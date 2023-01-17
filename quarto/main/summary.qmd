@@ -285,7 +285,9 @@ In this section we present RAP components and RAP scores.
 
 For each RAP component a percent positive was calculated. Positive responses were recorded where an answer of "regularly" or "all the time" was given. For documentation, a positive response was recorded if both code comments and README files questions received positive responses. For the continuous integration and dependency management components, responses of "yes" were recorded as positive.
 
-The count of each respondent’s scores is presented here as “RAP scores”. “Basic components” are the components which make up the RAP MVP. “Advanced components” are components that help improve reproducibility, but were are considered part of the minimum standard.
+RAP scores are then calculated for each respondent as the total of their positive responses. A score of 3 suggests that a respondent is implementing 3 components of RAP at least regularly. 
+
+“Basic components” are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). “Advanced components” are components which help improve reproducibility, but are not considered part of the minimum standard.
 
 ### RAP components
 
