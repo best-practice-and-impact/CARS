@@ -64,7 +64,8 @@ sample_sizes <- function(data) {
     code_at_work = sum(data$code_freq != "Never"),
     can_code = sum(data$code_freq != "Never" | data$other_coding_experience == "Yes"),
     other_code_experience = sum(data$other_coding_experience == "Yes"),
-    heard_of_RAP = sum(data$heard_of_RAP == "Yes")
+    heard_of_RAP = sum(data$heard_of_RAP == "Yes"),
+    not_RAP_champ = sum(data$know_RAP_champ != "I am a RAP champion")
   )
 }
 
