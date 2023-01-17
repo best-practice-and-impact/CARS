@@ -113,8 +113,8 @@ This question was only asked of respondents with coding experience outside of th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$ability_change, n = samples$all, xlab = "Ability change", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$ability_change, n = samples$all, column_headers = c("Ability change", "Percent"))
+plot <- CARS::plot_freqs(tables$ability_change, n = samples$can_code, xlab = "Ability change", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ability_change, n = samples$can_code, column_headers = c("Ability change", "Percent"))
 
 CARS::wrap_outputs("ability-change", plot, table)
 
@@ -128,8 +128,8 @@ These data only show where people first learned to code. They do not show all th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$where_learned, n = samples$all, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$where_learned, n = samples$all, column_headers = c("Where learned", "Percent"))
+plot <- CARS::plot_freqs(tables$where_learned, n = samples$code_at_work, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$where_learned, n = samples$code_at_work, column_headers = c("Where learned", "Percent"))
 
 CARS::wrap_outputs("where-learned", plot, table)
 
@@ -196,8 +196,8 @@ We provided examples of tools that may be used for dependency management:
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$dependency_management, n = samples$all, break_q_names_col = "value", xlab = "Use dependency management software", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$dependency_management, n = samples$all, column_headers = c("Use dependency management software", "Percent"))
+plot <- CARS::plot_freqs(tables$dependency_management, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use dependency management software", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$dependency_management, n = samples$code_at_work, column_headers = c("Use dependency management software", "Percent"))
 
 CARS::wrap_outputs("dependency-management", plot, table)
 
@@ -213,8 +213,8 @@ As above, respondents were provided with examples of continuous integration tech
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$ci, n = samples$all, break_q_names_col = "value", xlab = "Use continuous integration", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$ci, n = samples$all, column_headers = c("Use continuous integration", "Percent"))
+plot <- CARS::plot_freqs(tables$ci, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use continuous integration", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ci, n = samples$code_at_work, column_headers = c("Use continuous integration", "Percent"))
 
 CARS::wrap_outputs("ci", plot, table)
 
@@ -229,8 +229,8 @@ Respondents were asked whether they use reproducible workflow packages. Responde
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$all, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$rep_workflow, n = samples$all, column_headers = c("Use reproduciable workflow packages", "Percent"))
+plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$rep_workflow, n = samples$code_at_work, column_headers = c("Use reproduciable workflow packages", "Percent"))
 
 CARS::wrap_outputs("rep-workflow", plot, table)
 
@@ -249,8 +249,8 @@ We asked respondents:
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$all, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$rap_knowledge, n = samples$all, column_headers = c("Knowledge", "Percent"))
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$rap_knowledge, n = samples$heard_of_RAP, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-knowledge", plot, table)
 
