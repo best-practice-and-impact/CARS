@@ -170,7 +170,7 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = NULL, width = NULL)
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = NULL, width = NULL)
 table <- CARS::df_to_table(tables$doc, 
                            column_headers = c(
                              "Statement",
