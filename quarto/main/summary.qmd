@@ -96,7 +96,7 @@ Using the data presented above we calculated the number of respondents with:
 ```{r}
 
 plot <- CARS::plot_stacked(tables$language_status, n = samples$all, xlab = "Programming tool", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$language_status, n = samples$all, column_headers = c("Programming tool", "Both", "Access only", "Knowledge only", "Neither"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$language_status, n = samples$all, column_headers = c("Programming tool", "Both", "Access Only", "Knowledge Only", "Neither"), crosstab = TRUE)
 
 CARS::wrap_outputs("langauge-status", plot, table)
 

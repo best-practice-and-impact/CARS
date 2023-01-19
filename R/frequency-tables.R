@@ -613,7 +613,7 @@ summarise_language_status <- function(data) {
                  "status_C",
                  "status_matlab")
 
-  levels <- c("both", "access", "knowledge", "neither")
+  levels <- c("Both", "Access Only", "Knowledge Only", "Neither")
 
   labels <- c("R",
               "SQL",

@@ -39,10 +39,10 @@ derive_language_status <- function(data) {
 
     knowledge_col <- data[paste0("knowledge_", lang)]
 
-    dplyr::case_when(access_col == "Yes" & knowledge_col == "Yes" ~ "both",
-                     access_col == "Yes" & knowledge_col != "Yes" ~ "access",
-                     access_col != "Yes" & knowledge_col == "Yes" ~ "knowledge",
-                     access_col != "Yes" & knowledge_col != "Yes" ~ "neither")
+    dplyr::case_when(access_col == "Yes" & knowledge_col == "Yes" ~ "Both",
+                     access_col == "Yes" & knowledge_col != "Yes" ~ "Access Only",
+                     access_col != "Yes" & knowledge_col == "Yes" ~ "Knowledge Only",
+                     access_col != "Yes" & knowledge_col != "Yes" ~ "Neither")
   })
 
   colnames(new_vars) <- paste0("status_", lang_list)
