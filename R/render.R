@@ -13,14 +13,14 @@
 render_site <- function(data, path = "quarto/main", output_path = "docs/") {
   unlink(output_path, recursive = TRUE)
 
-  dir.create(paste0(path, "/temp"))
-  save(data, file = paste0(path, "/temp/data.rda"))
+  dir.create("../temp")
+  save(data, file = "../temp/data.rda")
 
   # executes in higher directory level to avoid issues with .quarto stopping package from building
 
   quarto::quarto_render(input = path, as_job = FALSE)
 
-  unlink(paste0(path, "/temp"), recursive = TRUE)
+  unlink("../temp", recursive = TRUE)
 }
 
 #' @title create filtered pages

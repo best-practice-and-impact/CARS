@@ -32,17 +32,17 @@ test_that("derive_language_status output is as expected", {
 
   expected <- data.frame(
     dummy_data,
-    status_R = c("knowledge", "knowledge"),
-    status_SQL = c("knowledge", "knowledge"),
-    status_SAS = c("both", "both"),
-    status_VBA = c("access", "access"),
-    status_python = c("neither", "neither"),
-    status_SPSS = c("neither", "access"),
-    status_stata = c("access", "neither"),
-    status_JS = c("neither", "both"),
-    status_java = c("neither", "knowledge"),
-    status_C = c("knowledge", "access"),
-    status_matlab = c("both", "neither")
+    status_R = c("Knowledge Only", "Knowledge Only"),
+    status_SQL = c("Knowledge Only", "Knowledge Only"),
+    status_SAS = c("Both", "Both"),
+    status_VBA = c("Access Only", "Access Only"),
+    status_python = c("Neither", "Neither"),
+    status_SPSS = c("Neither", "Access Only"),
+    status_stata = c("Access Only", "Neither"),
+    status_JS = c("Neither", "Both"),
+    status_java = c("Neither", "Knowledge Only"),
+    status_C = c("Knowledge Only", "Access Only"),
+    status_matlab = c("Both", "Neither")
   )
 
   expect_equal(got, expected)

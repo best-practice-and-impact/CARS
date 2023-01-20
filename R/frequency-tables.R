@@ -64,7 +64,8 @@ sample_sizes <- function(data) {
     code_at_work = sum(data$code_freq != "Never"),
     can_code = sum(data$code_freq != "Never" | data$other_coding_experience == "Yes"),
     other_code_experience = sum(data$other_coding_experience == "Yes"),
-    heard_of_RAP = sum(data$heard_of_RAP == "Yes")
+    heard_of_RAP = sum(data$heard_of_RAP == "Yes"),
+    not_RAP_champ = sum(data$heard_of_RAP == "Yes" & data$know_RAP_champ != "I am a RAP champion")
   )
 }
 
@@ -144,7 +145,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
                  "access_JS", "knowledge_java", "access_java", "knowledge_C",
                  "access_C", "knowledge_matlab", "access_matlab")
 
-  levels <- c("Yes", "No", "Don't Know")
+  levels <- c("Yes", "Don't Know", "No")
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
               "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
@@ -612,7 +613,7 @@ summarise_language_status <- function(data) {
                  "status_C",
                  "status_matlab")
 
-  levels <- c("both", "access", "knowledge", "neither")
+  levels <- c("Both", "Access Only", "Knowledge Only", "Neither")
 
   labels <- c("R",
               "SQL",

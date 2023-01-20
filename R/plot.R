@@ -235,7 +235,9 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'
 #' @export
 
-plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "",
+                         colour_scale = c("2gradients", "gradient", "scale", "3scale"),
+                         font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
@@ -482,7 +484,8 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 #'
 #' @export
 
-plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
+plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2,
+                        xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
