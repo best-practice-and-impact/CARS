@@ -11,7 +11,7 @@ output:
 
 library(magrittr)
 
-load("../../../temp/data.Rda")
+load("../../../../temp/data.Rda")
 
 data <- {{{filter}}}
 

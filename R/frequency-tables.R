@@ -225,17 +225,17 @@ summarise_coding_practices <- function(data) {
   levels <- c("I don't understand this question", "Never", "Rarely",
                  "Sometimes", "Regularly", "All the time")
 
-  labels <- c("I use open source software when programming",
-              "My team open sources its code",
-              "I use a source code version control system e.g. Git",
-              "Code my team writes is reviewed by a colleague",
-              "I write repetitive elements in my code as functions",
-              "I unit test my code",
-              "I collect my code and supporting material into packages",
-              "I follow a standard directory structure when programming",
-              "I follow coding guidelines or style guides when programming",
-              "I write code to automatically quality assure data",
-              "My team applies the principles set out in the Aqua book when carrying out analysis as code")
+  labels <- c("Use open source software",
+              "Open source own code",
+              "Version control",
+              "Code review",
+              "Functions",
+              "Unit testing",
+              "Packaging code",
+              "Standard directory structure",
+              "Coding guidelines / Style guides",
+              "Automated data quality assurance",
+              "Apply AQUA book principles with analysis code")
 
   frequencies <- calculate_freqs(data, questions, levels, labels)
 
@@ -613,7 +613,7 @@ summarise_language_status <- function(data) {
                  "status_C",
                  "status_matlab")
 
-  levels <- c("Both", "Access Only", "Knowledge Only", "Neither")
+  levels <- c("Access Only", "Both", "Knowledge Only")
 
   labels <- c("R",
               "SQL",

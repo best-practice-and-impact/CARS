@@ -23,17 +23,17 @@ test_that("summarise_coding_practises output is as expected", {
 
   got <- summarise_coding_practices(dummy_data)
 
-  expected <- data.frame(name = c(rep("Code my team writes is reviewed by a colleague", 6),
-                                  rep("I collect my code and supporting material into packages", 6),
-                                  rep("I follow a standard directory structure when programming", 6),
-                                  rep("I follow coding guidelines or style guides when programming", 6),
-                                  rep("I unit test my code", 6),
-                                  rep("I use a source code version control system e.g. Git", 6),
-                                  rep("I use open source software when programming", 6),
-                                  rep("I write code to automatically quality assure data", 6),
-                                  rep("I write repetitive elements in my code as functions", 6),
-                                  rep("My team applies the principles set out in the Aqua book when carrying out analysis as code", 6),
-                                  rep("My team open sources its code", 6)),
+  expected <- data.frame(name = rep(sort(c("Use open source software",
+                                           "Open source own code",
+                                           "Version control",
+                                           "Code review",
+                                           "Functions",
+                                           "Unit testing",
+                                           "Packaging code",
+                                           "Standard directory structure",
+                                           "Coding guidelines / Style guides",
+                                           "Automated data quality assurance",
+                                           "Apply AQUA book principles with analysis code")), each=6),
                          value = factor(rep(c("I don't understand this question",
                                               "Never",
                                               "Rarely",
@@ -46,17 +46,17 @@ test_that("summarise_coding_practises output is as expected", {
                                                                       "Sometimes",
                                                                       "Regularly",
                                                                       "All the time")),
-                         n = c(0, 1/6, 0, 0, 1/2, 1/3,
+                         n = c(1/2, 1/3, 0, 1/6, 0, 0,
+                               0, 1/6, 0, 1/3, 1/2, 0,
+                               0, 1/6, 0, 0, 1/2, 1/3,
+                               0, 1/3, 1/2,  1/6, 0, 0,
+                               1/2, 1/3, 1/6, 0, 0, 0,
+                               1/3, 0, 0, 1/2, 0, 1/6,
                                0, 1/2, 1/6, 1/3, 0, 0,
                                0, 1/6, 1/3, 1/2, 0, 0,
-                               0, 1/3, 1/2, 1/6, 0, 0,
                                0, 1/6, 1/3, 0, 0, 1/2,
-                               0, 1/6, 1/2, 0, 0, 1/3,
                                0, 3/5, 0, 2/5, 0, 0,
-                               0, 1/6, 0, 1/3, 1/2, 0,
-                               1/2, 1/3, 1/6, 0, 0, 0,
-                               1/2, 1/3, 0, 1/6, 0, 0,
-                               1/3, 0, 0, 1/2, 0, 1/6))
+                               0, 1/6, 1/2, 0, 0, 1/3))
 
   expect_equal(got, expected)
 
