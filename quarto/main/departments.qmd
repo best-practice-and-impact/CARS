@@ -19,6 +19,8 @@ Below are links to profession-specific reports These contain summary statistics,
 
 - [Department for Environment, Food and Rural Affairs (excl. agencies)](departments/department-for-environment-food-and-rural-affairs-excl-agencies-.html)
 
+- [Department for Environment, Food and Rural Affairs (including agencies)](departments/department-for-environment-food-and-rural-affairs-including-agencies-.html)
+
 - [Department for International Trade](departments/department-for-international-trade.html)
 
 - [Department for Levelling Up, Housing and Communities](departments/department-for-levelling-up-housing-and-communities.html)
@@ -40,6 +42,8 @@ Below are links to profession-specific reports These contain summary statistics,
 - [Ministry of Justice (excl. agencies)](departments/ministry-of-justice-excl-agencies-.html)
 
 - [National Records of Scotland](departments/national-records-of-scotland.html)
+
+- [NHS](departments/nhs.html)
 
 - [Northern Ireland Statistics and Research Agency](departments/northern-ireland-statistics-and-research-agency.html)
 
