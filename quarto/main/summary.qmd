@@ -43,10 +43,12 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note, we did not ask how much of each data operation is done with code or how often.
 
+Respondents who don't do the operation at all have been removed.
+
 ```{r}
 
-plot <- CARS::plot_stacked(tables$operations, n = samples$all, xlab = "Operation", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$operations, n = samples$all, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$operations, xlab = "Operation", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$operations, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
 
 CARS::wrap_outputs("operations", plot, table)
 
@@ -91,7 +93,9 @@ Using the data presented above we calculated the number of respondents with:
 
 - Access to tools they do not have the capability to use (access only)  
 - Access to tools they are able to use (access and knowledge)  
-- Or capability to use tools they cannot access at work (knowledge only)  
+- Or capability to use tools they cannot access at work (knowledge only)
+
+excluding respondents who have neither access or knowledge
 
 ```{r}
 
@@ -113,8 +117,8 @@ This question was only asked of respondents with coding experience outside of th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$ability_change, n = samples$can_code, xlab = "Ability change", ylab = "%", font_size = 14)
-table <- CARS::df_to_table(tables$ability_change, n = samples$can_code, column_headers = c("Ability change", "Percent"))
+plot <- CARS::plot_freqs(tables$ability_change, n = samples$other_code_experience, xlab = "Ability change", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ability_change, n = samples$other_code_experience, column_headers = c("Ability change", "Percent"))
 
 CARS::wrap_outputs("ability-change", plot, table)
 
@@ -246,8 +250,11 @@ We asked respondents about their knowledge of and opinions on [reproducible anal
 
 We asked respondents:
 
-- Do you know who the reproducible analytical pipelines (RAP) champion in your department is?  
-- Do you know who the reproducible analytical pipelines (RAP) champion in your department is?  
+- Have you heard of RAP?
+- Do you know what a RAP champion is?  
+- Do you know who the RAP champion in your department is?
+
+This excludes respondents who are RAP champions themselves
 
 ```{r}
 
@@ -306,7 +313,7 @@ CARS::wrap_outputs("rap-comp", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, xlab = "Basic RAP scores", ylab = "%", font_size = 14)
+plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = c(255, 105, 0), xlab = "Basic RAP scores", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$basic_rap_scores, n = samples$code_at_work, column_headers = c("Basic RAP scores", "Percent"))
 
 CARS::wrap_outputs("basic-rap-scores", plot, table)
