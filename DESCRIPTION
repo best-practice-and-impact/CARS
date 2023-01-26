@@ -1,12 +1,6 @@
 Package: CARS
 Title: Coding in Analysis and Research Survey (CARS)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Version: 1.0.0
 Description: Analysis code for the coding in analysis and research survey (CARS).
 License: MIT + file LICENSE
 Imports:
