@@ -170,7 +170,7 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = NULL, width = NULL)
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = 600, width = "100%")
 table <- CARS::df_to_table(tables$doc, 
                            column_headers = c(
                              "Statement",
@@ -264,7 +264,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = NULL, width = NULL)
+plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = 575, width = "100%")
 table <- CARS::df_to_table(tables$rap_opinions, 
                            column_headers = c(
                              "Statement",
