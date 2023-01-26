@@ -313,7 +313,9 @@ CARS::wrap_outputs("rap-comp", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = c(255, 105, 0), xlab = "Basic RAP scores", ylab = "%", font_size = 14)
+bar_colour <- CARS::get_2colour_scale(2)[2][[1]]
+
+plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = bar_colour, xlab = "Basic RAP scores", ylab = "%", font_size = 14)
 table <- CARS::df_to_table(tables$basic_rap_scores, n = samples$code_at_work, column_headers = c("Basic RAP scores", "Percent"))
 
 CARS::wrap_outputs("basic-rap-scores", plot, table)
