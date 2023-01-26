@@ -101,7 +101,7 @@ Using the data presented above we calculated the number of respondents with:
 - Access to tools they are able to use (access and knowledge)  
 - Or capability to use tools they cannot access at work (knowledge only)
 
-excluding respondents who have neither access or knowledge
+Respondents who have neither access nor knowledge have been removed.
 
 ```{r}
 
@@ -260,7 +260,7 @@ We asked respondents:
 - Do you know what a RAP champion is?  
 - Do you know who the RAP champion in your department is?
 
-This excludes respondents who are RAP champions themselves
+Respondents who have neither access nor knowledge have been removed.
 
 ```{r}
 
