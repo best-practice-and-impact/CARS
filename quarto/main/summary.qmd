@@ -54,7 +54,7 @@ CARS::wrap_outputs("operations", plot, table)
 
 ### Access to and knowledge of programming languages
 
-Given a list of programming tools, we asked respondents to answer “Yes”, “No” or “Don’t know” for the following questions;  
+Given a list of programming tools, we asked respondents to answer "Yes", "No" or "Don't know" for the following questions;  
 
 - Do you know how to program with this tool to a level suitable for your work?  
 - Is this tool available to use for your work?  
@@ -170,7 +170,7 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = NULL, width = NULL)
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = 600, width = "100%")
 table <- CARS::df_to_table(tables$doc, 
                            column_headers = c(
                              "Statement",
@@ -264,7 +264,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = NULL, width = NULL)
+plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = 575, width = "100%")
 table <- CARS::df_to_table(tables$rap_opinions, 
                            column_headers = c(
                              "Statement",
@@ -289,7 +289,7 @@ For each RAP component a percent positive was calculated. Positive responses wer
 
 RAP scores are then calculated for each respondent as the total of their positive responses. A score of 3 suggests that a respondent is implementing 3 components of RAP at least regularly. 
 
-“Basic components” are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). “Advanced components” are components which help improve reproducibility, but are not considered part of the minimum standard.
+"Basic components" are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). "Advanced components" are components which help improve reproducibility, but are not considered part of the minimum standard.
 
 ### RAP components
 
