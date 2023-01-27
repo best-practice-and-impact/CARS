@@ -235,9 +235,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'
 #' @export
 
-plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "",
-                         colour_scale = c("2gradients", "gradient", "scale", "3scale"),
-                         font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
@@ -484,8 +482,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 #'
 #' @export
 
-plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2,
-                        xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
+plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
@@ -532,7 +529,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2,
     tickfont = list(size = font_size),
     titlefont = list(size = font_size * 1.2),
     range = list(-1, 1),
-    tickformat = ".0%", title = "Percent"
+    title = "Percent"
   )
 
   y <- list(
@@ -563,7 +560,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2,
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
   fig <- plotly::plot_ly(y = data[[1]],
-                         x=data[[3]],
+                         x = data[[3]],
                          type="bar",
                          color = data[[2]],
                          orientation = "h",
@@ -585,7 +582,14 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2,
                         yaxis = y,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)))
 
-  fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
+  tick_text <- paste0(round(abs(seq(-1, 1, .25)) * 100, digits = 2), "%")
+  tick_values <- seq(-1, 1, .25)
+
+  fig <- plotly::layout(fig,
+                        annotations = create_y_lab(ylab, font_size),
+                        xaxis = list(ticktext = tick_text,
+                                      tickvals = tick_values,
+                                      title = "%"))
 
   fig <- plotly::layout(fig, legend = list(xanchor = "left",
                                            yanchor = "bottom",
