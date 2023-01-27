@@ -62,10 +62,10 @@ sample_sizes <- function(data) {
   list(
     all = nrow(data),
     code_at_work = sum(data$code_freq != "Never"),
-    can_code = sum(data$code_freq != "Never" | data$other_coding_experience == "Yes"),
+    can_code = sum(data$code_freq != "Never" | (data$other_coding_experience == "Yes" & data$prev_coding_experience != "No")),
     other_code_experience = sum(data$other_coding_experience == "Yes"),
     heard_of_RAP = sum(data$heard_of_RAP == "Yes"),
-    not_RAP_champ = sum(data$heard_of_RAP == "Yes" & data$know_RAP_champ != "I am a RAP champion")
+    not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion")
   )
 }
 
@@ -179,6 +179,9 @@ summarise_where_learned_code <- function(data){
   if (!"code_freq" %in% colnames(data)) {
     stop("unexpected_input: no column called 'code_freq'")
   }
+  if (!"other_coding_experience" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'other_coding_experience'")
+  }
   if (!"prev_coding_experience" %in% colnames(data)) {
     stop("unexpected_input: no column called 'prev_coding_experience'")
   }
@@ -195,11 +198,13 @@ summarise_where_learned_code <- function(data){
   data <- data %>%
     select(.data$first_learned, .data$prev_coding_experience, .data$code_freq) %>%
     mutate(
-      first_learned = case_when((is.na(data$prev_coding_experience) |
-                                   (data$prev_coding_experience == "No")) &
+      first_learned = case_when((data$other_coding_experience == "No" |
+                                   data$prev_coding_experience == "No") &
                                   data$code_freq != "Never" ~ "In current role",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
                                 TRUE ~ .data$first_learned))
+
+  data$prev_coding_experience[data$other_coding_experience == "No"] <- "No"
 
   frequencies <- calculate_freqs(data, questions, levels)
 
