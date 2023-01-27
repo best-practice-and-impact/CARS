@@ -24,9 +24,9 @@ samples <- CARS::sample_sizes(data)
 
 ## Draft notice
 
-Please note that all outputs are provisional and presented here for feedback purposes. We do not recommend using the summary statistics in their current form for any other purpose. Please revisit this page in future to see the finalised outputs, including explanatory text. 
+Please note that all outputs are provisional. All findings have been thoroughly quality assured. However, the outputs presented here may change.  
 
-This is a living document. We want our users to get as much value as possible from our analysis. Because of that, we will be updating these pages with additional outputs and insights when possible. To make sure you always access the latest insights, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
+While any changes to the data are not likely to be substantial, we are planning to carry out more in-depth analysis and the commentary may change. As such, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
 
 
 ## Coding frequency and tools
