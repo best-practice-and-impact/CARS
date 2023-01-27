@@ -138,8 +138,8 @@ These data only show where people first learned to code. They do not show all th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$where_learned, n = samples$code_at_work, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$where_learned, n = samples$code_at_work, column_headers = c("Where learned", "Percent"))
+plot <- CARS::plot_freqs(tables$where_learned, n = samples$can_code, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$where_learned, n = samples$can_code, column_headers = c("Where learned", "Percent"))
 
 CARS::wrap_outputs("where-learned", plot, table)
 
