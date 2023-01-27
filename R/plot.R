@@ -582,8 +582,8 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                         yaxis = y,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)))
 
-  tick_text <- paste0(round(abs(seq(-1, 1, .25)) * 100, digits = 2), "%")
-  tick_values <- seq(-1, 1, .25)
+  tick_text <- paste0(round(abs(seq(-1, 1, .5)) * 100, digits = 2), "%")
+  tick_values <- seq(-1, 1, .5)
 
   fig <- plotly::layout(fig,
                         annotations = create_y_lab(ylab, font_size),

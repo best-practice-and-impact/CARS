@@ -469,9 +469,7 @@ summarise_rap_comp <- function(data) {
     mutate(name = factor(.data$name, levels = labels)) %>%
     arrange(.data$name) %>%
     mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
-    mutate(n = colSums(data[questions], na.rm = TRUE) / ifelse(sum(colSums(data[questions], na.rm = TRUE))==0,
-                                                               1,
-                                                               sum(colSums(data[questions], na.rm = TRUE))))
+    mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never"))
 
   names(components$n) <- NULL
 
