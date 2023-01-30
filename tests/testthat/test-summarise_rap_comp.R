@@ -1,24 +1,24 @@
 
 dummy_data <- data.frame(code_freq = c(rep("Somtimes", 4)),
-                         use_open_source_score = c(6, NA, 5, 7),
-                         open_code_score = c(2, 4, 6, 8),
-                         version_control_score = c(2, 4, 6, 8),
-                         peer_review_score = c(6, 5, 5, 7),
-                         AQUA_book_score = c(2, 4, 2, 3),
-                         doc_score = c(1, 3, 5, 7),
-                         basic_rap_score = c(3, 6, 2, 4),
-                         function_score = c(5, 7, 6, 8),
-                         unit_test_score = c(1, 3, 5, 7),
-                         function_doc_score = c(2, 4, 6, 8),
-                         package_score = c(1, 3, 5, 7),
-                         code_style_score = c(2, 4, 6, 8),
-                         cont_integration_score = c(1, 3, 5, 7),
-                         dep_management_score = c(2, 4, 5, 3),
-                         advanced_rap_score = c(3, 7, 5, 6))
+                         use_open_source_score = c(1, NA, 1, 0),
+                         open_code_score = c(1, 1, 1, 1),
+                         version_control_score = c(0, 0, 0, 0),
+                         peer_review_score = c(1, 1, 1, 0),
+                         AQUA_book_score = c(0, 1, 0, 1),
+                         doc_score = c(1, 1, 1, 0),
+                         basic_rap_score = c(1, 1, 0, 1),
+                         function_score = c(1, 0, 1, 0),
+                         unit_test_score = c(1, 1, 1, 0),
+                         function_doc_score = c(0, 1, 1, 0),
+                         package_score = c(1, 1, 1, 0),
+                         code_style_score = c(0, 1, 1, 0),
+                         cont_integration_score = c(1, 1, 1, 0),
+                         dep_management_score = c(0, 1, 1, 1),
+                         advanced_rap_score = c(1, 0, 1, 1))
 
 test_that("summarise_rap_comp missing data is handled correctly", {
 
-  dummy_data[5] <- NA
+  dummy_data[7] <- NA
 
   got <-summarise_rap_comp(dummy_data)
 
@@ -60,8 +60,8 @@ test_that("summarise_rap_comp output is as expected", {
                          value = c("Basic", "Basic", "Basic", "Basic", "Basic", "Basic",
                                    "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced", "Advanced"),
 
-                         n = c(18/236, 20/236, 20/236, 23/236, 11/236, 16/236, 26/236,
-                               16/236, 20/236, 16/236, 20/236, 16/236, 14/236)
+                         n = c(1/2, 1, 0, 3/4, 1/2, 3/4, 1/2,
+                               3/4, 1/2, 3/4, 1/2, 3/4, 3/4)
   )
 
   expect_equal(got, expected)
