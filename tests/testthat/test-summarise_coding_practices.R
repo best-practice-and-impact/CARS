@@ -1,3 +1,4 @@
+
 dummy_data <- data.frame(prac_use_open_source = c(rep("Never", 3), rep("Sometimes", 2), rep(NA, 1)),
                          prac_open_source_own = c(rep("Sometimes", 3), rep("I don't understand this question", 2), rep("All the time", 1)),
                          prac_version_control = c(rep("Rarely", 3), rep("All the time", 2), rep("Never", 1)),
@@ -10,49 +11,53 @@ dummy_data <- data.frame(prac_use_open_source = c(rep("Never", 3), rep("Sometime
                          prac_automated_QA = c(rep("Regularly", 3), rep("Sometimes", 2), rep("Never", 1)),
                          prac_AQUA_book = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Sometimes", 1)))
 
-dummy_output <- summarise_coding_practices(dummy_data)
+test_that("summarise_coding_practises missing data is handled correctly", {
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  got <- summarise_coding_practices(dummy_data)
+
+  expect_false(any(is.na.data.frame(got)))
+
 })
 
-test_that("output has three columns", {
-  expect_equal(ncol(dummy_output), 3)
-})
+test_that("summarise_coding_practises output is as expected", {
 
-test_that("output has sixty-six rows", {
-  expect_equal(nrow(dummy_output), 66)
-})
+  got <- summarise_coding_practices(dummy_data)
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na.data.frame(dummy_output)))
-})
+  expected <- data.frame(name = rep(sort(c("Use open source software",
+                                           "Open source own code",
+                                           "Version control",
+                                           "Code review",
+                                           "Functions",
+                                           "Unit testing",
+                                           "Packaging code",
+                                           "Standard directory structure",
+                                           "Coding guidelines / Style guides",
+                                           "Automated data quality assurance",
+                                           "Apply AQUA book principles with analysis code")), each=6),
+                         value = factor(rep(c("I don't understand this question",
+                                              "Never",
+                                              "Rarely",
+                                              "Sometimes",
+                                              "Regularly",
+                                              "All the time"), 11),
+                                        levels = c("I don't understand this question",
+                                                                      "Never",
+                                                                      "Rarely",
+                                                                      "Sometimes",
+                                                                      "Regularly",
+                                                                      "All the time")),
+                         n = c(1/2, 1/3, 0, 1/6, 0, 0,
+                               0, 1/6, 0, 1/3, 1/2, 0,
+                               0, 1/6, 0, 0, 1/2, 1/3,
+                               0, 1/3, 1/2,  1/6, 0, 0,
+                               1/2, 1/3, 1/6, 0, 0, 0,
+                               1/3, 0, 0, 1/2, 0, 1/6,
+                               0, 1/2, 1/6, 1/3, 0, 0,
+                               0, 1/6, 1/3, 1/2, 0, 0,
+                               0, 1/6, 1/3, 0, 0, 1/2,
+                               0, 3/5, 0, 2/5, 0, 0,
+                               0, 1/6, 1/2, 0, 0, 1/3))
 
-test_that("output has the correct column order", {
-  expect_equal(colnames(dummy_output), c("name",
-                                         "value",
-                                         "n"))
-})
+  expect_equal(got, expected)
 
-test_that("output has the correct question names", {
-  expect_equal(unique(dummy_output[[1]]), c("Code my team writes is reviewed by a colleague",
-                                            "I collect my code and supporting material into packages",
-                                            "I follow a standard directory structure when programming",
-                                            "I follow coding guidelines or style guides when programming",
-                                            "I unit test my code",
-                                            "I use a source code version control system e.g. Git",
-                                            "I use open source software when programming",
-                                            "I write code to automatically quality assure data",
-                                            "I write repetitive elements in my code as functions",
-                                            "My team applies the principles set out in the Aqua book when carrying out analysis as code",
-                                            "My team open sources its code"))
 })
-
-# test_that("frequencies are correct", {
-#   expect_equal(dummy_output[dummy_output$value == "I don't understand this question",]$n, c(0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 2))
-#   expect_equal(dummy_output[dummy_output$value == "Never",]$n, c(1, 3, 1, 2, 1, 1, 3, 1, 2, 2, 0))
-#   expect_equal(dummy_output[dummy_output$value == "Rarely",]$n, c(0, 1, 2, 3, 2, 3, 0, 0, 1, 0, 0))
-#   expect_equal(dummy_output[dummy_output$value == "Sometimes",]$n, c(0, 2, 3, 1, 0, 0, 2, 2, 0, 1, 3))
-#   expect_equal(dummy_output[dummy_output$value == "Regularly",]$n, c(3, 0, 0, 0, 0, 0, 0, 3, 0, 0 ,0))
-#   expect_equal(dummy_output[dummy_output$value == "All the time",]$n, c(2, 0, 0, 0, 3, 2, 0, 0, 0, 0, 1))
-# })

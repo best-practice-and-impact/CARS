@@ -4,3 +4,6 @@
 .Ruserdata
 docs/
 temp/
+**/.quarto
+*.csv
+*.rda

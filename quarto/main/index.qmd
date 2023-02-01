@@ -4,17 +4,19 @@ title: "Home"
 
 ## Draft notice
 
-Please note that all outputs are provisional and presented here for feedback purposes. We do not recommend using the summary statistics in their current form for any other purpose. Please revisit this page in future to see the finalised outputs.
+Please note that all outputs are provisional. All findings have been thoroughly quality assured. However, the outputs presented here may change.  
+
+While any changes to the data are not likely to be substantial, we are planning to carry out more in-depth analysis and the commentary may change. As such, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
+
+
 
 ## How do analysts use programming and software engineering in the UK Public Sector?
 
 Please note it is possible that the figures presented here will change in future. 
 
-While any changes to the data are not likely to be substantial, we are planning to carry out more in-depth analysis and the commentary may change. As such, we recommend linking to these pages rather than sharing this analysis any other way at this stage. We will be regularly updating these pages with additional outputs and insights. 
+The Coding in Analysis and Research Survey (CARS) was developed to understand better how programming is used by government analysts. Most questions focused on whether and how analysts use code in their work. The survey is also concerned with [Reproducible Analytical Pipelines (RAP)](#rap). 
 
-The Coding in Analysis and Research Survey (CARS) was developed to understand better how programming is used by government analysts. Most questions focused on whether and how analysts use code in their work. The survey is also concerned with Reproducible Analytical Pipelines (RAP). You can find links to further information on RAP at the bottom of this page. 
-
-The survey was distributed to government analysts and researchers in the autumn of 2021. The results presented here summarise the key findings from 912 respondents from over 50 public sector organisations. You can find the 2021 findings in [last year's publication](https://best-practice-and-impact.github.io/CARS-3/).
+The survey was distributed to government analysts and researchers in the autumn of 2022. The results presented here summarise the key findings from 1322 respondents from over 50 public sector organisations. You can find the 2021 findings in [last year's publication](https://best-practice-and-impact.github.io/CARS-3/).
 
 ## Who is this research for?
 
@@ -33,7 +35,7 @@ Avoid:
 * Attempting to estimate absolute frequencies - we did not use random sampling
 * Inferring differences between groups - these outputs are only intended to be descriptive and inferential tests were not carried out unless stated otherwise
 
-## More information on reproducible analytical pipelines
+## More information on reproducible analytical pipelines {#rap}
 
 [Quality assurance for coding in analysis and research](https://best-practice-and-impact.github.io/qa-of-code-guidance/)
 

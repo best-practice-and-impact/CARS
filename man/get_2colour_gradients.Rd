@@ -2,12 +2,7 @@
 % Please edit documentation in R/colour_scales.R
 \name{get_2colour_gradients}
 \alias{get_2colour_gradients}
-\title{Create 2 colour gradient palette
-
-Creates a list of  colour names (RGB). Generates a palate using two colour gradients and an optional grey neutral colour.
-Each half of the palette contains different shades of the colour submitted to the function. These are useful where two colour
-scales in the same palette are needed, e.g. likert type plots. By default, the main colours are shades of blue and orange
-used in the analysis function colour scheme.}
+\title{Create 2 colour gradient palette}
 \usage{
 get_2colour_gradients(
   n,
@@ -36,8 +31,6 @@ the endpoint of the first colour gradient (e.g. if n=6 and mid=3, there will be 
 RGB colours
 }
 \description{
-Create 2 colour gradient palette
-
 Creates a list of  colour names (RGB). Generates a palate using two colour gradients and an optional grey neutral colour.
 Each half of the palette contains different shades of the colour submitted to the function. These are useful where two colour
 scales in the same palette are needed, e.g. likert type plots. By default, the main colours are shades of blue and orange

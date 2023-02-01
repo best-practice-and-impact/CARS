@@ -14,5 +14,5 @@ Set up JavaScript functions for show table/chart buttons
 }
 \details{
 Insert JavaScript code for show table/chart buttons. Use with insert_table_toggle().
-Only include once per document. Assumes the naving convention "name-table" and "name-chart" for divs containing tables and charts.
+Only include once per document. Assumes the naming convention "name-table" and "name-chart" for divs containing tables and charts.
 }

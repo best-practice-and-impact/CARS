@@ -1,47 +1,40 @@
-dummy_data <- data.frame(prac_use_open_source = c("All the time", "Regularly", "Sometimes", "Rarely", "Never"),
-                         prac_open_source_own = c("Never", "All the time", "Regularly", "Sometimes", "Rarely"),
-                         prac_version_control = c("Rarely", "Never" ,"All the time", "Regularly", "Sometimes"),
-                         prac_review = c("Sometimes", "Rarely", "Never", "All the time", "Regularly"),
-                         prac_AQUA_book = c("Regularly", "Sometimes", "Rarely", "Never", "All the time"),
-                         doc_readme = c("All the time", "Regularly", "Sometimes", "Rarely", "Never"),
-                         doc_comments = c("Never", "All the time", "Regularly", "Sometimes", "Rarely"))
+dummy_data <- data.frame(code_freq = c("Never", rep("Sometimes", 4)),
+                         prac_use_open_source = c(NA, "Regularly", "Sometimes", "Rarely", "Never"),
+                         prac_open_source_own = c(NA, "All the time", "Regularly", "Sometimes", "Rarely"),
+                         prac_version_control = c(NA, "Never" ,"All the time", "Regularly", "Sometimes"),
+                         prac_review = c(NA, "Rarely", "Never", "All the time", "Regularly"),
+                         prac_AQUA_book = c(NA, "Sometimes", "Rarely", "Never", "All the time"),
+                         doc_readme = c(NA, "Regularly", "Sometimes", "Rarely", "Never"),
+                         doc_comments = c(NA, "All the time", "Regularly", "Sometimes", "Rarely"))
 
-dummy_output <- derive_basic_rap_scores(dummy_data)
+test_that("derive_basic_rap_scores validation works", {
 
-test_that("output is a dataframe", {
-  expect_s3_class(dummy_output, "data.frame")
+  dummy_data <- data.frame()
+
+  expect_error(derive_basic_rap_scores(dummy_data), "Unexpected input - missing column names: code_freq\nprac_use_open_source\nprac_open_source_own\nprac_version_control\nprac_review\nprac_AQUA_book\ndoc_comments\ndoc_readme")
+
 })
 
-new_cols <- c("use_open_source_score",
-              "open_code_score",
-              "version_control_score",
-              "peer_review_score",
-              "AQUA_book_score",
-              "doc_score",
-              "basic_rap_score")
+test_that("derive_basic_rap_scores output is as expected", {
 
-test_that("output has new columns", {
-  expect_true(identical(new_cols, colnames(dummy_output[8:14])))
-})
+  got <- derive_basic_rap_scores(dummy_data)
 
-test_that("output does not contain missing values", {
-  expect_false(any(is.na(dummy_output)))
-})
+  expected <- data.frame(code_freq = c("Never", rep("Sometimes", 4)),
+                         prac_use_open_source = c(NA, "Regularly", "Sometimes", "Rarely", "Never"),
+                         prac_open_source_own = c(NA, "All the time", "Regularly", "Sometimes", "Rarely"),
+                         prac_version_control = c(NA, "Never" ,"All the time", "Regularly", "Sometimes"),
+                         prac_review = c(NA, "Rarely", "Never", "All the time", "Regularly"),
+                         prac_AQUA_book = c(NA, "Sometimes", "Rarely", "Never", "All the time"),
+                         doc_readme = c(NA, "Regularly", "Sometimes", "Rarely", "Never"),
+                         doc_comments = c(NA, "All the time", "Regularly", "Sometimes", "Rarely"),
+                         use_open_source_score = c(NA, 1, 0, 0, 0),
+                         open_code_score = c(NA, 1, 1, 0, 0),
+                         version_control_score = c(NA, 0, 1, 1, 0),
+                         peer_review_score = c(NA, 0, 0, 1, 1),
+                         AQUA_book_score = c(NA, 0, 0, 0, 1),
+                         doc_score = c(NA, 1, 0, 0, 0),
+                         basic_rap_score = c(NA, 3, 2, 2, 2))
 
-test_that("Check number of rows in output", {
-  expect_equal(nrow(dummy_output), 5)
-})
+  expect_equal(got, expected)
 
-test_that("Check number of columns in output", {
-  expect_equal(ncol(dummy_output), 14)
-})
-
-test_that("output values are correct", {
-  expect_equal(dummy_output[[8]], c(1, 1, 0, 0 ,0))
-  expect_equal(dummy_output[[9]], c(0, 1, 1, 0, 0))
-  expect_equal(dummy_output[[10]], c(0, 0, 1, 1, 0))
-  expect_equal(dummy_output[[11]], c(0, 0, 0, 1, 1))
-  expect_equal(dummy_output[[12]], c(1, 0, 0, 0, 1))
-  expect_equal(dummy_output[[13]], c(0, 1, 0, 0, 0))
-  expect_equal(dummy_output[[14]], c(2, 3, 2, 2, 2))
 })

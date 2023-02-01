@@ -54,12 +54,12 @@ wrap_outputs <- function(name, chart, table) {
 #'
 #' @description Set up JavaScript functions for show table/chart buttons
 #'
-#'@details Insert JavaScript code for show table/chart buttons. Use with insert_table_toggle().
-#'Only include once per document. Assumes the naving convention "name-table" and "name-chart" for divs containing tables and charts.
+#' @details Insert JavaScript code for show table/chart buttons. Use with insert_table_toggle().
+#'Only include once per document. Assumes the naming convention "name-table" and "name-chart" for divs containing tables and charts.
 #'
-#'@return JavaScript code (raw html)
+#' @return JavaScript code (raw html)
 #'
-#'@export
+#' @export
 #'
 
 setup_table_toggle <- function() {
@@ -90,17 +90,17 @@ setup_table_toggle <- function() {
 }
 
 
-#'@title Insert table toggle buttons
+#' @title Insert table toggle buttons
 #'
-#'@description Add table toggle buttons to rmarkdowndown site
+#' @description Add table toggle buttons to rmarkdown site
 #'
-#'@details Add "show table" and "show chart" buttons to rmarkdown site (html). Expects table contaners to be named "name-table" and chart containers to be named "name-chart"
+#' @details Add "show table" and "show chart" buttons to rmarkdown site (html). Expects table contaners to be named "name-table" and chart containers to be named "name-chart"
 #'
-#'@param output_name the name of assigned to the output. Used to name buttons and reference tables and chart.
+#' @param output_name the name of assigned to the output. Used to name buttons and reference tables and chart.
 #'
-#'@return html buttons and CSS
+#' @return html buttons and CSS
 #'
-#'@export
+#' @export
 
 insert_table_toggle <- function(output_name) {
 

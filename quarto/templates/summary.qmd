@@ -1,26 +1,33 @@
 ---
-title: "Summary statistics"
+title: "{{{title}}}"
 output:
   html_document
 ---
+
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() ("{{{" and "}}}", respectively))
+[comment]: <> (This document should only be edited as a template: quarto/templates/summary.qmd)
 
 ```{r echo=FALSE}
 
 library(magrittr)
 
-load("../../../temp/data.Rda")
+load("../../../../temp/data.Rda")
 
-tables <- CARS::summarise_all(data, all_tables = TRUE)
+data <- {{{filter}}}
+
+tables <- CARS::summarise_all(data, all_tables = FALSE)
 
 samples <- CARS::sample_sizes(data)
 
 ```
+
 
 ## Draft notice
 
 Please note that all outputs are provisional. All findings have been thoroughly quality assured. However, the outputs presented here may change.  
 
 While any changes to the data are not likely to be substantial, we are planning to carry out more in-depth analysis and the commentary may change. As such, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
+
 
 ## Coding frequency and tools
 
@@ -253,7 +260,7 @@ We asked respondents:
 - Do you know what a RAP champion is?  
 - Do you know who the RAP champion in your department is?
 
-Respondents who are RAP champions themselves have been removed.
+Respondents who have neither access nor knowledge have been removed.
 
 ```{r}
 
@@ -331,4 +338,3 @@ table <- CARS::df_to_table(tables$advanced_rap_scores, n = samples$code_at_work,
 CARS::wrap_outputs("advanced-rap-scores", plot, table)
 
 ```
-

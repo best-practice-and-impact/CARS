@@ -1,6 +1,6 @@
 #' @title Create 2 colour gradient palette
 #'
-#' Creates a list of  colour names (RGB). Generates a palate using two colour gradients and an optional grey neutral colour.
+#' @description Creates a list of  colour names (RGB). Generates a palate using two colour gradients and an optional grey neutral colour.
 #' Each half of the palette contains different shades of the colour submitted to the function. These are useful where two colour
 #' scales in the same palette are needed, e.g. likert type plots. By default, the main colours are shades of blue and orange
 #' used in the analysis function colour scheme.
@@ -11,7 +11,7 @@
 #' @param mid the middle value of the scale. If neutral_mid = TRUE this value will be represented in grey. Otherwise, this will be
 #' the endpoint of the first colour gradient (e.g. if n=6 and mid=3, there will be three shades of each colour)
 #' @param neutral_mid whether the middle of the scale should be represented in grey (logical, TRUE by default)
-#'@param colour_names whether to return HTML colour names. TRUE by default.
+#' @param colour_names whether to return HTML colour names. TRUE by default.
 #'
 #' @return RGB colours
 #'
@@ -64,7 +64,7 @@ get_2colour_gradients <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 10
     c2_first <- c2_gradient[1]
     c2_brightness <- (max(c2_first[[1]]) + min (c2_first[[1]])) / 2
 
-    mid_brightness <- 200
+    mid_brightness <- 175
 
     mid_colour <- c(mid_brightness, mid_brightness, mid_brightness)
     colours <- c(c1_gradient, list(mid_colour), c2_gradient)
@@ -81,15 +81,15 @@ get_2colour_gradients <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 10
 }
 
 
-#'@title Create 2 colour scale palette
+#' @title Create 2 colour scale palette
 #'
-#' Creates a list of  colour names (RGB). Generates a scale between two colours. By default these are the
+#' @description Creates a list of  colour names (RGB). Generates a scale between two colours. By default these are the
 #' shades of orange and blue used in the analysis function colour scheme.
 #'
 #' @param n the number of colours needed
 #' @param colour1 the first colour in the scale - a numeric vector representing red, green and blue (max 255)
 #' @param colour2 the last colour in the scale - numeric vector representing red, green and blue (max 255).
-#'@param colour_names whether to return HTML colour names. TRUE by default.
+#' @param colour_names whether to return HTML colour names. TRUE by default.
 #'
 #' @return vector of hexadecimal colours containing shades between the two selected colours
 #'
@@ -130,13 +130,13 @@ get_2colour_scale <- function(n, colour1 = c(0, 69, 86), colour2 = c(255, 105, 0
 }
 
 
-#' Create single colour gradient
+#' @title Create single colour gradient
 #'
-#' Creates a list of colours for plotting. The list contains n shades of the original colour, increasing in brightness.
+#' @description Creates a list of colours for plotting. The list contains n shades of the original colour, increasing in brightness.
 #'
 #' @param n the number of colours needed
 #' @param colour the first colour of the gradient - numeric vector with three values representing red, blue and green (max 255)
-#'@param colour_names whether to return HTML colour names. TRUE by default.
+#' @param colour_names whether to return HTML colour names. TRUE by default.
 #'
 #' @return RGB colours
 #'
@@ -176,16 +176,16 @@ get_gradient <- function(n, colour = c(0, 69, 86), colour_names = TRUE) {
 }
 
 
-#'@title create 3 colour palette
+#' @title create 3 colour palette
 #'
-#'@description create a list of 3 colours in RGB; orange, blue and green for plotting
+#' @description create a list of 3 colours in RGB; orange, blue and green for plotting
 #'
-#'@param n the number of colours needed
-#'@param colour_names whether to return HTML colour names. TRUE by default.
+#' @param n the number of colours needed
+#' @param colour_names whether to return HTML colour names. TRUE by default.
 #'
-#'@return RGB colours
+#' @return RGB colours
 #'
-#'@export
+#' @export
 
 get_3colour_scale <- function(n, colour_names = TRUE) {
 
