@@ -37,6 +37,7 @@ summarise_all <- function(data, all_tables = FALSE) {
     output_list <- c(output_list,
                      list(
                        capability_change_by_freq = summarise_cap_change_by_freq(data),
+                       capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
                        basic_score_by_implementation = summarise_basic_score_by_imp(data),
                        adv_score_by_implementation = summarise_adv_score_by_imp(data),
                        basic_score_by_understanding = summarise_basic_score_by_understanding(data),
@@ -680,6 +681,38 @@ summarise_cap_change_by_freq <- function(data){
     "Sometimes",
     "Regularly",
     "All the time")
+
+  levels2 <- c(
+    "Significantly worse",
+    "Slightly worse",
+    "No change",
+    "Slightly better",
+    "Significantly better")
+
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise capability change by management responsibility
+#'
+#' @description calculate the cross tab of capability change by management responsibilty
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_cap_change_by_line_manage <- function(data){
+
+  col1 <- "management"
+
+  col2 <- "coding_ability_change"
+
+  levels1 <- c("Yes",
+               "No - I manage people who do not write code",
+               "No - I don't line manage anyone")
 
   levels2 <- c(
     "Significantly worse",

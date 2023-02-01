@@ -10,6 +10,8 @@ library(magrittr)
 
 load("../../../temp/data.Rda")
 
+data <- data[!(data$department %in% c("Office for National Statistics", "NHS")), ]
+
 tables <- CARS::summarise_all(data, all_tables = TRUE)
 
 samples <- CARS::sample_sizes(data)
