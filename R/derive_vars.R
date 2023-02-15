@@ -35,9 +35,9 @@ derive_language_status <- function(data) {
   lang_list <- gsub("access_", "", lang_list)
 
   new_vars <- sapply(lang_list, function(lang) {
-    access_col <- data[paste0("access_", lang)]
+    access_col <- data[[paste0("access_", lang)]]
 
-    knowledge_col <- data[paste0("knowledge_", lang)]
+    knowledge_col <- data[[paste0("knowledge_", lang)]]
 
     dplyr::case_when(access_col == "Yes" & knowledge_col == "Yes" ~ "Both",
                      access_col == "Yes" & knowledge_col != "Yes" ~ "Access Only",
