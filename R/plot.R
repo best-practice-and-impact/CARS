@@ -693,8 +693,8 @@ calculate_bases <- function(data, mid, neutral_mid) {
 #' @description Sets x or y axis range for plotly objects
 #'
 #' @param plot plotly object
-#' @param min
-#' @param max
+#' @param min minimum value
+#' @param max maximum value
 #' @param axis optional: defaults to "x"
 #'
 #' @return list of parameters for plotly annotation

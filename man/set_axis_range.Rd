@@ -9,6 +9,10 @@ set_axis_range(plot, min, max, axis = c("x", "y"))
 \arguments{
 \item{plot}{plotly object}
 
+\item{min}{minimum value}
+
+\item{max}{maximum value}
+
 \item{axis}{optional: defaults to "x"}
 }
 \value{
