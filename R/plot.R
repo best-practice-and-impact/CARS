@@ -688,6 +688,32 @@ calculate_bases <- function(data, mid, neutral_mid) {
   return(bases)
 }
 
+#' @title Set axis range
+#'
+#' @description Sets x or y axis range for plotly objects
+#'
+#' @param plot plotly object
+#' @param min
+#' @param max
+#' @param axis optional: defaults to "x"
+#'
+#' @return list of parameters for plotly annotation
+#'
+#' @export
+
+set_axis_range <- function(plot, min, max, axis = c("x", "y")) {
+  axis <- match.arg(axis)
+
+  if (axis == "x") {
+    plot <- plot %>% plotly::layout(xaxis = list(zerolinecolor = '#ffff',
+                                               range = list(min, max)))
+  } else if (axis == "y") {
+    plot <- plot %>% plotly::layout(yaxis = list(zerolinecolor = '#ffff',
+                                                 range = list(min, max)))
+  }
+
+  return(plot)
+}
 
 
 #' @title Create custom Y axis label
