@@ -148,3 +148,34 @@ tidy_colnames <- function(raw_data) {
   return(output)
 }
 
+#' @title Get all CARS data, including previous waves
+#'
+#' @description Ingest and preprocess all previous CARS data
+#'
+#' @return data frame
+#'
+#' @export
+
+get_all_waves <- function() {
+
+  data <- get_tidy_data() %>%
+    rename_cols() %>%
+    apply_skip_logic() %>%
+    clean_departments() %>%
+    derive_vars()
+  data$year <- 2022
+
+  w3_data <- get_tidy_data(survey = "961613") %>%
+    w3_rename_cols() %>%
+    w3_enforce_streaming()
+  w3_data$year <- 2021
+
+  w2_data <- get_tidy_data(survey = "790800") %>%
+    w2_rename_cols() %>%
+    w2_enforce_streaming()
+  w2_data$year <- 2020
+
+  data <- dplyr::bind_rows(data, w3_data, w2_data)
+
+  return(data)
+}

@@ -14,9 +14,11 @@ w3_rename_cols <- function(data) {
     stop("Unexpected input: data is not a data.frame.")
   }
 
-  data <- data[8:length(data)]
+  data <- data[c(1, 9:length(data))]
 
   colnames(data) <- c(
+    "ID",
+    "tracking_link",
     "CS_grade",
     "department",
     "other_department_name",
@@ -55,8 +57,8 @@ w3_rename_cols <- function(data) {
     "degree_other",
     "code_freq",
     "code_manage",
-    "ops_analysis",
     "ops_cleaning",
+    "ops_analysis",
     "ops_linking",
     "ops_transfer_migration",
     "ops_vis",
@@ -114,7 +116,7 @@ w3_rename_cols <- function(data) {
     "prac_style",
     "prac_automated_QA",
     "prac_AQUA_book",
-    "doc_commentsnts",
+    "doc_comments",
     "doc_functions",
     "doc_readme",
     "doc_desk_notes",
