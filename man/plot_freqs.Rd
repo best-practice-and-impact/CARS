@@ -23,6 +23,8 @@ plot_freqs(
 
 \item{n}{sample size (optional)}
 
+\item{colour}{Colour name. Defaults to blue (see @get_gradient())}
+
 \item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
 
 \item{type}{optional: chart type ("bar" or "line").}
@@ -38,8 +40,6 @@ plot_freqs(
 \item{orientation}{plot orientation ("h" = horizontal, "v" = verical). Vertical by default}
 
 \item{...}{additional plotly_ly arguments}
-
-\item{bar_colour}{Colour name. Defaults to blue (see @get_gradient())}
 }
 \value{
 bar chart

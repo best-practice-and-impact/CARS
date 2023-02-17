@@ -112,7 +112,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
 #' @param n sample size (optional)
-#' @param bar_colour Colour name. Defaults to blue (see @get_gradient())
+#' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
