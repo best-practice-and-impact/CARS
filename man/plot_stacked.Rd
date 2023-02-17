@@ -8,6 +8,7 @@ plot_stacked(
   data,
   n,
   break_q_names_col,
+  type = c("bar", "line"),
   max_lines = 2,
   xlab = "",
   ylab = "",
@@ -24,6 +25,8 @@ plot_stacked(
 \item{n}{sample size}
 
 \item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
+
+\item{type}{optional: chart type ("bar" or "line").}
 
 \item{max_lines}{maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()}
 

@@ -112,8 +112,9 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
 #' @param n sample size (optional)
-#' @param bar_colour Colour name. Defaults to blue (see @get_gradient())
+#' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
 #' @param xlab X axis title (optional)
 #' @param ylab Y axis title (optional)
@@ -125,13 +126,13 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @export
 
-plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
+plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line"), max_lines = 2,  xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
 
   # Set default bar colour
-  if (missing(bar_colour)) {
-    bar_colour <- get_gradient(1)[[1]]
-  } else if (!is.character(bar_colour) | length(bar_colour) != 1) {
-    stop("Unexpected input - bar_colour should be a single colour name.")
+  if (missing(colour)) {
+    colour <- get_gradient(1)[[1]]
+  } else if (!is.character(colour) | length(colour) != 1) {
+    stop("Unexpected input - colour should be a single colour name.")
   }
 
   # Validate data
@@ -154,6 +155,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
   }
 
   orientation <- match.arg(orientation)
+  type <- match.arg(type)
 
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
@@ -188,15 +190,30 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 
   hovertext <- paste0(data[[1]], ": ", round(abs(data[[2]]) * 100, 1), "%", " <extra></extra>")
 
-  fig <- plotly::plot_ly(
-    x = x_vals,
-    y = y_vals,
-    marker = list(color = bar_colour),
-    type = "bar",
-    orientation = orientation,
-    hovertemplate = hovertext,
-    ...
-  )
+  if (type == "bar") {
+    fig <- plotly::plot_ly(
+      x = x_vals,
+      y = y_vals,
+      marker = list(color = colour),
+      type = "bar",
+      orientation = orientation,
+      hovertemplate = hovertext,
+      ...
+    )
+  } else if (type == "line") {
+    fig <- plotly::plot_ly(
+      x = x_vals,
+      y = y_vals,
+      marker = list(color = colour),
+      line = list(color = colour),
+      type = "scatter",
+      mode = "lines",
+      orientation = orientation,
+      hovertemplate = hovertext,
+      ...
+    )
+  }
+
 
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
@@ -222,6 +239,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #' @param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
 #' @param n sample size
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
+#' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
 #' @param xlab X axis title
 #' @param ylab Y axis title
@@ -235,7 +253,7 @@ plot_freqs <- function(data, n, bar_colour, break_q_names_col, max_lines = 2,  x
 #'
 #' @export
 
-plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
@@ -265,8 +283,8 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   }
 
   colour_scale <- match.arg(colour_scale)
-
   orientation <- match.arg(orientation)
+  type <- match.arg(type)
 
   # Get bar colours
   ncolours <- length(unique(data[[2]]))
@@ -306,6 +324,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
+  if (type == "bar") {
   fig <- plotly::plot_ly(y = y_vals,
                          x = x_vals,
                          color = data[[2]],
@@ -314,6 +333,18 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
                          hovertemplate = hovertext,
                          marker = list(color = colours),
                          ...)
+  } else if (type == "line") {
+    fig <- plotly::plot_ly(y = y_vals,
+                           x = x_vals,
+                           color = data[[2]],
+                           type = "scatter",
+                           mode = "lines",
+                           orientation = orientation,
+                           hovertemplate = hovertext,
+                           marker = list(color = colours),
+                           line = list(color = colours),
+                           ...)
+  }
 
   fig <- plotly::config(fig, displayModeBar = F)
 
@@ -657,6 +688,32 @@ calculate_bases <- function(data, mid, neutral_mid) {
   return(bases)
 }
 
+#' @title Set axis range
+#'
+#' @description Sets x or y axis range for plotly objects
+#'
+#' @param plot plotly object
+#' @param min minimum value
+#' @param max maximum value
+#' @param axis optional: defaults to "x"
+#'
+#' @return list of parameters for plotly annotation
+#'
+#' @export
+
+set_axis_range <- function(plot, min, max, axis = c("x", "y")) {
+  axis <- match.arg(axis)
+
+  if (axis == "x") {
+    plot <- plot %>% plotly::layout(xaxis = list(zerolinecolor = '#ffff',
+                                               range = list(min, max)))
+  } else if (axis == "y") {
+    plot <- plot %>% plotly::layout(yaxis = list(zerolinecolor = '#ffff',
+                                                 range = list(min, max)))
+  }
+
+  return(plot)
+}
 
 
 #' @title Create custom Y axis label
