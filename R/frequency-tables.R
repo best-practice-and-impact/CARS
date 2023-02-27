@@ -38,13 +38,14 @@ summarise_all <- function(data, all_tables = FALSE) {
                      list(
                        capability_change_by_freq = summarise_cap_change_by_freq(data),
                        capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
+                       capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
                        basic_score_by_implementation = summarise_basic_score_by_imp(data),
                        adv_score_by_implementation = summarise_adv_score_by_imp(data),
                        basic_score_by_understanding = summarise_basic_score_by_understanding(data),
                        adv_score_by_understanding = summarise_adv_score_by_understanding(data),
-                       languages_by_prof = summarise_languages_by_prof(data) # Needs refactoring
-                     ))
-
+                       languages_by_prof = summarise_languages_by_prof(data),
+                       heard_of_RAP_by_prof = summarise_heard_of_RAP_by_prof(data)
+                       ))
   }
 
   return(output_list)
@@ -728,6 +729,44 @@ summarise_cap_change_by_line_manage <- function(data){
 }
 
 
+#' @title Summarise capability change by CS grade
+#'
+#' @description calculate the cross tab of capability change by CS grade
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_cap_change_by_CS_grade <- function(data){
+
+  col1 <- "CS_grade"
+
+  col2 <- "coding_ability_change"
+
+  levels1 <- c("Higher Executive Officer (or equivalent)",
+               "Senior Executive Officer (or equivalent)",
+               "Grade 6 and 7")
+
+  levels2 <- c(
+    "Significantly worse",
+    "Slightly worse",
+    "No change",
+    "Slightly better",
+    "Significantly better")
+
+  selected_data <- data %>%
+    dplyr::select(CS_grade, coding_ability_change) %>%
+    dplyr::mutate(CS_grade = dplyr::case_when(CS_grade %in% c("Grade 7 (or equivalent)",
+                                                              "Grade 6 (or equivalent)") ~ "Grade 6 and 7",
+                                              TRUE ~ CS_grade))
+
+  frequencies <- calculate_multi_table_freqs(selected_data, col1, col2, levels1, levels2)
+
+  return(frequencies)
+
+}
+
+
 #' @title Compare basic RAP score to implementation of RAP
 #'
 #' @description calculate frequency table for basic rap score compared with implementation of RAP
@@ -892,12 +931,91 @@ summarise_languages_by_prof <- function(data) {
   outputs <- do.call(rbind, outputs)
 
   colnames(outputs) <- c("lang", "prof", "n")
-  outputs <- outputs[, c("prof", "lang", "n")]
   rownames(outputs) <- NULL
 
   outputs$prof <- recode(outputs$prof, !!!prof_names)
 
   return(outputs)
+}
+
+
+#' @title Summarise heard of RAP by profession
+#'
+#' @description Create frequency table of basic and advanced RAP score components
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+#'
+#' @importFrom dplyr filter mutate case_match arrange
+
+summarise_heard_of_RAP_by_prof <- function(data) {
+
+  filtered_data <- dplyr::filter(data, workplace == "Civil service, including devolved administations")
+  filtered_RAP_data <- dplyr::filter(filtered_data, heard_of_RAP == "Yes")
+
+  questions <- c("heard_of_RAP")
+
+  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+             "prof_GORS", "prof_GSR", "prof_GSG")
+
+  prof_names <- c("Data scientists",
+                  "Digital and data (DDAT)",
+                  "Actuaries",
+                  "Economists (GES)",
+                  "Geographers",
+                  "Operational researchers (GORS)",
+                  "Social researchers (GSR)",
+                  "Statisticians (GSG)")
+
+  names(prof_names) <- profs
+
+  frequencies <- calculate_freqs(filtered_data, questions, profs)
+
+  frequencies <- frequencies %>%
+    dplyr::mutate(value = factor(.data$value, levels = profs)) %>%
+    dplyr::arrange(.data$value) %>%
+    dplyr::mutate(n = colSums(filtered_RAP_data[profs] == "Yes") / colSums(filtered_data[profs] == "Yes"))
+
+  rownames(frequencies) <- NULL
+
+  return(frequencies)
+
+}
+
+
+summarise_strategy_knowledge_by_prof <- function(data) {
+  data <- data[data$code_freq <= "Never", ]
+
+  data$prof_DS <- ifelse(data$prof_DS_GSG_GORS == "Yes" | data$prof_DS_other == "Yes", "Yes", "No")
+
+  profs <- c("prof_GAD", "prof_DDAT",  "prof_DS", "prof_GES",
+             "prof_GORS", "prof_GSR", "prof_GSG")
+  strat_knowledge <- c("I have not heard of the RAP strategy",
+                       "I have heard of the RAP strategy, but I haven't read it",
+                       "I have read the RAP strategy")
+
+  prof_counts <- colSums(data[profs] == "Yes")
+
+  prof_langs <- sapply(profs, function(prof) {
+    filtered_data <- data[data[prof] == "Yes", ]
+
+    freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
+
+    return(freqs)
+  }) %>% data.frame
+
+  prof_langs <- cbind(lang = lang_names, prof_langs)
+
+  colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
+                            "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
+
+  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
+  prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
+  prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
+
+  return(prof_langs_long)
+
 }
 
 
