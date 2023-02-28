@@ -14,7 +14,8 @@ testthat::test_that("validity check works",
                     {
                       testthat::expect_error(
                         freq_subplots(dummy_data, xlab = "x", ylab = "y",
-                                      height = 20, width = 20, nrows = 1))
+                                      height = 20, width = 20, nrows = 1),
+                        "Unexpected input: n_rows should be 2 or greater.")
                     })
 
 
@@ -22,8 +23,23 @@ got <- freq_subplots(dummy_data, xlab = "x", ylab = "y",
               height = 500, width = 300, nrows = 3,
               y_margin = .3, x_margin = .3, orientation = "v")
 
-testthat::test_that("expected outputs achieved",
-                    {
-                      testthat::expect_equal(c(got$x$data[[1]]$x), factor(levels1, levels = levels1))
-                      testthat::expect_equal(c(got$x$data[[1]]$y), dummy_data[dummy_data$Q2 == 1, "n"])
-                    })
+for(i in 1:length(unique(dummy_data[[2]]))){
+  j = 2*i - 1
+  testthat::test_that("expected outputs achieved",
+                      {
+                        # x values
+                        testthat::expect_equal(c(got$x$data[[j]]$x), factor(levels1, levels = levels1))
+
+                        # y values
+                        testthat::expect_equal(c(got$x$data[[j]]$y), dummy_data[dummy_data$Q2 == i, "n"])
+
+                        # Bar colors
+                        testthat::expect_equal(got$x$data[[j]]$marker$color, "#004556")
+
+                        # Plot orientation
+                        testthat::expect_equal(got$x$data[[j]]$orientation, "v")
+
+                        # Title
+                        testthat::expect_equal(got$x$data[[j]]$title, factor(i, levels = c(1, 2, 3)))
+                      })
+}
