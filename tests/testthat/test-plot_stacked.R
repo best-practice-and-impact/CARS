@@ -4,8 +4,7 @@ dummy_data <- data.frame(Q1 = rep(c("test1",
                                     "test3"), each = 3),
                          Q2 = factor(rep(c(1, 2, 3), 3),
                                      levels = c(1, 2, 3)),
-                         n = c(0.2, 0.3, 0.4, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
-
+                         n = c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
 
 testthat::test_that("validity checks work",
                     {
@@ -25,7 +24,7 @@ testthat::test_that("expected outputs achieved",
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(rep(c("test1", "test2", "test3"), each = 3),
                                                                            levels = c("test3", "test2", "test1")))
-                      testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.2, 0.3, 0.4, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
+                      testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
 
                       # Bar colors
                       testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#004556", "#004556", "#004556", "#AFAFAF", "#AFAFAF", "#AFAFAF", "#FF6900", "#FF6900", "#FF6900"))

@@ -351,7 +351,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 #'
 #' @description Produce bar chart (plotly) for frequency data with grouping variable.
 #'
-#' @param data Frequency data (data frame). 3 columns - cateogry names, groups and frequencies.
+#' @param data Frequency data (data frame). 3 columns - category names, groups and frequencies.
 #' @param n sample size
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
