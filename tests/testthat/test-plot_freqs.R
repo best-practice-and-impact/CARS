@@ -23,29 +23,29 @@ got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y", break_q_names_col
 testthat::test_that("expected outputs achieved",
                     {
                       # x and y values
-                      testthat::expect_equal(c(got$x$attrs[[1]][[1]]), factor(c("This is test<br>number one", "This is test<br>2", "test3"),
+                      testthat::expect_equal(c(got$x$attrs[[1]]$x), factor(c("This is test<br>number one", "This is test<br>2", "test3"),
                                                                               levels = c("This is test<br>number one", "This is test<br>2", "test3")))
-                      testthat::expect_equal(c(got$x$attrs[[1]][[2]]), c(0.5, 0.2, 0.8))
+                      testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.5, 0.2, 0.8))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]][[3]][[1]], "#004556")
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, "#004556")
 
                       # Plot orientation
-                      testthat::expect_equal(got$x$attrs[[1]][[4]], "v")
+                      testthat::expect_equal(got$x$attrs[[1]]$orientation, "v")
 
                       # Sample size
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[5]][[3]], "Sample size = 100")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
 
                       # Axis labels
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[1]][[1]], "x")
-                      testthat::expect_equal(got$x$layoutAttrs[[2]][[1]][[1]], "y")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$title, "x")
+                      testthat::expect_equal(got$x$layoutAttrs[[2]]$annotations$text, "y")
 
                       # Font sizes
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[1]][[2]][[1]], 12)
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[1]][[3]][[1]], 14.4)
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[2]][[2]][[1]], 12)
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[2]][[3]][[1]], 14.4)
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[4]][[2]][[1]], 12)
-                      testthat::expect_equal(got$x$layoutAttrs[[1]][[5]][[11]][[1]], 12)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$titlefont$size, 14.4)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$tickfont$size, 12)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$yaxis$titlefont$size, 14.4)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$yaxis$tickfont$size, 12)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$hoverlabel$font$size, 12)
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$font$size, 12)
 
                     })

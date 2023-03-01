@@ -243,7 +243,7 @@ plot_stacked <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
   } else if (ncol(data) != 3) {
-    stop("Unexpected input - data should have three columns")
+    stop("Unexpected input - data should have three columns.")
   }
 
   # Validate labels
