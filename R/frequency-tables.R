@@ -196,13 +196,13 @@ summarise_where_learned_code <- function(data){
               "Other")
 
   data <- data %>%
-    select(.data$first_learned, .data$prev_coding_experience, .data$code_freq) %>%
+    select(first_learned, prev_coding_experience, code_freq) %>%
     mutate(
       first_learned = case_when((data$other_coding_experience == "No" |
                                    data$prev_coding_experience == "No") &
                                   data$code_freq != "Never" ~ "In current role",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
-                                TRUE ~ .data$first_learned))
+                                TRUE ~ first_learned))
 
   data$prev_coding_experience[data$other_coding_experience == "No"] <- "No"
 
@@ -466,8 +466,8 @@ summarise_rap_comp <- function(data) {
   components <- calculate_freqs(data, questions, levels, labels)
 
   components <- components %>%
-    mutate(name = factor(.data$name, levels = labels)) %>%
-    arrange(.data$name) %>%
+    mutate(name = factor(name, levels = labels)) %>%
+    arrange(name) %>%
     mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
     mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never"))
 
@@ -913,13 +913,13 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 
   } else {
     frequencies <- selected_data %>%
-      pivot_longer(cols = questions,
+      pivot_longer(cols = all_of(questions),
                    names_to = "name",
                    values_to = "value") %>%
-      group_by(.data$name) %>%
-      count(.data$value, .drop=FALSE) %>%
-      mutate(name = recode(.data$name, !!!labels_list)) %>%
-      arrange(.data$name, by_group=TRUE) %>%
+      group_by(name) %>%
+      count(value, .drop=FALSE) %>%
+      mutate(name = recode(name, !!!labels_list)) %>%
+      arrange(name, by_group=TRUE) %>%
       drop_na() %>%
       data.frame()
 
@@ -957,7 +957,7 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
-    count(across(c(col1, col2)), .drop=FALSE) %>%
+    count(across(all_of(c(col1, col2))), .drop=FALSE) %>%
     drop_na() %>%
     data.frame()
 
@@ -981,7 +981,7 @@ prop_by_group <- function(data) {
 
   data %>%
     group_by_at(1) %>%
-    mutate(n = .data$n / ifelse(sum(.data$n)==0, 1, sum(.data$n))) %>%
+    mutate(n = n / ifelse(sum(n)==0, 1, sum(n))) %>%
     data.frame()
 
 }

@@ -17,7 +17,7 @@ plot_grouped(
 )
 }
 \arguments{
-\item{data}{Frequency data (data frame). 3 columns - cateogry names, groups and frequencies.}
+\item{data}{Frequency data (data frame). 3 columns - category names, groups and frequencies.}
 
 \item{n}{sample size}
 

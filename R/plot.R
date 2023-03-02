@@ -506,18 +506,18 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   n_questions <- length(unique(data[[1]]))
   n_answers <- length(unique(data[[2]]))
 
+  # Validate neutral mid
+  if (!is.logical(neutral_mid)) {
+    stop("Unexpected input - neutral_mid is not logical.")
+  }
+
   # Validate mid
   if (!is.numeric(mid)) {
     stop("Unexpected input - mid is not numeric.")
   } else if (mid < 2) {
-    stop("Unexpected inout - mid is smaller than 2.")
-  } else if (neutral_mid & mid > n_answers) {
+    stop("Unexpected input - mid is smaller than 2.")
+  } else if (neutral_mid & mid >= n_answers) {
     stop("Unexpected input - mid >= the number of answers.")
-  }
-
-  # Validate neutral mid
-  if (!is.logical(neutral_mid)) {
-    stop("Unexpected input - mid is not logical (TRUE/FALSE)")
   }
 
   # Apply break_q_names to a column

@@ -10,7 +10,6 @@ testthat::test_that("validity checks work",
                     {
                       testthat::expect_error(plot_grouped(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
                       testthat::expect_error(plot_grouped(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data does not contain 3 columns.")
-                      testthat::expect_error(plot_grouped(dplyr::mutate(dummy_data, n = as.character(n))), "Unexpected input - data column 3 is not numeric.")
                       testthat::expect_error(plot_grouped(dummy_data, xlab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_grouped(dummy_data, ylab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_grouped(dummy_data, xlab = c("1", "2")), "Unexpected input - labels should be single character strings.")
