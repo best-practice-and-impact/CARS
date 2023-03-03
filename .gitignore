@@ -2,8 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-docs/
 temp/
 **/.quarto
 *.csv
 *.rda
+docs/

@@ -6,8 +6,8 @@ dummy_data <- data.frame(Q1 = factor(c("This is test number one", "This is test 
 
 testthat::test_that("validity checks work",
                     {
-                      testthat::expect_error(plot_freqs(dummy_data, bar_colour = c("blue", "green")), "Unexpected input - bar_colour should be a single colour name.")
-                      testthat::expect_error(plot_freqs(dummy_data, bar_colour = 1), "Unexpected input - bar_colour should be a single colour name.")
+                      testthat::expect_error(plot_freqs(dummy_data, colour = c("blue", "green")), "Unexpected input - colour should be a single colour name.")
+                      testthat::expect_error(plot_freqs(dummy_data, colour = 1), "Unexpected input - colour should be a single colour name.")
                       testthat::expect_error(plot_freqs(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
                       testthat::expect_error(plot_freqs(dplyr::mutate(dummy_data, Q2 = Q1)), "Unexpected input - data does not contain two columns.")
                       testthat::expect_error(plot_freqs(dplyr::mutate(dummy_data, n = as.character(n))), "Unexpected input - data column 2 is not numeric.")
