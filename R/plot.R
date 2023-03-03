@@ -652,7 +652,10 @@ calculate_bases <- function(data, mid, neutral_mid) {
     }
   }
 
-  negative_bases <- data %>% dplyr::group_by_at(1) %>% dplyr::mutate_at(3, get_neg_bases, mid = mid, neutral_mid = neutral_mid) %>% data.frame
+  negative_bases <- data %>%
+    dplyr::group_by_at(1) %>%
+    dplyr::mutate_at(3, get_neg_bases, mid = mid, neutral_mid = neutral_mid) %>%
+    data.frame()
 
   bases <- bases - negative_bases[[3]]
 
