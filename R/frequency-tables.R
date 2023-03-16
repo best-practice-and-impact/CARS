@@ -44,6 +44,7 @@ summarise_all <- function(data, all_tables = FALSE) {
                        basic_score_by_understanding = summarise_basic_score_by_understanding(data),
                        adv_score_by_understanding = summarise_adv_score_by_understanding(data),
                        languages_by_prof = summarise_languages_by_prof(data),
+                       open_source_by_prof = summarise_open_source_by_prof(data),
                        heard_of_RAP_by_prof = summarise_heard_of_RAP_by_prof(data)
                        ))
   }
@@ -198,13 +199,13 @@ summarise_where_learned_code <- function(data){
               "Other")
 
   data <- data %>%
-    select(.data$first_learned, .data$prev_coding_experience, .data$code_freq) %>%
+    select(first_learned, prev_coding_experience, code_freq) %>%
     mutate(
       first_learned = case_when((data$other_coding_experience == "No" |
                                    data$prev_coding_experience == "No") &
                                   data$code_freq != "Never" ~ "In current role",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
-                                TRUE ~ .data$first_learned))
+                                TRUE ~ first_learned))
 
   data$prev_coding_experience[data$other_coding_experience == "No"] <- "No"
 
@@ -468,8 +469,8 @@ summarise_rap_comp <- function(data) {
   components <- calculate_freqs(data, questions, levels, labels)
 
   components <- components %>%
-    mutate(name = factor(.data$name, levels = labels)) %>%
-    arrange(.data$name) %>%
+    mutate(name = factor(name, levels = labels)) %>%
+    arrange(name) %>%
     mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
     mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never"))
 
@@ -916,16 +917,19 @@ summarise_languages_by_prof <- function(data) {
   outputs <- lapply(profs, function(prof) {
     filtered_data <- data[data[prof] == "Yes", ]
 
+    if(nrow(filtered_data) > 0) {
+
     output <- summarise_coding_tools(filtered_data, "knowledge", prop = FALSE)
 
-    # Retain frequencies for "Yes" responses only
-    output <- output[output[[2]] == "Yes", ]
+      # Retain frequencies for "Yes" responses only
+      output <- output[output[[2]] == "Yes", ]
 
-    output$value <- prof
+      output$value <- prof
 
-    output$n <- output$n / ifelse(sum(output$n)==0, 1, sum(output$n))
+      output$n <- output$n / ifelse(sum(output$n)==0, 1, sum(output$n))
 
-    return(output)
+      return(output)
+    }
   })
 
   outputs <- do.call(rbind, outputs)
@@ -939,9 +943,60 @@ summarise_languages_by_prof <- function(data) {
 }
 
 
+#' @title Summarise open source practice by profession
+#'
+#' @description only used the main summary page. Needs to be turned into wide data for html table.
+#'
+#' @param data CARS data (pre-processed)
+#'
+#' @return data.frame
+#'
+#' @importFrom dplyr recode
+
+summarise_open_source_by_prof <- function(data) {
+
+  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+             "prof_GORS", "prof_GSR", "prof_GSG")
+
+  prof_names <- c("Data scientists",
+                  "Digital and data (DDAT)",
+                  "Actuaries",
+                  "Economists (GES)",
+                  "Geographers",
+                  "Operational researchers (GORS)",
+                  "Social researchers (GSR)",
+                  "Statisticians (GSG)")
+
+  names(prof_names) <- profs
+
+  outputs <- lapply(profs, function(prof) {
+    filtered_data <- data[data[prof] == "Yes", ]
+
+    if(nrow(filtered_data) > 0) {
+
+      output <- summarise_coding_practices(filtered_data)
+
+      output <- output[output[[1]] == "Use open source software",]
+
+      output$name <- prof
+
+      return(output)
+    }
+  })
+
+  outputs <- do.call(rbind, outputs)
+
+  rownames(outputs) <- NULL
+
+  outputs$name <- recode(outputs$name, !!!prof_names)
+
+  return(outputs)
+}
+
+
 #' @title Summarise heard of RAP by profession
 #'
-#' @description Create frequency table of basic and advanced RAP score components
+#' @description Create frequency table of RAP awareness for professions
 #'
 #' @param data full CARS dataset after pre-processing
 #'
@@ -973,9 +1028,11 @@ summarise_heard_of_RAP_by_prof <- function(data) {
   frequencies <- calculate_freqs(filtered_data, questions, profs)
 
   frequencies <- frequencies %>%
-    dplyr::mutate(value = factor(.data$value, levels = profs)) %>%
-    dplyr::arrange(.data$value) %>%
-    dplyr::mutate(n = colSums(filtered_RAP_data[profs] == "Yes") / colSums(filtered_data[profs] == "Yes"))
+    dplyr::mutate(value = factor(value, levels = profs)) %>%
+    dplyr::arrange(value) %>%
+    dplyr::mutate(n = colSums(filtered_RAP_data[profs] == "Yes") / ifelse(colSums(filtered_data[profs] == "Yes") != 0,
+                                                                          colSums(filtered_data[profs] == "Yes"),
+                                                                          1))
 
   rownames(frequencies) <- NULL
 
@@ -984,39 +1041,37 @@ summarise_heard_of_RAP_by_prof <- function(data) {
 }
 
 
-summarise_strategy_knowledge_by_prof <- function(data) {
-  data <- data[data$code_freq <= "Never", ]
-
-  data$prof_DS <- ifelse(data$prof_DS_GSG_GORS == "Yes" | data$prof_DS_other == "Yes", "Yes", "No")
-
-  profs <- c("prof_GAD", "prof_DDAT",  "prof_DS", "prof_GES",
-             "prof_GORS", "prof_GSR", "prof_GSG")
-  strat_knowledge <- c("I have not heard of the RAP strategy",
-                       "I have heard of the RAP strategy, but I haven't read it",
-                       "I have read the RAP strategy")
-
-  prof_counts <- colSums(data[profs] == "Yes")
-
-  prof_langs <- sapply(profs, function(prof) {
-    filtered_data <- data[data[prof] == "Yes", ]
-
-    freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
-
-    return(freqs)
-  }) %>% data.frame
-
-  prof_langs <- cbind(lang = lang_names, prof_langs)
-
-  colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
-                            "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
-
-  prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
-  prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
-  prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
-
-  return(prof_langs_long)
-
-}
+# summarise_strategy_knowledge_by_prof <- function(data) {
+#   data <- data[data$code_freq <= "Never", ]
+#
+#   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+#              "prof_GORS", "prof_GSR", "prof_GSG")
+#   strat_knowledge <- c("I have not heard of the RAP strategy",
+#                        "I have heard of the RAP strategy, but I haven't read it",
+#                        "I have read the RAP strategy")
+#
+#   prof_counts <- colSums(data[profs] == "Yes")
+#
+#   prof_langs <- sapply(profs, function(prof) {
+#     filtered_data <- data[data[prof] == "Yes", ]
+#
+#     freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
+#
+#     return(freqs)
+#   }) %>% data.frame
+#
+#   prof_langs <- cbind(lang = lang_names, prof_langs)
+#
+#   colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
+#                             "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
+#
+#   prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
+#   prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
+#   prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
+#
+#   return(prof_langs_long)
+#
+# }
 
 
 #' @title Calculate frequencies
@@ -1064,13 +1119,13 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 
   } else {
     frequencies <- selected_data %>%
-      pivot_longer(cols = questions,
+      pivot_longer(cols = all_of(questions),
                    names_to = "name",
                    values_to = "value") %>%
-      group_by(.data$name) %>%
-      count(.data$value, .drop=FALSE) %>%
-      mutate(name = recode(.data$name, !!!labels_list)) %>%
-      arrange(.data$name, by_group=TRUE) %>%
+      group_by(name) %>%
+      count(value, .drop=FALSE) %>%
+      mutate(name = recode(name, !!!labels_list)) %>%
+      arrange(name, by_group=TRUE) %>%
       drop_na() %>%
       data.frame()
 
@@ -1132,7 +1187,7 @@ prop_by_group <- function(data) {
 
   data %>%
     group_by_at(1) %>%
-    mutate(n = .data$n / ifelse(sum(.data$n)==0, 1, sum(.data$n))) %>%
+    mutate(n = n / ifelse(sum(n)==0, 1, sum(n))) %>%
     data.frame()
 
 }

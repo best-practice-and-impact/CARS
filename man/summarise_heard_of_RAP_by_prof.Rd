@@ -13,5 +13,5 @@ summarise_heard_of_RAP_by_prof(data)
 frequency table (data.frame)
 }
 \description{
-Create frequency table of basic and advanced RAP score components
+Create frequency table of RAP awareness for professions
 }
