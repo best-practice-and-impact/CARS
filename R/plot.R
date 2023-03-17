@@ -112,7 +112,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
 #' @param n sample size (optional)
-#' @param bar_colour Colour name. Defaults to blue (see @get_gradient())
+#' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
@@ -210,6 +210,29 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
     )
   }
 
+  if (type == "bar") {
+    fig <- plotly::plot_ly(
+      x = x_vals,
+      y = y_vals,
+      marker = list(color = colour),
+      type = "bar",
+      orientation = orientation,
+      hovertemplate = hovertext,
+      ...
+    )
+  } else if (type == "line") {
+    fig <- plotly::plot_ly(
+      x = x_vals,
+      y = y_vals,
+      marker = list(color = colour),
+      line = list(color = colour),
+      type = "scatter",
+      mode = "lines",
+      orientation = orientation,
+      hovertemplate = hovertext,
+      ...
+    )
+  }
 
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
@@ -680,6 +703,7 @@ calculate_bases <- function(data, mid, neutral_mid) {
   return(bases)
 }
 
+
 #' @title Set up error bars
 #'
 #' @description Formats plotly error bar settings. Can be used with plots
@@ -701,6 +725,7 @@ set_error_bars <- function(lower_ci, upper_ci) {
     )
   )
 }
+
 
 #' @title Set axis range
 #'
