@@ -1,0 +1,515 @@
+---
+title: "{{{CARS Analysis}}}"
+output:
+  html_document
+format:
+  html:
+    theme: cosmo
+    toc: true
+editor: visual
+execute:
+  echo: false
+  warnings: false
+---
+
+```{r}
+library(magrittr)
+library(CARS)
+library(car)
+library(MASS)
+library(nnet)
+library(stats)
+library(Hmisc)
+library(brant)
+library(ggplot2)
+library(ggcorrplot)
+
+data <- CARS::get_tidy_data() %>%
+  CARS::rename_cols() %>%
+  CARS::apply_skip_logic() %>%
+  CARS::clean_departments() %>%
+  CARS::derive_vars()
+
+ONS_data <- dplyr::filter(data, department == "Office for National Statistics")
+
+tables <- CARS::summarise_all(data, all_tables = TRUE)
+
+ONS_tables <- CARS::summarise_all(ONS_data, all_tables = TRUE)
+
+samples <- CARS::sample_sizes(data)
+
+```
+
+## Coding frequency and tools
+
+### How often do respondents use code
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$code_freq, n = samples$all, xlab = "Coding frequency", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$code_freq, n = samples$all, column_headers = c("Coding frequency", "Percent"))
+
+CARS::wrap_outputs("coding-freq", plot, table)
+
+```
+
+### What is code being used for
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$operations, xlab = "Operation", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$operations, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
+
+CARS::wrap_outputs("operations", plot, table)
+
+```
+
+### Access to and knowledge of programming languages
+
+### Access to coding tools
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", ylab = "%", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+
+CARS::wrap_outputs("access", plot, table)
+
+```
+
+### Knowledge of coding tools
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", ylab = "%", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+
+CARS::wrap_outputs("knowledge", plot, table)
+
+```
+
+### Access and knowledge gaps
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$language_status, xlab = "Programming tool", ylab = "%", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$language_status, column_headers = c("Programming tool", "Access Only", "Both", "Knowledge Only"), crosstab = TRUE)
+
+CARS::wrap_outputs("langauge-status", plot, table)
+
+```
+
+## Coding capability
+
+### Change in coding ability during current role
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$ability_change, n = samples$other_code_experience, xlab = "Ability change", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ability_change, n = samples$other_code_experience, column_headers = c("Ability change", "Percent"))
+
+CARS::wrap_outputs("ability-change", plot, table)
+
+```
+
+### Where respondents first learned to code
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$where_learned, n = samples$can_code, xlab = "Where learned", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$where_learned, n = samples$can_code, column_headers = c("Where learned", "Percent"))
+
+CARS::wrap_outputs("where-learned", plot, table)
+
+```
+
+## Coding practices
+
+### Good analysis coding practices
+
+```{r}
+
+plot <- CARS::plot_likert(tables$coding_practices, n = samples$code_at_work,
+                          mid = 5, neutral_mid = FALSE, break_q_names_col = "name",
+                          max_lines = 2, xlab = "%", font_size = 14, height = 800, width = "100%")
+table <- CARS::df_to_table(tables$coding_practices, 
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)", 
+                             "Rarely (%)", 
+                             "Sometimes (%)",
+                             "Regularly (%)", 
+                             "All the time (%)"
+                             ),
+                           n = samples$code_at_work,
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("good-practices", plot, table)
+
+```
+
+### Documentation
+
+```{r}
+
+plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, xlab = "%", font_size = 14, height = 600, width = "100%")
+table <- CARS::df_to_table(tables$doc, 
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)", 
+                             "Rarely (%)", 
+                             "Sometimes (%)",
+                             "Regularly (%)", 
+                             "All the time (%)"
+                             ),
+                           n = samples$code_at_work,
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("doc", plot, table)
+
+```
+
+### Dependency Management
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$dependency_management, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use dependency management software", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$dependency_management, n = samples$code_at_work, column_headers = c("Use dependency management software", "Percent"))
+
+CARS::wrap_outputs("dependency-management", plot, table)
+
+```
+
+### Continuous integration
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$ci, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use continuous integration", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$ci, n = samples$code_at_work, column_headers = c("Use continuous integration", "Percent"))
+
+CARS::wrap_outputs("ci", plot, table)
+
+```
+
+### Reproducible workflow packages
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$rep_workflow, n = samples$code_at_work, column_headers = c("Use reproduciable workflow packages", "Percent"))
+
+CARS::wrap_outputs("rep-workflow", plot, table)
+
+```
+
+## RAP knowledge and opinions
+
+### Knowledge of RAP
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$not_RAP_champ, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", ylab = "%", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$rap_knowledge, n = samples$not_RAP_champ, column_headers = c("Knowledge", "Percent"))
+
+CARS::wrap_outputs("rap-knowledge", plot, table)
+
+```
+
+### Opinions on RAP
+
+```{r}
+
+plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, xlab = "%", font_size = 14, height = 575, width = "100%")
+table <- CARS::df_to_table(tables$rap_opinions, 
+                           column_headers = c(
+                             "Statement",
+                             "Strongly Disagree (%)",
+                             "Disagree (%)", 
+                             "Neutral (%)", 
+                             "Agree (%)",
+                             "Strongly Agree (%)"
+                             ),
+                           n = samples$heard_of_RAP,
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("rap-opinions", plot, table)
+
+```
+
+## RAP scores
+
+### RAP components
+
+```{r}
+
+plot <- CARS::plot_grouped(tables$rap_components, n = samples$code_at_work, orientation = "h", ylab = "%", xlab = "RAP component", font_size = 14)
+table <- CARS::df_to_table(tables$rap_components, n = samples$code_at_work, column_headers = c("RAP component", "Type", "Percentage of analysts who code in their work"))
+
+CARS::wrap_outputs("rap-comp", plot, table)
+
+```
+
+### Basic RAP scores
+
+```{r}
+
+bar_colour <- CARS::get_2colour_scale(2)[2][[1]]
+
+plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = bar_colour, xlab = "Basic RAP scores", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$basic_rap_scores, n = samples$code_at_work, column_headers = c("Basic RAP scores", "Percent"))
+
+CARS::wrap_outputs("basic-rap-scores", plot, table)
+
+```
+
+### Advanced RAP scores
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$advanced_rap_scores, n = samples$code_at_work, xlab = "Advanced RAP scores", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$advanced_rap_scores, n = samples$code_at_work, column_headers = c("Advanced RAP scores", "Percent"))
+
+CARS::wrap_outputs("advanced-rap-scores", plot, table)
+
+```
+
+## Coding ability change
+
+### Visualise data
+
+```{r}
+tables$capability_change_by_freq %>% tidyr::pivot_wider(names_from = code_freq, values_from = n) %>% data.frame()
+
+CARS::plot_likert(tables$capability_change_by_freq, mid = 3, neutral_mid = TRUE, xlab = "%", font_size = 14, height = 600, width = "100%")
+
+
+tables$capability_change_by_line_manage %>% tidyr::pivot_wider(names_from = management, values_from = n) %>% data.frame()
+
+CARS::plot_likert(tables$capability_change_by_line_manage, mid = 3, neutral_mid = TRUE, xlab = "%", font_size = 14, height = 600, width = "100%")
+
+
+tables$capability_change_by_CS_grade %>% tidyr::pivot_wider(names_from = CS_grade, values_from = n) %>% data.frame()
+
+CARS::plot_likert(tables$capability_change_by_CS_grade, mid = 3, neutral_mid = TRUE, xlab = "%", font_size = 14, height = 600, width = "100%")
+
+```
+
+```{r}
+selected_data <- subset(data, select=c("coding_ability_change", "code_freq", "management", "CS_grade", "prof_DS", "prof_DDAT"))
+
+selected_data <- selected_data %>%
+  dplyr::mutate(coding_ability_change = dplyr::case_when(coding_ability_change %in% c("Slightly worse",
+                                                                                      "Significantly worse") ~ "Worse",
+                                                         TRUE ~ coding_ability_change))
+
+selected_data$coding_ability_change <- ordered(selected_data$coding_ability_change,
+                                              levels = c("Worse",
+                                                         "No change",
+                                                         "Slightly better",
+                                                         "Significantly better"),
+                                              exclude = NULL)
+
+selected_data <- selected_data %>%
+  dplyr::mutate(code_freq = dplyr::case_when(code_freq %in% c("Never",
+                                                              "Rarely") ~ "Rarely or never",
+                                             TRUE ~ code_freq))
+
+selected_data$code_freq <- factor(selected_data$code_freq,
+                                  levels = c("Rarely or never",
+                                             "Sometimes",
+                                             "Regularly",
+                                             "All the time"),
+                                  exclude = NULL)
+
+selected_data <- selected_data %>%
+  dplyr::mutate(manage_coders = ifelse(management == "Yes", "Yes", "No")) %>%
+  dplyr::mutate(manage_non_coders = ifelse(management == "No - I manage people who do not write code", "Yes", "No"))
+
+selected_data$manage_coders <- factor(selected_data$manage_coders)
+selected_data$manage_non_coders <- factor(selected_data$manage_non_coders)
+
+selected_data <- selected_data %>%
+  dplyr::mutate(CS_grade = dplyr::case_when(CS_grade %in% c("Grade 7 (or equivalent)",
+                                                            "Grade 6 (or equivalent)") ~ "Grade 6 and 7",
+                                            TRUE ~ CS_grade))
+
+selected_data$CS_grade <- factor(selected_data$CS_grade,
+                                 levels = c("Higher Executive Officer (or equivalent)",
+                                            "Senior Executive Officer (or equivalent)",
+                                            "Grade 6 and 7"),
+                                 exclude = NULL)
+
+selected_data <- selected_data %>%
+  dplyr::mutate(data_profession = ifelse(prof_DS=="Yes" | prof_DDAT=="Yes", "Yes", "No"))
+
+selected_data$data_profession <- factor(selected_data$data_profession)
+
+selected_data <- dplyr::select(selected_data, coding_ability_change, code_freq,
+                               manage_coders, manage_non_coders, CS_grade, data_profession)
+
+selected_data <- tidyr::drop_na(selected_data)
+
+```
+
+### Visualise correlations in the data.
+
+```{r}
+r <- cor(data.matrix(selected_data), use = "complete.obs", method = "kendall")
+
+ggcorrplot(r,
+           type = "lower",
+           lab = TRUE)
+
+```
+
+Correlation values above 0.8 would indicate that their is multicolinearity in the data, which would break the assumption of the model.
+
+```{r}
+M7 <- polr(coding_ability_change~code_freq*(CS_grade+data_profession), data = selected_data,
+           Hess = TRUE, method="logistic")
+
+```
+
+### Generate p-values and odds rations for the best fit model
+
+```{r}
+# get coefficients (it's in matrix form)
+coefficients <- summary(M7)$coefficients
+
+# calculate p-values
+p_value <- (1 - pnorm(abs(coefficients[ ,"t value"]), 0, 1))*2
+
+# bind back to coefficients
+(coefficients <- cbind(coefficients, p_value))
+
+# calculate odds ratios
+odds_ratio <- exp(coefficients[ ,"Value"])
+
+# combine with coefficient and p_value
+(coefficients <- cbind(
+  coefficients[ ,c("Value", "p_value")],
+  odds_ratio
+))
+
+```
+
+## RAP awareness
+
+### Visualise data
+
+```{r}
+CARS::plot_freqs(tables$heard_of_RAP_by_prof, xlab = "Profession", ylab = "Heard of RAP (%)", font_size = 14)
+
+```
+
+```{r}
+RAP_awareness_data <- data %>%
+  dplyr::select("heard_of_RAP", "department", "prof_DS", "prof_DDAT", "prof_GAD",
+                "prof_GES", "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG") %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(department = ifelse(department == "Office for National Statistics",
+                                    "Yes", "No"),
+                across(everything(), as.factor)) %>%
+  dplyr::rename(ONS = department) %>%
+  data.frame(row.names = NULL)
+
+```
+
+### Visualise correlations in the data.
+
+```{r}
+r <- cor(data.matrix(RAP_awareness_data), use = "complete.obs", method = "kendall")
+
+ggcorrplot(r,
+           type = "lower",
+           lab = TRUE)
+
+```
+
+```{r}
+GLM4 <- glm(formula = heard_of_RAP ~ . -prof_geog -prof_GSR -prof_GES, data = RAP_awareness_data, family = "binomial")
+
+```
+
+### Generate odds ratios for best fit model
+
+```{r}
+# calculate odds ratios
+odds_ratio <- exp(coefficients(GLM4))
+
+# bind back to coefficients
+(coefficients <- round(cbind(summary(GLM4)$coefficients, odds_ratio), 4))
+
+```
+
+## RAP strategy
+
+```{r}
+RAP_strategy_data <- data %>%
+  dplyr::select("strategy_knowledge", "department", "prof_DS", "prof_DDAT", "prof_GAD",
+                "prof_GES", "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG") %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(department = ifelse(department == "Office for National Statistics",
+                                    "Yes", "No"),
+                across(everything(), as.factor)) %>%
+  dplyr::rename(ONS = department)
+data.frame(row.names = NULL)
+
+
+RAP_strategy_data$strategy_knowledge <- relevel(RAP_strategy_data$strategy_knowledge,
+                                                ref = "I have not heard of the RAP strategy")
+
+
+MN5 <- multinom(formula = strategy_knowledge ~ . -prof_geog -prof_GES -prof_GAD -prof_GORS, data = RAP_strategy_data, HESS=TRUE)
+
+
+```
+
+### Generate odds ratios for best fit model
+
+```{r}
+exp(coef(MN5))
+
+```
+
+## Coding tools
+
+### Visualise data
+
+```{r}
+CARS::freq_subplots(tables$languages_by_prof, "", "", y_margin = .1,
+                    x_margin = .15, orientation = "h", height = 1500,
+                    width = 800, nrows = 4, font_size = 14)
+
+```
+
+```{r}
+selected_data <- data %>%
+  dplyr::select("knowledge_R", "knowledge_python", "department", "prof_DS", "prof_DDAT",
+                "prof_GAD", "prof_GES", "prof_geog", "prof_GORS", "prof_GSR",
+                "prof_GSG") %>%
+  tidyr::drop_na() %>%
+  dplyr::mutate(department = ifelse(department == "Office for National Statistics",
+                                    "Yes", "No"),
+                knowledge_opensource = ifelse(knowledge_R == "Yes" |
+                                                knowledge_python == "Yes",
+                                              "Yes",
+                                              "No"),
+                across(everything(), ~factor(.x, levels = c("No", "Yes")))) %>%
+  dplyr::rename(ONS = department) %>%
+  data.frame(row.names = NULL)
+
+```
+
+### Generate odds ratios for best fit model
+
+```{r}
+# calculate odds ratios
+odds_ratio <- exp(coefficients(GLM4))
+
+# bind back to coefficients
+(coefficients <- round(cbind(summary(GLM4)$coefficients, odds_ratio), 4))
+
+```
