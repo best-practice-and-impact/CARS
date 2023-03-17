@@ -23,7 +23,8 @@ Imports:
     knitr,
     quarto,
     kableExtra,
-    readr
+    readr,
+    Hmisc
 Suggests:
     devtools,
     testthat (>= 3.0.0)

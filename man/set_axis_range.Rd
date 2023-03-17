@@ -5,6 +5,8 @@
 \title{Set axis range}
 \usage{
 set_axis_range(plot, min, max, axis = c("x", "y"))
+
+set_axis_range(plot, min, max, axis = c("x", "y"))
 }
 \arguments{
 \item{plot}{plotly object}
@@ -17,7 +19,11 @@ set_axis_range(plot, min, max, axis = c("x", "y"))
 }
 \value{
 list of parameters for plotly annotation
+
+list of parameters for plotly annotation
 }
 \description{
+Sets x or y axis range for plotly objects
+
 Sets x or y axis range for plotly objects
 }
