@@ -210,29 +210,6 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
     )
   }
 
-  if (type == "bar") {
-    fig <- plotly::plot_ly(
-      x = x_vals,
-      y = y_vals,
-      marker = list(color = colour),
-      type = "bar",
-      orientation = orientation,
-      hovertemplate = hovertext,
-      ...
-    )
-  } else if (type == "line") {
-    fig <- plotly::plot_ly(
-      x = x_vals,
-      y = y_vals,
-      marker = list(color = colour),
-      line = list(color = colour),
-      type = "scatter",
-      mode = "lines",
-      orientation = orientation,
-      hovertemplate = hovertext,
-      ...
-    )
-  }
 
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
@@ -250,6 +227,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   return(fig)
 
 }
+
 
 #' @title Plot stacked bar graph
 #'
