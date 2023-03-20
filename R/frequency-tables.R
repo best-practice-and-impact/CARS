@@ -663,6 +663,62 @@ summarise_line_manage <- function(data){
 }
 
 
+#' @title Summarise knowledge of git
+#'
+#' @description calculate frequency table for if someone knows how to version control using git
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_knowledge_git <- function(data){
+
+  # Validation checks
+  if (!"knowledge_git" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'knowledge_git'")
+  }
+
+  questions <- "knowledge_git"
+
+  levels <- c("Yes",
+              "No",
+              "I don't know")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise access to git
+#'
+#' @description calculate frequency table for if someone has access to git
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_access_git <- function(data){
+
+  # Validation checks
+  if (!"access_git" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'access_git'")
+  }
+
+  questions <- "access_git"
+
+  levels <- c("Yes",
+              "No",
+              "I don't know")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
 #' @title Summarise capability change by coding frequency
 #'
 #' @description calculate the cross tab of coding frequency by capability change
