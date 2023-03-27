@@ -32,7 +32,7 @@ summarise_all <- function(data, all_tables = FALSE) {
     line_manage = summarise_line_manage(data),
     git_knowledge = summarise_knowledge_git(data),
     git_access = summarise_access_git(data),
-    strategy_knowledge = summarise_strategy_knowledge(data),
+    strategy_knowledge = summarise_strategy_knowledge(data)
   )
 
   if (all_tables) {
