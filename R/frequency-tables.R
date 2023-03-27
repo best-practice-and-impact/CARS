@@ -719,6 +719,39 @@ summarise_access_git <- function(data){
 }
 
 
+#' @title Summarise Analysis Function RAP strategy knowledge
+#'
+#' @description calculate frequency table for if someone heard of or read the RAP strategy
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_strategy_knowledge <- function(data){
+
+  # Validation checks
+  if (!"strategy_knowledge" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'strategy_knowledge'")
+  }
+  if (!"heard_of_RAP" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'heard_of_RAP'")
+  }
+
+  data <- dplyr::filter(data, heard_of_RAP == "Yes")
+
+  questions <- "strategy_knowledge"
+
+  levels <- c("I have not heard of the RAP strategy",
+              "I have heard of the RAP strategy, but I haven't read it",
+              "I have read the RAP strategy")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
 #' @title Summarise capability change by coding frequency
 #'
 #' @description calculate the cross tab of coding frequency by capability change
