@@ -29,7 +29,10 @@ summarise_all <- function(data, all_tables = FALSE) {
     ci = summarise_ci(data),
     dependency_management = summarise_dep_man(data),
     rep_workflow = summarise_rep_workflow(data),
-    line_manage = summarise_line_manage(data)
+    line_manage = summarise_line_manage(data),
+    git_knowledge = summarise_knowledge_git(),
+    git_access = summarise_access_git(),
+    strategy_knowledge = summarise_strategy_knowledge(),
   )
 
   if (all_tables) {
