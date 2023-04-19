@@ -29,7 +29,10 @@ summarise_all <- function(data, all_tables = FALSE) {
     ci = summarise_ci(data),
     dependency_management = summarise_dep_man(data),
     rep_workflow = summarise_rep_workflow(data),
-    line_manage = summarise_line_manage(data)
+    line_manage = summarise_line_manage(data),
+    git_knowledge = summarise_knowledge_git(data),
+    git_access = summarise_access_git(data),
+    strategy_knowledge = summarise_strategy_knowledge(data)
   )
 
   if (all_tables) {
@@ -655,6 +658,95 @@ summarise_line_manage <- function(data){
   levels <- c("Yes",
               "No - I manage people who do not write code",
               "No - I don't line manage anyone")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise knowledge of git
+#'
+#' @description calculate frequency table for if someone knows how to version control using git
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_knowledge_git <- function(data){
+
+  # Validation checks
+  if (!"knowledge_git" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'knowledge_git'")
+  }
+
+  questions <- "knowledge_git"
+
+  levels <- c("Yes",
+              "No",
+              "I don't know")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise access to git
+#'
+#' @description calculate frequency table for if someone has access to git
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_access_git <- function(data){
+
+  # Validation checks
+  if (!"access_git" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'access_git'")
+  }
+
+  questions <- "access_git"
+
+  levels <- c("Yes",
+              "No",
+              "I don't know")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+
+  return(frequencies)
+
+}
+
+
+#' @title Summarise Analysis Function RAP strategy knowledge
+#'
+#' @description calculate frequency table for if someone heard of or read the RAP strategy
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_strategy_knowledge <- function(data){
+
+  # Validation checks
+  if (!"strategy_knowledge" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'strategy_knowledge'")
+  }
+  if (!"heard_of_RAP" %in% colnames(data)) {
+    stop("unexpected_input: no column called 'heard_of_RAP'")
+  }
+
+  data <- dplyr::filter(data, heard_of_RAP == "Yes")
+
+  questions <- "strategy_knowledge"
+
+  levels <- c("I have not heard of the RAP strategy",
+              "I have heard of the RAP strategy, but I haven't read it",
+              "I have read the RAP strategy")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
