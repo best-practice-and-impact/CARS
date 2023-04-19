@@ -9,7 +9,7 @@
 #' @export
 
 get_ci <- function(table, freq_col, n_col) {
-  table[c("percent", "lower", "upper")] <- Hmisc::binconf(table$Freq, table$n, method = "wilson")
+  table[c("percent", "lower", "upper")] <- Hmisc::binconf(table[[freq_col]], table[[n_col]], method = "wilson")
   table$lower_ci <- table$percent - table$lower
   table$upper_ci <- table$upper - table$percent
 
