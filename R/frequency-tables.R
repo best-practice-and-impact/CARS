@@ -1011,14 +1011,12 @@ summarise_languages_by_prof <- function(data) {
 
     if(nrow(filtered_data) > 0) {
 
-    output <- summarise_coding_tools(filtered_data, "knowledge", prop = FALSE)
+      output <- summarise_coding_tools(filtered_data, "knowledge")
 
       # Retain frequencies for "Yes" responses only
       output <- output[output[[2]] == "Yes", ]
 
       output$value <- prof
-
-      output$n <- output$n / ifelse(sum(output$n)==0, 1, sum(output$n))
 
       return(output)
     }
