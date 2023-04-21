@@ -34,7 +34,7 @@ df_to_table <- function(data, column_headers, n, crosstab = FALSE, proportion_co
   html <- knitr::kable(data, align = alignment, format = "html") %>% kableExtra::kable_styling()
 
   if (!missing(n)) {
-    html <- kableExtra::add_footnote(html, paste0("Sample size = ", n))
+    html <- kableExtra::add_footnote(html, paste0("Sample size = ", n), notation = "none")
   }
 
   return(html)
