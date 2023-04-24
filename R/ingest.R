@@ -120,7 +120,7 @@ ingest <- function(survey = "1167489",
 #' @export
 
 read_file <- function(name, dir = Sys.getenv("CARS_DATA_DIR")) {
-  read.csv(paste0(dir, "/", name), quote = c("\"\"", "'"))
+  read.csv(paste0(dir, "/", name), encoding = "utf-8")
 }
 
 #' @title Convert raw data to data frame
