@@ -67,10 +67,10 @@ summarise_all <- function(data, all_tables = FALSE) {
 sample_sizes <- function(data) {
   list(
     all = nrow(data),
-    code_at_work = sum(data$code_freq != "Never"),
+    code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
     can_code = sum(data$code_freq != "Never" | (data$other_coding_experience == "Yes" & data$prev_coding_experience != "No")),
-    other_code_experience = sum(data$other_coding_experience == "Yes"),
-    heard_of_RAP = sum(data$heard_of_RAP == "Yes"),
+    other_code_experience = sum(!is.na(data$other_coding_experience ) & data$other_coding_experience == "Yes"),
+    heard_of_RAP = sum(!is.na(data$heard_of_RAP) & data$heard_of_RAP == "Yes"),
     not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion")
   )
 }

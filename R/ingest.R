@@ -33,9 +33,7 @@ get_tidy_data_api <- function(...) {
 
 get_tidy_data_file <- function(...) {
 
-  ingest(...) # First API request always fails so the API is pinged twice to circumvent this.
-
-  data <- read_file(...) %>%
+  data <- read_file(..., ) %>%
     tidy_colnames()
 
   return(data)
