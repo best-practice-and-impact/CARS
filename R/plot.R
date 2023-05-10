@@ -432,7 +432,6 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
-    data <- dplyr::arrange(data, data[,1])
     data[,1] <- factor(data[,1], levels = data[,1])
     x_vals <- data[[1]]
     y_vals <- data[[3]]
@@ -440,8 +439,6 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_axis <- axes$scale_axis
     legend = list(traceorder = 'normal')
   } else if (orientation == "h") {
-    data <- dplyr::arrange(data, dplyr::desc(data[,1]))
-    data[,1] <- factor(data[,1], levels = data[,1])
     x_vals <- data[[3]]
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
@@ -451,8 +448,6 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   }
 
   y_axis$title <- ""
-
-  colours <- rev(colours)
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
