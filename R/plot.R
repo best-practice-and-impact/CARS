@@ -391,7 +391,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   # Set default bar colours
   n_groups <- length(unique(data[[2]]))
-  colours <- get_2colour_scale(n_groups)
+  colours <- get_2colour_gradients(n_groups)
 
   colour_list <- rev(as.list(colours))
   names(colour_list) <- unique(data[[2]])
@@ -432,7 +432,6 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
-    data[,1] <- factor(data[,1], levels = data[,1])
     x_vals <- data[[1]]
     y_vals <- data[[3]]
     x_axis <- axes$cat_axis
