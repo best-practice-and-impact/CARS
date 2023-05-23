@@ -778,7 +778,7 @@ create_y_lab <- function(ylab, font_size) {
                      y = 1,
                      x = "min",
                      showarrow = FALSE,
-                     yshift = 30,
+                     yshift = font_size * 2.4,
                      xref = "paper",
                      yref = "paper",
                      font = list(size = font_size * 1.2)
