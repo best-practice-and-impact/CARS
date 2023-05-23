@@ -64,6 +64,12 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
                          height = height,
                          width = width)
 
+      if (orientation == "h") {
+        plot <- plot %>% set_axis_range(0, 1, axis = "x")
+      } else if (orientation == "v") {
+        plot <- plot %>% set_axis_range(0, 1, axis = "y")
+      }
+
       plots[[i]] <- plotly::plotly_build(plot)
 
       plot_index <- plot_index + 1
