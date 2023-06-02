@@ -1130,6 +1130,58 @@ summarise_heard_of_RAP_by_prof <- function(data) {
 
 }
 
+#' @title Summarise open source vs proprietary capability
+#'
+#' @description Calculate proportion of respondents who have capability in R/Python vs SAS/SPSS/stata
+#'
+#' @param data Full CARS dataset including previous waves
+#'
+#' @return data.frame
+#'
+#' @export
+
+summarise_os_vs_prop <- function(data) {
+  data$open_source_lang_knowledge <- ifelse(
+    data$knowledge_python == "Yes" | data$knowledge_R == "Yes",
+    TRUE, FALSE
+  )
+
+  data$prop_lang_knowledge <- ifelse(
+    data$knowledge_SAS == "Yes" |
+      data$knowledge_SPSS == "Yes" |
+      data$knowledge_stata == "Yes",
+    TRUE, FALSE
+  )
+
+  os_freqs <- data %>%
+    dplyr::group_by(year) %>%
+    dplyr::summarise(Freq = sum(open_source_lang_knowledge), n = dplyr::n()) %>%
+    data.frame %>%
+    get_ci(freq_col = 2, n_col = 3)
+
+  os_freqs <- cbind(lang_type = "open source", os_freqs)
+
+  prop_freqs <- data %>%
+    dplyr::group_by(year) %>%
+    dplyr::summarise(Freq = sum(prop_lang_knowledge), n = dplyr::n()) %>%
+    data.frame %>%
+    get_ci(freq_col = 2, n_col = 3)
+
+  prop_freqs <- cbind(lang_type = "proprietary", prop_freqs)
+
+  grouped_lang_freqs <- rbind(os_freqs, prop_freqs)
+  grouped_lang_freqs$year <- as.character(grouped_lang_freqs$year)
+  grouped_lang_freqs$lang_type <- factor(grouped_lang_freqs$lang_type, levels = c("open source", "proprietary"))
+
+  return(grouped_lang_freqs)
+}
+
+
+
+
+
+
+
 
 # summarise_strategy_knowledge_by_prof <- function(data) {
 #   data <- data[data$code_freq <= "Never", ]
