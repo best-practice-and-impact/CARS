@@ -157,9 +157,9 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
 
 #' @title Display programming languages filtered by profession
 #'
-#' @param table frequency table (language capability, see frequency table functions)
-#' @param prof profession name
-#' @param prof_col profession column name
+#' @param table frequency table (languages_by_prof, see frequency table functions).
+#' @param prof profession name in the table, e.g. "Data scientists".
+#' @param prof_col profession column name in the data to calculate the sample size, e.g. "data$prof_DS".
 #'
 #' @return HTML output - table and chart
 #' @export
