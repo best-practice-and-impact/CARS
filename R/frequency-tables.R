@@ -1176,45 +1176,25 @@ summarise_os_vs_prop <- function(data) {
   return(grouped_lang_freqs)
 }
 
+#' @title RAP awareness over time
+#'
+#' @param data all wave data
+#'
+#' @return data frame
+#' @export
 
+summarise_rap_awareness_over_time <- function(data) {
 
+    RAP_awareness <- table(data$heard_of_RAP, data$year) %>%
+    data.frame %>%
+    dplyr::group_by(Var2) %>%
+    dplyr::mutate(n = sum(Freq)) %>%
+    dplyr::filter(Var1 == "Yes") %>%
+    data.frame()  %>%
+    get_ci(freq_col = 3, n_col = 4)
 
-
-
-
-
-# summarise_strategy_knowledge_by_prof <- function(data) {
-#   data <- data[data$code_freq <= "Never", ]
-#
-#   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
-#              "prof_GORS", "prof_GSR", "prof_GSG")
-#   strat_knowledge <- c("I have not heard of the RAP strategy",
-#                        "I have heard of the RAP strategy, but I haven't read it",
-#                        "I have read the RAP strategy")
-#
-#   prof_counts <- colSums(data[profs] == "Yes")
-#
-#   prof_langs <- sapply(profs, function(prof) {
-#     filtered_data <- data[data[prof] == "Yes", ]
-#
-#     freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
-#
-#     return(freqs)
-#   }) %>% data.frame
-#
-#   prof_langs <- cbind(lang = lang_names, prof_langs)
-#
-#   colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
-#                             "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
-#
-#   prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
-#   prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
-#   prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
-#
-#   return(prof_langs_long)
-#
-# }
-
+    return(RAP_awareness)
+}
 
 #' @title Calculate frequencies
 #'

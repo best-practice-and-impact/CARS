@@ -153,3 +153,31 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   write(link_page_contents, paste0(qmd_path, "/", type, ".qmd"))
 
 }
+
+
+#' @title Display programming languages filtered by profession
+#'
+#' @param table frequency table (language capability, see frequency table functions)
+#' @param prof profession name
+#' @param prof_col profession column name
+#'
+#' @return HTML output - table and chart
+#' @export
+
+display_prof_langs <- function(table, prof, prof_col) {
+  table <- table[table$prof == prof, ][c(1,3)]
+
+  n <- sum(!is.na(prof_col) & prof_col == "Yes")
+
+  plot <- CARS::plot_freqs(table, n = n, font_size = 14, orientation = "h", xlab = "Can code with this tool (percent)") %>% CARS::set_axis_range(0, 1, axis = "x")
+
+  table <- CARS::df_to_table(table, n = n, column_headers = c("Programming language", "Can code with this tool (percent)"))
+
+  output_name <- paste0(
+    gsub("[ |(|)]", "", prof),
+    "-langs"
+  )
+
+  CARS::wrap_outputs(name = output_name, plot, table)
+
+}

@@ -33,7 +33,7 @@ get_tidy_data_api <- function(...) {
 
 get_tidy_data_file <- function(...) {
 
-  data <- read_file(..., ) %>%
+  data <- read_file(...) %>%
     tidy_colnames()
 
   return(data)
@@ -184,6 +184,8 @@ tidy_colnames <- function(raw_data) {
 #' @title Get all CARS data, including previous waves
 #'
 #' @description Ingest and preprocess all previous CARS data
+#'
+#' @param mode data source - "api"/"file"
 #'
 #' @return data frame
 #'
