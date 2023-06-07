@@ -1130,39 +1130,71 @@ summarise_heard_of_RAP_by_prof <- function(data) {
 
 }
 
+#' @title Summarise open source vs proprietary capability
+#'
+#' @description Calculate proportion of respondents who have capability in R/Python vs SAS/SPSS/stata
+#'
+#' @param data Full CARS dataset including previous waves
+#'
+#' @return data.frame
+#'
+#' @export
 
-# summarise_strategy_knowledge_by_prof <- function(data) {
-#   data <- data[data$code_freq <= "Never", ]
-#
-#   profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
-#              "prof_GORS", "prof_GSR", "prof_GSG")
-#   strat_knowledge <- c("I have not heard of the RAP strategy",
-#                        "I have heard of the RAP strategy, but I haven't read it",
-#                        "I have read the RAP strategy")
-#
-#   prof_counts <- colSums(data[profs] == "Yes")
-#
-#   prof_langs <- sapply(profs, function(prof) {
-#     filtered_data <- data[data[prof] == "Yes", ]
-#
-#     freqs <- as.vector(colSums(filtered_data[langs] == "Yes")) / prof_counts[prof] * 100
-#
-#     return(freqs)
-#   }) %>% data.frame
-#
-#   prof_langs <- cbind(lang = lang_names, prof_langs)
-#
-#   colnames(prof_langs) <- c("lang", "Actuaries", "Digital and data (DDAT)", "Data scientists", "Economists (GES)",
-#                             "Operational researchers (GORS)", "Social researchers (GSR)", "Statisticians (GSG)")
-#
-#   prof_langs_long <- tidyr::pivot_longer(prof_langs, cols = colnames(prof_langs)[2:8]) %>% data.frame
-#   prof_langs_long[[1]] <- factor(prof_langs_long[[1]], levels = unique(prof_langs_long[[1]]))
-#   prof_langs_long[[2]] <- factor(prof_langs_long[[2]], levels = unique(prof_langs_long[[2]]))
-#
-#   return(prof_langs_long)
-#
-# }
+summarise_os_vs_prop <- function(data) {
+  data$open_source_lang_knowledge <- ifelse(
+    data$knowledge_python == "Yes" | data$knowledge_R == "Yes",
+    TRUE, FALSE
+  )
 
+  data$prop_lang_knowledge <- ifelse(
+    data$knowledge_SAS == "Yes" |
+      data$knowledge_SPSS == "Yes" |
+      data$knowledge_stata == "Yes",
+    TRUE, FALSE
+  )
+
+  os_freqs <- data %>%
+    dplyr::group_by(year) %>%
+    dplyr::summarise(Freq = sum(open_source_lang_knowledge), n = dplyr::n()) %>%
+    data.frame %>%
+    get_ci(freq_col = 2, n_col = 3)
+
+  os_freqs <- cbind(lang_type = "open source", os_freqs)
+
+  prop_freqs <- data %>%
+    dplyr::group_by(year) %>%
+    dplyr::summarise(Freq = sum(prop_lang_knowledge), n = dplyr::n()) %>%
+    data.frame %>%
+    get_ci(freq_col = 2, n_col = 3)
+
+  prop_freqs <- cbind(lang_type = "proprietary", prop_freqs)
+
+  grouped_lang_freqs <- rbind(os_freqs, prop_freqs)
+  grouped_lang_freqs$year <- as.character(grouped_lang_freqs$year)
+  grouped_lang_freqs$lang_type <- factor(grouped_lang_freqs$lang_type, levels = c("open source", "proprietary"))
+
+  return(grouped_lang_freqs)
+}
+
+#' @title RAP awareness over time
+#'
+#' @param data all wave data
+#'
+#' @return data frame
+#' @export
+
+summarise_rap_awareness_over_time <- function(data) {
+
+    RAP_awareness <- table(data$heard_of_RAP, data$year) %>%
+    data.frame %>%
+    dplyr::group_by(Var2) %>%
+    dplyr::mutate(n = sum(Freq)) %>%
+    dplyr::filter(Var1 == "Yes") %>%
+    data.frame()  %>%
+    get_ci(freq_col = 3, n_col = 4)
+
+    return(RAP_awareness)
+}
 
 #' @title Calculate frequencies
 #'

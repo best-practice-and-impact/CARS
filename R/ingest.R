@@ -33,7 +33,7 @@ get_tidy_data_api <- function(...) {
 
 get_tidy_data_file <- function(...) {
 
-  data <- read_file(..., ) %>%
+  data <- read_file(...) %>%
     tidy_colnames()
 
   return(data)
@@ -185,6 +185,8 @@ tidy_colnames <- function(raw_data) {
 #'
 #' @description Ingest and preprocess all previous CARS data
 #'
+#' @param mode data source - "api"/"file"
+#'
 #' @return data frame
 #'
 #' @export
@@ -204,6 +206,7 @@ get_all_waves <- function(mode = c("api", "file")) {
   }
 
   data <- data %>%
+    tidy_colnames() %>%
     rename_cols() %>%
     apply_skip_logic() %>%
     clean_departments() %>%
@@ -211,11 +214,13 @@ get_all_waves <- function(mode = c("api", "file")) {
   data$year <- 2022
 
   w3_data <- w3_data %>%
+    tidy_colnames() %>%
     w3_rename_cols() %>%
     w3_enforce_streaming()
   w3_data$year <- 2021
 
   w2_data <- w2_data %>%
+    tidy_colnames() %>%
     w2_rename_cols() %>%
     w2_enforce_streaming()
   w2_data$year <- 2020

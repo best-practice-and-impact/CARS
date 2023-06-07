@@ -6,6 +6,9 @@
 \usage{
 get_all_waves(mode = c("api", "file"))
 }
+\arguments{
+\item{mode}{data source - "api"/"file"}
+}
 \value{
 data frame
 }
