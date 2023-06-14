@@ -613,7 +613,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                         annotations = create_y_lab(ylab, font_size),
                         xaxis = list(ticktext = tick_text,
                                       tickvals = tick_values,
-                                      title = "%"))
+                                      title = xlab))
 
   fig <- plotly::layout(fig, legend = list(xanchor = "left",
                                            yanchor = "bottom",
