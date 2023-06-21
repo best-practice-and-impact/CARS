@@ -8,7 +8,7 @@ output:
 
 library(magrittr)
 
-load("../../../../temp/data.Rda")
+load("../../../temp/data.Rda")
 
 tables <- CARS::summarise_all(data, all_tables = TRUE)
 

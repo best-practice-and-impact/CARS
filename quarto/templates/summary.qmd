@@ -109,6 +109,34 @@ CARS::wrap_outputs("langauge-status", plot, table)
 
 ```
 
+### Access to and knowledge of git
+
+We asked respondents to answer "Yes", "No" or "Don't know" for the following questions;  
+
+- Do you know how to use git to version-control your work??  
+- Is git available to use in your work?  
+
+### Access to git
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$git_access, n = samples$all, xlab = "git access", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$git_access, n = samples$all, column_headers = c("git access", "Percent"))
+
+CARS::wrap_outputs("git-access", plot, table)
+
+```
+
+### Knowledge of git
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$git_knowledge, n = samples$all, xlab = "git knowledge", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$git_knowledge, n = samples$all, column_headers = c("git knowledge", "Percent"))
+
+CARS::wrap_outputs("git-knowledge", plot, table)
+
+```
 
 ## Coding capability
 
