@@ -296,6 +296,21 @@ CARS::wrap_outputs("rap-knowledge", plot, table)
 
 ```
 
+### Knowledge of RAP strategy
+
+We asked the respondents "What is your familiarity with the Analysis Function reproducible analytical pipelines (RAP) strategy?".
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$strategy_knowledge, n = samples$heard_of_RAP,
+                         break_q_names_col = "value", max_lines = 3,
+                         xlab = "RAP strategy knowledge", ylab = "%", font_size = 14)
+table <- CARS::df_to_table(tables$strategy_knowledge, n = samples$heard_of_RAP, column_headers = c("RAP strategy knowledge", "Percent"))
+
+CARS::wrap_outputs("strategy-knowledge", plot, table)
+
+```
+
 ### Opinions on RAP
 
 We asked respondents who had heard of RAP whether they agreed with a series of statements.
