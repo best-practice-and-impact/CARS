@@ -20,12 +20,6 @@ samples <- CARS::sample_sizes(data)
 
 ```
 
-## Draft notice
-
-Please note that all outputs are provisional. All findings have been thoroughly quality assured. However, the outputs presented here may change.  
-
-While any changes to the data are not likely to be substantial, we are planning to carry out more in-depth analysis and the commentary may change. As such, we recommend linking to these pages rather than sharing this analysis any other way at this stage. 
-
 ## Coding frequency and tools
 
 ### How often do respondents use code
