@@ -113,8 +113,8 @@ CARS::wrap_outputs("langauge-status", plot, table)
 
 We asked respondents to answer "Yes", "No" or "Don't know" for the following questions;  
 
-- Do you know how to use git to version-control your work??  
-- Is git available to use in your work?  
+- Do you know how to use git to version-control your work?
+- Is git available to use in your work?
 
 ### Access to git
 
@@ -183,17 +183,17 @@ plot <- CARS::plot_likert(tables$coding_practices, n = samples$code_at_work,
           mid = 5, neutral_mid = FALSE, break_q_names_col = "name",
           max_lines = 2, font_size = 14, height = 800, width = "100%")
 table <- CARS::df_to_table(tables$coding_practices, 
-         column_headers = c(
-           "Statement",
-           "I don't understand this question (%)",
-           "Never (%)", 
-           "Rarely (%)", 
-           "Sometimes (%)",
-           "Regularly (%)", 
-           "All the time (%)"
-           ),
-         n = samples$code_at_work,
-         crosstab = TRUE)
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)", 
+                             "Rarely (%)", 
+                             "Sometimes (%)",
+                             "Regularly (%)", 
+                             "All the time (%)"
+                             ),
+                           n = samples$code_at_work,
+                           crosstab = TRUE)
 
 CARS::wrap_outputs("good-practices", plot, table)
 
