@@ -221,7 +221,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   fig <- plotly::layout(fig,
                         xaxis = x_axis,
                         yaxis = y_axis,
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
@@ -358,7 +358,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
                                       y = 1,
                                       traceorder = "normal",
                                       font = list(size = font_size)),
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         xaxis = x_axis,
                         yaxis = y_axis,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
@@ -433,6 +433,9 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
+  data[[1]] <- factor(x[[1]], levels = x[[1]])
+  data[[2]] <- factor(x[[2]], levels = unique(x[[2]]))
+
   orientation <- match.arg(orientation)
 
   axes <- axis_settings(xlab, ylab, font_size)
@@ -472,12 +475,11 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   fig <- plotly::layout(fig,
                         xaxis = x_axis,
                         yaxis = y_axis,
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                           xref='paper', yref='paper', font=list(size = font_size)),
-                        legend = list(traceorder= 'reversed')
+                                           xref='paper', yref='paper', font=list(size = font_size))
   )
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
@@ -487,9 +489,9 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 }
 
 
-#' @title Plot likert graph
+#' @title Plot Likert graph
 #'
-#' @description Produce likert stacked bar chart (plotly). At least 2 questions per plot.
+#' @description Produce Likert stacked bar chart (plotly). At least 2 questions per plot.
 #'
 #' @param data Frequency data for likert quesitons (data frame). 3 columns: question, answer option, frequency.
 #' @param mid the mid-point of the scale. should be higher than 2 and lower than the number of answers.
@@ -598,7 +600,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   fig <- plotly::layout(fig,
                         barmode = "stack",
                         clickmode = "none",
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
                                            xref='paper', yref='paper', font=list(size = font_size)),
@@ -778,7 +780,7 @@ create_y_lab <- function(ylab, font_size) {
                      y = 1,
                      x = "min",
                      showarrow = FALSE,
-                     yshift = font_size * 2.4,
+                     yshift = font_size * 2,
                      xref = "paper",
                      yref = "paper",
                      font = list(size = font_size * 1.2)
