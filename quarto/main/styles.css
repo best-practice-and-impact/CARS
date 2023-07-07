@@ -88,17 +88,11 @@
   color: black;
 }
 
-.nav-link:hover {
-  background-color: #ffdd00;
-  box-shadow: 0 0 0 2px black !important;
-  color: black !important;
-}
-
 .toggle-button {
   text-decoration: underline;
 }
 
-.toggle-button:focus {
+.toggle-button:hover {
   background-color: #ffdd00;
   border-bottom: 4px solid black;
   color: black;

@@ -1,7 +1,8 @@
 ---
 title: "The state of public sector analysis code: 2022"
 output:
-  html_document
+  html:
+    self-contained: true
 ---
 
 ```{r echo=FALSE}
