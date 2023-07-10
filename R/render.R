@@ -3,9 +3,7 @@
 #'
 #' @description render CARS publication from quarto
 #'
-#' @param data full pre-processed CARS dataset
 #' @param path quarto input
-#' @param path execute directory
 #' @param output_path output path (will overwrite existing outputs). Should match the path set in the quarto site yaml
 #'
 #' @export
