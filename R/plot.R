@@ -452,7 +452,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     data[[1]] <- factor(rev(data[[1]]), levels = rev(unique(data[[1]])))
     data[[2]] <- factor(rev(data[[2]]), levels = rev(unique(data[[2]])))
     colours <- rev(colours)
-    x_vals <- data[[3]]
+    x_vals <- rev(data[[3]])
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis

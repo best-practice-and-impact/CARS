@@ -1,5 +1,5 @@
 ---
-title: "The state of public sector analysis code: 2022"
+title: "The state of UK public sector analysis code: 2022"
 output:
   html:
     self-contained: true
@@ -25,9 +25,9 @@ samples <- CARS::sample_sizes(data)
 
 ## Coding frequency and tools
 
-### The majority of respondents regularly use code at work
+### Most respondents regularly use code at work
 
-Over the past three years, the majority of respondents reported coding regularly or all the time to complete work objectives. This may be due in part to respondent bias, where those with an interest in coding are more likely to respond to the survey. However, the results show that coding is now, and has been for at least a few years, a normal aspect of analysis work in the public sector. 
+Over the past three years, most respondents reported coding regularly or all the time to complete work objectives. This may be due in part to respondent bias, where those with an interest in coding are more likely to respond to the survey. However, the results show that coding is now, and has been for at least a few years, a normal aspect of analysis work in the public sector. 
 
 #### 2022 data
 
@@ -264,7 +264,7 @@ CARS::wrap_outputs("rap-awareness-over-time", plot, table)
 ```
 ### Most respondents have heard of RAP champions
 
-[RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. Although the majority of respondents who have heard of RAP had heard of the RAP champions' network, most did not know who their RAP champions are. More work is needed to increase awareness of the support available across government, including who its RAP champions are.
+[RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. Although most respondents who have heard of RAP had heard of the RAP champions' network, most did not know who their RAP champions are. More work is needed to increase awareness of the support available across government, including who its RAP champions are.
 
 Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any inquiries about RAP or the champions network.
 
@@ -337,7 +337,7 @@ While most respondents who write code use open source software and peer review c
 
 ```{r}
 
-tables$rap_components %<>% dplyr::arrange(value, n) %>% data.frame
+tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
 
 tables$rap_components$name <- as.character(tables$rap_components$name)
 
