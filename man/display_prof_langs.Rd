@@ -7,11 +7,11 @@
 display_prof_langs(table, prof, prof_col)
 }
 \arguments{
-\item{table}{frequency table (language capability, see frequency table functions)}
+\item{table}{frequency table (languages_by_prof, see frequency table functions).}
 
-\item{prof}{profession name}
+\item{prof}{profession name in the table, e.g. "Data scientists".}
 
-\item{prof_col}{profession column name}
+\item{prof_col}{profession column name in the data to calculate the sample size, e.g. "data$prof_DS".}
 }
 \value{
 HTML output - table and chart

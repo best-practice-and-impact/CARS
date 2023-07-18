@@ -1,7 +1,8 @@
 ---
-title: "The state of public sector analysis code: 2022"
+title: "The state of UK public sector analysis code: 2022"
 output:
-  html_document
+  html:
+    self-contained: true
 ---
 
 ```{r echo=FALSE}
@@ -24,9 +25,9 @@ samples <- CARS::sample_sizes(data)
 
 ## Coding frequency and tools
 
-### The majority of respondents regularly use code at work
+### Most respondents regularly use code at work
 
-Over the past three years, the majority of respondents reported coding regularly or all the time to complete work objectives. This may be due in part to respondent bias, where those with an interest in coding are more likely to respond to the survey. However, the results show that coding is now, and has been for at least a few years, a normal aspect of analysis work in the public sector. 
+Over the past three years, most respondents reported coding regularly or all the time to complete work objectives. This may be in part due to respondent bias, where those with an interest in coding are more likely to respond to the survey. However, we can conclude that coding is now, and has been for at least a few years, a normal aspect of analysis work in the public sector for many analysts.
 
 #### 2022 data
 
@@ -263,9 +264,9 @@ CARS::wrap_outputs("rap-awareness-over-time", plot, table)
 ```
 ### Most respondents have heard of RAP champions
 
-[RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. Although the majority of respondents who have heard of RAP had heard of the RAP champions' network, most did not know who their RAP champions are. More work is needed to increase awareness of the support available across government, including who its RAP champions are.
+[RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. Although most respondents who have heard of RAP had heard of the RAP champions' network, most did not know who their RAP champions are. More work is needed to increase awareness of the support available across government, including who its RAP champions are.
 
-Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any inquiries about RAP or the champions network.
+Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any enquiries about RAP or the champions network.
 
 ```{r}
 
@@ -296,7 +297,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ### Respondents see the benefits of RAP but most are not currently implementing it
 
-We asked respondents who had heard of RAP a series of questions about their opinions on RAP. The majority agreed with the statement "I think it is important to implement RAP in my work" (`r round(sum(data$RAP_important %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")`), but only only `r round(sum(data$RAP_implementing %in% c("Agree", "Strongly Agree") | data$RAP_planning %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")` agreed they are either currently implementing RAP or planning to do so.
+We asked respondents who had heard of RAP a series of questions about their opinions on RAP. The majority agreed with the statement "I think it is important to implement RAP in my work" (`r round(sum(data$RAP_important %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")`), but only only `r round(sum(data$RAP_implementing %in% c("Agree", "Strongly Agree"))) %>% paste0("%")` agreed they are currently implementing RAP. 
 
 Similarly , around half of the respondents agreed on various statements on understanding RAP and having the support and resources to implement it. While awareness and buy-in is high, this highlights the need to ensure analysts are aware of the resources currently available, and for additional resources to be made available where gaps currently exist.
 
@@ -336,7 +337,7 @@ While most respondents who write code use open source software and peer review c
 
 ```{r}
 
-tables$rap_components %<>% dplyr::arrange(value, n) %>% data.frame
+tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
 
 tables$rap_components$name <- as.character(tables$rap_components$name)
 
@@ -419,7 +420,7 @@ CARS::wrap_outputs("doc", plot, table)
 
 ## Summary
 
-The findings above show that the analysis has made great strides towards RAP adoption. Using code for analysis is widespread. Open source coding tools such as R, Python, SQL and git are widely available and used (although this varies by organisation). RAP awareness has increased dramatically and many analysts feel supported to apply RAP in their work. Capability is generally increasing, but there is work to do to ensure analysts can retain these coding skills, especially as they move to more senior positions.
+The findings above show that the analysis function has made great strides towards RAP adoption. Using code for analysis is widespread. Open source coding tools such as R, Python, SQL and git are widely available and used (although this varies by organisation). RAP awareness has increased dramatically and many analysts feel supported to apply RAP in their work. Capability is generally increasing, but there is work to do to ensure analysts can retain these coding skills, especially as they move to more senior positions.
 
 However, there is still much work to be done before RAP becomes the default way of working. While many analysts write code, few consistently apply RAP principles while doing so. Although most respondents see the value of RAP in their work and are actively implementing it, the data on good practices suggest that teams across the analysis function still have a work to do before consistently meeting the minimum RAP standards.
 

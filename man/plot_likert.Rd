@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot_likert}
 \alias{plot_likert}
-\title{Plot likert graph}
+\title{Plot Likert graph}
 \usage{
 plot_likert(
   data,
@@ -42,5 +42,5 @@ plot_likert(
 bar chart
 }
 \description{
-Produce likert stacked bar chart (plotly). At least 2 questions per plot.
+Produce Likert stacked bar chart (plotly). At least 2 questions per plot.
 }

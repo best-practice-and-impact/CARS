@@ -98,7 +98,7 @@
   text-decoration: underline;
 }
 
-.toggle-button:focus {
+.toggle-button:hover {
   background-color: #ffdd00;
   border-bottom: 4px solid black;
   color: black;
