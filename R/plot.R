@@ -282,7 +282,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
     data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines = max_lines)
 
-    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
+    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = unique(data[[break_q_names_col]]))
   }
 
   colour_scale <- match.arg(colour_scale)
@@ -433,21 +433,26 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
-  data[[1]] <- factor(x[[1]], levels = x[[1]])
-  data[[2]] <- factor(x[[2]], levels = unique(x[[2]]))
+  data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+  data[[2]] <- factor(data[[2]], levels = unique(data[[2]]))
 
   orientation <- match.arg(orientation)
 
   axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
+    data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+    data[[2]] <- factor(data[[2]], levels = unique(data[[2]]))
     x_vals <- data[[1]]
     y_vals <- data[[3]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
     legend = list(traceorder = 'normal')
   } else if (orientation == "h") {
-    x_vals <- data[[3]]
+    data[[1]] <- factor(rev(data[[1]]), levels = rev(unique(data[[1]])))
+    data[[2]] <- factor(rev(data[[2]]), levels = rev(unique(data[[2]])))
+    colours <- rev(colours)
+    x_vals <- rev(data[[3]])
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
@@ -475,6 +480,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   fig <- plotly::layout(fig,
                         xaxis = x_axis,
                         yaxis = y_axis,
+                        legend = legend,
                         margin = list(b = 100, t = font_size * 2),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,

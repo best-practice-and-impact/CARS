@@ -3,24 +3,13 @@
 #'
 #' @description render CARS publication from quarto
 #'
-#' @param data full pre-processed CARS dataset
 #' @param path quarto input
-#' @param path execute directory
 #' @param output_path output path (will overwrite existing outputs). Should match the path set in the quarto site yaml
 #'
 #' @export
 
-render_site <- function(data, path = "quarto/main", output_path = "docs/") {
-  unlink(output_path, recursive = TRUE)
-
-  dir.create("../temp")
-  save(data, file = "../temp/data.rda")
-
-  # executes in higher directory level to avoid issues with .quarto stopping package from building
-
+render_site <- function(path = "quarto/main", output_path = "docs/") {
   quarto::quarto_render(input = path, as_job = FALSE)
-
-  unlink("../temp", recursive = TRUE)
 }
 
 #' @title create filtered pages

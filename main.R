@@ -8,4 +8,4 @@ data <- CARS::get_tidy_data_file("2022_data.csv") %>%
 
 CARS::create_filtered_pages(data, type = "departments")
 CARS::create_filtered_pages(type = "professions")
-CARS::render_site(data)
+CARS::render_site()

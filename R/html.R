@@ -138,3 +138,9 @@ insert_table_toggle <- function(output_name) {
 
   return(html)
 }
+
+accessible_tabs <- function() {
+"<script>
+  $('.nav-link').attr('tab-index', '0');
+</script>"
+}

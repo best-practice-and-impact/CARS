@@ -4,12 +4,10 @@
 \alias{render_site}
 \title{render site}
 \usage{
-render_site(data, path = "quarto/main", output_path = "docs/")
+render_site(path = "quarto/main", output_path = "docs/")
 }
 \arguments{
-\item{data}{full pre-processed CARS dataset}
-
-\item{path}{execute directory}
+\item{path}{quarto input}
 
 \item{output_path}{output path (will overwrite existing outputs). Should match the path set in the quarto site yaml}
 }
