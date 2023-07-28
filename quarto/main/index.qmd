@@ -17,6 +17,10 @@ This research was made with senior analysts and leaders in mind. It is intended 
 
 ## How to use this research
 
+Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. We are unable to provide details about response rates by department or profession. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
+
+We cannot draw wider conclusions about the general population of government analysts from these results because the survey is not based on a random sample.
+ 
 Do:
 
 * Explore the data to gain insights about current coding practices in government analysis and research
@@ -26,6 +30,8 @@ Avoid:
 
 * Attempting to estimate absolute frequencies - we did not use random sampling
 * Inferring differences between groups - these outputs are only intended to be descriptive and inferential tests were not carried out unless stated otherwise
+
+For more detail, [see the data collection page](data_collection.qmd). 
 
 ## More information on reproducible analytical pipelines {#rap}
 

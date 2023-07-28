@@ -23,6 +23,12 @@ samples <- CARS::sample_sizes(data)
 
 ```
 
+## How to use this research
+
+Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. We are unable to provide details about response rates by department or profession. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
+
+For more detail, [see the data collection page](data_collection.qmd). 
+
 ## Coding frequency and tools
 
 ### Most respondents regularly use code at work
@@ -185,7 +191,7 @@ CARS::wrap_outputs("where-learned", plot, table)
 
 ### Most analysts' coding capabilities are actively improving
 
-Most respondents with prior coding experience reported that their coding capability has improved while in their current role. Again, this shows the analysis function is building capability in-house as well as recruiting analysts with existing capability. However, results also show a minority of respondents who feel they are losing their capability. As more analysts gain capability, it is important that existing skills are retained.
+Most respondents with prior coding experience reported that their coding capability has improved while in their current role. Again, this shows the Analysis Function is building capability in-house as well as recruiting analysts with existing capability. However, results also show a minority of respondents who feel they are losing their capability. As more analysts gain capability, it is important that existing skills are retained.
 
 ```{r}
 
@@ -247,7 +253,7 @@ The following links contain more resources on RAP:
 freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)
 ```
 
-Over the past three years, awareness of RAP has increased year on year across the analysis function. In 2022, `r round(freqs[3, 5]*100, digits = 0) %>% paste0("%")` of respondents had heard of RAP, a `r round((freqs[3, 5]-freqs[1, 5])/freqs[1, 5]*100, digits = 0) %>% paste0("%")` increase.
+Over the past three years, awareness of RAP has increased year on year across the Analysis Function. In 2022, `r round(freqs[3, 5]*100, digits = 0) %>% paste0("%")` of respondents had heard of RAP, a `r round((freqs[3, 5]-freqs[1, 5])/freqs[1, 5]*100, digits = 0) %>% paste0("%")` increase.
 
 ```{r}
 plot <- CARS::plot_freqs(freqs[c(2, 5)], type = "line", xlab = "Year", font_size = 14, error_y = CARS::set_error_bars(freqs$lower_ci, freqs$upper_ci)) %>% CARS::set_axis_range(0, 1, axis = "y")
@@ -279,7 +285,7 @@ CARS::wrap_outputs("rap-knowledge", plot, table)
 
 ### Most respondents have heard of the RAP strategy
 
-The [analysis function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government. Although most respondents had not read the strategy, 77% of those who had heard of RAP were also aware of the RAP strategy.
+The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government. Although most respondents had not read the strategy, 77% of those who had heard of RAP were also aware of the RAP strategy.
 
 ```{r}
 plot <- CARS::plot_freqs(tables$strategy_knowledge, break_q_names_col = 1, max_lines = 3, font_size = 14, orientation = "v", n = samples$heard_of_RAP)
@@ -420,7 +426,7 @@ CARS::wrap_outputs("doc", plot, table)
 
 ## Summary
 
-The findings above show that the analysis function has made great strides towards RAP adoption. Using code for analysis is widespread. Open source coding tools such as R, Python, SQL and git are widely available and used (although this varies by organisation). RAP awareness has increased dramatically and many analysts feel supported to apply RAP in their work. Capability is generally increasing, but there is work to do to ensure analysts can retain these coding skills, especially as they move to more senior positions.
+The findings above show that the Analysis Function has made great strides towards RAP adoption. Using code for analysis is widespread. Open source coding tools such as R, Python, SQL and git are widely available and used (although this varies by organisation). RAP awareness has increased dramatically and many analysts feel supported to apply RAP in their work. Capability is generally increasing, but there is work to do to ensure analysts can retain these coding skills, especially as they move to more senior positions.
 
-However, there is still much work to be done before RAP becomes the default way of working. While many analysts write code, few consistently apply RAP principles while doing so. Although most respondents see the value of RAP in their work and are actively implementing it, the data on good practices suggest that teams across the analysis function still have a work to do before consistently meeting the minimum RAP standards.
+However, there is still much work to be done before RAP becomes the default way of working. While many analysts write code, few consistently apply RAP principles while doing so. Although most respondents see the value of RAP in their work and are actively implementing it, the data on good practices suggest that teams across the Analysis Function still have a work to do before consistently meeting the minimum RAP standards.
 

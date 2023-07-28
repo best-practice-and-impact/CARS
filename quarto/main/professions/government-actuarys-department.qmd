@@ -1,10 +1,10 @@
 ---
-title: "{{{title}}}"
+title: "Profession summary: government actuary's department (GAD)"
 output:
   html_document
 ---
 
-[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() ("{{{" and "}}}", respectively))
+[comment]: <> (This document makes use of custom open and close tags for use with glue::glue() (" and ", respectively))
 [comment]: <> (This document should only be edited as a template: quarto/templates/summary.qmd)
 
 ```{r echo=FALSE}
@@ -17,7 +17,7 @@ data <- CARS::get_tidy_data_file("2022_data.csv") %>%
   CARS::clean_departments() %>%
   CARS::derive_vars()
 
-data <- {{{filter}}}
+data <- data[!is.na(data$prof_GAD) & data$prof_GAD == "Yes", ]
 
 tables <- CARS::summarise_all(data, all_tables = FALSE)
 

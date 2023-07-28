@@ -1,0 +1,216 @@
+---
+title: "Data collection"
+---
+
+```{r}
+library(magrittr)
+
+# Setup
+all_wave_data <- CARS::get_all_waves(mode = "file")
+
+data <- CARS::get_tidy_data_file("2022_data.csv") %>%
+  CARS::rename_cols() %>%
+  CARS::apply_skip_logic() %>%
+  CARS::clean_departments() %>%
+  CARS::derive_vars()
+
+```
+
+# Sampling
+
+The coding in analysis and research survey (CARS) data collection takes place for approximately one month, every Autumn. Launch dates vary slightly by year to maximise response rate, for example by avoiding clashes with other internal surveys. In 2022, data collection took place from 3 October to 11 November.
+
+Recruitment was done through a variety of channels, mailing lists, networks and newsletters. For the past three years, the most common source of data was through RAP champions, who promote the survey in their organisations. We rely on various champions, heads of professions (HoPs) and deputy directors of analysis (DDans) to promote the survey in their departments. This means the response rate and any selection bias will vary across organisations. 
+
+Our promotional materials make it clear that we are interested in responses from all analysts, whether or not they code. However, it may be the case that the survey attracts a disproportionate number of respondents who have an interest in coding and RAP. We advise against making strong inferences about differences between professions and departments or attempting to estimate real frequencies from the data. 
+
+Lastly, while the survey is open to all public sector analysts, the vast majority of responses come from the UK and devolved civil service (`r round(sum(data$workplace == "Civil service, including devolved administations") / nrow(data) * 100, 1)`%). As such, follow-up questions on grade and profession applied only to civil servants. 
+
+## Where our data comes from
+
+Link tracking allows us to see where responses are coming from. Links promoted by RAP champions were the most commonly used for the past three waves, but consistently account for fewer than half of responses. 
+
+```{r}
+rename_list <- list(
+  "RAS" = "RAS mailing list/newsletter",
+  "RAP Champs mailing list" = "RAP champions",
+  "RAP champs round 2" = "RAP champions",
+  "RAP champs" = "RAP champions",
+  "HMRC RAP champs" = "RAP champions",
+  "DSTL RAP champs" = "RAP champions",  
+  "RAS" = "ONS RAS mailing list",
+  "RAS round 2" = "ONS RAS mailing list",
+  "ONS" = "ONS RAS mailing list",
+  "RAP champions slack" = "Slack",
+  "Actuaries" = "Profession newsletters/mailing lists",
+  "GSS newsletter" = "Profession newsletters/mailing lists",
+  "Analysis function newsletter / mailing list" = "Profession newsletters/mailing lists",
+  "BEIS RAP champs" = "Profession newsletters/mailing lists",
+  "GESR newsletters" = "Profession newsletters/mailing lists",
+  "GAD" = "Profession newsletters/mailing lists",
+  "GORS" = "Profession newsletters/mailing lists",
+  "Economist newsletter" = "Profession newsletters/mailing lists",
+  "weekly professions notes" = "Profession newsletters/mailing lists",
+  "weekly professions note" = "Profession newsletters/mailing lists",
+  "Geography newsletter" = "Profession newsletters/mailing lists",
+  "Geography " = "Profession newsletters/mailing lists",
+  "DDAT" = "Profession newsletters/mailing lists",
+  "Social research newsletter" = "Profession newsletters/mailing lists",
+  "Analysis Function" = "Profession newsletters/mailing lists",
+  "HoPs and DDANs" = "HoP/DDan mailing list",
+  "Final DDANs Extension" = "HoP/DDan mailing list",
+  "data science slack - general" = "Slack",
+  "RAP Champions slack" = "Slack",
+  "General data science slack" = "Slack",
+  "RAP collaboration slack" = "Slack",
+  "Government digital general slack" = "Slack",
+  "Slack final reminder" = "Slack",
+  "Harmonisation Champions" = "Other champions",
+  "Evaluation Champions" = "Other champions",
+  "Government digital DS slack" = "Slack",
+  "GSS slack" = "Slack",
+  "RAS mailing list/newsletter" = "ONS RAS mailing list",
+  "RAS mailing list" = "ONS RAS mailing"
+)
+all_wave_data$tracking_link %<>% dplyr::recode(!!!rename_list)
+
+links <- table(all_wave_data$tracking_link)
+most_used <- names(links)[links >= 100]
+all_wave_data$tracking_link <- ifelse(!all_wave_data$tracking_link %in% most_used, "Other", all_wave_data$tracking_link)
+
+tracking_link_freqs <- table(all_wave_data$year, all_wave_data$tracking_link) %>% 
+  data.frame %>% 
+  dplyr::group_by(Var1) %>% 
+  dplyr::mutate(n = sum(Freq), percent = Freq / sum(Freq)) %>% 
+  dplyr::arrange(Var1) %>%
+  data.frame()
+
+# Reorder by 2022 frequencies
+# As the dataset is ordered by year, the code below works out the correct order for the 2022 "block" and applies it to all three
+
+order <- rev(order(tracking_link_freqs$percent[17:24]))
+tracking_link_freqs <- tracking_link_freqs[c(order, order+8, order+16) ,]
+
+CARS::df_to_table(tracking_link_freqs[c(2,1,5)], column_headers = c("Tracking link", "2020", "2021", "2022"), crosstab = T)
+
+```
+
+## Sample size by year
+
+```{r}
+
+year_dist <- table(all_wave_data$year) %>% data.frame 
+colnames(year_dist) <- c("Year", "ONS sample")
+
+year_dist %>%
+  kableExtra::kable() %>%
+  kableExtra::kable_styling()
+
+```
+
+# Respondent characteristics
+
+## Coding frequency
+
+Every year, we ask respondents how often they code to achieve work objectives. While our communication strategy has changed over time, particularly to encourage more non-coders to respond, the findings remain similar, with a gradual increase in the number of coders over time.
+Although we seek responses from all analysts the data likely over-represents people with current or prior coding experience.
+
+```{r}
+
+all_wave_data$code_freq <- factor(all_wave_data$code_freq, levels = c(
+  "Never", 
+  "Rarely",
+  "Sometimes",
+  "Regularly",
+  "All the time"
+))
+
+code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) %>% 
+  data.frame %>% 
+  dplyr::group_by(Var1) %>% 
+  dplyr::mutate(n = sum(Freq), percent = Freq / sum(Freq)) %>% 
+  data.frame() %>%
+  CARS::get_ci(3, 4)
+
+plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], orientation = "v", type = "bar", font_size = 14, xlab = "Year") %>%
+  plotly::layout(legend = list(traceorder = "reversed")) 
+
+table <- CARS::df_to_table(code_freqs_by_year[c(2,1,5)], crosstab = T, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "2020", "2021", "2022"))
+
+CARS::wrap_outputs("code-freq", plot, table)
+
+```
+
+## Grade
+
+Across all waves, over 80% of respondents from the civil service are at HEO to grade 7 grades. While this will be representative of the grade distribution of analysts in some government organisations, it may not be the case for all organisations.
+
+```{r}
+all_wave_data$CS_grade[all_wave_data$CS_grade == "Research Officer"] <- "Higher Executive Officer (or equivalent)"
+
+all_wave_data$CS_grade <- gsub(" \\(or equivalent\\)", "", all_wave_data$CS_grade)
+
+recode_list <- list(
+  "Administrative Officer" = "Administrative officer or executive officer",
+  "Executive Officer" = "Administrative officer or executive officer",
+  "Grade 6" = "Grade 6 or above",
+  "SCS Pay Band 1" = "Grade 6 or above"  
+)
+
+all_wave_data$CS_grade <- dplyr::recode(all_wave_data$CS_grade, !!!recode_list)
+
+all_wave_data$CS_grade <- factor(all_wave_data$CS_grade, levels = c(
+  "Administrative officer or executive officer",
+  "Higher Executive Officer",
+  "Senior Executive Officer",
+  "Grade 7",
+  "Grade 6 or above"
+))
+
+grade_freqs <- table(all_wave_data$year, all_wave_data$CS_grade) %>% data.frame() %>%
+  dplyr::group_by(Var1) %>%
+  dplyr::reframe(Var2, percent = Freq / sum(Freq)) %>%
+  data.frame
+
+plot <- CARS::plot_stacked(grade_freqs, orientation = "v", font_size = 14, xlab = "Year", colour_scale = "gradient") %>% 
+  plotly::layout(legend = list(traceorder = "reversed"))
+
+table <-  CARS::df_to_table(grade_freqs[c(2,1,3)], crosstab = T, column_headers = c("Grade", "2020", "2021", "2022"))
+
+CARS::wrap_outputs("grades-by-year", plot, table)
+```
+
+## Profession
+
+Below is a breakdowns for civil service professions. These cover the [analysis function professions](https://analysisfunction.civilservice.gov.uk/about-us/frequently-asked-questions/) and do not apply outside of the civil service. The exception to this are data scientists who do not have an official government profession, but are included separately here to avoid skewing the data for other professions. Please note that respondents can have multiple profession memberships. Profession data is difficult to compare across waves as these questions have changed in line with changes to the analysis function.
+
+The CARS sample has high representation from statisticians in particular compared with other professions. This again may be representative of some organisations but not all. 
+
+
+```{r}
+prof_cols <- colnames(data)[grepl("prof_", colnames(data))]
+prof_data <- data.frame(data[prof_cols] != "No")
+
+frequencies <- colSums(prof_data, na.rm = T) |> data.frame() %>% tibble::rownames_to_column()
+colnames(frequencies) <- c("Profession", "n")
+frequencies$Percent <- frequencies$n / nrow(data)
+frequencies <- dplyr::arrange(frequencies, dplyr::desc(Percent))
+
+recode_vals <- c(
+  "prof_GSG" = "Statisticians",
+  "prof_DS" = "Data scientists",
+  "prof_GSR" = "Social researchers",
+  "prof_CS_none" = "civil servant - no profession membership",
+  "prof_GORS" = "Operational researchers",
+  "prof_GES" = "Economists",
+  "prof_DDAT" = "Digital, data and technology profession",
+  "prof_CS_other" = "Civil servant - other profession",
+  "prof_GAD" = "Actuaries",
+  "prof_geog" = "Georgraphers"
+) 
+frequencies$Profession <- dplyr::recode(frequencies$Profession, !!!recode_vals)
+
+CARS::df_to_table(frequencies[c(1,3)])
+
+```
+

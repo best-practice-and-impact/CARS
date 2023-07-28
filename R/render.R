@@ -59,7 +59,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
       "government geography profession",
       "government operational research (GORS)",
       "government social research (GSR)",
-      "government statician group (GSG)"
+      "government statistician group (GSG)"
     )
 
     filenames <- c(

@@ -162,6 +162,8 @@ convert_raw <- function(r) {
 #' @param raw_data data frame returned by convert_raw()
 #'
 #' @return data frame with empty rows removed and tidied column names
+#'
+#' @export
 
 tidy_colnames <- function(raw_data) {
 
