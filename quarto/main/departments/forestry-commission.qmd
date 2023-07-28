@@ -1,5 +1,5 @@
 ---
-title: "Profession summary: government data scientists"
+title: "Department summary: Forestry Commission"
 output:
   html_document
 ---
@@ -17,7 +17,7 @@ data <- CARS::get_tidy_data_file("2022_data.csv") %>%
   CARS::clean_departments() %>%
   CARS::derive_vars()
 
-data <- data[!is.na(data$prof_DS) & data$prof_DS == "Yes", ]
+data <- data[!is.na(data$department) & data$department == "Forestry Commission", ]
 
 tables <- CARS::summarise_all(data, all_tables = FALSE)
 

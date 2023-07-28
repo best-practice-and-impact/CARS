@@ -29,7 +29,7 @@ samples <- CARS::sample_sizes(data)
 
 Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. We are unable to provide details about response rates by department or profession. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
 
-For more detail, [see the data collection page](data_collection.qmd). 
+For more detail, [see the data collection page](../data_collection.qmd). 
 
 ## Coding frequency and tools
 
