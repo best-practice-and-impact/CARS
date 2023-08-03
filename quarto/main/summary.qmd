@@ -303,7 +303,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ### Respondents see the benefits of RAP but most are not currently implementing it
 
-We asked respondents who had heard of RAP a series of questions about their opinions on RAP. The majority agreed with the statement "I think it is important to implement RAP in my work" (`r round(sum(data$RAP_important %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")`), but only only `r round(sum(data$RAP_implementing %in% c("Agree", "Strongly Agree"))) %>% paste0("%")` agreed they are currently implementing RAP. 
+We asked respondents who had heard of RAP a series of questions about their opinions on RAP. The majority agreed with the statement "I think it is important to implement RAP in my work" (`r round(sum(data$RAP_important %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")`), but only only `r round(sum(data$RAP_implementing %in% c("Agree", "Strongly Agree")) / samples$heard_of_RAP * 100, 1) %>% paste0("%")` agreed they are currently implementing RAP. 
 
 Similarly , around half of the respondents agreed on various statements on understanding RAP and having the support and resources to implement it. While awareness and buy-in is high, this highlights the need to ensure analysts are aware of the resources currently available, and for additional resources to be made available where gaps currently exist.
 
