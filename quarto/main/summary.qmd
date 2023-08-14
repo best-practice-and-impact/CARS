@@ -241,11 +241,10 @@ CARS::wrap_outputs("capability-change-by-freq", plot, table)
 
 RAP refers to the use of good software engineering practices to make analysis pipelines more reproducible. This approach aims to use automation to improve the quality and efficiency of analytical processes.
 
-The following links contain more resources on RAP: 
-- [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
-- [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
-- [RAP Companion](https://ukgovdatascience.github.io/rap_companion/)
+The following links contain more resources on RAP:
 
+* you can find minimum RAP standards in the [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
+* you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Awareness of RAP across government has increased
 
