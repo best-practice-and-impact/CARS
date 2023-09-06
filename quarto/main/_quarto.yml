@@ -3,12 +3,14 @@ project:
   output-dir: ../../docs/
 
 website:
-  title: "DRAFT: Coding in Analysis and Research Survey 2022"
+  title: Coding in Analysis and Research Survey 2022
   navbar:
     background: primary
     left:
       - href: index.qmd
         text: Home
+      - href: data_collection.qmd
+        text: Data collection
       - href: summary.qmd
         text: Summary statistics
       - href: departments.qmd

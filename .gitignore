@@ -6,4 +6,4 @@ temp/
 **/.quarto
 *.csv
 *.rda
-docs/
+exploratory_scripts/

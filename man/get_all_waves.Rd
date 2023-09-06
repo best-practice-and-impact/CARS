@@ -4,7 +4,10 @@
 \alias{get_all_waves}
 \title{Get all CARS data, including previous waves}
 \usage{
-get_all_waves()
+get_all_waves(mode = c("api", "file"))
+}
+\arguments{
+\item{mode}{data source - "api"/"file"}
 }
 \value{
 data frame

@@ -35,15 +35,7 @@ test_that("summarise_languages_by_prof output is as expected", {
 
   got <- summarise_languages_by_prof(dummy_data)
 
-  expected <- data.frame(prof = c(rep("Data scientists", 11),
-                                  rep("Digital and data (DDAT)", 11),
-                                  rep("Actuaries", 11),
-                                  rep("Economists (GES)", 11),
-                                  rep("Geographers", 11),
-                                  rep("Operational researchers (GORS)", 11),
-                                  rep("Social researchers (GSR)", 11),
-                                  rep("Statisticians (GSG)", 11)),
-                         lang = rep(c("C++ / C#",
+  expected <- data.frame(lang = rep(c("C++ / C#",
                                       "Java / Scala",
                                       "Javascript / Typescript",
                                       "Matlab",
@@ -54,14 +46,22 @@ test_that("summarise_languages_by_prof output is as expected", {
                                       "SQL",
                                       "Stata",
                                       "VBA"), 8),
-                         n = c(1/22, 2/22, 3/22, 3/22, 3/22, 1/22, 2/22, 2/22, 3/22, 1/22, 1/22,
-                               0, 1/11, 2/11, 2/11, 2/11, 0, 1/11, 1/11, 2/11, 0, 0,
+                         prof = c(rep("Data scientists", 11),
+                                  rep("Digital and data (DDAT)", 11),
+                                  rep("Actuaries", 11),
+                                  rep("Economists (GES)", 11),
+                                  rep("Geographers", 11),
+                                  rep("Operational researchers (GORS)", 11),
+                                  rep("Social researchers (GSR)", 11),
+                                  rep("Statisticians (GSG)", 11)),
+                         n = c(1/3, 2/3, 1, 1, 1, 1/3, 2/3, 2/3, 1, 1/3, 1/3,
+                               0, 1/4, 1/2, 1/2, 1/2, 0, 1/4, 1/4, 1/2, 0, 0,
                                0, 0, 1/4, 1/4, 1/4, 0, 0, 0, 1/4, 0, 0,
-                               0, 0, 1/4, 1/4, 1/4, 0, 0, 0, 1/4, 0, 0,
+                               0, 0, 1/2, 1/2, 1/2, 0, 0, 0, 1/2, 0, 0,
                                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                               0, 1/11, 2/11, 2/11, 2/11, 0, 1/11, 1/11, 2/11, 0, 0,
-                               1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11, 1/11,
-                               1/22, 2/22, 3/22, 3/22, 3/22, 1/22, 2/22, 2/22, 3/22, 1/22, 1/22))
+                               0, 1/5, 2/5, 2/5, 2/5, 0, 1/5, 1/5, 2/5, 0, 0,
+                               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                               1/6, 1/3, 1/2, 1/2, 1/2, 1/6, 1/3, 1/3, 1/2, 1/6, 1/6))
 
   expect_equal(got, expected)
 

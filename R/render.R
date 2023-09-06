@@ -3,24 +3,13 @@
 #'
 #' @description render CARS publication from quarto
 #'
-#' @param data full pre-processed CARS dataset
 #' @param path quarto input
-#' @param path execute directory
 #' @param output_path output path (will overwrite existing outputs). Should match the path set in the quarto site yaml
 #'
 #' @export
 
-render_site <- function(data, path = "quarto/main", output_path = "docs/") {
-  unlink(output_path, recursive = TRUE)
-
-  dir.create("../temp")
-  save(data, file = "../temp/data.rda")
-
-  # executes in higher directory level to avoid issues with .quarto stopping package from building
-
+render_site <- function(path = "quarto/main", output_path = "docs/") {
   quarto::quarto_render(input = path, as_job = FALSE)
-
-  unlink("../temp", recursive = TRUE)
 }
 
 #' @title create filtered pages
@@ -70,7 +59,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
       "government geography profession",
       "government operational research (GORS)",
       "government social research (GSR)",
-      "government statician group (GSG)"
+      "government statistician group (GSG)"
     )
 
     filenames <- c(
@@ -151,5 +140,33 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   link_page_contents <- glue::glue(link_page_template, .open = "{{{", .close = "}}}") %>% as.character()
 
   write(link_page_contents, paste0(qmd_path, "/", type, ".qmd"))
+
+}
+
+
+#' @title Display programming languages filtered by profession
+#'
+#' @param table frequency table (languages_by_prof, see frequency table functions).
+#' @param prof profession name in the table, e.g. "Data scientists".
+#' @param prof_col profession column name in the data to calculate the sample size, e.g. "data$prof_DS".
+#'
+#' @return HTML output - table and chart
+#' @export
+
+display_prof_langs <- function(table, prof, prof_col) {
+  table <- table[table$prof == prof, ][c(1,3)]
+
+  n <- sum(!is.na(prof_col) & prof_col == "Yes")
+
+  plot <- CARS::plot_freqs(table, n = n, font_size = 14, orientation = "h", xlab = "Can code with this tool (percent)") %>% CARS::set_axis_range(0, 1, axis = "x")
+
+  table <- CARS::df_to_table(table, n = n, column_headers = c("Programming language", "Can code with this tool (percent)"))
+
+  output_name <- paste0(
+    gsub("[ |(|)]", "", prof),
+    "-langs"
+  )
+
+  CARS::wrap_outputs(name = output_name, plot, table)
 
 }

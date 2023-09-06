@@ -65,6 +65,12 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
                          height = height,
                          width = width)
 
+      if (orientation == "h") {
+        plot <- plot %>% set_axis_range(0, 1, axis = "x")
+      } else if (orientation == "v") {
+        plot <- plot %>% set_axis_range(0, 1, axis = "y")
+      }
+
       plots[[i]] <- plotly::plotly_build(plot)
 
       plot_index <- plot_index + 1
@@ -192,8 +198,6 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
-  hovertext <- paste0(data[[1]], ": ", round(abs(data[[2]]) * 100, 1), "%", " <extra></extra>")
-
   if (type == "bar") {
     fig <- plotly::plot_ly(
       x = x_vals,
@@ -201,7 +205,6 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
       marker = list(color = colour),
       type = "bar",
       orientation = orientation,
-      hovertemplate = hovertext,
       ...
     )
   } else if (type == "line") {
@@ -211,9 +214,8 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
       marker = list(color = colour),
       line = list(color = colour),
       type = "scatter",
-      mode = "lines",
+      mode = "markers+lines",
       orientation = orientation,
-      hovertemplate = hovertext,
       ...
     )
   }
@@ -223,7 +225,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   fig <- plotly::layout(fig,
                         xaxis = x_axis,
                         yaxis = y_axis,
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
@@ -235,6 +237,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   return(fig)
 
 }
+
 
 #' @title Plot stacked bar graph
 #'
@@ -283,7 +286,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
     data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines = max_lines)
 
-    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
+    data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = unique(data[[break_q_names_col]]))
   }
 
   colour_scale <- match.arg(colour_scale)
@@ -324,8 +327,6 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  hovertext <- glue::glue("{data[[1]]}, {data[[2]]}: {round(abs(data[[3]]) * 100, 1)}% <extra></extra>")
-
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
   if (type == "bar") {
@@ -334,7 +335,6 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
                          color = data[[2]],
                          type = "bar",
                          orientation = orientation,
-                         hovertemplate = hovertext,
                          marker = list(color = colours),
                          ...)
   } else if (type == "line") {
@@ -342,9 +342,8 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
                            x = x_vals,
                            color = data[[2]],
                            type = "scatter",
-                           mode = "lines",
+                           mode = "markers+lines",
                            orientation = orientation,
-                           hovertemplate = hovertext,
                            marker = list(color = colours),
                            line = list(color = colours),
                            ...)
@@ -363,7 +362,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
                                       y = 1,
                                       traceorder = "normal",
                                       font = list(size = font_size)),
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         xaxis = x_axis,
                         yaxis = y_axis,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
@@ -402,7 +401,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   # Set default bar colours
   n_groups <- length(unique(data[[2]]))
-  colours <- get_2colour_scale(n_groups)
+  colours <- get_2colour_gradients(n_groups)
 
   colour_list <- rev(as.list(colours))
   names(colour_list) <- unique(data[[2]])
@@ -438,22 +437,26 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = data[[break_q_names_col]])
   }
 
+  data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+  data[[2]] <- factor(data[[2]], levels = unique(data[[2]]))
+
   orientation <- match.arg(orientation)
 
   axes <- axis_settings(xlab, ylab, font_size)
 
   if (orientation == "v") {
-    data <- dplyr::arrange(data, data[,1])
-    data[,1] <- factor(data[,1], levels = data[,1])
+    data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+    data[[2]] <- factor(data[[2]], levels = unique(data[[2]]))
     x_vals <- data[[1]]
     y_vals <- data[[3]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
     legend = list(traceorder = 'normal')
   } else if (orientation == "h") {
-    data <- dplyr::arrange(data, dplyr::desc(data[,1]))
-    data[,1] <- factor(data[,1], levels = data[,1])
-    x_vals <- data[[3]]
+    data[[1]] <- factor(rev(data[[1]]), levels = rev(unique(data[[1]])))
+    data[[2]] <- factor(rev(data[[2]]), levels = rev(unique(data[[2]])))
+    colours <- rev(colours)
+    x_vals <- rev(data[[3]])
     y_vals <- data[[1]]
     x_axis <- axes$scale_axis
     y_axis <- axes$cat_axis
@@ -462,8 +465,6 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   }
 
   y_axis$title <- ""
-
-  colours <- rev(colours)
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
@@ -483,12 +484,12 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   fig <- plotly::layout(fig,
                         xaxis = x_axis,
                         yaxis = y_axis,
-                        margin = list(b = 100),
+                        legend = legend,
+                        margin = list(b = 100, t = font_size * 2),
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                           xref='paper', yref='paper', font=list(size = font_size)),
-                        legend = list(traceorder= 'reversed')
+                                           xref='paper', yref='paper', font=list(size = font_size))
   )
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
@@ -498,9 +499,9 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 }
 
 
-#' @title Plot likert graph
+#' @title Plot Likert graph
 #'
-#' @description Produce likert stacked bar chart (plotly). At least 2 questions per plot.
+#' @description Produce Likert stacked bar chart (plotly). At least 2 questions per plot.
 #'
 #' @param data Frequency data for likert quesitons (data frame). 3 columns: question, answer option, frequency.
 #' @param mid the mid-point of the scale. should be higher than 2 and lower than the number of answers.
@@ -609,7 +610,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   fig <- plotly::layout(fig,
                         barmode = "stack",
                         clickmode = "none",
-                        margin = list(b = 100),
+                        margin = list(b = 100, t = font_size * 2),
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
                                            xref='paper', yref='paper', font=list(size = font_size)),
@@ -624,7 +625,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                         annotations = create_y_lab(ylab, font_size),
                         xaxis = list(ticktext = tick_text,
                                       tickvals = tick_values,
-                                      title = "%"))
+                                      title = xlab))
 
   fig <- plotly::layout(fig, legend = list(xanchor = "left",
                                            yanchor = "bottom",
@@ -695,6 +696,58 @@ calculate_bases <- function(data, mid, neutral_mid) {
   return(bases)
 }
 
+
+#' @title Set axis range
+#'
+#' @description Sets x or y axis range for plotly objects
+#'
+#' @param plot plotly object
+#' @param min minimum value
+#' @param max maximum value
+#' @param axis optional: defaults to "x"
+#'
+#' @return list of parameters for plotly annotation
+#'
+#' @export
+
+set_axis_range <- function(plot, min, max, axis = c("x", "y")) {
+  axis <- match.arg(axis)
+
+  if (axis == "x") {
+    plot <- plot %>% plotly::layout(xaxis = list(zerolinecolor = '#ffff',
+                                                 range = list(min, max)))
+  } else if (axis == "y") {
+    plot <- plot %>% plotly::layout(yaxis = list(zerolinecolor = '#ffff',
+                                                 range = list(min, max)))
+  }
+
+  return(plot)
+}
+
+
+#' @title Set up error bars
+#'
+#' @description Formats plotly error bar settings. Can be used with plots
+#'
+#' @param lower_ci lower confidence interval
+#' @param upper_ci upper confidence interval
+#'
+#' @return list of parameters for plotly error bars
+#'
+#' @export
+
+set_error_bars <- function(lower_ci, upper_ci) {
+  return(
+    list(
+      symmetric = "false",
+      array = upper_ci,
+      arrayminus = lower_ci,
+      color = "black"
+    )
+  )
+}
+
+
 #' @title Set axis range
 #'
 #' @description Sets x or y axis range for plotly objects
@@ -740,7 +793,7 @@ create_y_lab <- function(ylab, font_size) {
                      y = 1,
                      x = "min",
                      showarrow = FALSE,
-                     yshift = 30,
+                     yshift = font_size * 2,
                      xref = "paper",
                      yref = "paper",
                      font = list(size = font_size * 1.2)

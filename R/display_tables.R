@@ -7,15 +7,17 @@
 #' @param column_headers optional: list of column headers for the output table
 #' @param n optional: sample size
 #' @param crosstab whether to create a cross tabulation. FALSE by default
-#'
+#' @param proportion_col optional: columns to be turned into a percentage. Last column only be default
 #' @return HTML table
 #' @export
 
-df_to_table <- function(data, column_headers, n, crosstab = FALSE) {
+df_to_table <- function(data, column_headers, n, crosstab = FALSE, proportion_col) {
 
-  proportion_col <- length(data)
+  if (missing(proportion_col)) {
+    proportion_col <- length(data)
+  }
 
-  data[proportion_col] <- paste0(round(data[[proportion_col]] * 100, 1), "%")
+  data[proportion_col] <- round(data[proportion_col] * 100, 1) %>% lapply(paste0, "%")
 
   if (crosstab) {
     data <- df_to_crosstab(data)
@@ -32,7 +34,7 @@ df_to_table <- function(data, column_headers, n, crosstab = FALSE) {
   html <- knitr::kable(data, align = alignment, format = "html") %>% kableExtra::kable_styling()
 
   if (!missing(n)) {
-    html <- kableExtra::add_footnote(html, paste0("Sample size = ", n))
+    html <- kableExtra::add_footnote(html, paste0("Sample size = ", n), notation = "none")
   }
 
   return(html)

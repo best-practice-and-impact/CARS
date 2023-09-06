@@ -23,6 +23,6 @@ Below are links to profession-specific reports These contain summary statistics,
 
 - [Government social research (GSR)](professions/government-social-research.html)
 
-- [Government statician group (GSG)](professions/government-statician-group.html)
+- [Government statistician group (GSG)](professions/government-statician-group.html)
 
 

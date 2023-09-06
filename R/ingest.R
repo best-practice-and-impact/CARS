@@ -1,5 +1,5 @@
 
-#' @title Get tidy data
+#' @title Get tidy data from API
 #'
 #' @description API function for data ingest. Loads data from the smartsurvey API and convert to a tidy data frame.
 #'
@@ -9,12 +9,31 @@
 #'
 #' @export
 
-get_tidy_data <- function(...) {
+get_tidy_data_api <- function(...) {
 
   ingest(...) # First API request always fails so the API is pinged twice to circumvent this.
 
   data <- ingest(...) %>%
     convert_raw() %>%
+    tidy_colnames()
+
+  return(data)
+}
+
+
+#' @title Get tidy data from file
+#'
+#' @description API function for data ingest. Loads data from csv and returns pre-processed data frame.
+#'
+#' @param ... optional: arguments to be passed to \link{ingest}
+#'
+#' @return tidied CARS dataset
+#'
+#' @export
+
+get_tidy_data_file <- function(...) {
+
+  data <- read_file(...) %>%
     tidy_colnames()
 
   return(data)
@@ -88,6 +107,20 @@ ingest <- function(survey = "1167489",
   return(r)
 }
 
+#' Read file
+#'
+#' Wrapper for read.csv - loads data using path saved in environment variable.
+#'
+#' @param name file name
+#' @param dir data folder (defaults to CARS_DATA_DIR environment vairable)
+#'
+#' @return unprocessed CARS data
+#' @export
+
+read_file <- function(name, dir = Sys.getenv("CARS_DATA_DIR")) {
+  read.csv(paste0(dir, "/", name), encoding = "utf-8")
+}
+
 #' @title Convert raw data to data frame
 #'
 #' @description Convert raw smartsurvey data to data.frame . Extract contents (raw csv) from smartsurvey API request and convert to data.frame
@@ -129,6 +162,8 @@ convert_raw <- function(r) {
 #' @param raw_data data frame returned by convert_raw()
 #'
 #' @return data frame with empty rows removed and tidied column names
+#'
+#' @export
 
 tidy_colnames <- function(raw_data) {
 
@@ -152,25 +187,42 @@ tidy_colnames <- function(raw_data) {
 #'
 #' @description Ingest and preprocess all previous CARS data
 #'
+#' @param mode data source - "api"/"file"
+#'
 #' @return data frame
 #'
 #' @export
 
-get_all_waves <- function() {
+get_all_waves <- function(mode = c("api", "file")) {
 
-  data <- get_tidy_data() %>%
+  mode <- match.arg(mode)
+
+  if (mode == "api") {
+    data <- get_tidy_data_api()
+    w3_data <- get_tidy_data_api(survey = "961613")
+    w2_data <- get_tidy_data_api(survey = "790800")
+  } else if (mode == "file") {
+    data <- read_file("2022_data.csv")
+    w3_data <- read_file("2021_data.csv")
+    w2_data <- read_file("2020_data.csv")
+  }
+
+  data <- data %>%
+    tidy_colnames() %>%
     rename_cols() %>%
     apply_skip_logic() %>%
     clean_departments() %>%
     derive_vars()
   data$year <- 2022
 
-  w3_data <- get_tidy_data(survey = "961613") %>%
+  w3_data <- w3_data %>%
+    tidy_colnames() %>%
     w3_rename_cols() %>%
     w3_enforce_streaming()
   w3_data$year <- 2021
 
-  w2_data <- get_tidy_data(survey = "790800") %>%
+  w2_data <- w2_data %>%
+    tidy_colnames() %>%
     w2_rename_cols() %>%
     w2_enforce_streaming()
   w2_data$year <- 2020
