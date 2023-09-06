@@ -1285,7 +1285,7 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
-    count(across(c(col1, col2)), .drop=FALSE) %>%
+    count(across(all_of(c(col1, col2))), .drop=FALSE) %>%
     drop_na() %>%
     data.frame()
 
