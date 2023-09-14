@@ -464,7 +464,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
 
-  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+  hovertext <- paste0(data[[1]], ": ", round(abs(x_vals * 100, 1)), "%", " <extra></extra>")
 
   fig <- plotly::plot_ly(
     x = x_vals,
