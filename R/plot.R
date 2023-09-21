@@ -452,6 +452,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
     legend = list(traceorder = 'normal')
+    hovertext <- paste0(data[[1]], ": ", round(abs(y_vals) * 100, 1), "%", " <extra></extra>")
   } else if (orientation == "h") {
     data[[1]] <- factor(rev(data[[1]]), levels = rev(unique(data[[1]])))
     data[[2]] <- factor(rev(data[[2]]), levels = rev(unique(data[[2]])))
@@ -462,13 +463,12 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_axis <- axes$cat_axis
     legend = list(traceorder = 'reversed')
     ylab <- xlab
+    hovertext <- paste0(data[[1]], ": ", round(abs(x_vals) * 100, 1), "%", " <extra></extra>")
   }
 
   y_axis$title <- ""
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
-
-  hovertext <- paste0(data[[1]], ": ", round(abs(x_vals) * 100, 1), "%", " <extra></extra>")
 
   fig <- plotly::plot_ly(
     x = x_vals,

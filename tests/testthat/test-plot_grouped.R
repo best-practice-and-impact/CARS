@@ -1,4 +1,4 @@
-levels1 = c("test1", "test2", "test3", "test4", "test5")
+levels1 <- c("test1", "test2", "test3", "test4", "test5")
 
 dummy_data <- data.frame(Q1 = factor(levels1,
                                     levels = levels1),
