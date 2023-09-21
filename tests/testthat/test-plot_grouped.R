@@ -27,7 +27,7 @@ testthat::test_that("expected outputs achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.2, 0.5, 0.3, 0.8, 0.6))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#004556", "#004556", "#FF6900", "#FF6900", "#FF6900"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#FF6900", "#FF6900", "#FF6900", "#004556", "#004556"))
 
                       # Sample size
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")

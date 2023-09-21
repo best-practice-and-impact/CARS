@@ -39,7 +39,7 @@ testthat::test_that("expected outputs achieved", {
                               y = 1,
                               x = "min",
                               showarrow = FALSE,
-                              yshift = 30,
+                              yshift = 24,
                               xref = "paper",
                               yref = "paper",
                               font = list(size = 12 * 1.2)))
