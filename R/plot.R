@@ -22,7 +22,8 @@
 #'
 #' @export
 
-freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3, y_margin = .1, x_margin = .1, font_size = 12, orientation = "h") {
+freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3,
+                          y_margin = .1, x_margin = .1, font_size = 12, orientation = "h") {
 
   if (nrows == 1) {
     stop("Unexpected input: n_rows should be 2 or greater.")
@@ -132,7 +133,10 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @export
 
-plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line"), max_lines = 2,  xlab = "", ylab = "", font_size = 12, orientation = c("v", "h"), ...) {
+
+plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line"),
+                       max_lines = 2,  xlab = "", ylab = "", font_size = 12,
+                       orientation = c("v", "h"), ...) {
 
   # Set default bar colour
   if (missing(colour)) {
@@ -262,7 +266,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
   } else if (ncol(data) != 3) {
-    stop("Unexpected input - data should have three columns")
+    stop("Unexpected input - data should have three columns.")
   }
 
   # Validate labels
@@ -448,6 +452,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
     legend = list(traceorder = 'normal')
+    hovertext <- paste0(data[[1]], ": ", round(abs(y_vals) * 100, 1), "%", " <extra></extra>")
   } else if (orientation == "h") {
     data[[1]] <- factor(rev(data[[1]]), levels = rev(unique(data[[1]])))
     data[[2]] <- factor(rev(data[[2]]), levels = rev(unique(data[[2]])))
@@ -458,13 +463,12 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
     y_axis <- axes$cat_axis
     legend = list(traceorder = 'reversed')
     ylab <- xlab
+    hovertext <- paste0(data[[1]], ": ", round(abs(x_vals) * 100, 1), "%", " <extra></extra>")
   }
 
   y_axis$title <- ""
 
   sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
-
-  hovertext <- paste0(data[[1]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
   fig <- plotly::plot_ly(
     x = x_vals,
@@ -536,18 +540,18 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   n_questions <- length(unique(data[[1]]))
   n_answers <- length(unique(data[[2]]))
 
+  # Validate neutral mid
+  if (!is.logical(neutral_mid)) {
+    stop("Unexpected input - neutral_mid is not logical.")
+  }
+
   # Validate mid
   if (!is.numeric(mid)) {
     stop("Unexpected input - mid is not numeric.")
   } else if (mid < 2) {
-    stop("Unexpected inout - mid is smaller than 2.")
-  } else if (neutral_mid & mid > n_answers) {
+    stop("Unexpected input - mid is smaller than 2.")
+  } else if (neutral_mid & mid >= n_answers) {
     stop("Unexpected input - mid >= the number of answers.")
-  }
-
-  # Validate neutral mid
-  if (!is.logical(neutral_mid)) {
-    stop("Unexpected input - mid is not logical (TRUE/FALSE)")
   }
 
   # Apply break_q_names to a column
@@ -682,7 +686,10 @@ calculate_bases <- function(data, mid, neutral_mid) {
     }
   }
 
-  negative_bases <- data %>% dplyr::group_by_at(1) %>% dplyr::mutate_at(3, get_neg_bases, mid = mid, neutral_mid = neutral_mid) %>% data.frame
+  negative_bases <- data %>%
+    dplyr::group_by_at(1) %>%
+    dplyr::mutate_at(3, get_neg_bases, mid = mid, neutral_mid = neutral_mid) %>%
+    data.frame()
 
   bases <- bases - negative_bases[[3]]
 

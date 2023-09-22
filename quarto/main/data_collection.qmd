@@ -100,7 +100,7 @@ CARS::df_to_table(tracking_link_freqs[c(2,1,5)], column_headers = c("Tracking li
 ```{r}
 
 year_dist <- table(all_wave_data$year) %>% data.frame 
-colnames(year_dist) <- c("Year", "ONS sample")
+colnames(year_dist) <- c("Year", "Sample")
 
 year_dist %>%
   kableExtra::kable() %>%
