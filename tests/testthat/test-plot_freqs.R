@@ -22,7 +22,9 @@ testthat::test_that("expected outputs achieved",
                     {
 
                       got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
-                                        break_q_names_col = TRUE, orientation = "v")
+                                        break_q_names_col = TRUE,
+                                        type = "bar",
+                                        orientation = "v")
 
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), factor(c("This is test<br>number one", "This is test<br>2", "test3"),
@@ -56,7 +58,9 @@ testthat::test_that("expected outputs achieved",
                     {
 
                       got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
-                                        break_q_names_col = TRUE, orientation = "h")
+                                        break_q_names_col = TRUE,
+                                        type = "line",
+                                        orientation = "h")
 
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(c("This is test<br>number one", "This is test<br>2", "test3"),
