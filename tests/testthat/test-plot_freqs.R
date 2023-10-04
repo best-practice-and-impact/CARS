@@ -18,7 +18,7 @@ testthat::test_that("validity checks work",
                       testthat::expect_error(plot_freqs(dummy_data, font_size = "x"), "Unexpected input - font_size is not numeric.")
                     })
 
-testthat::test_that("expected outputs achieved",
+testthat::test_that("expected outputs for vertical chart achieved",
                     {
 
                       got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
@@ -54,7 +54,7 @@ testthat::test_that("expected outputs achieved",
 
                     })
 
-testthat::test_that("expected outputs achieved",
+testthat::test_that("expected outputs for horizontal chart achieved",
                     {
 
                       got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
