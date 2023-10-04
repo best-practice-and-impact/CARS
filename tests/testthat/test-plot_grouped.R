@@ -27,7 +27,7 @@ testthat::test_that("expected outputs for vertical chart achieved",
 
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), factor(c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5"),
-                                                                           levels = rev(c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5"))))
+                                                                           levels = c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5")))
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.2, 0.5, 0.3, 0.8, 0.6))
 
                       # Bar colors
@@ -58,12 +58,12 @@ testthat::test_that("expected outputs for horizontal chart achieved",
                                           orientation = "h")
 
                       # x and y values
-                      testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5"),
-                                                                           levels = c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5")))
-                      testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.2, 0.5, 0.3, 0.8, 0.6))
+                      testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(rev(c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5")),
+                                                                           levels = rev(c("This is test<br>number one", "This is test<br>2", "test3", "test4", "test5"))))
+                      testthat::expect_equal(c(got$x$attrs[[1]]$x), rev(c(0.2, 0.5, 0.3, 0.8, 0.6)))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#FF6900", "#FF6900", "#FF6900", "#004556", "#004556"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, rev(c("#FF6900", "#FF6900", "#FF6900", "#004556", "#004556")))
 
                       # Sample size
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
