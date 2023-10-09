@@ -1125,6 +1125,9 @@ summarise_heard_of_RAP_by_prof <- function(data) {
                                                                           1))
 
   rownames(frequencies) <- NULL
+  names(frequencies$n) <- NULL
+
+  frequencies$value <- recode(frequencies$value, !!!prof_names)
 
   return(frequencies)
 
