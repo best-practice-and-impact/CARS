@@ -32,8 +32,7 @@ apply_skip_logic <- function(data) {
                      data$code_freq != "Never",
                      data$other_coding_experience != "No",
                      data$heard_of_RAP != "No",
-                     data$have_RAP_champ %in% c("Yes", "test"),
-  )
+                     data$have_RAP_champ %in% c("Yes", "test"))
 
   skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
@@ -53,8 +52,7 @@ apply_skip_logic <- function(data) {
                        colnames(data)[which(colnames(data) == "line_manage"):which(colnames(data) == "reproducible_workflow")],
                        colnames(data)[which(colnames(data) == "first_learned")],
                        colnames(data)[which(colnames(data) == "have_RAP_champ"):which(colnames(data) == "RAP_comments")],
-                       colnames(data)[which(colnames(data) == "know_RAP_champ")],
-  )
+                       colnames(data)[which(colnames(data) == "know_RAP_champ")])
 
   for(i in 1:length(conditions)){
     data <- enforce_skip_logic(data, conditions[[i]], skipped_cols[[i]])
