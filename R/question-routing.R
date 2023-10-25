@@ -13,7 +13,7 @@ apply_skip_logic <- function(data) {
 
   conditions <- list(data$workplace != "NHS or local healthcare service",
                      data$workplace %in%
-                       c("Civil service, including devolved administations",
+                       c("Civil service, including devolved administrations",
                          "NHS or local healthcare service",
                          "test"),
                      data$department != "Office for National Statistics",
