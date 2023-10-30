@@ -13,7 +13,6 @@ summarise_all <- function(data, all_tables = FALSE) {
 
   output_list <- list(
     code_freq = summarise_code_freq(data),
-    operations = summarise_operations(data),
     knowledge = summarise_coding_tools(data, "knowledge"),
     access = summarise_coding_tools(data, "access"),
     language_status = summarise_language_status(data),
@@ -105,33 +104,6 @@ summarise_code_freq <- function(data) {
 }
 
 
-#' @title Summarise data operations
-#'
-#' @description calculate frequency table for data operations
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_operations <- function(data) {
-
-  questions <- c("ops_analysis", "ops_cleaning", "ops_linking",
-                 "ops_transfer_migration", "ops_vis", "ops_machine_learning",
-                 "ops_modelling", "ops_QA")
-
-  levels <- c("I do some or all of this by coding", "I do this without coding")
-
-  labels <- c("Data analysis", "Data cleaning", "Data linking",
-              "Data transfer / migration", "Data visualisation",
-              "Machine learning", "Modelling", "Quality assurance")
-
-  frequencies <- calculate_freqs(data, questions, levels, labels)
-
-  return(frequencies)
-
-}
-
-
 #' @title Summarise coding tools
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
@@ -147,14 +119,12 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
   questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
                  "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
                  "knowledge_python", "access_python", "knowledge_SPSS",
-                 "access_SPSS", "knowledge_stata", "access_stata", "knowledge_JS",
-                 "access_JS", "knowledge_java", "access_java", "knowledge_C",
-                 "access_C", "knowledge_matlab", "access_matlab")
+                 "access_SPSS", "knowledge_stata", "access_stata",
+                 "knowledge_matlab", "access_matlab")
 
   levels <- c("Yes", "Don't Know", "No")
 
-  labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
-              "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
+  labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "Matlab")
 
   type <- match.arg(type, several.ok = TRUE)
 
@@ -188,29 +158,22 @@ summarise_where_learned_code <- function(data){
   if (!"other_coding_experience" %in% colnames(data)) {
     stop("unexpected_input: no column called 'other_coding_experience'")
   }
-  if (!"prev_coding_experience" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'prev_coding_experience'")
-  }
 
   questions <- "first_learned"
 
-  levels <- c("In current role",
-              "In education",
-              "In private sector employment",
-              "In public sector employment",
-              "Self-taught",
+  levels <- c("Current employment",
+              "Education",
+              "Previous private sector employment",
+              "Previous public sector employment",
               "Other")
 
-  data <- data %>%
-    select(first_learned, prev_coding_experience, code_freq) %>%
+  data_m<- data %>%
+    select(first_learned, code_freq) %>%
     mutate(
-      first_learned = case_when((data$other_coding_experience == "No" |
-                                   data$prev_coding_experience == "No") &
-                                  data$code_freq != "Never" ~ "In current role",
+      first_learned = case_when((data$other_coding_experience == "No") &
+                                  data$code_freq != "Never" ~ "Current employment",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
                                 TRUE ~ first_learned))
-
-  data$prev_coding_experience[data$other_coding_experience == "No"] <- "No"
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -231,7 +194,8 @@ summarise_coding_practices <- function(data) {
   questions <- c("prac_use_open_source", "prac_open_source_own",
                  "prac_version_control", "prac_review", "prac_functions",
                  "prac_unit_test", "prac_package", "prac_dir_structure",
-                 "prac_style", "prac_automated_QA", "prac_AQUA_book")
+                 "prac_style", "prac_automated_QA", "prac_development_QA",
+                 "prac_proportionate_QA")
 
   levels <- c("I don't understand this question", "Never", "Rarely",
                  "Sometimes", "Regularly", "All the time")
@@ -246,7 +210,8 @@ summarise_coding_practices <- function(data) {
               "Standard directory structure",
               "Coding guidelines / Style guides",
               "Automated data quality assurance",
-              "Apply AQUA book principles with analysis code")
+              "Quality assurance throughout development",
+              "Proportionate quality assurance")
 
   frequencies <- calculate_freqs(data, questions, levels, labels)
 
@@ -585,11 +550,11 @@ summarise_ability_change <- function(data) {
 
   questions <- "coding_ability_change"
 
-  levels <- c("Significantly worse",
-              "Slightly worse",
-              "No change",
-              "Slightly better",
-              "Significantly better")
+  levels <- c("It has become significantly worse",
+              "It has become slightly worse",
+              "It has stayed the same",
+              "It has become slightly better",
+              "It has become significantly better")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -617,9 +582,6 @@ summarise_language_status <- function(data) {
                  "status_python",
                  "status_SPSS",
                  "status_stata",
-                 "status_JS",
-                 "status_java",
-                 "status_C",
                  "status_matlab")
 
   levels <- c("Access Only", "Both", "Knowledge Only")
@@ -631,9 +593,6 @@ summarise_language_status <- function(data) {
               "Python",
               "SPSS",
               "Stata",
-              "Javascript / Typescript",
-              "Java / Scala",
-              "C++ / C#",
               "Matlab")
 
   frequencies <- calculate_freqs(data, questions, levels, labels)
