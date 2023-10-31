@@ -36,8 +36,8 @@ apply_skip_logic <- function(data) {
 
   skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "prof_DE"):which(colnames(data) == "prof_CS_other")],
-                       colnames(data)[which(colnames(data) == "prof_DE"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
+                       colnames(data)[which(colnames(data) == "ONS_directorate"):which(colnames(data) == "prof_CS_other")],
+                       colnames(data)[which(colnames(data) == "ONS_directorate"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "pay_band"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "NHS_band")],
                        colnames(data)[which(colnames(data) == "NHS_band"):which(colnames(data) == "NJC_grade")],
@@ -49,7 +49,7 @@ apply_skip_logic <- function(data) {
                        colnames(data)[which(colnames(data) == "Wales_NHS_organisation"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "qual_1_subject"):which(colnames(data) == "qual_3_learn_code")],
-                       colnames(data)[which(colnames(data) == "line_manage"):which(colnames(data) == "reproducible_workflow")],
+                       colnames(data)[which(colnames(data) == "other_coding_experience"):which(colnames(data) == "reproducible_workflow")],
                        colnames(data)[which(colnames(data) == "first_learned")],
                        colnames(data)[which(colnames(data) == "have_RAP_champ"):which(colnames(data) == "RAP_comments")],
                        colnames(data)[which(colnames(data) == "know_RAP_champ")])
