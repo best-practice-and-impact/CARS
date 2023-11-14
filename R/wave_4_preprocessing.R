@@ -10,6 +10,10 @@
 #' @export
 
 w4_rename_cols <- function(data) {
+
+  if (class(data) != "data.frame") {
+    stop("Unexpected input: data is not a data.frame.")
+  }
   if (ncol(data) != 112) {
     stop("Unexpected input: incorrect number of columns. Please use the 2022 CARS dataset.")
   }
@@ -138,7 +142,7 @@ w4_rename_cols <- function(data) {
 #' @return CARS dataset
 #' @export
 
-clean_departments <- function(data) {
+w4_clean_departments <- function(data) {
 
   data$department[grepl("forest research", tolower(data$other_department_name))] <- "Forestry Commission"
 
@@ -173,7 +177,7 @@ clean_departments <- function(data) {
 #'
 #' @export
 
-w4_apply_skip_logic <- function(data) {
+w4_enforce_streaming <- function(data) {
 
   conditions <- list(data$workplace %in% c("Civil service, including devolved administations", "test"),
                      data$department %in% c("Office for National Statistics", "test"),

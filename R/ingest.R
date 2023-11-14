@@ -52,7 +52,7 @@ get_tidy_data_file <- function(...) {
 
 #' @return the exported data as a dataframe
 
-ingest <- function(survey = "1167489",
+ingest <- function(survey = "1376897",
                    token = Sys.getenv("CARS_TOKEN"),
                    secret = Sys.getenv("CARS_SECRET"),
                    proxies = Sys.getenv("alt_proxy"),
@@ -199,10 +199,12 @@ get_all_waves <- function(mode = c("api", "file")) {
 
   if (mode == "api") {
     data <- get_tidy_data_api()
+    w4_data <- get_tidy_data_api(survey = "1167489")
     w3_data <- get_tidy_data_api(survey = "961613")
     w2_data <- get_tidy_data_api(survey = "790800")
   } else if (mode == "file") {
     data <- read_file("2022_data.csv")
+    w4_data <- read_file("2022_data.csv")
     w3_data <- read_file("2021_data.csv")
     w2_data <- read_file("2020_data.csv")
   }
@@ -213,7 +215,13 @@ get_all_waves <- function(mode = c("api", "file")) {
     apply_skip_logic() %>%
     clean_departments() %>%
     derive_vars()
-  data$year <- 2022
+  data$year <- 2023
+
+  w4_data <- w4_data %>%
+    tidy_colnames() %>%
+    w4_rename_cols() %>%
+    w4_enforce_streaming()
+  w4_data$year <- 2022
 
   w3_data <- w3_data %>%
     tidy_colnames() %>%
@@ -227,7 +235,7 @@ get_all_waves <- function(mode = c("api", "file")) {
     w2_enforce_streaming()
   w2_data$year <- 2020
 
-  data <- dplyr::bind_rows(data, w3_data, w2_data)
+  data <- dplyr::bind_rows(data, w2_data, w3_data, w2_data)
 
   return(data)
 }
