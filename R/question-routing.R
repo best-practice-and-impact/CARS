@@ -11,28 +11,27 @@
 
 apply_skip_logic <- function(data) {
 
-  conditions <- list(data$workplace != "NHS or local healthcare service",
-                     data$workplace %in%
+  conditions <- list(data$workplace == "NHS or local healthcare service",
+                     !(data$workplace %in%
                        c("Civil service, including devolved administrations",
-                         "NHS or local healthcare service",
-                         "test"),
-                     data$department != "Office for National Statistics",
-                     data$department %in% c("Office for National Statistics", "test"),
-                     !is.na(data$ONS_directorate),
-                     data$pay_band != "Local Authority or NJC",
-                     data$pay_band != "Other / Not sure",
-                     !is.na(data$NHS_band),
-                     data$primary_work_country != "Scotland",
-                     data$primary_work_country != "Wales",
-                     data$primary_work_country != "Northern Ireland",
-                     !is.na(data$England_NHS_organisation),
-                     !is.na(data$Scotland_NHS_organisation),
-                     !is.na(data$Wales_NHS_organisation),
-                     data$highest_qualification != "Any other qualification",
-                     data$code_freq != "Never",
-                     data$other_coding_experience != "No",
-                     data$heard_of_RAP != "No",
-                     data$have_RAP_champ %in% c("Yes", "test"))
+                         "NHS or local healthcare service")),
+                     data$department == "Office for National Statistics",
+                     !(data$department %in% c("Office for National Statistics")),
+                     is.na(data$ONS_directorate),
+                     data$pay_band == "Local Authority or NJC",
+                     data$pay_band == "Other / Not sure",
+                     is.na(data$NHS_band),
+                     data$primary_work_country == "Scotland",
+                     data$primary_work_country == "Wales",
+                     data$primary_work_country == "Northern Ireland",
+                     is.na(data$England_NHS_organisation),
+                     is.na(data$Scotland_NHS_organisation),
+                     is.na(data$Wales_NHS_organisation),
+                     data$highest_qualification == "Any other qualification",
+                     data$code_freq == "Never",
+                     data$other_coding_experience == "No",
+                     data$heard_of_RAP == "No",
+                     !(data$have_RAP_champ %in% c("Yes")))
 
   skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
@@ -78,10 +77,9 @@ apply_skip_logic <- function(data) {
 
 check_skip_logic <- function(data, condition, skipped_cols) {
 
-  condition_failed <- !condition & !is.na(data[skipped_cols])
+  condition_met <- condition & !is.na(data[skipped_cols])
 
-  row_failed <- as.logical(rowSums(condition_failed))
-
+  row_failed <- as.logical(rowSums(condition_met))
 
   return(
     which(row_failed)
