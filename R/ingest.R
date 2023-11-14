@@ -220,7 +220,8 @@ get_all_waves <- function(mode = c("api", "file")) {
   w4_data <- w4_data %>%
     tidy_colnames() %>%
     w4_rename_cols() %>%
-    w4_enforce_streaming()
+    w4_enforce_streaming() %>%
+    w4_clean_departments()
   w4_data$year <- 2022
 
   w3_data <- w3_data %>%
