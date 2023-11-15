@@ -236,7 +236,7 @@ get_all_waves <- function(mode = c("api", "file")) {
     w2_enforce_streaming()
   w2_data$year <- 2020
 
-  data <- dplyr::bind_rows(data, w2_data, w3_data, w2_data)
+  data <- dplyr::bind_rows(data, w4_data, w3_data, w2_data)
 
   return(data)
 }
