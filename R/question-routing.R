@@ -49,7 +49,7 @@ apply_skip_logic <- function(data) {
                        colnames(data)[which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "qual_1_subject"):which(colnames(data) == "qual_3_learn_code")],
                        colnames(data)[which(colnames(data) == "other_coding_experience"):which(colnames(data) == "reproducible_workflow")],
-                       colnames(data)[which(colnames(data) == "first_learned")],
+                       colnames(data)[which(colnames(data) == "first_learned"):which(colnames(data) == "coding_ability_change")],
                        colnames(data)[which(colnames(data) == "have_RAP_champ"):which(colnames(data) == "RAP_comments")],
                        colnames(data)[which(colnames(data) == "know_RAP_champ")])
 
