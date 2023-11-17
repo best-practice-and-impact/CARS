@@ -12,30 +12,26 @@
 apply_skip_logic <- function(data) {
 
   conditions <- list(data$workplace == "NHS or local healthcare service",
-                     !(data$workplace %in%
-                       c("Civil service, including devolved administrations",
-                         "NHS or local healthcare service")),
-                     data$department == "Office for National Statistics",
-                     !(data$department %in% c("Office for National Statistics")),
-                     is.na(data$ONS_directorate),
+                     !data$workplace %in% c("Civil service, including devolved administrations", "NHS or local healthcare service") & !is.na(data$workplace),
+                     data$department != "Office for National Statistics" & !is.na(data$department),
+                     !is.na(data$ONS_directorate),
                      data$pay_band == "Local Authority or NJC",
                      data$pay_band == "Other / Not sure",
-                     is.na(data$NHS_band),
+                     !is.na(data$NHS_band),
                      data$primary_work_country == "Scotland",
                      data$primary_work_country == "Wales",
                      data$primary_work_country == "Northern Ireland",
-                     is.na(data$England_NHS_organisation),
-                     is.na(data$Scotland_NHS_organisation),
-                     is.na(data$Wales_NHS_organisation),
+                     !is.na(data$England_NHS_organisation),
+                     !is.na(data$Scotland_NHS_organisation),
+                     !is.na(data$Wales_NHS_organisation),
                      data$highest_qualification == "Any other qualification",
                      data$code_freq == "Never",
                      data$other_coding_experience == "No",
                      data$heard_of_RAP == "No",
-                     !(data$have_RAP_champ %in% c("Yes")))
+                     data$have_RAP_champ != "Yes" & !is.na(data$have_RAP_champ))
 
   skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
                        colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "ONS_directorate"):which(colnames(data) == "prof_CS_other")],
                        colnames(data)[which(colnames(data) == "ONS_directorate"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "pay_band"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
                        colnames(data)[which(colnames(data) == "NHS_band")],
