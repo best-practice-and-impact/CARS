@@ -2,12 +2,12 @@
 % Please edit documentation in R/wave_2_preprocessing.R
 \name{w2_rename_cols}
 \alias{w2_rename_cols}
-\title{Rename columns (wave 3)}
+\title{Rename columns (wave 2)}
 \usage{
 w2_rename_cols(data)
 }
 \arguments{
-\item{data}{CARS wave 3 (2021) survey data (data.frame).}
+\item{data}{CARS wave 2 (2020) survey data (data.frame).}
 }
 \value{
 data.frame
