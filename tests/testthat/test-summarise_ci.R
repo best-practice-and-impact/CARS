@@ -2,7 +2,7 @@
 dummy_data <- data.frame(CI = c(NA,
                                 rep("Yes", 2),
                                 rep("No", 3),
-                                rep("I don't know what continuous integration is", 4)))
+                                rep("I don't know", 4)))
 
 test_that("summarise_ci validation works", {
 
@@ -26,10 +26,10 @@ test_that("summarise_ci output is as expected", {
 
   expected <- data.frame(value = factor(c("Yes",
                                           "No",
-                                          "I don't know what continuous integration is"),
+                                          "I don't know"),
                                         levels = c("Yes",
                                                    "No",
-                                                   "I don't know what continuous integration is")),
+                                                   "I don't know")),
                          n = c(2/9, 1/3, 4/9))
 
   expect_equal(got, expected)
