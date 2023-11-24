@@ -1,32 +1,47 @@
 # Coding tools frequency tables (access or knowledge)
 
+prac_responses <- rep(c(
+  NA,
+  "I don't understand this question",
+  "Never",
+  "Rarely",
+  "Sometimes",
+  "Regularly",
+  "All the time"),
+  each = 3)
+
+prof_responses <- rep(c(
+  NA,
+  "Yes",
+  "No"),
+  times = 7)
+
 dummy_data <- data.frame(
-  prac_use_open_source = c(NA,
-                           rep(c("I don't understand this question",
-                               "Never",
-                               "Rarely",
-                               "Sometimes",
-                               "Regularly",
-                               "All the time"), 2)),
-  prac_open_source_own = rep("Sometimes", 13),
-  prac_version_control = rep("Sometimes", 13),
-  prac_review = rep("Sometimes", 13),
-  prac_functions = rep("Sometimes", 13),
-  prac_unit_test = rep("Sometimes", 13),
-  prac_package = rep("Sometimes", 13),
-  prac_dir_structure = rep("Sometimes", 13),
-  prac_style = rep("Sometimes", 13),
-  prac_automated_QA = rep("Sometimes", 13),
-  prac_development_QA = rep("Sometimes", 13),
-  prac_proportionate_QA = rep("Sometimes", 13),
-  prof_DS = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_DDAT = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_GAD = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_GES = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_geog = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_GORS = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_GSR = c(NA, rep(c("Yes", "No"), each=6)),
-  prof_GSG = c(NA, rep(c("Yes", "No"), each=6)))
+
+  prac_use_open_source = prac_responses,
+  prac_open_source_own = prac_responses,
+  prac_version_control = prac_responses,
+  prac_review = prac_responses,
+  prac_functions = prac_responses,
+  prac_unit_test = prac_responses,
+  prac_package = prac_responses,
+  prac_dir_structure = prac_responses,
+  prac_style = prac_responses,
+  prac_automated_QA = prac_responses,
+  prac_development_QA = prac_responses,
+  prac_proportionate_QA = prac_responses,
+
+  prof_DE = prof_responses,
+  prof_DS = prof_responses,
+  prof_DDAT = prof_responses,
+  prof_GAD = prof_responses,
+  prof_GES = prof_responses,
+  prof_geog = prof_responses,
+  prof_GORS = prof_responses,
+  prof_GSR = prof_responses,
+  prof_GSG = prof_responses
+
+)
 
 test_that("summarise_open_source_by_prof missing data is handled correctly", {
 
@@ -41,34 +56,38 @@ test_that("summarise_open_source_by_prof output is as expected", {
 
   got <- summarise_open_source_by_prof(dummy_data)
 
-  expected <- data.frame(name = rep(c("Data scientists",
-                                      "Digital and data (DDAT)",
-                                      "Actuaries",
-                                      "Economists (GES)",
-                                      "Geographers",
-                                      "Operational researchers (GORS)",
-                                      "Social researchers (GSR)",
-                                      "Statisticians (GSG)"), each=6),
-                         value = factor(rep(c("I don't understand this question",
-                                              "Never",
-                                              "Rarely",
-                                              "Sometimes",
-                                              "Regularly",
-                                              "All the time"), 8),
-                                        levels = c("I don't understand this question",
-                                                   "Never",
-                                                   "Rarely",
-                                                   "Sometimes",
-                                                   "Regularly",
-                                                   "All the time")),
-                         n = c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6,
-                               1/6, 1/6, 1/6, 1/6, 1/6, 1/6))
+  expected <- data.frame(
+
+    name = rep(c(
+      "Data engineers",
+      "Data scientists",
+      "Digital and data (DDAT)",
+      "Actuaries",
+      "Economists (GES)",
+      "Geographers",
+      "Operational researchers (GORS)",
+      "Social researchers (GSR)",
+      "Statisticians (GSG)"),
+      each=6),
+
+    value = factor(rep(c(
+      "I don't understand this question",
+      "Never",
+      "Rarely",
+      "Sometimes",
+      "Regularly",
+      "All the time"), 9),
+      levels = c(
+        "I don't understand this question",
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Regularly",
+        "All the time")),
+
+    n = rep(1/6, times = 54)
+
+  )
 
   expect_equal(got, expected)
 
