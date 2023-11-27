@@ -12,6 +12,7 @@ derive_vars <- function(data) {
   data <- data %>%
     derive_language_status() %>%
     derive_rap_score()
+    derive_rap_champ_status()
 
   return(data)
 }
@@ -181,3 +182,26 @@ derive_advanced_rap_scores <- function(data) {
   return(data)
 
 }
+
+
+#' @title Derive RAP Champion status
+#'
+#' @description Derive RAP Champion status column from existing variables and add to the dataframe.
+#'
+#' @param data a date frame containing cleaned CARS wave 5 data
+#'
+#' @return dataframe containing the additional RAP Champion status columns
+#'
+#' @importFrom dplyr mutate case_when
+derive_rap_champ_status <- function(data){
+
+  data <- data %>%
+          mutate(RAP_champ_status = case_when(have_RAP_champ == "Yes" & know_RAP_champ == "Yes, and I am a RAP Champion" ~ "Yes, and I am a RAP Champion",
+                                              have_RAP_champ == "Yes" & know_RAP_champ == "Yes" ~ "Yes, and I know who the RAP Champion is",
+                                              have_RAP_champ == "Yes" & know_RAP_champ == "No" ~ "Yes, but I don't know who the RAP Champion is",
+                                              have_RAP_champ == "No" ~ "No",
+                                              have_RAP_champ == "I don't know" ~ "I don't know"))
+
+}
+
+

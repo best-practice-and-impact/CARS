@@ -1,10 +1,10 @@
 
 dummy_data <- data.frame(coding_ability_change = c(NA,
-                                                   rep("Significantly worse", 2),
-                                                   rep("Slightly worse", 3),
-                                                   rep("No change", 4),
-                                                   rep("Slightly better", 5),
-                                                   rep("Significantly better", 6)))
+                                                   rep("It has become significantly worse", 2),
+                                                   rep("It has become slightly worse", 3),
+                                                   rep("It has stayed the same", 4),
+                                                   rep("It has become slightly better", 5),
+                                                   rep("It has become significantly better", 6)))
 
 test_that("summarise_ability_change validation works", {
 
@@ -26,16 +26,16 @@ test_that("summarise_ability_change output is as expected", {
 
   got <- summarise_ability_change(dummy_data)
 
-  expected <- data.frame(value = factor(c("Significantly worse",
-                                          "Slightly worse",
-                                          "No change",
-                                          "Slightly better",
-                                          "Significantly better"),
-                                        levels = c("Significantly worse",
-                                                   "Slightly worse",
-                                                   "No change",
-                                                   "Slightly better",
-                                                   "Significantly better")),
+  expected <- data.frame(value = factor(c("It has become significantly worse",
+                                          "It has become slightly worse",
+                                          "It has stayed the same",
+                                          "It has become slightly better",
+                                          "It has become significantly better"),
+                                        levels = c("It has become significantly worse",
+                                                   "It has become slightly worse",
+                                                   "It has stayed the same",
+                                                   "It has become slightly better",
+                                                   "It has become significantly better")),
                          n=c(0.10, 0.15, 0.20, 0.25, 0.30))
 
   expect_equal(got, expected)

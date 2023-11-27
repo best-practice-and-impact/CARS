@@ -1,17 +1,22 @@
 
-dummy_data <- data.frame(prac_use_open_source = c(rep("Never", 3), rep("Sometimes", 2), rep(NA, 1)),
-                         prac_open_source_own = c(rep("Sometimes", 3), rep("I don't understand this question", 2), rep("All the time", 1)),
-                         prac_version_control = c(rep("Rarely", 3), rep("All the time", 2), rep("Never", 1)),
-                         prac_review = c(rep("Regularly", 3), rep("All the time", 2), rep("Never", 1)),
-                         prac_functions = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Rarely", 1)),
-                         prac_unit_test = c(rep("All the time", 3), rep("Rarely", 2), rep("Never", 1)),
-                         prac_package = c(rep("Never", 3), rep("Sometimes", 2), rep("Rarely", 1)),
-                         prac_dir_structure = c(rep("Sometimes", 3), rep("Rarely", 2), rep("Never", 1)),
-                         prac_style = c(rep("Rarely", 3), rep("Never", 2), rep("Sometimes", 1)),
-                         prac_automated_QA = c(rep("Regularly", 3), rep("Sometimes", 2), rep("Never", 1)),
-                         prac_AQUA_book = c(rep("I don't understand this question", 3), rep("Never", 2), rep("Sometimes", 1)))
+answers <- c("I don't understand this question", "Never", "Rarely", "Sometimes", "Regularly", "All the time")
+
+dummy_data <- data.frame(prac_use_open_source = answers,
+                         prac_open_source_own = answers,
+                         prac_version_control = answers,
+                         prac_review = answers,
+                         prac_functions = answers,
+                         prac_unit_test = answers,
+                         prac_package = answers,
+                         prac_dir_structure = answers,
+                         prac_style = answers,
+                         prac_automated_QA = answers,
+                         prac_development_QA = answers,
+                         prac_proportionate_QA = answers)
 
 test_that("summarise_coding_practises missing data is handled correctly", {
+
+  dummy_data[1,1] <- NA
 
   got <- summarise_coding_practices(dummy_data)
 
@@ -33,30 +38,11 @@ test_that("summarise_coding_practises output is as expected", {
                                            "Standard directory structure",
                                            "Coding guidelines / Style guides",
                                            "Automated data quality assurance",
-                                           "Apply AQUA book principles with analysis code")), each=6),
-                         value = factor(rep(c("I don't understand this question",
-                                              "Never",
-                                              "Rarely",
-                                              "Sometimes",
-                                              "Regularly",
-                                              "All the time"), 11),
-                                        levels = c("I don't understand this question",
-                                                                      "Never",
-                                                                      "Rarely",
-                                                                      "Sometimes",
-                                                                      "Regularly",
-                                                                      "All the time")),
-                         n = c(1/2, 1/3, 0, 1/6, 0, 0,
-                               0, 1/6, 0, 1/3, 1/2, 0,
-                               0, 1/6, 0, 0, 1/2, 1/3,
-                               0, 1/3, 1/2,  1/6, 0, 0,
-                               1/2, 1/3, 1/6, 0, 0, 0,
-                               1/3, 0, 0, 1/2, 0, 1/6,
-                               0, 1/2, 1/6, 1/3, 0, 0,
-                               0, 1/6, 1/3, 1/2, 0, 0,
-                               0, 1/6, 1/3, 0, 0, 1/2,
-                               0, 3/5, 0, 2/5, 0, 0,
-                               0, 1/6, 1/2, 0, 0, 1/3))
+                                           "Quality assurance throughout development",
+                                           "Proportionate quality assurance")), each=6),
+                         value = factor(rep(answers, 12),
+                                        levels = answers),
+                         n = rep(1/6, times=72))
 
   expect_equal(got, expected)
 
