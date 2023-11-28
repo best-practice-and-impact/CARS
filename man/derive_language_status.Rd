@@ -13,5 +13,5 @@ derive_language_status(data)
 data.frame
 }
 \description{
-Derve the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
+Derive the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
 }
