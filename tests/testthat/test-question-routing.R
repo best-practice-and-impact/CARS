@@ -56,7 +56,7 @@ test_that("apply_skip_logic replaces all relevant columns with NAs", {
 
   got <- apply_skip_logic(dummy_data)
 
-  expected <- read.csv("../../inst/extdata/cars_dummy_data.csv") %>%
+  expected <- read.csv("../../inst/extdata/cars_dummy_data_clean.csv") %>%
     rename_cols()
 
   expect_equal(expected, got)
