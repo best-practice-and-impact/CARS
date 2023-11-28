@@ -16,12 +16,6 @@ dummy_data <- data.frame(
   access_SPSS = c("No", "Yes"),
   knowledge_stata = c("Don't know", "No"),
   access_stata = c("Yes", "No"),
-  knowledge_JS = c("Don't know", "Yes"),
-  access_JS = c("No", "Yes"),
-  knowledge_java = c("Don't know", "Yes"),
-  access_java = c("Don't know", "No"),
-  knowledge_C = c("Yes", "Don't know"),
-  access_C = c("No", "Yes"),
   knowledge_matlab = c("Yes", "No"),
   access_matlab = c("Yes", "No")
 )
@@ -32,10 +26,7 @@ test_that("summarise_language_status output is as expected", {
 
   got <- summarise_language_status(dummy_data)
 
-  expected <- data.frame(name = rep(c("C++ / C#",
-                                      "Java / Scala",
-                                      "Javascript / Typescript",
-                                      "Matlab",
+  expected <- data.frame(name = rep(c("Matlab",
                                       "Python",
                                       "R",
                                       "SAS",
@@ -46,13 +37,13 @@ test_that("summarise_language_status output is as expected", {
                          value = factor(rep(c("Access Only",
                                               "Both",
                                               "Knowledge Only"),
-                                            11),
+                                            8),
                                         levels=c("Access Only",
                                                  "Both",
                                                  "Knowledge Only")),
-                         n = c(0.50, 0.00, 0.50, 0.00, 0.00, 1.00, 0.00, 1.00, 0.00, 0.00, 1.00,
-                               0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 1.00, 0.00, 1.00,
-                               0.00, 0.00, 0.00, 0.00, 1.00, 1.00, 0.00, 0.00, 1.00, 0.00, 0.00))
+                         n = c(0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00,
+                               1.00, 0.00, 1.00, 0.00, 1.00, 0.00, 0.00, 0.00,
+                               0.00, 1.00, 1.00, 0.00, 0.00, 1.00, 0.00, 0.00))
 
   expect_equal(got, expected)
 

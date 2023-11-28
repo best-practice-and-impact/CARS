@@ -13,7 +13,6 @@ summarise_all <- function(data, all_tables = FALSE) {
 
   output_list <- list(
     code_freq = summarise_code_freq(data),
-    operations = summarise_operations(data),
     knowledge = summarise_coding_tools(data, "knowledge"),
     access = summarise_coding_tools(data, "access"),
     language_status = summarise_language_status(data),
@@ -105,33 +104,6 @@ summarise_code_freq <- function(data) {
 }
 
 
-#' @title Summarise data operations
-#'
-#' @description calculate frequency table for data operations
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_operations <- function(data) {
-
-  questions <- c("ops_analysis", "ops_cleaning", "ops_linking",
-                 "ops_transfer_migration", "ops_vis", "ops_machine_learning",
-                 "ops_modelling", "ops_QA")
-
-  levels <- c("I do some or all of this by coding", "I do this without coding")
-
-  labels <- c("Data analysis", "Data cleaning", "Data linking",
-              "Data transfer / migration", "Data visualisation",
-              "Machine learning", "Modelling", "Quality assurance")
-
-  frequencies <- calculate_freqs(data, questions, levels, labels)
-
-  return(frequencies)
-
-}
-
-
 #' @title Summarise coding tools
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
@@ -147,14 +119,12 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
   questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
                  "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
                  "knowledge_python", "access_python", "knowledge_SPSS",
-                 "access_SPSS", "knowledge_stata", "access_stata", "knowledge_JS",
-                 "access_JS", "knowledge_java", "access_java", "knowledge_C",
-                 "access_C", "knowledge_matlab", "access_matlab")
+                 "access_SPSS", "knowledge_stata", "access_stata",
+                 "knowledge_matlab", "access_matlab")
 
   levels <- c("Yes", "Don't Know", "No")
 
-  labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata",
-              "Javascript / Typescript", "Java / Scala", "C++ / C#", "Matlab")
+  labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "Matlab")
 
   type <- match.arg(type, several.ok = TRUE)
 
@@ -164,6 +134,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
 
   return(frequencies)
 }
+
 
 
 #' @title Summarise where respondents learned to code
@@ -188,29 +159,22 @@ summarise_where_learned_code <- function(data){
   if (!"other_coding_experience" %in% colnames(data)) {
     stop("unexpected_input: no column called 'other_coding_experience'")
   }
-  if (!"prev_coding_experience" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'prev_coding_experience'")
-  }
 
   questions <- "first_learned"
 
-  levels <- c("In current role",
-              "In education",
-              "In private sector employment",
-              "In public sector employment",
-              "Self-taught",
+  levels <- c("Current employment",
+              "Education",
+              "Previous private sector employment",
+              "Previous public sector employment",
               "Other")
 
   data <- data %>%
-    select(first_learned, prev_coding_experience, code_freq) %>%
+    select(first_learned, code_freq) %>%
     mutate(
-      first_learned = case_when((data$other_coding_experience == "No" |
-                                   data$prev_coding_experience == "No") &
-                                  data$code_freq != "Never" ~ "In current role",
+      first_learned = case_when((data$other_coding_experience == "No") &
+                                  data$code_freq != "Never" ~ "Current employment",
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
                                 TRUE ~ first_learned))
-
-  data$prev_coding_experience[data$other_coding_experience == "No"] <- "No"
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -231,7 +195,8 @@ summarise_coding_practices <- function(data) {
   questions <- c("prac_use_open_source", "prac_open_source_own",
                  "prac_version_control", "prac_review", "prac_functions",
                  "prac_unit_test", "prac_package", "prac_dir_structure",
-                 "prac_style", "prac_automated_QA", "prac_AQUA_book")
+                 "prac_style", "prac_automated_QA", "prac_development_QA",
+                 "prac_proportionate_QA")
 
   levels <- c("I don't understand this question", "Never", "Rarely",
                  "Sometimes", "Regularly", "All the time")
@@ -246,7 +211,8 @@ summarise_coding_practices <- function(data) {
               "Standard directory structure",
               "Coding guidelines / Style guides",
               "Automated data quality assurance",
-              "Apply AQUA book principles with analysis code")
+              "Quality assurance throughout development",
+              "Proportionate quality assurance")
 
   frequencies <- calculate_freqs(data, questions, levels, labels)
 
@@ -313,24 +279,38 @@ summarise_rap_advanced <- function(data){
 
 summarise_rap_knowledge <- function(data){
 
-  # Validation checks
-  if (!"heard_of_RAP" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'heard_of_RAP'")
-  }
+  questions <- "heard_of_RAP"
 
-  questions <- "know_RAP_champ"
-
-  levels <- c("Have not heard of RAP",
-              "I don't know what a RAP champion is",
-              "I know what a RAP champion is but don't know who the RAP champion in my department is",
-              "I know what a RAP champion is and there is no RAP champion in my department",
-              "I know who the RAP champion in my department is")
-
-  data$know_RAP_champ[data$heard_of_RAP == "No"] <- "Have not heard of RAP"
+  levels <- c("Yes",
+              "No")
 
   frequencies <- calculate_freqs(data, questions, levels)
   return(frequencies)
 }
+
+
+#' @title Knowledge of RAP Champions
+#'
+#' @description Create a frequency table of knowledge of RAP Champions
+#'
+#' @param data full CARS dataset after pre-processing
+#'
+#' @return frequency table (data.frame)
+
+summarise_rap_champ_status <- function(data){
+
+  questions <- "RAP_champ_status"
+
+  levels <- c("Yes, and I am a RAP Champion",
+              "Yes, and I know who the RAP Champion is",
+              "Yes, but I don't know who the RAP Champion is",
+              "No",
+              "I don't know")
+
+  frequencies <- calculate_freqs(data, questions, levels)
+  return(frequencies)
+}
+
 
 
 #' @title Opinions of RAP
@@ -443,7 +423,7 @@ summarise_rap_comp <- function(data) {
               "Team open source code",
               "Version control",
               "Peer review",
-              "AQUA book guidance",
+              "Development QA",
               "Documentation",
               "Functions",
               "Unit testing",
@@ -457,7 +437,7 @@ summarise_rap_comp <- function(data) {
                  "open_code_score",
                  "version_control_score",
                  "peer_review_score",
-                 "AQUA_book_score",
+                 "development_QA_score",
                  "doc_score",
                  "function_score",
                  "unit_test_score",
@@ -475,7 +455,7 @@ summarise_rap_comp <- function(data) {
     mutate(name = factor(name, levels = labels)) %>%
     arrange(name) %>%
     mutate(value = c(rep("Basic", 6), rep("Advanced", 7))) %>%
-    mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never"))
+    mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
 
   names(components$n) <- NULL
 
@@ -503,7 +483,7 @@ summarise_ci <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know what continuous integration is")
+              "I don't know")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -531,7 +511,7 @@ summarise_dep_man <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know what dependency management is")
+              "I don't know")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -559,7 +539,7 @@ summarise_rep_workflow <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know what reproducible workflows are")
+              "I don't know")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -585,11 +565,11 @@ summarise_ability_change <- function(data) {
 
   questions <- "coding_ability_change"
 
-  levels <- c("Significantly worse",
-              "Slightly worse",
-              "No change",
-              "Slightly better",
-              "Significantly better")
+  levels <- c("It has become significantly worse",
+              "It has become slightly worse",
+              "It has stayed the same",
+              "It has become slightly better",
+              "It has become significantly better")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -617,9 +597,6 @@ summarise_language_status <- function(data) {
                  "status_python",
                  "status_SPSS",
                  "status_stata",
-                 "status_JS",
-                 "status_java",
-                 "status_C",
                  "status_matlab")
 
   levels <- c("Access Only", "Both", "Knowledge Only")
@@ -631,9 +608,6 @@ summarise_language_status <- function(data) {
               "Python",
               "SPSS",
               "Stata",
-              "Javascript / Typescript",
-              "Java / Scala",
-              "C++ / C#",
               "Matlab")
 
   frequencies <- calculate_freqs(data, questions, levels, labels)
@@ -744,9 +718,9 @@ summarise_strategy_knowledge <- function(data){
 
   questions <- "strategy_knowledge"
 
-  levels <- c("I have not heard of the RAP strategy",
-              "I have heard of the RAP strategy, but I haven't read it",
-              "I have read the RAP strategy")
+  levels <- c("Yes",
+              "Yes, but I haven't read it",
+              "No")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -769,19 +743,20 @@ summarise_cap_change_by_freq <- function(data){
 
   col2 <- "coding_ability_change"
 
+  dplyr::filter(data, code_freq != "Never")
+
   levels1 <- c(
-    "Never",
     "Rarely",
     "Sometimes",
     "Regularly",
     "All the time")
 
   levels2 <- c(
-    "Significantly worse",
-    "Slightly worse",
-    "No change",
-    "Slightly better",
-    "Significantly better")
+    "It has become significantly worse",
+    "It has become slightly worse",
+    "It has stayed the same",
+    "It has become slightly better",
+    "It has become significantly better")
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
@@ -809,11 +784,11 @@ summarise_cap_change_by_line_manage <- function(data){
                "No - I don't line manage anyone")
 
   levels2 <- c(
-    "Significantly worse",
-    "Slightly worse",
-    "No change",
-    "Slightly better",
-    "Significantly better")
+    "It has become significantly worse",
+    "It has become slightly worse",
+    "It has stayed the same",
+    "It has become slightly better",
+    "It has become significantly better")
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
 
@@ -841,11 +816,11 @@ summarise_cap_change_by_CS_grade <- function(data){
                "Grade 6 and 7")
 
   levels2 <- c(
-    "Significantly worse",
-    "Slightly worse",
-    "No change",
-    "Slightly better",
-    "Significantly better")
+    "It has become significantly worse",
+    "It has become slightly worse",
+    "It has stayed the same",
+    "It has become slightly better",
+    "It has become significantly better")
 
   selected_data <- data %>%
     dplyr::select(CS_grade, coding_ability_change) %>%
@@ -992,10 +967,11 @@ summarise_adv_score_by_understanding <- function(data){
 
 summarise_languages_by_prof <- function(data) {
 
-  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+  profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
 
-  prof_names <- c("Data scientists",
+  prof_names <- c("Data engineers",
+                  "Data scientists",
                   "Digital and data (DDAT)",
                   "Actuaries",
                   "Economists (GES)",
@@ -1045,10 +1021,11 @@ summarise_languages_by_prof <- function(data) {
 
 summarise_open_source_by_prof <- function(data) {
 
-  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+  profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
 
-  prof_names <- c("Data scientists",
+  prof_names <- c("Data engineers",
+                  "Data scientists",
                   "Digital and data (DDAT)",
                   "Actuaries",
                   "Economists (GES)",
@@ -1096,15 +1073,16 @@ summarise_open_source_by_prof <- function(data) {
 
 summarise_heard_of_RAP_by_prof <- function(data) {
 
-  filtered_data <- dplyr::filter(data, workplace == "Civil service, including devolved administations")
+  filtered_data <- dplyr::filter(data, workplace == "Civil service, including devolved administrations")
   filtered_RAP_data <- dplyr::filter(filtered_data, heard_of_RAP == "Yes")
 
   questions <- c("heard_of_RAP")
 
-  profs <- c("prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
+  profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
 
-  prof_names <- c("Data scientists",
+  prof_names <- c("Data engineers",
+                  "Data scientists",
                   "Digital and data (DDAT)",
                   "Actuaries",
                   "Economists (GES)",

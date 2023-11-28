@@ -1,14 +1,7 @@
 
-dummy_data <- data.frame(heard_of_RAP = c("No", rep("Yes", 13)),
-                         know_RAP_champ = c(rep("I don't know what a RAP champion is", 2),
-                                            rep("I know what a RAP champion is but don't know who the RAP champion in my department is", 3),
-                                            rep("I know what a RAP champion is and there is no RAP champion in my department", 4),
-                                            rep("I know who the RAP champion in my department is", 5))
-)
+dummy_data <- data.frame(heard_of_RAP = c(NA, "Yes", "No"))
 
 test_that("summarise_rap_knowledge missing data is handled correctly", {
-
-  dummy_data[5, 1] <- NA
 
   got <- summarise_rap_knowledge(dummy_data)
 
@@ -20,26 +13,19 @@ test_that("summarise_rap_knowledge output is as expected", {
 
   got <- summarise_rap_knowledge(dummy_data)
 
-  expected <- data.frame(value = factor(c("Have not heard of RAP",
-                                          "I don't know what a RAP champion is",
-                                          "I know what a RAP champion is but don't know who the RAP champion in my department is",
-                                          "I know what a RAP champion is and there is no RAP champion in my department",
-                                          "I know who the RAP champion in my department is"),
-                                        levels = c("Have not heard of RAP",
-                                                   "I don't know what a RAP champion is",
-                                                   "I know what a RAP champion is but don't know who the RAP champion in my department is",
-                                                   "I know what a RAP champion is and there is no RAP champion in my department",
-                                                   "I know who the RAP champion in my department is")),
-                         n = c(1/14, 1/14, 3/14, 4/14, 5/14))
+  expected <- data.frame(
+
+    value = factor(c(
+      "Yes",
+      "No"),
+      levels = c(
+        "Yes",
+        "No")),
+
+    n = rep(1/2, times = 2)
+
+  )
 
   expect_equal(got, expected)
-
-})
-
-test_that("summarise_rap_knowledge validation works", {
-
-  dummy_data <- data.frame(Test = c("test1", "test2"))
-
-  expect_error(summarise_rap_knowledge(dummy_data), "unexpected_input: no column called 'heard_of_RAP'")
 
 })
