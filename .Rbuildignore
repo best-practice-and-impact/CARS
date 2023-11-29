@@ -8,3 +8,4 @@
 ^R/test\.R$
 ^main\.R$
 ^.*.quarto
+^data-raw$
