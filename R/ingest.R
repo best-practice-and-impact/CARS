@@ -203,7 +203,7 @@ get_all_waves <- function(mode = c("api", "file")) {
     w3_data <- get_tidy_data_api(survey = "961613")
     w2_data <- get_tidy_data_api(survey = "790800")
   } else if (mode == "file") {
-    data <- read_file("2022_data.csv")
+    data <- read_file("2023_data.csv")
     w4_data <- read_file("2022_data.csv")
     w3_data <- read_file("2021_data.csv")
     w2_data <- read_file("2020_data.csv")
