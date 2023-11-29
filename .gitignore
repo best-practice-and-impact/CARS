@@ -7,3 +7,4 @@ temp/
 *.csv
 *.rda
 exploratory_scripts/
+docs/
