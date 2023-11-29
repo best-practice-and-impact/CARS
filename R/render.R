@@ -41,6 +41,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
 
   if (type == "professions") {
     prof_cols <- c(
+      "prof_DE",
       "prof_DS",
       "prof_DDAT",
       "prof_GAD",
@@ -52,6 +53,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
     )
 
     prof_names <- c(
+      "government data engineers",
       "government data scientists",
       "digital and data profession (DDAT)",
       "government actuary's department (GAD)",
@@ -63,6 +65,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
     )
 
     filenames <- c(
+      "data-engineers.qmd",
       "data-scientists.qmd",
       "digital-and-data.qmd",
       "government-actuarys-department.qmd",
