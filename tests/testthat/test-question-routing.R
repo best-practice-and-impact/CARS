@@ -51,13 +51,11 @@ test_that("enforce_skip_logic replaces failing rows from multiple skipped column
 })
 
 test_that("apply_skip_logic replaces all relevant columns with NAs", {
-  dummy_data <- read.csv("../../inst/extdata/cars_dummy_data.csv") %>%
-    rename_cols()
+  dummy_data <- rename_cols(cars_dummy_data)
 
   got <- apply_skip_logic(dummy_data)
 
-  expected <- read.csv("../../inst/extdata/cars_dummy_data_clean.csv") %>%
-    rename_cols()
+  expected <- rename_cols(cars_dummy_data_clean)
 
   expect_equal(expected, got)
 })
