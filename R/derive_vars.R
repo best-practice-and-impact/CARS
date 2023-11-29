@@ -11,7 +11,7 @@
 derive_vars <- function(data) {
   data <- data %>%
     derive_language_status() %>%
-    derive_rap_score()
+    derive_rap_score() %>%
     derive_rap_champ_status()
 
   return(data)
