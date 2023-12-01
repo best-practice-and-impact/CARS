@@ -140,7 +140,7 @@ rename_cols <- function(data) {
 
 clean_departments <- function(data) {
 
-  data$department[grepl("Foreign, Commonwealth & Development Office (excl. agencies)", data$department)] <- "Foreign, Commonwealth and Development Office (excl. agencies)"
+  data$department[data$department == "Foreign, Commonwealth & Development Office (excl. agencies)"] <- "Foreign, Commonwealth and Development Office (excl. agencies)"
 
   data$department[data$workplace == "NHS"] <- "NHS"
 
