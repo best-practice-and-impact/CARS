@@ -140,13 +140,15 @@ rename_cols <- function(data) {
 
 clean_departments <- function(data) {
 
-  data$department[grepl("forest research", tolower(data$other_department_name))] <- "Forestry Commission"
+  data$department[data$department == "Foreign, Commonwealth & Development Office (excl. agencies)"] <- "Foreign, Commonwealth and Development Office (excl. agencies)"
 
   data$department[data$workplace == "NHS"] <- "NHS"
 
   defra_orgs <- c(
     "Department for Environment, Food and Rural Affairs (excl. agencies)",
     "Forestry Commission",
+    "Forest Research",
+    "Forestry England",
     "Animal and Plant Health Agency",
     "Centre for Environment, Fisheries and Aquaculture Science",
     "Rural Payments Agency",
