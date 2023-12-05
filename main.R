@@ -7,5 +7,5 @@ data <- CARS::get_tidy_data_file("2023_data.csv") %>%
   CARS::derive_vars()
 
 CARS::create_filtered_pages(data, type = "departments")
-CARS::create_filtered_pages(type = "professions")
+CARS::create_filtered_pages(data, type = "professions")
 CARS::render_site()
