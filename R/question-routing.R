@@ -30,27 +30,27 @@ apply_skip_logic <- function(data) {
                      data$heard_of_RAP == "No",
                      data$have_RAP_champ != "Yes" & !is.na(data$have_RAP_champ) & data$have_RAP_champ != "test")
 
-  skipped_cols <- list(colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "ONS_directorate")],
-                       colnames(data)[which(colnames(data) == "CS_grade"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "ONS_directorate"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "pay_band"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "NHS_band")],
-                       colnames(data)[which(colnames(data) == "NHS_band"):which(colnames(data) == "NJC_grade")],
-                       colnames(data)[which(colnames(data) == "NJC_grade")],
-                       colnames(data)[which(colnames(data) == "England_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "England_NHS_organisation"):which(colnames(data) == "Scotland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "England_NHS_organisation"):which(colnames(data) == "Wales_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "Scotland_NHS_organisation"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "Wales_NHS_organisation"):which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "Northern_Ireland_NHS_organisation")],
-                       colnames(data)[which(colnames(data) == "qual_1_subject"):which(colnames(data) == "qual_3_learn_code")],
-                       colnames(data)[which(colnames(data) == "other_coding_experience"):which(colnames(data) == "reproducible_workflow")],
-                       colnames(data)[which(colnames(data) == "first_learned"):which(colnames(data) == "coding_ability_change")],
-                       colnames(data)[which(colnames(data) == "have_RAP_champ"):which(colnames(data) == "RAP_comments")],
-                       colnames(data)[which(colnames(data) == "know_RAP_champ")])
+  skipped_cols <- list(dplyr::select(data, "CS_grade":"ONS_directorate"),
+                       dplyr::select(data, "CS_grade":"Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "ONS_directorate":"Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "pay_band":"Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "NHS_band"),
+                       dplyr::select(data, "NHS_band":"NJC_grade"),
+                       dplyr::select(data, "NJC_grade"),
+                       dplyr::select(data, "England_NHS_organisation"),
+                       dplyr::select(data, "England_NHS_organisation":"Scotland_NHS_organisation"),
+                       dplyr::select(data, "England_NHS_organisation":"Wales_NHS_organisation"),
+                       dplyr::select(data, "Scotland_NHS_organisation":"Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "Wales_NHS_organisation":"Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "Northern_Ireland_NHS_organisation"),
+                       dplyr::select(data, "qual_1_subject":"qual_3_learn_code"),
+                       dplyr::select(data, "other_coding_experience":"reproducible_workflow"),
+                       dplyr::select(data, "first_learned":"coding_ability_change"),
+                       dplyr::select(data, "have_RAP_champ":"RAP_comments"),
+                       dplyr::select(data, "know_RAP_champ"))
 
   for(i in 1:length(conditions)){
-    data <- enforce_skip_logic(data, conditions[[i]], skipped_cols[[i]])
+    data <- enforce_skip_logic(data, conditions[[i]], colnames(skipped_cols[[i]]))
   }
 
   return(data)
