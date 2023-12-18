@@ -483,7 +483,7 @@ summarise_ci <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know")
+              "I don't know what continuous integration is")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -511,7 +511,7 @@ summarise_dep_man <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know")
+              "I don't know what dependency management is")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
