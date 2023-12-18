@@ -122,7 +122,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
                  "access_SPSS", "knowledge_stata", "access_stata",
                  "knowledge_matlab", "access_matlab")
 
-  levels <- c("Yes", "Don't Know", "No")
+  levels <- c("Yes", "Don't know", "No")
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "Matlab")
 
