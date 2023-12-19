@@ -144,6 +144,20 @@ clean_departments <- function(data) {
 
   data$department[data$workplace == "NHS"] <- "NHS"
 
+  data$department[data$other_department_name == "Office for National Statistics"] <- "Office for National Statistics"
+
+  data$department[data$other_department_name == "Data Science Campus"] <- "Office for National Statistics"
+
+  data$department[data$other_department_name == "Welsh Revenue Authority"] <- "Welsh Government"
+
+  data$department[data$other_department_name == "Equality Hub, Cabinet Office"] <- "Cabinet Office (excl. agencies)"
+
+  data$department[data$other_department_name == "Natural England"] <- "Natural England"
+
+  data$department[data$other_department_name == "Department for Communities"] <- "Northern Ireland Executive"
+
+  data$department[data$other_department_name == "Department of Education Northern Ireland"] <- "Northern Ireland Executive"
+
   defra_orgs <- c(
     "Department for Environment, Food and Rural Affairs (excl. agencies)",
     "Forestry Commission",
@@ -163,3 +177,33 @@ clean_departments <- function(data) {
 
 }
 
+#' @title Clean workplace data
+#'
+#' @description reclassify 'other' text responses into CS/NHS
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_workplace <- function(data) {
+
+  data$workplace[data$workplace == "MOD"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "HMRC"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "The Pensions Regulator"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Scottish Funding Council"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Office for Students"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Office for students"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "OfS"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Dstl"] <- "Civil service, including devolved administrations"
+
+  return(data)
+
+}
