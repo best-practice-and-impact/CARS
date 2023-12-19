@@ -4,7 +4,7 @@ knowledge_response <- rep(c(
   NA,
   "Yes",
   "No",
-  "Don't Know"),
+  "Don't know"),
   each = 3, times = 6)
 
 prof_response <- rep(c(
