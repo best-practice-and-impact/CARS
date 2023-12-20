@@ -4,7 +4,7 @@ dummy_data <- data.frame(
     NA,
     "Yes",
     "No",
-    "I don't know")
+    "I don't know what reproducible workflows are")
 
 )
 
@@ -25,10 +25,10 @@ test_that("summarise_rep_workflow output is as expected", {
     value = factor(c(
       "Yes",
       "No",
-      "I don't know"),
+      "I don't know what reproducible workflows are"),
       levels = c("Yes",
                  "No",
-                 "I don't know")),
+                 "I don't know what reproducible workflows are")),
 
     n = rep(1/3, times = 3)
 
