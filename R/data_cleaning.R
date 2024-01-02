@@ -129,6 +129,25 @@ rename_cols <- function(data) {
   return(data)
 }
 
+#' @title Clean data
+#'
+#' @description Recategorise department, workplace and first_learned data
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_data <- function(data){
+
+ data %>%
+   clean_departments() %>%
+   clean_workplace() %>%
+   clean_first_learned()
+
+}
+
+
 #' @title Clean department data
 #'
 #' @description add NHS to department list and merge departments where needed.
@@ -203,6 +222,33 @@ clean_workplace <- function(data) {
   data$workplace[data$workplace == "OfS"] <- "Civil service, including devolved administrations"
 
   data$workplace[data$workplace == "Dstl"] <- "Civil service, including devolved administrations"
+
+  return(data)
+
+}
+
+#' @title Clean first learned data
+#'
+#' @description reclassify 'other' free text responses into self-taught based on common terms used
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_first_learned <- function(data) {
+
+  matches <- c("self",
+               "hobby",
+               "personal",
+               "independ",
+               "home",
+               "for fun",
+               "free time",
+               "spare time",
+               "childhood")
+
+  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(matches, collapse = "|"))] <- "Self-taught"
 
   return(data)
 
