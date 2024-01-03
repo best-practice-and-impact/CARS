@@ -276,10 +276,15 @@ Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.u
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$not_RAP_champ, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$rap_knowledge, n = samples$not_RAP_champ, column_headers = c("Knowledge", "Percent"))
+plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$code_at_work, xlab = "Heard of RAP?", font_size = 14, orientation = "v")
+table <- CARS::df_to_table(tables$rap_knowledge, n = samples$code_at_work, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-knowledge", plot, table)
+
+plot <- CARS::plot_freqs(tables$rap_champ_status, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 2, xlab = "Heard of RAP champions?", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$rap_champ_status, n = samples$heard_of_RAP, column_headers = c("Knowledge", "Percent"))
+
+CARS::wrap_outputs("rap-champ-status", plot, table)
 
 ```
 
