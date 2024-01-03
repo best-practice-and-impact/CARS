@@ -7,14 +7,14 @@ dummy_data <- data.frame(
     "Sometimes",
     "Regularly",
     "All the time"),
-    each=18),
+    each = 21),
 
   other_coding_experience = rep(c(
     NA,
     "Yes",
     "No"),
     times = 6,
-    each = 6),
+    each = 7),
 
   first_learned = rep(c(
     NA,
@@ -22,6 +22,7 @@ dummy_data <- data.frame(
     "Education",
     "Previous private sector employment",
     "Previous public sector employment",
+    "Self-taught",
     "Other"),
     times = 18)
 
@@ -46,15 +47,17 @@ test_that("summarise_where_learned_code output is as expected", {
       "Education",
       "Previous private sector employment",
       "Previous public sector employment",
+      "Self-taught",
       "Other"),
       levels = c(
         "Current employment",
         "Education",
         "Previous private sector employment",
         "Previous public sector employment",
+        "Self-taught",
         "Other")),
 
-    n = c(19/47, rep(7/47, times=4))
+    n = c(24/64, rep(8/64, times=5))
 
   )
 

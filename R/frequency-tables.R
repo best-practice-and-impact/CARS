@@ -167,6 +167,7 @@ summarise_where_learned_code <- function(data){
               "Education",
               "Previous private sector employment",
               "Previous public sector employment",
+              "Self-taught",
               "Other")
 
   data <- data %>%
