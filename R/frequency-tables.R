@@ -21,6 +21,7 @@ summarise_all <- function(data, all_tables = FALSE) {
     coding_practices = summarise_coding_practices(data),
     doc = summarise_doc(data),
     rap_knowledge = summarise_rap_knowledge(data),
+    rap_champ_status = summarise_rap_champ_status(data),
     rap_opinions = summarise_rap_opinions(data),
     basic_rap_scores = summarise_rap_basic(data),
     advanced_rap_scores = summarise_rap_advanced(data),
@@ -122,7 +123,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
                  "access_SPSS", "knowledge_stata", "access_stata",
                  "knowledge_matlab", "access_matlab")
 
-  levels <- c("Yes", "Don't Know", "No")
+  levels <- c("Yes", "Don't know", "No")
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "Matlab")
 
@@ -483,7 +484,7 @@ summarise_ci <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know")
+              "I don't know what continuous integration is")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -511,7 +512,7 @@ summarise_dep_man <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know")
+              "I don't know what dependency management is")
 
   frequencies <- calculate_freqs(data, questions, levels)
 
@@ -539,7 +540,7 @@ summarise_rep_workflow <- function(data) {
 
   levels <- c("Yes",
               "No",
-              "I don't know")
+              "I don't know what reproducible workflows are")
 
   frequencies <- calculate_freqs(data, questions, levels)
 

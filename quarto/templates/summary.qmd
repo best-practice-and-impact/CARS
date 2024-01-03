@@ -11,9 +11,10 @@ output:
 
 library(magrittr)
 
-data <- CARS::get_tidy_data_file("2022_data.csv") %>%
+data <- CARS::get_tidy_data_file("2023_data.csv") %>%
   CARS::rename_cols() %>%
   CARS::apply_skip_logic() %>%
+  CARS::clean_workplace() %>%
   CARS::clean_departments() %>%
   CARS::derive_vars()
 
@@ -46,21 +47,6 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-
-### What code is being used for
-
-We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note, we did not ask how much of each data operation is done with code or how often.
-
-Respondents who don't do the operation at all have been removed.
-
-```{r}
-
-plot <- CARS::plot_stacked(tables$operations, xlab = "Operation", font_size = 14)
-table <- CARS::df_to_table(tables$operations, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
-
-CARS::wrap_outputs("operations", plot, table)
-
-```
 
 ### Access to and knowledge of programming languages
 

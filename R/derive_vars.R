@@ -200,7 +200,7 @@ derive_rap_champ_status <- function(data){
                                               have_RAP_champ == "Yes" & know_RAP_champ == "Yes" ~ "Yes, and I know who the RAP Champion is",
                                               have_RAP_champ == "Yes" & know_RAP_champ == "No" ~ "Yes, but I don't know who the RAP Champion is",
                                               have_RAP_champ == "No" ~ "No",
-                                              have_RAP_champ == "I don't know" ~ "I don't know"))
+                                              have_RAP_champ == "Don't know" ~ "I don't know"))
 
 }
 

@@ -1,22 +1,22 @@
 # Coding tools frequency tables (access or knowledge)
 
 dummy_data <- data.frame(
-  knowledge_R = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  access_R = c(rep("Yes", 2), "No", rep("Don't Know", 3)),
-  knowledge_SQL = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  access_SQL = c("Yes", rep("No", 3), rep("Don't Know", 2)),
-  knowledge_SAS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  access_SAS = c(rep("Yes", 3), "No", rep("Don't Know", 2)),
-  knowledge_VBA = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  access_VBA = c(rep("Yes", 2), "No", rep("Don't Know", 3)),
-  knowledge_python = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  access_python = c("Yes", rep("No", 3), rep("Don't Know", 2)),
-  knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't Know"),
-  access_SPSS = c(rep("Yes", 3), "No", rep("Don't Know", 2)),
-  knowledge_stata = c("Yes", rep("No", 2), rep("Don't Know", 3)),
-  access_stata = c(rep("Yes", 2), "No", rep("Don't Know", 3)),
-  knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't Know"),
-  access_matlab = c("Yes", rep("No", 5), rep("Don't Know", 0)) # Used to check zero counts aren't missing
+  knowledge_R = c("Yes", rep("No", 2), rep("Don't know", 3)),
+  access_R = c(rep("Yes", 2), "No", rep("Don't know", 3)),
+  knowledge_SQL = c(rep("Yes", 3), rep("No", 2), "Don't know"),
+  access_SQL = c("Yes", rep("No", 3), rep("Don't know", 2)),
+  knowledge_SAS = c(rep("Yes", 2), rep("No", 3), "Don't know"),
+  access_SAS = c(rep("Yes", 3), "No", rep("Don't know", 2)),
+  knowledge_VBA = c("Yes", rep("No", 2), rep("Don't know", 3)),
+  access_VBA = c(rep("Yes", 2), "No", rep("Don't know", 3)),
+  knowledge_python = c(rep("Yes", 3), rep("No", 2), "Don't know"),
+  access_python = c("Yes", rep("No", 3), rep("Don't know", 2)),
+  knowledge_SPSS = c(rep("Yes", 2), rep("No", 3), "Don't know"),
+  access_SPSS = c(rep("Yes", 3), "No", rep("Don't know", 2)),
+  knowledge_stata = c("Yes", rep("No", 2), rep("Don't know", 3)),
+  access_stata = c(rep("Yes", 2), "No", rep("Don't know", 3)),
+  knowledge_matlab = c(rep("Yes", 3), rep("No", 2), "Don't know"),
+  access_matlab = c("Yes", rep("No", 5), rep("Don't know", 0)) # Used to check zero counts aren't missing
 )
 
 test_that("summarise_coding_tools missing data is handled correctly", {
@@ -41,8 +41,8 @@ test_that("summarise_coding_tools knowledge output is as expected", {
                                                   "SQL",
                                                   "Stata",
                                                   "VBA"), each=3),
-                                   "value" = factor(rep(c("Yes", "Don't Know", "No"), 8),
-                                                    levels = c("Yes", "Don't Know", "No")),
+                                   "value" = factor(rep(c("Yes", "Don't know", "No"), 8),
+                                                    levels = c("Yes", "Don't know", "No")),
                                    "n" = c(1/2, 1/6, 1/3, 1/2, 1/6, 1/3, 1/6, 1/2,
                                            1/3, 1/3, 1/6, 1/2, 1/3, 1/6, 1/2, 1/2,
                                            1/6, 1/3, 1/6, 1/2, 1/3, 1/6, 1/2, 1/3))
@@ -63,8 +63,8 @@ test_that("summarise_coding_tools access output is as expected", {
                                                "SQL",
                                                "Stata",
                                                "VBA"), each=3),
-                                "value" = factor(rep(c("Yes", "Don't Know", "No"), 8),
-                                                 levels = c("Yes", "Don't Know", "No")),
+                                "value" = factor(rep(c("Yes", "Don't know", "No"), 8),
+                                                 levels = c("Yes", "Don't know", "No")),
                                 "n" = c(1/6, 0, 5/6, 1/6, 1/3, 1/2, 1/3, 1/2,
                                         1/6, 1/2, 1/3, 1/6, 1/2, 1/3, 1/6, 1/6,
                                         1/3, 1/2, 1/3, 1/2, 1/6, 1/3, 1/2, 1/6))
