@@ -123,7 +123,11 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
                  "access_SPSS", "knowledge_stata", "access_stata",
                  "knowledge_matlab", "access_matlab")
 
-  levels <- c("Yes", "Don't know", "No")
+  if (type == "knowledge") {
+    levels <- c("Yes", "No", "Not required for my work")
+  } else {
+    levels <- c("Yes", "No", "Don't know")
+  }
 
   labels <- c("R", "SQL", "SAS", "VBA", "Python", "SPSS", "Stata", "Matlab")
 
@@ -1142,7 +1146,7 @@ summarise_os_vs_prop <- function(data) {
     data.frame %>%
     get_ci(freq_col = 2, n_col = 3)
 
-  os_freqs <- cbind(lang_type = "open source", os_freqs)
+  os_freqs <- cbind(lang_type = "Open Source", os_freqs)
 
   prop_freqs <- data %>%
     dplyr::group_by(year) %>%
@@ -1150,11 +1154,11 @@ summarise_os_vs_prop <- function(data) {
     data.frame %>%
     get_ci(freq_col = 2, n_col = 3)
 
-  prop_freqs <- cbind(lang_type = "proprietary", prop_freqs)
+  prop_freqs <- cbind(lang_type = "Proprietary", prop_freqs)
 
   grouped_lang_freqs <- rbind(os_freqs, prop_freqs)
   grouped_lang_freqs$year <- as.character(grouped_lang_freqs$year)
-  grouped_lang_freqs$lang_type <- factor(grouped_lang_freqs$lang_type, levels = c("open source", "proprietary"))
+  grouped_lang_freqs$lang_type <- factor(grouped_lang_freqs$lang_type, levels = c("Open Source", "Proprietary"))
 
   return(grouped_lang_freqs)
 }
