@@ -11,7 +11,7 @@ test_that("derive_basic_rap_scores validation works", {
 
   dummy_data <- data.frame()
 
-  expect_error(derive_basic_rap_scores(dummy_data), "Unexpected input - missing column names: code_freq\nprac_use_open_source\nprac_open_source_own\nprac_version_control\nprac_review\nprac_development_QA\ndoc_comments\ndoc_readme")
+  expect_error(derive_basic_rap_scores(dummy_data), "Unexpected input - missing column names: code_freq\nprac_use_open_source\nprac_open_source_own\nprac_version_control\nprac_review\nprac_proportionate_QA\ndoc_comments\ndoc_readme")
 
 })
 
