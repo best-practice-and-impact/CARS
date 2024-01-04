@@ -135,8 +135,8 @@ These data only show where people first learned to code. They do not show all th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$where_learned, n = samples$can_code, xlab = "Where learned", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$where_learned, n = samples$can_code, column_headers = c("Where learned", "Percent"))
+plot <- CARS::plot_freqs(tables$where_learned, n = samples$code_at_work, xlab = "Where learned", font_size = 14, orientation = "h")
+table <- CARS::df_to_table(tables$where_learned, n = samples$code_at_work, column_headers = c("Where learned", "Percent"))
 
 CARS::wrap_outputs("where-learned", plot, table)
 
@@ -239,7 +239,7 @@ Respondents were asked whether they use reproducible workflow packages. Responde
 ```{r}
 
 plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", font_size = 14)
-table <- CARS::df_to_table(tables$rep_workflow, n = samples$code_at_work, column_headers = c("Use reproduciable workflow packages", "Percent"))
+table <- CARS::df_to_table(tables$rep_workflow, n = samples$code_at_work, column_headers = c("Use reproducible workflow packages", "Percent"))
 
 CARS::wrap_outputs("rep-workflow", plot, table)
 
