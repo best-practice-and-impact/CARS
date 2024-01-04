@@ -86,7 +86,7 @@ derive_basic_rap_scores <- function(data) {
                         "prac_open_source_own",
                         "prac_version_control",
                         "prac_review",
-                        "prac_development_QA",
+                        "prac_proportionate_QA",
                         "doc_comments",
                         "doc_readme")
 
@@ -103,7 +103,7 @@ derive_basic_rap_scores <- function(data) {
                        "open_code_score",
                        "version_control_score",
                        "peer_review_score",
-                       "development_QA_score",
+                       "proportionate_QA_score",
                        "doc_score")
 
   high_vals <- c("Regularly", "All the time")
