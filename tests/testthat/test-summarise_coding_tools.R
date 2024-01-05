@@ -33,17 +33,17 @@ test_that("summarise_coding_tools knowledge output is as expected", {
 
   got_knowledge <- summarise_coding_tools(dummy_data, "knowledge")
 
-  expected_knowledge <- data.frame(name = rep(c("Matlab",
-                                                "Python",
+  expected_knowledge <- data.frame(name = rep(c("Python",
                                                 "R",
+                                                "SQL",
+                                                "Matlab",
                                                 "SAS",
                                                 "SPSS",
-                                                "SQL",
                                                 "Stata",
                                                 "VBA"), each=3),
                                    value = factor(rep(c("Yes", "No", "Not required for my work"), 8),
                                                   levels = c("Yes", "No", "Not required for my work")),
-                                   n = c(1/3, 2/3, 0, rep(1/3, times=21))
+                                   n = c(rep(1/3, times=9), 1/3, 2/3, 0, rep(1/3, times=12))
   )
 
   expect_equal(got_knowledge, expected_knowledge)
@@ -54,17 +54,17 @@ test_that("summarise_coding_tools access output is as expected", {
 
   got_access <- summarise_coding_tools(dummy_data, "access")
 
-  expected_access <- data.frame(name = rep(c("Matlab",
-                                             "Python",
+  expected_access <- data.frame(name = rep(c("Python",
                                              "R",
+                                             "SQL",
+                                             "Matlab",
                                              "SAS",
                                              "SPSS",
-                                             "SQL",
                                              "Stata",
                                              "VBA"), each=3),
                                 value = factor(rep(c("Yes", "No", "Don't know"), 8),
                                                levels = c("Yes", "No", "Don't know")),
-                                n = c(1/3, 2/3, 0, rep(1/3, times=21))
+                                n = c(rep(1/3, times=9), 1/3, 2/3, 0, rep(1/3, times=12))
   )
 
   expect_equal(got_access, expected_access)
