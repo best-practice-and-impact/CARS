@@ -134,7 +134,8 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop)
+  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop) %>%
+    dplyr::arrange(match(name, c("Python", "R", "SQL", "Matlab", "SAS", "SPSS", "Stata", "VBA")))
 
   return(frequencies)
 }
@@ -428,7 +429,7 @@ summarise_rap_comp <- function(data) {
               "Team open source code",
               "Version control",
               "Peer review",
-              "Development QA",
+              "Proportionate QA",
               "Documentation",
               "Functions",
               "Unit testing",
@@ -442,7 +443,7 @@ summarise_rap_comp <- function(data) {
                  "open_code_score",
                  "version_control_score",
                  "peer_review_score",
-                 "development_QA_score",
+                 "proportionate_QA_score",
                  "doc_score",
                  "function_score",
                  "unit_test_score",
