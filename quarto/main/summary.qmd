@@ -69,7 +69,7 @@ code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) %>%
 plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], orientation = "v", type = "bar", font_size = 14, xlab = "Year") %>%
   plotly::layout(legend = list(traceorder = "reversed")) 
 
-table <- CARS::df_to_table(code_freqs_by_year[c(2,1,5)], crosstab = T, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "2020", "2021", "2022"))
+table <- CARS::df_to_table(code_freqs_by_year[c(2,1,5)], crosstab = T, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "2020", "2021", "2022", "2023"))
 
 CARS::wrap_outputs("code-freq", plot, table)
 
@@ -93,7 +93,7 @@ More respondents reported having access to R and Python than any other programmi
 ```{r}
 
 plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
@@ -106,7 +106,7 @@ More respondents reported having the knowledge to use R, Python and SQL at work 
 ```{r}
 
 plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
