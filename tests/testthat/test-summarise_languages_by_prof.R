@@ -4,7 +4,7 @@ knowledge_response <- rep(c(
   NA,
   "Yes",
   "No",
-  "Don't know"),
+  "Not required for my work"),
   each = 3, times = 6)
 
 prof_response <- rep(c(
@@ -61,12 +61,12 @@ test_that("summarise_languages_by_prof output is as expected", {
   expected <- data.frame(
 
     lang = rep(c(
-      "Matlab",
       "Python",
       "R",
+      "SQL",
+      "Matlab",
       "SAS",
       "SPSS",
-      "SQL",
       "Stata",
       "VBA"),
       times = 9),
