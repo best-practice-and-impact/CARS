@@ -20,8 +20,8 @@ test_that("summarise_os_vs_prop output is as expected", {
 
   got <- summarise_os_vs_prop(dummy_data)
 
-  expected <- data.frame(lang_type = factor(rep(c("open source", "proprietary"), each=3),
-                                            levels = c("open source", "proprietary")),
+  expected <- data.frame(lang_type = factor(rep(c("Open Source", "Proprietary"), each=3),
+                                            levels = c("Open Source", "Proprietary")),
                          year = rep(c("2020", "2021", "2022"), times=2),
                          Freq = rep(c(24, 28), each=3),
                          n = rep(32, times=6)) %>%
