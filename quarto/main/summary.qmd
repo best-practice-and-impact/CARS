@@ -144,7 +144,9 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 
 Differences in preferred languages may lead to silos between analytical professions. For digital and data professionals, operational researchers, data scientists and geographers capability is highest in R, SQL and python. R is among the two top languages for capability for every analytical profession.
 
-However, proprietary tools tend to be more profession-specific. For example, economists have much higher stata capability than any other profession, while social researchers have the highest SPSS capability. Open source tooling offers better cross-profession as well as cross-department collaboration due to easier access to tools. 
+However, proprietary tools tend to be more profession-specific. For example, economists have much higher stata capability than any other profession, while social researchers have the highest SPSS capability. Open source tooling offers better cross-profession as well as cross-department collaboration due to easier access to tools.
+
+Please note that respondents might be members of more than one profession.
 
 ```{R}
 colnames(tables$languages_by_prof)[2] <- "Profession"
