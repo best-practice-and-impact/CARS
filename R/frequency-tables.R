@@ -1153,7 +1153,7 @@ summarise_os_vs_prop <- function(data) {
     data.frame %>%
     get_ci(freq_col = 2, n_col = 3)
 
-  os_freqs <- cbind(lang_type = "open Source", os_freqs)
+  os_freqs <- cbind(lang_type = "Open Source", os_freqs)
 
   prop_freqs <- data %>%
     dplyr::group_by(year) %>%
