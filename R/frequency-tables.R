@@ -78,9 +78,8 @@ sample_sizes <- function(data) {
                      prof_count <- sum(data[prof] == "Yes", na.rm = TRUE)
                      if (prof_count > 0) {
                        prof_sample <- paste0(prof_count, " (", substring(prof, 6), ")")
+                       return(prof_sample)
                        }
-
-                     return(prof_sample)
                      }
                    )
   )
