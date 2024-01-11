@@ -75,7 +75,10 @@ sample_sizes <- function(data) {
     profs = sapply(c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES",
                      "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG"),
                    function(prof) {
-                     prof_sample <- paste0(sum(data[prof] == "Yes", na.rm = TRUE), " (", substring(prof, 6), ")")
+                     prof_count <- sum(data[prof] == "Yes", na.rm = TRUE)
+                     if (prof_count > 0) {
+                       prof_sample <- paste0(prof_count, " (", substring(prof, 6), ")")
+                       }
 
                      return(prof_sample)
                      }
