@@ -80,10 +80,11 @@ sample_sizes <- function(data) {
 #' @description calculate frequency table for coding frequency.
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_code_freq <- function(data) {
+summarise_code_freq <- function(data, sample = FALSE) {
 
   # Validation checks
   if (!"code_freq" %in% colnames(data)) {
@@ -98,7 +99,7 @@ summarise_code_freq <- function(data) {
               "Regularly",
               "All the time")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 }
@@ -111,10 +112,11 @@ summarise_code_freq <- function(data) {
 #' @param data full CARS dataset after pre-processing
 #' @param type type of table (knowledge or access)
 #' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_coding_tools <- function(data, type = list("knowledge", "access"), prop = TRUE) {
+summarise_coding_tools <- function(data, type = list("knowledge", "access"), prop = TRUE, sample = FALSE) {
 
   questions <- c("knowledge_R", "access_R", "knowledge_SQL", "access_SQL",
                  "knowledge_SAS", "access_SAS", "knowledge_VBA", "access_VBA",
@@ -134,7 +136,7 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
 
   questions <- questions[grepl(paste0(type, "_"), questions)]
 
-  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop) %>%
+  frequencies <- calculate_freqs(data, questions, levels, labels, prop = prop, sample = sample) %>%
     dplyr::arrange(match(name, c("Python", "R", "SQL", "Matlab", "SAS", "SPSS", "Stata", "VBA")))
 
   return(frequencies)
@@ -147,12 +149,13 @@ summarise_coding_tools <- function(data, type = list("knowledge", "access"), pro
 #' @description calculate frequency table of where respondents learned to code
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 #'
 #' @importFrom dplyr select mutate case_when
 
-summarise_where_learned_code <- function(data){
+summarise_where_learned_code <- function(data, sample = FALSE){
 
   # Validation checks
   if (!"first_learned" %in% colnames(data)) {
@@ -182,7 +185,7 @@ summarise_where_learned_code <- function(data){
                                 !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
                                 TRUE ~ first_learned))
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 }
@@ -686,10 +689,11 @@ summarise_knowledge_git <- function(data){
 #' @description calculate frequency table for if someone has access to git
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_access_git <- function(data){
+summarise_access_git <- function(data, sample = FALSE){
 
   # Validation checks
   if (!"access_git" %in% colnames(data)) {
@@ -702,7 +706,7 @@ summarise_access_git <- function(data){
               "No",
               "I don't know")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 
@@ -973,12 +977,13 @@ summarise_adv_score_by_understanding <- function(data){
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
 #'
 #' @param data CARS data (pre-processed)
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return data.frame
 #'
 #' @importFrom dplyr recode
 
-summarise_languages_by_prof <- function(data) {
+summarise_languages_by_prof <- function(data, sample = FALSE) {
 
   profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
@@ -1000,7 +1005,7 @@ summarise_languages_by_prof <- function(data) {
 
     if(nrow(filtered_data) > 0) {
 
-      output <- summarise_coding_tools(filtered_data, "knowledge")
+      output <- summarise_coding_tools(filtered_data, "knowledge", sample = sample)
 
       # Retain frequencies for "Yes" responses only
       output <- output[output[[2]] == "Yes", ]
@@ -1199,6 +1204,7 @@ summarise_rap_awareness_over_time <- function(data) {
 #' @param levels all possible factor values in the filtered columns
 #' @param labels labels to rename the column headers. Only needed for multi-column frequencies
 #' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return data.frame
 #'
@@ -1207,7 +1213,7 @@ summarise_rap_awareness_over_time <- function(data) {
 #' @importFrom dplyr select all_of group_by count mutate recode arrange
 #' @importFrom tidyr pivot_longer drop_na
 
-calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE){
+calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE, sample = FALSE){
 
   if (!is.null(labels)) {
     labels_list <- as.list(labels)
@@ -1225,6 +1231,13 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
     frequencies <- data.frame(table(selected_data[questions]))
 
     colnames(frequencies) <- c("value", "n")
+
+    if (sample == TRUE) {
+      frequencies <- frequencies %>%
+        mutate(count = n)
+
+      frequencies$sample <- sum(!is.na(selected_data[1]))
+    }
 
     if (prop) {
 
@@ -1247,6 +1260,13 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 
     colnames(frequencies) <- c("name", "value", "n")
 
+    if (sample == TRUE) {
+      frequencies <- frequencies %>%
+        mutate(count = n)
+
+      frequencies$sample <- sum(!is.na(selected_data[1]))
+    }
+
     if (prop) {
       frequencies <- prop_by_group(frequencies)
     }
@@ -1254,6 +1274,7 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 
   return(frequencies)
 }
+
 
 #' @title Create tidy cross table
 #'
@@ -1265,12 +1286,13 @@ calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE)
 #' @param levels1 factor levels for col1
 #' @param levels2 factor levels for col2
 #' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
+#' @param sample returns proportion, count and, group size and sample size. FALSE by default
 #'
 #' @return data.frame
 #'
 #' @importFrom dplyr all_of across
 
-calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE){
+calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE, sample = FALSE){
 
   selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
 
@@ -1283,13 +1305,23 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
     drop_na() %>%
     data.frame()
 
+  if (sample == TRUE) {
+    frequencies <- frequencies %>%
+      mutate(count = n,
+             group_size = sum(n))
+
+    frequencies$sample <- sum(!is.na(selected_data[1]))
+  }
+
   if(prop){
     frequencies <- prop_by_group(frequencies)
   }
 
+
   return(frequencies)
 
 }
+
 
 #' @title Convert frequencies to proportions
 #'
