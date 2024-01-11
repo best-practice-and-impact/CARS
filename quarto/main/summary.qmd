@@ -151,7 +151,7 @@ Please note that respondents might be members of more than one profession.
 ```{R}
 colnames(tables$languages_by_prof)[2] <- "Profession"
 
-tables$languages_by_prof[c(2,1,3)] %>% CARS::df_to_table(crosstab = T, proportion_col = 3)
+tables$languages_by_prof[c(2,1,3)] %>% CARS::df_to_table(n = samples$profs, crosstab = T, proportion_col = 3)
 ```
 
 
