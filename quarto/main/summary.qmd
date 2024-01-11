@@ -170,6 +170,13 @@ table <- CARS::df_to_table(tables$git_access, n = samples$all, column_headers = 
 
 CARS::wrap_outputs("git-access", plot, table)
 
+
+plot <- CARS::plot_freqs(tables$git_knowledge, font_size = 14, n = samples$all, xlab = "Knowledge of git") %>% CARS::set_axis_range(0, 1, axis = "y")
+
+table <- CARS::df_to_table(tables$git_knowledge, n = samples$all, column_headers = c("Response", "Percent"))
+
+CARS::wrap_outputs("git-knowledge", plot, table)
+
 ```
 
 ## Capability
