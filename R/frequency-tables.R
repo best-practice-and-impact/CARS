@@ -70,7 +70,16 @@ sample_sizes <- function(data) {
     code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
     other_code_experience = sum(!is.na(data$other_coding_experience ) & data$other_coding_experience == "Yes"),
     heard_of_RAP = sum(!is.na(data$heard_of_RAP) & data$heard_of_RAP == "Yes"),
-    not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion")
+    not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion"),
+
+    profs = sapply(c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES",
+                     "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG"),
+                   function(prof) {
+                     prof_sample <- paste0(sum(data[prof] == "Yes", na.rm = TRUE), " (", substring(prof, 6), ")")
+
+                     return(prof_sample)
+                     }
+                   )
   )
 }
 
@@ -996,7 +1005,7 @@ summarise_languages_by_prof <- function(data) {
   names(prof_names) <- profs
 
   outputs <- lapply(profs, function(prof) {
-    filtered_data <- data[data[prof] == "Yes", ]
+    filtered_data <- dplyr::filter(data, get(prof) == "Yes")
 
     if(nrow(filtered_data) > 0) {
 
@@ -1050,7 +1059,7 @@ summarise_open_source_by_prof <- function(data) {
   names(prof_names) <- profs
 
   outputs <- lapply(profs, function(prof) {
-    filtered_data <- data[data[prof] == "Yes", ]
+    filtered_data <- dplyr::filter(data, get(prof) == "Yes")
 
     if(nrow(filtered_data) > 0) {
 
