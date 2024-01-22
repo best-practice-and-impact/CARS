@@ -199,7 +199,7 @@ summarise_where_learned_code <- function(data, sample = FALSE){
 #'
 #' @return frequency table (data.frame)
 
-summarise_coding_practices <- function(data) {
+summarise_coding_practices <- function(data, sample = FALSE) {
 
   questions <- c("prac_use_open_source", "prac_open_source_own",
                  "prac_version_control", "prac_review", "prac_functions",
@@ -223,7 +223,7 @@ summarise_coding_practices <- function(data) {
               "Quality assurance throughout development",
               "Proportionate quality assurance")
 
-  frequencies <- calculate_freqs(data, questions, levels, labels)
+  frequencies <- calculate_freqs(data, questions, levels, labels, sample = sample)
 
   return(frequencies)
 
@@ -380,7 +380,7 @@ summarise_rap_opinions <- function(data, sample = FALSE) {
 #'
 #' @return frequency table (data.frame)
 
-summarise_doc <- function(data) {
+summarise_doc <- function(data, sample = FALSE) {
 
   # Validation checks
   if (!"code_freq" %in% colnames(data)) {
@@ -413,7 +413,7 @@ summarise_doc <- function(data) {
               "Flow charts")
 
 
-  frequencies <- calculate_freqs(documentation_data, questions, levels, labels)
+  frequencies <- calculate_freqs(documentation_data, questions, levels, labels, sample = sample)
 
   return(frequencies)
 
@@ -470,6 +470,13 @@ summarise_rap_comp <- function(data, sample = FALSE) {
     mutate(n = colSums(data[questions], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
 
   names(components$n) <- NULL
+
+  if (sample == TRUE) {
+    components <- components %>%
+      mutate(count = colSums(data[questions], na.rm = TRUE))
+
+    components$sample <- sum(data$code_freq != "Never", na.rm = TRUE)
+  }
 
   return(components)
 
@@ -766,7 +773,7 @@ summarise_cap_change_by_freq <- function(data, sample = FALSE){
 
   col2 <- "coding_ability_change"
 
-  data <- dplyr::filter(data, code_freq != "Never")
+  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes"))
 
   levels1 <- c(
     "Rarely",
@@ -790,7 +797,7 @@ summarise_cap_change_by_freq <- function(data, sample = FALSE){
 
 #' @title Summarise capability change by management responsibility
 #'
-#' @description calculate the cross tab of capability change by management responsibilty
+#' @description calculate the cross tab of capability change by management responsibility
 #'
 #' @param data full CARS dataset after pre-processing
 #'
