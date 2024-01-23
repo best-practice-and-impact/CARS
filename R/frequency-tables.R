@@ -209,6 +209,7 @@ summarise_where_learned_code <- function(data, sample = FALSE){
 #' @description calculate frequency table for data practices
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
@@ -390,6 +391,7 @@ summarise_rap_opinions <- function(data, sample = FALSE) {
 #' @description Create frequency table of documentation use
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
@@ -437,6 +439,7 @@ summarise_doc <- function(data, sample = FALSE) {
 #' @description Create frequency table of basic and advanced RAP score components
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 #'
