@@ -87,25 +87,18 @@ We asked respondents to answer "Yes", "No" or "Don't know" for the following que
 - Is git available to use in your work?
 - Do you know how to use git to version-control your work?
 
-### Access to git
+### Git access and knowledge
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$git_access, n = samples$all, xlab = "git access", font_size = 14)
-table <- CARS::df_to_table(tables$git_access, n = samples$all, column_headers = c("git access", "Percent"))
+git_access_and_knowledge <- rbind(tables$git_access, tables$git_knowledge) %>%
+  dplyr::mutate(name = c(rep("Access", 3), rep("Knowledge", 3))) %>%
+  dplyr::select(name, value, n)
 
-CARS::wrap_outputs("git-access", plot, table)
+plot <- CARS::plot_stacked(git_access_and_knowledge, n = samples$all, xlab = "", colour_scale = "3scale", font_size = 14, orientation = "v")
+table <- CARS::df_to_table(git_access_and_knowledge, n = samples$all, column_headers = c("Knowledge / Access", "Response", "Percent"))
 
-```
-
-### Git knowledge
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$git_knowledge, n = samples$all, xlab = "git knowledge", font_size = 14)
-table <- CARS::df_to_table(tables$git_knowledge, n = samples$all, column_headers = c("git knowledge", "Percent"))
-
-CARS::wrap_outputs("git-knowledge", plot, table)
+CARS::wrap_outputs("git-access-and-knowledge", plot, table)
 
 ```
 
