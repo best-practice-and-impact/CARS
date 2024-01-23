@@ -13,5 +13,5 @@ summarise_cap_change_by_line_manage(data)
 frequency table (data.frame)
 }
 \description{
-calculate the cross tab of capability change by management responsibilty
+calculate the cross tab of capability change by management responsibility
 }

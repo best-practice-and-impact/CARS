@@ -4,10 +4,12 @@
 \alias{summarise_access_git}
 \title{Summarise access to git}
 \usage{
-summarise_access_git(data)
+summarise_access_git(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

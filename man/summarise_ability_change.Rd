@@ -4,10 +4,12 @@
 \alias{summarise_ability_change}
 \title{Summarise ability change frequency}
 \usage{
-summarise_ability_change(data)
+summarise_ability_change(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

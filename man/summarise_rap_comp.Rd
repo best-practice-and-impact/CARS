@@ -4,7 +4,7 @@
 \alias{summarise_rap_comp}
 \title{RAP score components}
 \usage{
-summarise_rap_comp(data)
+summarise_rap_comp(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

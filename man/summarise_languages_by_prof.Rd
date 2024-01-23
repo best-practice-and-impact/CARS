@@ -4,10 +4,12 @@
 \alias{summarise_languages_by_prof}
 \title{Summarise programming language knowledge by profession}
 \usage{
-summarise_languages_by_prof(data)
+summarise_languages_by_prof(data, sample = FALSE)
 }
 \arguments{
 \item{data}{CARS data (pre-processed)}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 data.frame

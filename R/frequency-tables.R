@@ -63,13 +63,14 @@ summarise_all <- function(data, all_tables = FALSE) {
 #' @return list of sample sizes
 #'
 #' @export
+#'
 
 sample_sizes <- function(data) {
   list(
     all = nrow(data),
     code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
-    other_code_experience = sum(!is.na(data$other_coding_experience ) & data$other_coding_experience == "Yes"),
-    heard_of_RAP = sum(!is.na(data$heard_of_RAP) & data$heard_of_RAP == "Yes"),
+    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes"),
+    heard_of_RAP = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$heard_of_RAP == "Yes"),
     not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion"),
 
     profs = sapply(c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES",

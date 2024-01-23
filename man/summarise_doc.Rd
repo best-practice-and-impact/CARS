@@ -4,7 +4,7 @@
 \alias{summarise_doc}
 \title{Frequency of documentation use}
 \usage{
-summarise_doc(data)
+summarise_doc(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

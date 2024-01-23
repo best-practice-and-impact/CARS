@@ -4,7 +4,7 @@
 \alias{summarise_coding_practices}
 \title{Summarise data practices questions}
 \usage{
-summarise_coding_practices(data)
+summarise_coding_practices(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
