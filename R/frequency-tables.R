@@ -4,49 +4,50 @@
 #'
 #' @param data full CARS dataset after pre-processing
 #' @param all_tables logical: whether to produce all summary output tables. Defaults to FALSE.
+#' @param sample additionally returns count and sample size for selected tables for QA. FALSE by default
 #'
 #' @return list of frequency tables
 #'
 #' @export
 
-summarise_all <- function(data, all_tables = FALSE) {
+summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 
   output_list <- list(
-    code_freq = summarise_code_freq(data),
-    knowledge = summarise_coding_tools(data, "knowledge"),
-    access = summarise_coding_tools(data, "access"),
+    code_freq = summarise_code_freq(data, sample = sample),
+    knowledge = summarise_coding_tools(data, "knowledge", sample = sample),
+    access = summarise_coding_tools(data, "access", sample = sample),
     language_status = summarise_language_status(data),
-    where_learned = summarise_where_learned_code(data),
-    ability_change = summarise_ability_change(data),
-    coding_practices = summarise_coding_practices(data),
-    doc = summarise_doc(data),
-    rap_knowledge = summarise_rap_knowledge(data),
-    rap_champ_status = summarise_rap_champ_status(data),
-    rap_opinions = summarise_rap_opinions(data),
+    where_learned = summarise_where_learned_code(data, sample = sample),
+    ability_change = summarise_ability_change(data, sample = sample),
+    coding_practices = summarise_coding_practices(data, sample = sample),
+    doc = summarise_doc(data, sample = sample),
+    rap_knowledge = summarise_rap_knowledge(data, sample = sample),
+    rap_champ_status = summarise_rap_champ_status(data, sample = sample),
+    rap_opinions = summarise_rap_opinions(data, sample = sample),
     basic_rap_scores = summarise_rap_basic(data),
     advanced_rap_scores = summarise_rap_advanced(data),
-    rap_components = summarise_rap_comp(data),
+    rap_components = summarise_rap_comp(data, sample = sample),
     ci = summarise_ci(data),
     dependency_management = summarise_dep_man(data),
     rep_workflow = summarise_rep_workflow(data),
     line_manage = summarise_line_manage(data),
     git_knowledge = summarise_knowledge_git(data),
-    git_access = summarise_access_git(data),
-    strategy_knowledge = summarise_strategy_knowledge(data)
+    git_access = summarise_access_git(data, sample = sample),
+    strategy_knowledge = summarise_strategy_knowledge(data, sample = sample)
   )
 
   if (all_tables) {
 
     output_list <- c(output_list,
                      list(
-                       capability_change_by_freq = summarise_cap_change_by_freq(data),
+                       capability_change_by_freq = summarise_cap_change_by_freq(data, sample = sample),
                        capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
                        capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
                        basic_score_by_implementation = summarise_basic_score_by_imp(data),
                        adv_score_by_implementation = summarise_adv_score_by_imp(data),
                        basic_score_by_understanding = summarise_basic_score_by_understanding(data),
                        adv_score_by_understanding = summarise_adv_score_by_understanding(data),
-                       languages_by_prof = summarise_languages_by_prof(data),
+                       languages_by_prof = summarise_languages_by_prof(data, sample = sample),
                        open_source_by_prof = summarise_open_source_by_prof(data),
                        heard_of_RAP_by_prof = summarise_heard_of_RAP_by_prof(data)
                        ))
