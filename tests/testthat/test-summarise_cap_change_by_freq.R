@@ -7,14 +7,20 @@ dummy_data <- data.frame(
     "It has stayed the same",
     "It has become slightly better",
     "It has become significantly better"),
-    each = 5),
+    each = 15),
   code_freq = rep(c(
     NA,
     "Sometimes",
     "All the time",
     "Rarely",
     "Regularly"),
-    times = 6)
+    times = 18),
+  other_coding_experience = rep(c(
+    NA,
+    "Yes",
+    "No"),
+    times = 30
+  )
 )
 
 test_that("summarise_cap_change_by_freq missing data is handled correctly", {

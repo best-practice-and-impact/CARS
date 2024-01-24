@@ -4,7 +4,12 @@
 \alias{summarise_coding_tools}
 \title{Summarise coding tools}
 \usage{
-summarise_coding_tools(data, type = list("knowledge", "access"), prop = TRUE)
+summarise_coding_tools(
+  data,
+  type = list("knowledge", "access"),
+  prop = TRUE,
+  sample = FALSE
+)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
@@ -12,6 +17,8 @@ summarise_coding_tools(data, type = list("knowledge", "access"), prop = TRUE)
 \item{type}{type of table (knowledge or access)}
 
 \item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

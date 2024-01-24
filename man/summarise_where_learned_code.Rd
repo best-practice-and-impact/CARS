@@ -4,10 +4,12 @@
 \alias{summarise_where_learned_code}
 \title{Summarise where respondents learned to code}
 \usage{
-summarise_where_learned_code(data)
+summarise_where_learned_code(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

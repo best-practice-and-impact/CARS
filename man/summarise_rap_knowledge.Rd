@@ -4,10 +4,12 @@
 \alias{summarise_rap_knowledge}
 \title{Knowledge of RAP}
 \usage{
-summarise_rap_knowledge(data)
+summarise_rap_knowledge(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

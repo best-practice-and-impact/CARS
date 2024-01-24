@@ -4,10 +4,12 @@
 \alias{summarise_rap_champ_status}
 \title{Knowledge of RAP Champions}
 \usage{
-summarise_rap_champ_status(data)
+summarise_rap_champ_status(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

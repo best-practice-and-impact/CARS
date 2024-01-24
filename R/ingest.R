@@ -213,7 +213,7 @@ get_all_waves <- function(mode = c("api", "file")) {
     tidy_colnames() %>%
     rename_cols() %>%
     apply_skip_logic() %>%
-    clean_departments() %>%
+    clean_data() %>%
     derive_vars()
   data$year <- 2023
 
