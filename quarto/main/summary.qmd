@@ -272,9 +272,9 @@ CARS::wrap_outputs("rap-knowledge", plot, table)
 
 ```
 
-### Awareness of RAP Champions
+### RAP Champions
 
-We asked respondents who had heard of RAP, if they knew who their RAP champions are.
+We asked respondents who had heard of RAP, if their department has a RAP champion and if they know who it is.
 
 [RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. 
 
@@ -283,7 +283,7 @@ Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.u
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_champ_status, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 2, xlab = "Heard of RAP champions?", font_size = 14, orientation = "h")
+plot <- CARS::plot_freqs(tables$rap_champ_status, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 2, xlab = "Department RAP champions?", font_size = 14, orientation = "h")
 table <- CARS::df_to_table(tables$rap_champ_status, n = samples$heard_of_RAP, column_headers = c("Knowledge", "Percent"))
 
 CARS::wrap_outputs("rap-champ-status", plot, table)
