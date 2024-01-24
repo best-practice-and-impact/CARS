@@ -1357,7 +1357,6 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
 }
 
 
-
 #' @title Convert frequencies to proportions
 #'
 #' @param data frequency table with three columns (can be of any name): name, value and count
