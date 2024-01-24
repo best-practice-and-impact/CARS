@@ -600,6 +600,8 @@ summarise_ability_change <- function(data, sample = FALSE) {
     stop("unexpected_input: no column called 'coding_ability_change'")
   }
 
+  data <- data[data$first_learned != "Current employment", ]
+
   questions <- "coding_ability_change"
 
   levels <- c("It has become significantly worse",
@@ -790,7 +792,7 @@ summarise_cap_change_by_freq <- function(data, sample = FALSE){
 
   col2 <- "coding_ability_change"
 
-  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes"))
+  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
 
   levels1 <- c(
     "Rarely",
@@ -826,6 +828,8 @@ summarise_cap_change_by_line_manage <- function(data){
 
   col2 <- "coding_ability_change"
 
+  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
+
   levels1 <- c("Yes",
                "No - I manage people who do not write code",
                "No - I don't line manage anyone")
@@ -857,6 +861,8 @@ summarise_cap_change_by_CS_grade <- function(data){
   col1 <- "CS_grade"
 
   col2 <- "coding_ability_change"
+
+  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
 
   levels1 <- c("Higher Executive Officer (or equivalent)",
                "Senior Executive Officer (or equivalent)",
