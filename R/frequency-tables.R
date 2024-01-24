@@ -70,7 +70,7 @@ sample_sizes <- function(data) {
   list(
     all = nrow(data),
     code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
-    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes"),
+    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes" & data$first_learned != "Current employment"),
     heard_of_RAP = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$heard_of_RAP == "Yes"),
     not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion"),
 
@@ -828,8 +828,6 @@ summarise_cap_change_by_line_manage <- function(data){
 
   col2 <- "coding_ability_change"
 
-  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
-
   levels1 <- c("Yes",
                "No - I manage people who do not write code",
                "No - I don't line manage anyone")
@@ -861,8 +859,6 @@ summarise_cap_change_by_CS_grade <- function(data){
   col1 <- "CS_grade"
 
   col2 <- "coding_ability_change"
-
-  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
 
   levels1 <- c("Higher Executive Officer (or equivalent)",
                "Senior Executive Officer (or equivalent)",
