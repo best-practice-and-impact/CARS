@@ -1,11 +1,13 @@
 ---
 title: "Summary QA"
+execute:
+  echo: false
 output:
   html:
     self-contained: true
 ---
 
-```{r echo=FALSE}
+```{r echo=FALSE, output=FALSE}
 library(magrittr)
 
 data <- CARS::get_tidy_data_file("2023_data.csv") %>%
@@ -113,7 +115,7 @@ if(tables$knowledge$sample[1] != exp_samples$all) {
 
 #### Open source capability
 Check percentages are correct from the data in the table:
-```{r}
+```{r echo = FALSE}
 knitr::kable(CARS::summarise_os_vs_prop(all_wave_data))
 ```
 
@@ -123,7 +125,7 @@ Check percentages are correct from the data in the table (final column = group s
 knitr::kable(tables$languages_by_prof)
 ```
 Denominator check - numbers of respondents in each profession, cross check with above:
-```{r}
+```{r echo = FALSE}
 raw_data %>%
   tidyr::pivot_longer(contains("prof"), names_to = "prof", values_to = "value") %>%
   dplyr::group_by(prof) %>%
@@ -132,7 +134,7 @@ raw_data %>%
 ```
 #### Access to git
 Check data against figure, check proportions are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(tables$git_access)
 ```
 Denominator check:
@@ -179,7 +181,7 @@ if(tables$ability_change$sample[1] != exp_samples$other_code_experience) {
 
 #### Ability change by frequency
 Check data against figure, check proportions are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(tables$capability_change_by_freq)
 ```
 
@@ -198,13 +200,13 @@ if(tables$capability_change_by_freq$sample[1] != exp_samples$other_code_experien
 ## RAP
 #### Awareness of RAP
 Check that the percentages in the chart and the figures in the text are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(CARS::summarise_rap_awareness_over_time(all_wave_data))
 ```
 
 #### RAP knowledge
 Check data against figure, check proportions are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(tables$rap_knowledge)
 ```
 
@@ -221,7 +223,7 @@ if(tables$rap_knowledge$sample[1] != exp_samples$code_at_work) {
 
 #### RAP champs
 Check data against figure, check proportions are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(tables$rap_champ_status)
 ```
 
@@ -238,7 +240,7 @@ if(tables$rap_champ_status$sample[1] != exp_samples$heard_of_RAP) {
 
 #### RAP strategy knowledge
 Check data against figure, check proportions are correct
-```{r}
+```{r echo = FALSE}
 knitr::kable(tables$strategy_knowledge)
 ```
 

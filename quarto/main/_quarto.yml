@@ -3,7 +3,7 @@ project:
   output-dir: ../../docs/
 
 website:
-  title: Coding in Analysis and Research Survey 2022
+  title: Coding in Analysis and Research Survey 2023
   navbar:
     background: primary
     left:

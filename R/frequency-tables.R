@@ -70,7 +70,7 @@ sample_sizes <- function(data) {
   list(
     all = nrow(data),
     code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
-    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes"),
+    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes" & data$first_learned != "Current employment"),
     heard_of_RAP = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$heard_of_RAP == "Yes"),
     not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion"),
 
@@ -600,6 +600,8 @@ summarise_ability_change <- function(data, sample = FALSE) {
     stop("unexpected_input: no column called 'coding_ability_change'")
   }
 
+  data <- data[data$first_learned != "Current employment", ]
+
   questions <- "coding_ability_change"
 
   levels <- c("It has become significantly worse",
@@ -790,7 +792,7 @@ summarise_cap_change_by_freq <- function(data, sample = FALSE){
 
   col2 <- "coding_ability_change"
 
-  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes"))
+  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
 
   levels1 <- c(
     "Rarely",
