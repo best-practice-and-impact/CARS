@@ -1,15 +1,23 @@
 heard_of_RAP <- c(NA,
                   rep(c("Yes",
                         "No"),
-                      times = 6))
+                      times = 15))
 
 year <- c(NA,
           rep(c("2020",
                 "2021",
                 "2022"),
-              each = 4))
+              each = 10))
 
-dummy_data <- data.frame(heard_of_RAP, year)
+code_freq <- c(NA,
+               rep(c("Never",
+                     "Rarely",
+                     "Sometimes",
+                     "Regularly",
+                     "All the time"),
+                   times = 6))
+
+dummy_data <- data.frame(heard_of_RAP, year, code_freq)
 
 test_that("summarise_rap_awareness_over_time missing data is handled correctly", {
 
@@ -27,17 +35,18 @@ test_that("summarise_rap_awareness_over_time output is as expected", {
                                        levels = c("No", "Yes")),
                          Var2 = factor(c("2020", "2021", "2022"),
                                        levels = c("2020", "2021", "2022")),
-                         Freq = c(2),
-                         n = c(4),
+                         Freq = c(4),
+                         n = c(8),
                          percent = c(0.5),
-                         lower = c(0.15003899),
-                         upper = c(0.849961),
-                         lower_ci = c(0.34996101),
-                         upper_ci = c(0.34996101))
+                         lower = c(0.21521606),
+                         upper = c(0.78478394),
+                         lower_ci = c(0.28478394),
+                         upper_ci = c(0.28478394))
 
   expect_equal(got, expected)
 
 
 })
+
 
 

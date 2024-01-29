@@ -304,6 +304,8 @@ summarise_rap_advanced <- function(data){
 
 summarise_rap_knowledge <- function(data, sample = FALSE){
 
+  data <- data[data$code_freq != "Never", ]
+
   questions <- "heard_of_RAP"
 
   levels <- c("Yes",
@@ -1218,6 +1220,8 @@ summarise_os_vs_prop <- function(data) {
 #' @export
 
 summarise_rap_awareness_over_time <- function(data) {
+
+    data <- data[data$code_freq != "Never", ]
 
     RAP_awareness <- table(data$heard_of_RAP, data$year) %>%
     data.frame %>%
