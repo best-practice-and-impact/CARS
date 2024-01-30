@@ -1015,7 +1015,7 @@ summarise_adv_score_by_understanding <- function(data){
 #'
 #' @importFrom dplyr recode
 
-summarise_languages_by_prof <- function(data, sample = FALSE) {
+summarise_languages_by_prof <- function(data, sample = TRUE) {
 
   profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
@@ -1044,13 +1044,16 @@ summarise_languages_by_prof <- function(data, sample = FALSE) {
 
       output$value <- prof
 
+      output <- dplyr::add_row(output, name = "Sample", value = prof, n = output$sample[1])
+
       return(output)
     }
   })
 
   outputs <- do.call(rbind, outputs)
 
-  colnames(outputs) <- c("lang", "prof", "n")
+  outputs <- outputs[c(2,1,3)]
+  colnames(outputs) <- c("prof", "lang", "n")
   rownames(outputs) <- NULL
 
   outputs$prof <- recode(outputs$prof, !!!prof_names)
