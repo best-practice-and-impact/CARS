@@ -1,5 +1,15 @@
 
-dummy_data <- data.frame(heard_of_RAP = c(NA, "Yes", "No"))
+dummy_data <- data.frame(heard_of_RAP = rep(c(NA,
+                                              "Yes",
+                                              "No"),
+                                            each = 6),
+                         code_freq = rep(c(NA,
+                                           "Never",
+                                           "Rarely",
+                                           "Sometimes",
+                                           "Regularly",
+                                           "All the time"),
+                                         times = 3))
 
 test_that("summarise_rap_knowledge missing data is handled correctly", {
 
