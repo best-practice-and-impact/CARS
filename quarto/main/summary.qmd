@@ -22,6 +22,9 @@ tables <- CARS::summarise_all(data, all_tables = TRUE)
 samples <- CARS::sample_sizes(data)
 
 ```
+This page presents the summary statistics for CARS 2023. 
+
+Summary statistics for individual departments and professions will follow.
 
 ## How to use this research
 
@@ -244,6 +247,8 @@ The following links contain more resources on RAP:
 * you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Awareness of RAP over time
+
+We asked respondents who used coding at work, if they had heard of RAP.
 
 ```{r}
 freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)

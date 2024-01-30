@@ -6,7 +6,8 @@ title: "Home"
 
 The Coding in Analysis and Research Survey (CARS) was developed to understand better how government analysts use programming. Most questions focused on whether and how analysts use coding in their work. The survey is also concerned with [Reproducible Analytical Pipelines (RAP)](#rap). 
 
-The survey was distributed to government analysts and researchers in the autumn of 2022. The results presented summarise the key findings from 1322 respondents from over 50 public sector organisations. You can find the 2021 results in [last year's publication](https://best-practice-and-impact.github.io/CARS-3/).
+The survey was distributed to government analysts and researchers in the autumn of 2023. The results presented summarise the key findings from 1297 respondents from over 50 public sector organisations.
+
 
 ## Who is this research for?
 
@@ -34,13 +35,12 @@ For more detail, [see the data collection page](data_collection.qmd).
 
 ## More information on reproducible analytical pipelines {#rap}
 
-[Reproducible Analytical Pipelines (RAP) MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md)
+[The Reproducible Analytical Pipelines Minimum Viable Product](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md) sets out the minimum expectations for what analysts must do for work to qualify as a RAP.
 
 [Quality assurance for coding in analysis and research](https://best-practice-and-impact.github.io/qa-of-code-guidance/)
 
-[The Reproducible Analytical Pipelines Minimum Viable Product](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md) sets out the minimum expectations for what analysts must do for work to qualify as a RAP.
-
 [RAP champions network page](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/)
+
 
 ## Accessibility statement
 
