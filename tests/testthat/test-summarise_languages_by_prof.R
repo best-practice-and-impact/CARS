@@ -15,15 +15,6 @@ prof_response <- rep(c(
 
 dummy_data <- data.frame(
 
-  code_freq = rep(c(
-    NA,
-    "Never",
-    "Rarely",
-    "Sometimes",
-    "Regularly",
-    "All the time"),
-    each = 12),
-
   knowledge_R = knowledge_response,
   knowledge_SQL = knowledge_response,
   knowledge_SAS = knowledge_response,
@@ -60,17 +51,6 @@ test_that("summarise_languages_by_prof output is as expected", {
 
   expected <- data.frame(
 
-    lang = rep(c(
-      "Python",
-      "R",
-      "SQL",
-      "Matlab",
-      "SAS",
-      "SPSS",
-      "Stata",
-      "VBA"),
-      times = 9),
-
     prof = rep(c(
       "Data engineers",
       "Data scientists",
@@ -81,9 +61,21 @@ test_that("summarise_languages_by_prof output is as expected", {
       "Operational researchers (GORS)",
       "Social researchers (GSR)",
       "Statisticians (GSG)"),
-      each = 8),
+      each = 9),
 
-    n = rep(1/3, times = 72)
+    lang = rep(c(
+      "Python",
+      "R",
+      "SQL",
+      "Matlab",
+      "SAS",
+      "SPSS",
+      "Stata",
+      "VBA",
+      "Sample"),
+      times = 9),
+
+    n = rep(c(rep(1/3, times=8), 18), times=9)
 
   )
 
