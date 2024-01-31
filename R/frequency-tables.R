@@ -1175,7 +1175,6 @@ summarise_heard_of_RAP_by_prof <- function(data) {
 
 summarise_os_vs_prop <- function(data) {
 
-  data <- dplyr::filter(data, !is.na(code_freq), code_freq != "Never")
 
   data$open_source_lang_knowledge <- ifelse(
     data$knowledge_python == "Yes" | data$knowledge_R == "Yes",
