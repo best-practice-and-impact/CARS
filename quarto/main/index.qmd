@@ -1,6 +1,10 @@
 ---
 title: "Home"
 ---
+:::{.callout-note}
+Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+We advise linking directly to this document when distributing to ensure the most up to date information.
+:::
 
 ## How do analysts use programming and software engineering in the UK Public Sector?
 
