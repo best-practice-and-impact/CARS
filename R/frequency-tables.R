@@ -78,15 +78,11 @@ sample_sizes <- function(data) {
                      "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG"),
                    function(prof) {
                      prof_count <- sum(data[prof] == "Yes", na.rm = TRUE)
-                     if (prof_count > 0) {
-                       prof_sample <- paste0(prof_count, " (", substring(prof, 6), ")")
-                       return(prof_sample)
-                       }
+                     return(prof_count)
                      }
                    )
-
-  )
-}
+    )
+  }
 
 
 #' @title Summarise coding frequency
@@ -1015,7 +1011,7 @@ summarise_adv_score_by_understanding <- function(data){
 #'
 #' @importFrom dplyr recode
 
-summarise_languages_by_prof <- function(data, sample = TRUE) {
+summarise_languages_by_prof <- function(data, sample = FALSE) {
 
   profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
              "prof_GORS", "prof_GSR", "prof_GSG")
@@ -1043,8 +1039,6 @@ summarise_languages_by_prof <- function(data, sample = TRUE) {
       output <- output[output[[2]] == "Yes", ]
 
       output$value <- prof
-
-      output <- dplyr::add_row(output, name = "Sample", value = prof, n = output$sample[1])
 
       return(output)
     }

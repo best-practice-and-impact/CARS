@@ -61,7 +61,7 @@ test_that("summarise_languages_by_prof output is as expected", {
       "Operational researchers (GORS)",
       "Social researchers (GSR)",
       "Statisticians (GSG)"),
-      each = 9),
+      each = 8),
 
     lang = rep(c(
       "Python",
@@ -71,11 +71,10 @@ test_that("summarise_languages_by_prof output is as expected", {
       "SAS",
       "SPSS",
       "Stata",
-      "VBA",
-      "Sample"),
+      "VBA"),
       times = 9),
 
-    n = rep(c(rep(1/3, times=8), 18), times=9)
+    n = rep(1/3, times=72)
 
   )
 
