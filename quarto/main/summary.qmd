@@ -22,16 +22,21 @@ tables <- CARS::summarise_all(data, all_tables = TRUE)
 samples <- CARS::sample_sizes(data)
 
 ```
+:::{.callout-note}
+Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+We advise linking directly to this document when distributing to ensure the most up to date information.
+:::
+
 
 ## How to use this research
 
-Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. We are unable to provide details about response rates by department or profession. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
+Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
 
 For more detail, [see the data collection page](data_collection.qmd). 
 
 ## Coding frequency and tools
 
-We asked respondents "In your current role, how often do you write code to complete your work objectives?"
+We asked all respondents "In your current role, how often do you write code to complete your work objectives?"
 
 #### 2023 data
 
@@ -74,7 +79,9 @@ CARS::wrap_outputs("code-freq", plot, table)
 
 ### Access to and knowledge of programming languages
 
-Given a list of programming tools, we asked respondents if the tool was available to use for their work. 
+### Access to coding tools
+
+Given a list of programming tools, we asked all respondents if the tool was available to use for their work. 
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 
@@ -88,9 +95,11 @@ CARS::wrap_outputs("access", plot, table)
 
 ```
 
-Given the same list of programming tools, respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
+### Knowledge of coding tools
 
-Please note that capability in programming languages is self-reported here and was not objectively defined or tested.
+Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
+
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
 ```{r}
 
@@ -101,7 +110,7 @@ CARS::wrap_outputs("knowledge", plot, table)
 
 ```
 
-#### Open source capability  over time
+### Open source capability  over time
 
 The proportion of respondents who report having the capability to use R and Python, is shown alongside the proportion who are able to use SAS, SPSS or Stata, for the past four years of the survey.
 
@@ -129,11 +138,11 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 ```
 
 
-#### Professions capability in different tools
+### Professions capability in different tools
 
-Differences in preferred languages may lead to silos between analytical professions. Here we show the tool capability of members of the different analytical professions.
+Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
 
-Please note that respondents might be members of more than one profession.
+Please note that respondents might be members of more than one profession, and may report capability in more than one tool.
 
 ```{R}
 colnames(tables$languages_by_prof)[2] <- "Profession"
@@ -152,7 +161,7 @@ We asked respondents to answer "Yes", "No" or "Don't know" for the following que
 
 Please note these outputs include people who do not code at work.
 
-### Git access and knowledge
+### Access to git
 
 ```{r}
 plot <- CARS::plot_freqs(tables$git_access, font_size = 14, n = samples$all, xlab = "Access to git") %>% CARS::set_axis_range(0, 1, axis = "y")
@@ -161,7 +170,10 @@ table <- CARS::df_to_table(tables$git_access, n = samples$all, column_headers = 
 
 CARS::wrap_outputs("git-access", plot, table)
 
+```
 
+### Knowledge of git
+```{r}
 plot <- CARS::plot_freqs(tables$git_knowledge, font_size = 14, n = samples$all, xlab = "Knowledge of git") %>% CARS::set_axis_range(0, 1, axis = "y")
 
 table <- CARS::df_to_table(tables$git_knowledge, n = samples$all, column_headers = c("Response", "Percent"))
@@ -171,11 +183,14 @@ CARS::wrap_outputs("git-knowledge", plot, table)
 ```
 
 
+## Coding capability and change
+
 ### Where respondents first learned to code
 
-Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'.
+Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'. Those who reported first learning to code outside of a work or educational environment were categorised as 'self-taught' based on free-text responses.
 
 These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
+
 
 ```{r}
 
@@ -245,6 +260,8 @@ The following links contain more resources on RAP:
 
 ### Awareness of RAP over time
 
+We asked respondents who used coding at work, if they had heard of RAP.
+
 ```{r}
 freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)
 ```
@@ -261,15 +278,6 @@ table <- CARS::df_to_table(freqs[c(2,5:7)],
                            proportion_col = 2:4)
 
 CARS::wrap_outputs("rap-awareness-over-time", plot, table)
-```
-
-#### 2023 data
-```{r}
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$code_at_work, xlab = "Heard of RAP?", font_size = 14, orientation = "v")
-table <- CARS::df_to_table(tables$rap_knowledge, n = samples$code_at_work, column_headers = c("Knowledge", "Percent"))
-
-CARS::wrap_outputs("rap-knowledge", plot, table)
-
 ```
 
 ### RAP Champions
@@ -292,7 +300,7 @@ CARS::wrap_outputs("rap-champ-status", plot, table)
 
 ### Awareness of RAP strategy
 
-We asked respondents who had heard of RAP, if they had heard of the RAP strategy
+We asked respondents who had heard of RAP, if they had heard of the RAP strategy.
 
 The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government.
 
@@ -335,8 +343,11 @@ CARS::wrap_outputs("rap-opinions", plot, table)
 
 ## Good coding practices
 
-We asked respondents who reported writing code at work about the good practices they apply when writing code at work. These questions cover many of the coding practices recommended in the quality assurance of code for analysis and research guidance, as well as the [minimum RAP standards](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub) set by the cross-government [RAP champions network](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/).
+We asked respondents who reported writing code at work about the good practices they apply when writing code at work. These questions cover many of the coding practices recommended in the quality assurance of code for analysis and research guidance, as well as the [minimum RAP standards](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md) set by the cross-government [RAP champions network](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/).
 
+Coding practices have been classified as either 'Basic' or 'Advanced'. Basic practices are those that make up the minimum RAP standards, while Advanced practices help improve reproducibility. The percentage of respondents who reported applying these practices either 'Regularly' or 'All the time' is shown below.
+
+Open sourcing was defined as 'making code freely available to be modified and redistributed'
 
 ```{r}
 
@@ -395,6 +406,8 @@ CARS::wrap_outputs("good-practices", plot, table)
 ### Code documentation
 
 We asked respondents who reported writing code at work how frequently they write different forms of documentation when programming in their current role.
+
+[Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
 
 ```{r}
 
