@@ -99,7 +99,7 @@ CARS::wrap_outputs("access", plot, table)
 
 Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
 
-Please note that capability in programming languages is self-reported here and was not objectively defined or tested, including "not required for my work".
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
 ```{r}
 
@@ -110,7 +110,7 @@ CARS::wrap_outputs("knowledge", plot, table)
 
 ```
 
-#### Open source capability  over time
+### Open source capability  over time
 
 The proportion of respondents who report having the capability to use R and Python, is shown alongside the proportion who are able to use SAS, SPSS or Stata, for the past four years of the survey.
 
@@ -138,7 +138,7 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 ```
 
 
-#### Professions capability in different tools
+### Professions capability in different tools
 
 Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
 
@@ -182,6 +182,8 @@ CARS::wrap_outputs("git-knowledge", plot, table)
 
 ```
 
+
+## Coding capability and change
 
 ### Where respondents first learned to code
 
@@ -404,6 +406,8 @@ CARS::wrap_outputs("good-practices", plot, table)
 ### Code documentation
 
 We asked respondents who reported writing code at work how frequently they write different forms of documentation when programming in their current role.
+
+[Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
 
 ```{r}
 
