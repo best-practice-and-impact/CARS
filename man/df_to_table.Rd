@@ -4,7 +4,7 @@
 \alias{df_to_table}
 \title{Data frame to html table}
 \usage{
-df_to_table(data, column_headers, n, crosstab = FALSE, proportion_col)
+df_to_table(data, column_headers, n, crosstab = FALSE, proportion_col, sample)
 }
 \arguments{
 \item{data}{frequency table in tidy format. Last column should contain proportions.
@@ -17,6 +17,8 @@ First one or two columns should contain factors.}
 \item{crosstab}{whether to create a cross tabulation. FALSE by default}
 
 \item{proportion_col}{optional: columns to be turned into a percentage. Last column only be default}
+
+\item{sample}{optional: add sample size as additional column}
 }
 \value{
 HTML table
