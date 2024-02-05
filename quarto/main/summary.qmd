@@ -385,7 +385,7 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 We asked respondents who reported writing code at work how frequently they write different forms of documentation when programming in their current role.
 
-[Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
+[Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a [RAP minimum viable product](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). Documentation is important to help others be clear on how to use the product and what the code is intended to do.
 
 ```{r}
 
