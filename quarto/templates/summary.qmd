@@ -54,12 +54,11 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ### Access to and knowledge of programming languages
 
-### Access to coding tools
-
 Given a list of programming tools, we asked all respondents if the tool was available to use for their work. 
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 
+### Access to coding tools
 
 ```{r}
 
@@ -70,11 +69,11 @@ CARS::wrap_outputs("access", plot, table)
 
 ```
 
-### Knowledge of coding tools
-
 Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
 
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
+
+### Knowledge of coding tools
 
 ```{r}
 
@@ -340,9 +339,7 @@ In this section we present RAP components and RAP scores.
 
 For each RAP component a percent positive was calculated. Positive responses were recorded where an answer of "regularly" or "all the time" was given. For documentation, a positive response was recorded if both code comments and README files questions received positive responses. For the continuous integration and dependency management components, responses of "yes" were recorded as positive.
 
-RAP scores are then calculated for each respondent as the total of their positive responses. A score of 3 suggests that a respondent is implementing 3 components of RAP at least regularly. 
-
-"Basic components" are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). "Advanced components" are components which help improve reproducibility, but are not considered part of the minimum standard.
+"Basic" components are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). "Advanced" components are components which help improve reproducibility, but are not considered part of the minimum standard.
 
 ### RAP components
 
@@ -365,29 +362,5 @@ table <- CARS::df_to_table(tables$rap_components,
                                               "Percentage of analysts who code in their work"))
 
 CARS::wrap_outputs("rap-comp", plot, table)
-
-```
-
-### Basic RAP scores
-
-```{r}
-
-bar_colour <- CARS::get_2colour_scale(2)[2][[1]]
-
-plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = bar_colour, xlab = "Basic RAP scores", font_size = 14)
-table <- CARS::df_to_table(tables$basic_rap_scores, n = samples$code_at_work, column_headers = c("Basic RAP scores", "Percent"))
-
-CARS::wrap_outputs("basic-rap-scores", plot, table)
-
-```
-
-### Advanced RAP scores
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$advanced_rap_scores, n = samples$code_at_work, xlab = "Advanced RAP scores", font_size = 14)
-table <- CARS::df_to_table(tables$advanced_rap_scores, n = samples$code_at_work, column_headers = c("Advanced RAP scores", "Percent"))
-
-CARS::wrap_outputs("advanced-rap-scores", plot, table)
 
 ```

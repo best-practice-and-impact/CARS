@@ -7,6 +7,11 @@ output:
 [comment]: <> (This document makes use of custom open and close tags for use with glue::glue() ("{{{" and "}}}", respectively))
 [comment]: <> (This document should only be edited as a template: quarto/templates/professions.qmd)
 
+:::{.callout-note}
+Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+We advise linking directly to this document when distributing to ensure the most up to date information.
+:::
+
 Below are links to profession-specific reports These contain summary statistics, filtered by profession. Only professions with 20 or more respondents are included.
 
 {{{links}}}

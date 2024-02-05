@@ -79,13 +79,11 @@ CARS::wrap_outputs("code-freq", plot, table)
 
 ### Access to and knowledge of programming languages
 
-### Access to coding tools
-
 Given a list of programming tools, we asked all respondents if the tool was available to use for their work. 
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 
-
+### Access to coding tools
 ```{r}
 
 plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
@@ -95,12 +93,13 @@ CARS::wrap_outputs("access", plot, table)
 
 ```
 
-### Knowledge of coding tools
+
 
 Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
 
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
+### Knowledge of coding tools
 ```{r}
 
 plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
@@ -224,27 +223,6 @@ table <- CARS::df_to_table(tables$ability_change,
                                               "Percent"))
 
 CARS::wrap_outputs("ability-change", plot, table)
-
-```
-
-#### Capability change by coding frequency
-
-
-```{r}
-plot <- CARS::plot_likert(tables$capability_change_by_freq, mid = 3,
-                          neutral_mid = TRUE, font_size = 14,
-                          height = 600, width = "100%")
-
-table <- CARS::df_to_table(tables$capability_change_by_freq,
-                           column_headers = c("Coding frequency",
-                                              "Significantly worse",
-                                              "Slightly worse",
-                                              "No change",
-                                              "Slightly better",
-                                              "Significantly better"),
-                           crosstab = TRUE)
-
-CARS::wrap_outputs("capability-change-by-freq", plot, table)
 
 ```
 
