@@ -9,3 +9,4 @@
 ^main\.R$
 ^.*.quarto
 ^data-raw$
+^\.pre-commit-config\.yaml$
