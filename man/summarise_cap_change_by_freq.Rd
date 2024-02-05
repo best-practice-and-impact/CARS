@@ -4,10 +4,12 @@
 \alias{summarise_cap_change_by_freq}
 \title{Summarise capability change by coding frequency}
 \usage{
-summarise_cap_change_by_freq(data)
+summarise_cap_change_by_freq(data, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{sample}{returns proportion, count and, group size and sample size. FALSE by default}
 }
 \value{
 frequency table (data.frame)

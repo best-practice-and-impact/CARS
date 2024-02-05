@@ -11,7 +11,8 @@
 derive_vars <- function(data) {
   data <- data %>%
     derive_language_status() %>%
-    derive_rap_score()
+    derive_rap_score() %>%
+    derive_rap_champ_status()
 
   return(data)
 }
@@ -20,7 +21,7 @@ derive_vars <- function(data) {
 
 #' @title Derive language status
 #'
-#' @description Derve the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
+#' @description Derive the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
 #'
 #' @param data tidied CARS wave 3 data (data.frame).
 #'
@@ -85,7 +86,7 @@ derive_basic_rap_scores <- function(data) {
                         "prac_open_source_own",
                         "prac_version_control",
                         "prac_review",
-                        "prac_AQUA_book",
+                        "prac_proportionate_QA",
                         "doc_comments",
                         "doc_readme")
 
@@ -102,7 +103,7 @@ derive_basic_rap_scores <- function(data) {
                        "open_code_score",
                        "version_control_score",
                        "peer_review_score",
-                       "AQUA_book_score",
+                       "proportionate_QA_score",
                        "doc_score")
 
   high_vals <- c("Regularly", "All the time")
@@ -115,8 +116,8 @@ derive_basic_rap_scores <- function(data) {
                               .x %in% high_vals ~ 1,
                               TRUE ~ 0),
                   .names = "{.col}_score")) %>%
-    mutate(doc_score = as.integer(.data$doc_comments_score & .data$doc_readme_score)) %>%
-    select(-c(.data$doc_comments_score, .data$doc_readme_score)) %>%
+    mutate(doc_score = as.integer(doc_comments_score & doc_readme_score)) %>%
+    select(-c(doc_comments_score, doc_readme_score)) %>%
     rename_with(~ score_col_names[which(paste0(prac_cols, "_score") == .x)],
                 .cols = paste0(prac_cols,
                                "_score")) %>%
@@ -181,3 +182,26 @@ derive_advanced_rap_scores <- function(data) {
   return(data)
 
 }
+
+
+#' @title Derive RAP Champion status
+#'
+#' @description Derive RAP Champion status column from existing variables and add to the dataframe.
+#'
+#' @param data a date frame containing cleaned CARS wave 5 data
+#'
+#' @return dataframe containing the additional RAP Champion status columns
+#'
+#' @importFrom dplyr mutate case_when
+derive_rap_champ_status <- function(data){
+
+  data <- data %>%
+          mutate(RAP_champ_status = case_when(have_RAP_champ == "Yes" & know_RAP_champ == "Yes, and I am a RAP Champion" ~ "Yes, and I am a RAP Champion",
+                                              have_RAP_champ == "Yes" & know_RAP_champ == "Yes" ~ "Yes, and I know who the RAP Champion is",
+                                              have_RAP_champ == "Yes" & know_RAP_champ == "No" ~ "Yes, but I don't know who the RAP Champion is",
+                                              have_RAP_champ == "No" ~ "No",
+                                              have_RAP_champ == "Don't know" ~ "I don't know"))
+
+}
+
+

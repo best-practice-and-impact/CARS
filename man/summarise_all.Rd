@@ -4,12 +4,14 @@
 \alias{summarise_all}
 \title{Summarise all}
 \usage{
-summarise_all(data, all_tables = FALSE)
+summarise_all(data, all_tables = FALSE, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
 \item{all_tables}{logical: whether to produce all summary output tables. Defaults to FALSE.}
+
+\item{sample}{additionally returns count and sample size for selected tables for QA. FALSE by default}
 }
 \value{
 list of frequency tables

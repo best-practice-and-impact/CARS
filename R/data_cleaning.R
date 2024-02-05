@@ -11,7 +11,7 @@
 
 rename_cols <- function(data) {
   if (ncol(data) != 112) {
-    stop("Unexpected input: incorrect number of columns. Please use the 2022 CARS dataset.")
+    stop("Unexpected input: incorrect number of columns. Please use the 2023 CARS dataset.")
   }
 
   colnames(data)[c(1, 7:ncol(data))] <- c(
@@ -23,6 +23,7 @@ rename_cols <- function(data) {
     "CS_grade",
     "department",
     "other_department_name",
+    "prof_DE",
     "prof_DS",
     "prof_DDAT",
     "prof_GAD",
@@ -34,6 +35,14 @@ rename_cols <- function(data) {
     "prof_CS_none",
     "prof_CS_other",
     "ONS_directorate",
+    "pay_band",
+    "NHS_band",
+    "NJC_grade",
+    "primary_work_country",
+    "England_NHS_organisation",
+    "Scotland_NHS_organisation",
+    "Wales_NHS_organisation",
+    "Northern_Ireland_NHS_organisation",
     "highest_qualification",
     "qual_1_subject",
     "qual_1_level",
@@ -46,46 +55,35 @@ rename_cols <- function(data) {
     "qual_3_learn_code",
     "code_freq",
     "management",
-    "ops_analysis",
-    "ops_cleaning",
-    "ops_linking",
-    "ops_transfer_migration",
-    "ops_vis",
-    "ops_machine_learning",
-    "ops_modelling",
-    "ops_QA",
-    "ops_other",
-    "ops_other_name",
-    "knowledge_R",
-    "access_R",
-    "knowledge_SQL",
-    "access_SQL",
-    "knowledge_SAS",
-    "access_SAS",
-    "knowledge_VBA",
-    "access_VBA",
-    "knowledge_python",
-    "access_python",
-    "knowledge_SPSS",
-    "access_SPSS",
-    "knowledge_stata",
-    "access_stata",
-    "knowledge_JS",
-    "access_JS",
-    "knowledge_java",
-    "access_java",
-    "knowledge_C",
-    "access_C",
-    "knowledge_matlab",
     "access_matlab",
-    "knowledge_access_other",
+    "access_python",
+    "access_R",
+    "access_SAS",
+    "access_SPSS",
+    "access_SQL",
+    "access_stata",
+    "access_VBA",
+    "access_open_source_other",
+    "access_licensed_other",
+    "access_other_specified",
+    "knowledge_matlab",
+    "knowledge_python",
+    "knowledge_R",
+    "knowledge_SAS",
+    "knowledge_SPSS",
+    "knowledge_SQL",
+    "knowledge_stata",
+    "knowledge_VBA",
+    "knowledge_licensed_other",
+    "knowledge_open_source_other",
+    "knowledge_other_specified",
     "knowledge_git",
     "access_git",
     "other_coding_experience",
-    "coding_ability_change",
-    "prev_coding_experience",
     "first_learned",
+    "coding_ability_change",
     "heard_of_RAP",
+    "have_RAP_champ",
     "know_RAP_champ",
     "strategy_knowledge",
     "RAP_confident",
@@ -102,11 +100,13 @@ rename_cols <- function(data) {
     "prac_review",
     "prac_functions",
     "prac_unit_test",
+    "prac_other_automated",
     "prac_package",
     "prac_dir_structure",
     "prac_style",
     "prac_automated_QA",
-    "prac_AQUA_book",
+    "prac_development_QA",
+    "prac_proportionate_QA",
     "doc_comments",
     "doc_functions",
     "doc_readme",
@@ -129,6 +129,25 @@ rename_cols <- function(data) {
   return(data)
 }
 
+#' @title Clean data
+#'
+#' @description Recategorise department, workplace and first_learned data
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_data <- function(data){
+
+ data %>%
+   clean_departments() %>%
+   clean_workplace() %>%
+   clean_first_learned()
+
+}
+
+
 #' @title Clean department data
 #'
 #' @description add NHS to department list and merge departments where needed.
@@ -140,13 +159,29 @@ rename_cols <- function(data) {
 
 clean_departments <- function(data) {
 
-  data$department[grepl("forest research", tolower(data$other_department_name))] <- "Forestry Commission"
+  data$department[data$department == "Foreign, Commonwealth & Development Office (excl. agencies)"] <- "Foreign, Commonwealth and Development Office (excl. agencies)"
 
   data$department[data$workplace == "NHS"] <- "NHS"
+
+  data$department[data$other_department_name == "Office for National Statistics"] <- "Office for National Statistics"
+
+  data$department[data$other_department_name == "Data Science Campus"] <- "Office for National Statistics"
+
+  data$department[data$other_department_name == "Welsh Revenue Authority"] <- "Welsh Government"
+
+  data$department[data$other_department_name == "Equality Hub, Cabinet Office"] <- "Cabinet Office (excl. agencies)"
+
+  data$department[data$other_department_name == "Natural England"] <- "Natural England"
+
+  data$department[data$other_department_name == "Department for Communities"] <- "Northern Ireland Executive"
+
+  data$department[data$other_department_name == "Department of Education Northern Ireland"] <- "Northern Ireland Executive"
 
   defra_orgs <- c(
     "Department for Environment, Food and Rural Affairs (excl. agencies)",
     "Forestry Commission",
+    "Forest Research",
+    "Forestry England",
     "Animal and Plant Health Agency",
     "Centre for Environment, Fisheries and Aquaculture Science",
     "Rural Payments Agency",
@@ -161,3 +196,60 @@ clean_departments <- function(data) {
 
 }
 
+#' @title Clean workplace data
+#'
+#' @description reclassify 'other' text responses into CS/NHS
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_workplace <- function(data) {
+
+  data$workplace[data$workplace == "MOD"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "HMRC"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "The Pensions Regulator"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Scottish Funding Council"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Office for Students"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Office for students"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "OfS"] <- "Civil service, including devolved administrations"
+
+  data$workplace[data$workplace == "Dstl"] <- "Civil service, including devolved administrations"
+
+  return(data)
+
+}
+
+#' @title Clean first learned data
+#'
+#' @description reclassify 'other' free text responses into self-taught based on common terms used
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_first_learned <- function(data) {
+
+  matches <- c("self",
+               "hobby",
+               "personal",
+               "independ",
+               "home",
+               "for fun",
+               "free time",
+               "spare time",
+               "childhood")
+
+  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(matches, collapse = "|"))] <- "Self-taught"
+
+  return(data)
+
+}

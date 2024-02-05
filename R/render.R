@@ -40,38 +40,39 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   dir.create(filtered_pages_path)
 
   if (type == "professions") {
-    prof_cols <- c(
-      "prof_DS",
-      "prof_DDAT",
-      "prof_GAD",
-      "prof_GES",
-      "prof_geog",
-      "prof_GORS",
-      "prof_GSR",
-      "prof_GSG"
+    prof_ref <- data.frame(prof_cols =  grep("prof", colnames(data), value = TRUE),
+                           prof_names = c("government data engineers",
+                                          "government data scientists",
+                                          "digital and data profession (DDAT)",
+                                          "government actuary's department (GAD)",
+                                          "government economic service (GES)",
+                                          "government geography profession",
+                                          "government operational research (GORS)",
+                                          "government social research (GSR)",
+                                          "government statistician group (GSG)",
+                                          "no government profession",
+                                          "other government profession"),
+                           filenames = c("data-engineers.qmd",
+                                         "data-scientists.qmd",
+                                         "digital-and-data.qmd",
+                                         "government-actuarys-department.qmd",
+                                         "government-economic-service.qmd",
+                                         "government-geography.qmd",
+                                         "government-operational-research.qmd",
+                                         "government-social-research.qmd",
+                                         "government-statistician-group.qmd",
+                                         "no-government-profession.qmd",
+                                         "other-government-profession.qmd"
+                           )
     )
 
-    prof_names <- c(
-      "government data scientists",
-      "digital and data profession (DDAT)",
-      "government actuary's department (GAD)",
-      "government economic service (GES)",
-      "government geography profession",
-      "government operational research (GORS)",
-      "government social research (GSR)",
-      "government statistician group (GSG)"
-    )
+    prof_cols <- data %>%
+      dplyr::select(dplyr::contains("prof") & !dplyr::contains("none")) %>%
+      dplyr::select_if(~ any(. == "Yes")) %>%
+      colnames()
 
-    filenames <- c(
-      "data-scientists.qmd",
-      "digital-and-data.qmd",
-      "government-actuarys-department.qmd",
-      "government-economic-service.qmd",
-      "government-geography.qmd",
-      "government-operational-research.qmd",
-      "government-social-research.qmd",
-      "government-statician-group.qmd"
-    )
+    prof_names <- prof_ref$prof_names[prof_ref$prof_cols %in% prof_cols]
+    filenames <- prof_ref$filenames[prof_ref$prof_cols %in% prof_cols]
 
     n_pages <- length(prof_cols)
   } else if (type == "departments") {
@@ -112,7 +113,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
       title <- paste0("Department summary: ", dep_list[i])
     }
 
-     # Custom open and close tags are used here to avoid clashes with quarto syntax
+    # Custom open and close tags are used here to avoid clashes with quarto syntax
     contents <- glue::glue(template, .open = "{{{", .close = "}}}") %>% as.character()
 
     path <- paste0(filtered_pages_path, "/", filenames[[i]])
@@ -142,7 +143,6 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   write(link_page_contents, paste0(qmd_path, "/", type, ".qmd"))
 
 }
-
 
 #' @title Display programming languages filtered by profession
 #'

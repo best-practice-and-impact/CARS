@@ -1,9 +1,20 @@
 
-dummy_data <- data.frame(heard_of_RAP = c("No", rep("Yes", 9)),
-                         strategy_knowledge = c(NA,
-                                                rep("I have not heard of the RAP strategy", 2),
-                                                rep("I have heard of the RAP strategy, but I haven't read it", 3),
-                                                rep("I have read the RAP strategy", 4)))
+dummy_data <- data.frame(
+
+  heard_of_RAP = rep(c(
+    NA,
+    "No",
+    "Yes"),
+    each = 4),
+
+  strategy_knowledge = rep(c(
+    NA,
+    "Yes",
+    "Yes, but I haven't read it",
+    "No"),
+    times = 3)
+
+)
 
 test_that("summarise_strategy_knowledge validation works", {
 
@@ -29,13 +40,20 @@ test_that("summarise_strategy_knowledge output is as expected", {
 
   got <- summarise_strategy_knowledge(dummy_data)
 
-  expected <- data.frame(value = factor(c("I have not heard of the RAP strategy",
-                                          "I have heard of the RAP strategy, but I haven't read it",
-                                          "I have read the RAP strategy"),
-                                        levels = c("I have not heard of the RAP strategy",
-                                                   "I have heard of the RAP strategy, but I haven't read it",
-                                                   "I have read the RAP strategy")),
-                         n = c(2/9, 1/3, 4/9))
+  expected <- data.frame(
+
+    value = factor(c(
+      "Yes",
+      "Yes, but I haven't read it",
+      "No"),
+      levels = c(
+        "Yes",
+        "Yes, but I haven't read it",
+        "No")),
+
+    n = rep(1/3, times = 3)
+
+  )
 
   expect_equal(got, expected)
 

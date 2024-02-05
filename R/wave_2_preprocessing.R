@@ -1,8 +1,8 @@
-#' Rename columns (wave 3)
+#' Rename columns (wave 2)
 #'
 #' @description add meaningful column names to dataset ingested from smartsurvey API.
 #'
-#' @param data CARS wave 3 (2021) survey data (data.frame).
+#' @param data CARS wave 2 (2020) survey data (data.frame).
 #'
 #' @return data.frame
 #'

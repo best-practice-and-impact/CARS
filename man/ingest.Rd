@@ -5,7 +5,7 @@
 \title{Ingest smartsurvey data}
 \usage{
 ingest(
-  survey = "1167489",
+  survey = "1376897",
   token = Sys.getenv("CARS_TOKEN"),
   secret = Sys.getenv("CARS_SECRET"),
   proxies = Sys.getenv("alt_proxy"),
