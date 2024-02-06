@@ -233,7 +233,7 @@ RAP refers to the use of good software engineering practices to make analysis pi
 
 The following links contain more resources on RAP:
 
-* you can find minimum RAP standards in the [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
+* you can find minimum RAP standards in the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md)
 * you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Awareness of RAP over time
