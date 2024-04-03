@@ -27,11 +27,11 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     basic_rap_scores = summarise_rap_basic(data),
     advanced_rap_scores = summarise_rap_advanced(data),
     rap_components = summarise_rap_comp(data, sample = sample),
-    ci = summarise_ci(data),
-    dependency_management = summarise_dep_man(data),
-    rep_workflow = summarise_rep_workflow(data),
+    ci = summarise_ci(data, sample = sample),
+    dependency_management = summarise_dep_man(data, sample = sample),
+    rep_workflow = summarise_rep_workflow(data, sample = sample),
     line_manage = summarise_line_manage(data),
-    git_knowledge = summarise_knowledge_git(data),
+    git_knowledge = summarise_knowledge_git(data, sample = sample),
     git_access = summarise_access_git(data, sample = sample),
     strategy_knowledge = summarise_strategy_knowledge(data, sample = sample)
   )
@@ -507,10 +507,11 @@ summarise_rap_comp <- function(data, sample = FALSE) {
 #' @description calculate frequency table for continuous integration
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_ci <- function(data) {
+summarise_ci <- function(data, sample = FALSE) {
 
   # Validation checks
   if (!"CI" %in% colnames(data)) {
@@ -523,7 +524,7 @@ summarise_ci <- function(data) {
               "No",
               "I don't know what continuous integration is")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 
@@ -535,10 +536,11 @@ summarise_ci <- function(data) {
 #' @description calculate frequency table for dependency management.
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_dep_man <- function(data) {
+summarise_dep_man <- function(data, sample = FALSE) {
 
   # Validation checks
   if (!"dep_management" %in% colnames(data)) {
@@ -551,22 +553,23 @@ summarise_dep_man <- function(data) {
               "No",
               "I don't know what dependency management is")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 
 }
 
 
-#' @title Summarise dependency_management frequency
+#' @title Summarise reproducible workflow frequency
 #'
-#' @description calculate frequency table for dependency_management.
+#' @description calculate frequency table for reproducible workflow.
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_rep_workflow <- function(data) {
+summarise_rep_workflow <- function(data, sample = FALSE) {
 
   # Validation checks
   if (!"reproducible_workflow" %in% colnames(data)) {
@@ -579,7 +582,7 @@ summarise_rep_workflow <- function(data) {
               "No",
               "I don't know what reproducible workflows are")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 
@@ -693,10 +696,11 @@ summarise_line_manage <- function(data){
 #' @description calculate frequency table for if someone knows how to version control using git
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_knowledge_git <- function(data){
+summarise_knowledge_git <- function(data, sample = FALSE){
 
   # Validation checks
   if (!"knowledge_git" %in% colnames(data)) {
@@ -709,7 +713,7 @@ summarise_knowledge_git <- function(data){
               "No",
               "I don't know")
 
-  frequencies <- calculate_freqs(data, questions, levels)
+  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
   return(frequencies)
 
