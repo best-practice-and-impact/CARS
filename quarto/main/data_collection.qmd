@@ -16,12 +16,6 @@ data <- CARS::get_tidy_data_file("2023_data.csv") %>%
 
 ```
 
-:::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
-We advise linking directly to this document when distributing to ensure the most up to date information.
-:::
-
-
 # How we collect data
 
 The Coding in Analysis and Research Survey (CARS) data collection takes place for approximately one month, every autumn. The survey is self-selecting and participation is voluntary. Launch dates vary slightly by year to maximise response rate, for example by avoiding clashes with other internal surveys. In 2023, data collection took place from 16 October to 4 December.

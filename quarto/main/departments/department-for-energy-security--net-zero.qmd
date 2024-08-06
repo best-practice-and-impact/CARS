@@ -25,11 +25,6 @@ samples <- CARS::sample_sizes(data)
 
 ```
 
-:::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
-We advise linking directly to this document when distributing to ensure the most up to date information.
-:::
-
 ## How to use this research
 
 Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
