@@ -1302,6 +1302,27 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
   return(frequencies)
 }
 
+
+#' @title Convert frequencies to proportions
+#'
+#' @param data frequency table with three columns (can be of any name): name, value and count
+#'
+#' @return input data with the third column as proportion (0-1)
+#'
+#' @importFrom dplyr group_by mutate
+
+count_to_prop <- function(data){
+
+  data <- data %>%
+    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) %>%
+    dplyr::mutate(n = n / ifelse(sum(n, na.rm = TRUE)==0, 1, sum(n, na.rm = TRUE))) %>%
+    data.frame()
+
+  return(data)
+
+}
+
+
 #' @title Create tidy cross table
 #'
 #' @description Returns a cross table in tidy data format.
