@@ -1251,68 +1251,56 @@ summarise_rap_awareness_over_time <- function(data) {
 #' @importFrom dplyr select all_of group_by count mutate recode arrange
 #' @importFrom tidyr pivot_longer drop_na
 
-calculate_freqs <- function(data, questions, levels, labels = NULL, prop = TRUE, sample = FALSE){
+calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
 
-  if (!is.null(labels)) {
-    labels_list <- as.list(labels)
-    names(labels_list) <- questions
-  } else if (length(questions) > 1) {
+  if (sum(!cols %in% colnames(data)) > 0) {
+    stop("unexpected_input: check column names")
+  }
+
+  if (is.null(labels) & (length(cols) > 1)) {
     stop("Missing input: labels needed for mutli-column frequencies.")
   }
 
-  selected_data <- data %>% select(all_of(questions))
 
+  data <- data |>
+    dplyr::select(dplyr::any_of(cols))
 
-  selected_data[] <- lapply(selected_data, factor, levels = levels)
-
-  if (length(questions) == 1) {
-    frequencies <- data.frame(table(selected_data[questions]))
+  if (length(cols) == 1) {
+    frequencies <- data.frame(table(data[cols]))
 
     colnames(frequencies) <- c("value", "n")
 
-    if (sample == TRUE) {
-      frequencies <- frequencies %>%
-        mutate(count = n)
-
-      frequencies$sample <- sum(!is.na(selected_data[1]))
-    }
-
-    if (prop) {
-
-      frequencies$n <- frequencies$n / ifelse(sum(frequencies$n, na.rm = TRUE)==0,
-                                              1,
-                                              sum(frequencies$n, na.rm = TRUE))
-    }
-
   } else {
-    frequencies <- selected_data %>%
-      pivot_longer(cols = all_of(questions),
-                   names_to = "name",
-                   values_to = "value") %>%
-      group_by(name) %>%
-      count(value, .drop=FALSE) %>%
-      mutate(name = recode(name, !!!labels_list)) %>%
-      arrange(name, by_group=TRUE) %>%
-      drop_na() %>%
+    frequencies <- data %>%
+      tidyr::pivot_longer(cols = dplyr::any_of(cols),
+                          names_to = "name",
+                          values_to = "value") %>%
+      dplyr::group_by(name) %>%
+      dplyr::count(value, .drop=FALSE) %>%
+      dplyr::mutate(name = dplyr::recode(name, !!!labels)) %>%
+      dplyr::arrange(name, by_group=TRUE) %>%
+      tidyr::drop_na() %>%
       data.frame()
 
     colnames(frequencies) <- c("name", "value", "n")
 
-    if (sample == TRUE) {
-      frequencies <- frequencies %>%
-        mutate(count = n)
-
-      frequencies$sample <- sum(!is.na(selected_data[1]))
-    }
-
-    if (prop) {
-      frequencies <- prop_by_group(frequencies)
-    }
   }
+
+
+  if (sample == TRUE) {
+
+    frequencies <- add_sample_size(frequencies, data, prop)
+  }
+
+  if (prop) {
+
+    frequencies <- count_to_prop(frequencies)
+  }
+
+
 
   return(frequencies)
 }
-
 
 #' @title Create tidy cross table
 #'
