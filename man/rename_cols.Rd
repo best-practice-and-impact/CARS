@@ -4,7 +4,7 @@
 \alias{rename_cols}
 \title{Rename columns}
 \usage{
-rename_cols(data)
+rename_cols(data, config)
 }
 \arguments{
 \item{data}{tidy CARS dataset}

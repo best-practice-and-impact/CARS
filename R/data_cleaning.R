@@ -1,4 +1,3 @@
-
 #' @title Rename columns
 #'
 #' @description Renames columns and removes unnecessary columns
@@ -9,7 +8,7 @@
 #'
 #' @export
 
-rename_cols <- function(data) {
+rename_cols <- function(data, config) {
   if (ncol(data) != 109) {
     stop("Unexpected input: incorrect number of columns. Please use the 2024 CARS dataset.")
   }
@@ -65,19 +64,19 @@ rename_cols <- function(data) {
 
 #' @title Clean data
 #'
-#' @description Recategorise department, workplace and first_learned data
+#' @description Rename columns, enforce streaming
 #'
 #' @param data cleaned CARS dataset
 #'
 #' @return CARS dataset
 #' @export
 
-clean_data <- function(data){
+clean_data <- function(data, config){
 
- data %>%
-   clean_departments() %>%
-   clean_workplace() %>%
-   clean_first_learned()
+ data <- rename_cols(data, config)
+ data <- apply_skip_logic(data)
+
+ return(data)
 
 }
 

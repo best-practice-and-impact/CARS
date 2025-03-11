@@ -4,17 +4,12 @@
 \alias{summarise_coding_tools}
 \title{Summarise coding tools}
 \usage{
-summarise_coding_tools(
-  data,
-  type = list("knowledge", "access"),
-  prop = TRUE,
-  sample = FALSE
-)
+summarise_coding_tools(data, config, question, prop = TRUE, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
-\item{type}{type of table (knowledge or access)}
+\item{question}{question name taken from config}
 
 \item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}
 

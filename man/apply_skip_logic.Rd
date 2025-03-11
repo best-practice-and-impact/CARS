@@ -13,5 +13,5 @@ apply_skip_logic(data)
 cleaned data.frame
 }
 \description{
-Iteratively applies enforce_skip_logic to the necessary fields in the data.
+Applies skip logic to dataset, returning NA for downstream questions to adhere to survey streaming.
 }

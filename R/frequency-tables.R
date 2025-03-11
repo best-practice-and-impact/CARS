@@ -40,7 +40,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 
     output_list <- c(output_list,
                      list(
-                       # capability_change_by_freq = summarise_cap_change_by_freq(data, sample = sample),
+                        capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change"),
                        # capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
                        # capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
                        # basic_score_by_implementation = summarise_basic_score_by_imp(data),
@@ -64,13 +64,12 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 #' @param prop additionally returns value as a proportion. TRUE by default
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
-#' @return
+#' @return frequency table df
 #' @export
-#'
-#' @examples
+
 summarise_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
-  list2env(get_question_data(data, config, question), envir = environment())
+  list2env(get_question_data(config, question), envir = environment())
 
   data[] <- lapply(data, factor, levels = levels)
 
@@ -152,10 +151,11 @@ summarise_code_freq <- function(data, sample = FALSE) {
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
+#' @export
 
 summarise_coding_tools <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
-  list2env(get_question_data(data, config, question), envir = environment())
+  list2env(get_question_data(config, question), envir = environment())
 
   cols <- cols[!grepl("git|other", cols)]
 
@@ -799,33 +799,23 @@ summarise_strategy_knowledge <- function(data, sample = FALSE){
 #'
 #' @return frequency table (data.frame)
 
-summarise_cap_change_by_freq <- function(data, sample = FALSE){
+summarise_cap_change_by_freq <- function(data, config, question1, question2, prop = TRUE, sample = FALSE){
 
-  col1 <- "code_freq"
+  list2env(get_question_data(config, question1), envir = environment())
+  col1 <- cols
+  levels1 <- levels[-1]
 
-  col2 <- "coding_ability_change"
+  list2env(get_question_data(config, question2), envir = environment())
+  col2 <- cols
+  levels2 <- levels
 
-  data <- dplyr::filter(data, (code_freq != "Never" & other_coding_experience == "Yes" & data$first_learned != "Current employment"))
+  data <- dplyr::filter(data, (code_freq != "Never" & coding_exp == "Yes" & data$first_learned != "Current role"))
 
-  levels1 <- c(
-    "Rarely",
-    "Sometimes",
-    "Regularly",
-    "All the time")
-
-  levels2 <- c(
-    "It has become significantly worse",
-    "It has become slightly worse",
-    "It has stayed the same",
-    "It has become slightly better",
-    "It has become significantly better")
-
-  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, sample = sample)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop, sample)
 
   return(frequencies)
 
 }
-
 
 #' @title Summarise capability change by management responsibility
 #'
@@ -1252,9 +1242,7 @@ summarise_rap_awareness_over_time <- function(data) {
 #'
 #' @return List of data cols, labels (if multiple cols), and factor levels for the specified question
 #' @export
-#'
-#' @examples
-#'
+
 get_question_data <- function(config, question){
 
   if (!is.null(config[[question]][["cols"]])){
@@ -1328,7 +1316,7 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
   }
 
 
-  if (sample == TRUE) {
+  if (sample) {
 
     frequencies <- add_sample_size(frequencies, data, prop)
   }
@@ -1363,6 +1351,31 @@ count_to_prop <- function(data){
 
 }
 
+#' @title Add sample size column
+#'
+#' @param data frequency table with three columns (can be of any name): name, value and count
+#'
+#' @return input data with the third column as sample size (total number of responses)
+#'
+#' @import dplyr
+
+add_sample_size <- function(frequencies, data, prop){
+
+  frequencies <- frequencies %>%
+    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) %>%
+    dplyr::mutate(count = n) %>%
+    data.frame()
+
+  frequencies$sample <- sum(!is.na(data[1]))
+
+  if (!prop){
+    frequencies <- dplyr::select(frequencies, -count)
+  }
+
+  return(frequencies)
+
+}
+
 
 #' @title Create tidy cross table
 #'
@@ -1393,17 +1406,12 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
     drop_na() %>%
     data.frame()
 
-  if (sample == TRUE) {
-    frequencies <- frequencies %>%
-      group_by_at(1) %>%
-      mutate(count = n,
-             group_size = sum(n))
-
-    frequencies$sample <- sum(!is.na(selected_data[1]))
+  if (sample) {
+    frequencies <- add_sample_size(frequencies, data, prop)
   }
 
   if(prop){
-    frequencies <- prop_by_group(frequencies)
+    frequencies <- count_to_prop(frequencies)
   }
 
 
