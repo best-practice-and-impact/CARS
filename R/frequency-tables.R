@@ -801,13 +801,13 @@ summarise_strategy_knowledge <- function(data, sample = FALSE){
 
 summarise_cap_change_by_freq <- function(data, config, question1, question2, prop = TRUE, sample = FALSE){
 
-  list2env(get_question_data(config, question1), envir = environment())
-  col1 <- cols
-  levels1 <- levels[-1]
+  q1 <- get_question_data(config, question1)
+  col1 <- q1[["cols"]]
+  levels1 <- q1[["levels"]][-1]
 
-  list2env(get_question_data(config, question2), envir = environment())
-  col2 <- cols
-  levels2 <- levels
+  q2 <- get_question_data(config, question2)
+  col2 <- q2[["cols"]]
+  levels2 <- q2[["levels"]]
 
   data <- dplyr::filter(data, (code_freq != "Never" & coding_exp == "Yes" & data$first_learned != "Current role"))
 
