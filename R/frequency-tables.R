@@ -19,7 +19,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
    # language_status = summarise_language_status(data),
    # where_learned = summarise_where_learned_code(data, sample = sample),
    # ability_change = summarise_ability_change(data, sample = sample),
-   # coding_practices = summarise_coding_practices(data, sample = sample),
+    coding_practices = summarise_multi_col_data(data, config, question = "coding_practices", sample = TRUE),
    # doc = summarise_doc(data, sample = sample),
    # rap_knowledge = summarise_rap_knowledge(data, sample = sample),
    # rap_champ_status = summarise_rap_champ_status(data, sample = sample),
@@ -58,6 +58,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 
 #' Generic summarise data into frequency table
 #'
+#'
 #' @param data cleaned CARS dataset
 #' @param config CARS config
 #' @param question question name taken from config
@@ -76,6 +77,31 @@ summarise_data <- function(data, config, question, prop = TRUE, sample = FALSE) 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
   return(frequencies)
+}
+
+
+#' @title Generic summarise multi-column data into frequency table
+#'
+#' @description calculate frequency table for multi-column data where no additional operations are needed
+#'
+#' @param data cleaned CARS dataset
+#' @param config CARS config
+#' @param question question name taken from config
+#' @param prop additionally returns value as a proportion. TRUE by default
+#' @param sample additionally returns count and sample size. FALSE by default
+#'
+#' @return frequency table (data.frame)
+
+summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
+
+  list2env(get_question_data(config, question), envir = environment())
+
+  labels <- config[[question]][["cols"]]
+
+  frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
+
+  return(frequencies)
+
 }
 
 
@@ -108,36 +134,6 @@ sample_sizes <- function(data) {
                    )
 
   )
-}
-
-
-#' @title Summarise coding frequency
-#'
-#' @description calculate frequency table for coding frequency.
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-
-summarise_code_freq <- function(data, sample = FALSE) {
-
-  # Validation checks
-  if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq'")
-  }
-
-  questions <- "code_freq"
-
-  levels <- c("Never",
-              "Rarely",
-              "Sometimes",
-              "Regularly",
-              "All the time")
-
-  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
-
-  return(frequencies)
 }
 
 
@@ -215,45 +211,6 @@ summarise_where_learned_code <- function(data, sample = FALSE){
   return(frequencies)
 }
 
-
-#' @title Summarise data practices questions
-#'
-#' @description calculate frequency table for data practices
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-
-summarise_coding_practices <- function(data, sample = FALSE) {
-
-  questions <- c("prac_use_open_source", "prac_open_source_own",
-                 "prac_version_control", "prac_review", "prac_functions",
-                 "prac_unit_test", "prac_package", "prac_dir_structure",
-                 "prac_style", "prac_automated_QA", "prac_development_QA",
-                 "prac_proportionate_QA")
-
-  levels <- c("I don't understand this question", "Never", "Rarely",
-                 "Sometimes", "Regularly", "All the time")
-
-  labels <- c("Use open source software",
-              "Open source own code",
-              "Version control",
-              "Code review",
-              "Functions",
-              "Unit testing",
-              "Packaging code",
-              "Standard directory structure",
-              "Coding guidelines / Style guides",
-              "Automated data quality assurance",
-              "Quality assurance throughout development",
-              "Proportionate quality assurance")
-
-  frequencies <- calculate_freqs(data, questions, levels, labels, sample = sample)
-
-  return(frequencies)
-
-}
 
 #' @title Knowledge of RAP
 #'
