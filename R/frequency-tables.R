@@ -14,6 +14,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 
   output_list <- list(
     code_freq = summarise_data(data, config, question = "code_freq"),
+    code_leisure = summarise_data(data, config, question = "code_leisure"),
     knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge"),
     access = summarise_coding_tools(data, config, question = "coding_tools_access"),
    # language_status = summarise_language_status(data),

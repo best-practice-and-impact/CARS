@@ -1,3 +1,104 @@
+#' @title Clean data
+#'
+#' @description Rename columns, enforce streaming
+#'
+
+#' @title Apply skip logic
+#'
+#' @description Applies skip logic to dataset, returning NA for downstream questions to adhere to survey streaming.
+#'
+#' @param data data.frame
+#'
+#' @return cleaned data.frame
+#'
+#' @export
+
+apply_skip_logic <- function(data) {
+
+  data <- dplyr::mutate(data, across(c(4:19), ~ dplyr::case_when(workplace == "NHS or local healthcare service" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(4:27), ~ dplyr::case_when(!workplace %in% c("Civil service, including devolved administrations", "NHS or local healthcare service") & !is.na(data$workplace) ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(19:27, 98:100), ~ dplyr::case_when(!department %in% c("Office for National Statistics", "test") & !is.na(department) ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(20:27), ~ dplyr::case_when(!is.na(ons_directorate) & ons_directorate != "test" ~ NA, .default = .)))
+
+  data[, "nhs_band"]  <- dplyr::case_when(data$pay_band %in% c("Local Authority or NJC", "Other / Not sure", "test") ~ NA, .default = data$nhs_band)
+  data[, "njc_grade"] <- dplyr::case_when(data$pay_band %in% c("NHS", "Other / Not sure", "test") ~ NA, .default = data$njc_grade)
+  data[, "nhs_england"] <- dplyr::case_when(data$nhs_country %in% c("Scotland", "Wales", "Northern Ireland", "test") ~ NA, .default = data$nhs_england)
+  data[, "nhs_scotland"] <- dplyr::case_when(data$nhs_country %in% c("England", "Wales", "Northern Ireland", "test") ~ NA, .default = data$nhs_scotland)
+  data[, "nhs_wales"] <- dplyr::case_when(data$nhs_country %in% c("England", "Scotland", "Northern Ireland", "test") ~ NA, .default = data$nhs_wales)
+  data[, "nhs_ni"] <- dplyr::case_when(data$nhs_country %in% c("England", "Scotland", "Wales", "test") ~ NA, .default = data$nhs_ni)
+
+  data <- dplyr::mutate(data, across(c(31:91), ~ dplyr::case_when(coding_exp == "No" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(56:91), ~ dplyr::case_when(code_freq == "Never" ~ NA, .default = .)))
+  data[, "ability_change"] <- dplyr::case_when(data$first_learned == "Current role" ~ NA, .default = data$ability_change)
+  data <- dplyr::mutate(data, across(c(76:91), ~ dplyr::case_when(ai == "No" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(93:97), ~ dplyr::case_when(heard_of_rap == "No" ~ NA, .default = .)))
+
+  return(data)
+
+}
+
+
+
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_data <- function(data, config){
+
+ data <- rename_cols(data, config)
+ data <- data |>
+   apply_skip_logic() |>
+   clean_departments()
+
+ return(data)
+
+}
+
+
+#' @title Clean department data
+#'
+#' @description add NHS to department list and merge departments where needed.
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_departments <- function(data) {
+
+  data$department[data$workplace == "NHS or local healthcare service"] <- "NHS"
+  data$department[data$department_other == "Office for National Statistics"] <- "Office for National Statistics"
+  data$department[data$department_other == "Natural England"] <- "Natural England"
+  data$department[data$department_other %in% c("Welsh Revenue Authority", "WRA")] <- "Welsh Government"
+  data$department[data$department_other == "Environment Agency"] <- "Environment Agency"
+  data$department[data$workplace %in% c("Environment Agency", "EA")] <- "Environment Agency"
+  data$department[data$department_other == "Home Office "] <- "Home Office"
+  data$department[data$department_other == "Centre for Environment Fisheries and Aquaculture Science"] <- "Centre for Environment Fisheries and Aquaculture Science"
+  data$department[data$department_other == "Department of Finance"] <- "Northern Ireland Executive"
+  data$department[data$department_other == "National Records of Scotland"] <- "National Records of Scotland"
+  data$department[data$department_other %in% c("Health and Safety Executive ", "Health and Safety Executive")] <- "Health and Safety Executive"
+  data$department[data$department_other == "UKHSA"] <- "UK Health Security Agency"
+
+  defra_orgs <- c(
+    "Department for Environment, Food and Rural Affairs (excl. agencies)",
+    "Forestry Commission",
+    "Forest Research",
+    "Forestry England",
+    "Animal and Plant Health Agency",
+    "Centre for Environment, Fisheries and Aquaculture Science",
+    "Rural Payments Agency",
+    "Environment Agency",
+    "Marine Management Organisation",
+    "Natural England"
+  )
+
+  data$defra <- data$department %in% defra_orgs
+
+  return(data)
+
+}
+
 #' @title Rename columns
 #'
 #' @description Renames columns and removes unnecessary columns
@@ -13,7 +114,7 @@ rename_cols <- function(data, config) {
     stop("Unexpected input: incorrect number of columns. Please use the 2024 CARS dataset.")
   }
 
-  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
+  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address::", "Started::", "Ended::")]
   colnames(data)[c(1:ncol(data))] <- c(
     "ID",
     "tracking_link",
@@ -57,132 +158,5 @@ rename_cols <- function(data, config) {
     "future_surveys"
   )
 
-
-
   return(data)
-}
-
-#' @title Clean data
-#'
-#' @description Rename columns, enforce streaming
-#'
-#' @param data cleaned CARS dataset
-#'
-#' @return CARS dataset
-#' @export
-
-clean_data <- function(data, config){
-
- data <- rename_cols(data, config)
- data <- apply_skip_logic(data)
-
- return(data)
-
-}
-
-
-#' @title Clean department data
-#'
-#' @description add NHS to department list and merge departments where needed.
-#'
-#' @param data cleaned CARS dataset
-#'
-#' @return CARS dataset
-#' @export
-
-clean_departments <- function(data) {
-
-  data$department[data$department == "Foreign, Commonwealth & Development Office (excl. agencies)"] <- "Foreign, Commonwealth and Development Office (excl. agencies)"
-
-  data$department[data$workplace == "NHS"] <- "NHS"
-
-  data$department[data$other_department_name == "Office for National Statistics"] <- "Office for National Statistics"
-
-  data$department[data$other_department_name == "Data Science Campus"] <- "Office for National Statistics"
-
-  data$department[data$other_department_name == "Welsh Revenue Authority"] <- "Welsh Government"
-
-  data$department[data$other_department_name == "Equality Hub, Cabinet Office"] <- "Cabinet Office (excl. agencies)"
-
-  data$department[data$other_department_name == "Natural England"] <- "Natural England"
-
-  data$department[data$other_department_name == "Department for Communities"] <- "Northern Ireland Executive"
-
-  data$department[data$other_department_name == "Department of Education Northern Ireland"] <- "Northern Ireland Executive"
-
-  defra_orgs <- c(
-    "Department for Environment, Food and Rural Affairs (excl. agencies)",
-    "Forestry Commission",
-    "Forest Research",
-    "Forestry England",
-    "Animal and Plant Health Agency",
-    "Centre for Environment, Fisheries and Aquaculture Science",
-    "Rural Payments Agency",
-    "Environment Agency",
-    "Marine Management Organisation",
-    "Natural England"
-  )
-
-  data$defra <- data$department %in% defra_orgs
-
-  return(data)
-
-}
-
-#' @title Clean workplace data
-#'
-#' @description reclassify 'other' text responses into CS/NHS
-#'
-#' @param data cleaned CARS dataset
-#'
-#' @return CARS dataset
-#' @export
-
-clean_workplace <- function(data) {
-
-  data$workplace[data$workplace == "MOD"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "HMRC"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "The Pensions Regulator"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "Scottish Funding Council"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "Office for Students"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "Office for students"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "OfS"] <- "Civil service, including devolved administrations"
-
-  data$workplace[data$workplace == "Dstl"] <- "Civil service, including devolved administrations"
-
-  return(data)
-
-}
-
-#' @title Clean first learned data
-#'
-#' @description reclassify 'other' free text responses into self-taught based on common terms used
-#'
-#' @param data cleaned CARS dataset
-#'
-#' @return CARS dataset
-#' @export
-
-clean_first_learned <- function(data) {
-
-  matches <- c("self",
-               "hobby",
-               "personal",
-               "independ",
-               "home",
-               "for fun",
-               "free time",
-               "spare time",
-               "childhood")
-
-  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(matches, collapse = "|"))] <- "Self-taught"
-
-  return(data)
-
 }

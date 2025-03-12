@@ -40,31 +40,14 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   dir.create(filtered_pages_path)
 
   if (type == "professions") {
+    prof_names <- unlist(config[["professions"]][["cols"]])
+    prof_names <- gsub("Civil Service, no profession membership", "No government profession", prof_names)
+    prof_names <- gsub("Other Civil Service profession", "Other government profession", prof_names)
+    filenames <- unlist(purrr::map(prof_names, ~ paste0(gsub("\\s+", "-", tolower(.x)), ".qmd")))
+
     prof_ref <- data.frame(prof_cols =  grep("prof", colnames(data), value = TRUE),
-                           prof_names = c("government data engineers",
-                                          "government data scientists",
-                                          "digital and data profession (DDAT)",
-                                          "government actuary's department (GAD)",
-                                          "government economic service (GES)",
-                                          "government geography profession",
-                                          "government operational research (GORS)",
-                                          "government social research (GSR)",
-                                          "government statistician group (GSG)",
-                                          "no government profession",
-                                          "other government profession"),
-                           filenames = c("data-engineers.qmd",
-                                         "data-scientists.qmd",
-                                         "digital-and-data.qmd",
-                                         "government-actuarys-department.qmd",
-                                         "government-economic-service.qmd",
-                                         "government-geography.qmd",
-                                         "government-operational-research.qmd",
-                                         "government-social-research.qmd",
-                                         "government-statistician-group.qmd",
-                                         "no-government-profession.qmd",
-                                         "other-government-profession.qmd"
-                           )
-    )
+                           prof_names,
+                           filenames)
 
     prof_cols <- data %>%
       dplyr::select(dplyr::contains("prof") & !dplyr::contains("none")) %>%
