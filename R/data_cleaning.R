@@ -1,7 +1,3 @@
-#' @title Clean data
-#'
-#' @description Rename columns, enforce streaming
-#'
 
 #' @title Apply skip logic
 #'
@@ -38,7 +34,10 @@ apply_skip_logic <- function(data) {
 }
 
 
-
+#' @title Clean data
+#'
+#' @description Rename columns, enforce streaming
+#'
 #' @param data cleaned CARS dataset
 #'
 #' @return CARS dataset

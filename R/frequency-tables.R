@@ -18,23 +18,18 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge"),
     access = summarise_coding_tools(data, config, question = "coding_tools_access"),
    # language_status = summarise_language_status(data),
-   # where_learned = summarise_where_learned_code(data, sample = sample),
-   # ability_change = summarise_ability_change(data, sample = sample),
-    coding_practices = summarise_multi_col_data(data, config, question = "coding_practices", sample = TRUE),
-   # doc = summarise_doc(data, sample = sample),
-   # rap_knowledge = summarise_rap_knowledge(data, sample = sample),
-   # rap_champ_status = summarise_rap_champ_status(data, sample = sample),
-   # rap_opinions = summarise_rap_opinions(data, sample = sample),
-   # basic_rap_scores = summarise_rap_basic(data),
-   # advanced_rap_scores = summarise_rap_advanced(data),
-   # rap_components = summarise_rap_comp(data, sample = sample),
-   # ci = summarise_ci(data),
-   # dependency_management = summarise_dep_man(data),
-   # rep_workflow = summarise_rep_workflow(data),
+    first_learned = summarise_data(data, config, question = "first_learned"),
+    ability_change = summarise_data(data, config, question = "ability_change"),
+    coding_years = summarise_data(data, config, question = "coding_years"),
+    coding_practices = summarise_multi_col_data(data, config, question = "coding_practices"),
+    working_practices = summarise_multi_col_data(data, config, question = "working_practices"),
+    doc = summarise_multi_col_data(data, config, question = "doc"),
+    rap_knowledge = summarise_data(data, config, question = "heard_of_rap"),
+    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions")
    # line_manage = summarise_line_manage(data),
    # git_knowledge = summarise_knowledge_git(data),
    # git_access = summarise_access_git(data, sample = sample),
-   # strategy_knowledge = summarise_strategy_knowledge(data, sample = sample)
+
   )
 
   if (all_tables) {
@@ -92,6 +87,7 @@ summarise_data <- function(data, config, question, prop = TRUE, sample = FALSE) 
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
+#' @export
 
 summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
@@ -165,77 +161,6 @@ summarise_coding_tools <- function(data, config, question, prop = TRUE, sample =
 }
 
 
-
-#' @title Summarise where respondents learned to code
-#'
-#' @description calculate frequency table of where respondents learned to code
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-#'
-#' @importFrom dplyr select mutate case_when
-
-summarise_where_learned_code <- function(data, sample = FALSE){
-
-  # Validation checks
-  if (!"first_learned" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'first_learned'")
-  }
-  if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq'")
-  }
-  if (!"other_coding_experience" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'other_coding_experience'")
-  }
-
-  questions <- "first_learned"
-
-  levels <- c("Current employment",
-              "Education",
-              "Previous private sector employment",
-              "Previous public sector employment",
-              "Self-taught",
-              "Other")
-
-  data <- data %>%
-    select(first_learned, code_freq) %>%
-    mutate(
-      first_learned = case_when((data$other_coding_experience == "No") &
-                                  data$code_freq != "Never" ~ "Current employment",
-                                !is.na(data$first_learned) & !(data$first_learned %in% levels) ~ "Other",
-                                TRUE ~ first_learned))
-
-  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
-
-  return(frequencies)
-}
-
-
-#' @title Knowledge of RAP
-#'
-#' @description Create a frequency table of knowledge of RAP
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-
-summarise_rap_knowledge <- function(data, sample = FALSE){
-
-  data <- data[data$code_freq != "Never", ]
-
-  questions <- "heard_of_RAP"
-
-  levels <- c("Yes",
-              "No")
-
-  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
-  return(frequencies)
-}
-
-
 #' @title Opinions of RAP
 #'
 #' @description Create frequency table of opinions of RAP
@@ -245,39 +170,15 @@ summarise_rap_knowledge <- function(data, sample = FALSE){
 #'
 #' @return frequency table (data.frame)
 
-summarise_rap_opinions <- function(data, sample = FALSE) {
+summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
-  # Validation checks
-  if (!"heard_of_RAP" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'heard_of_RAP'")
-  }
+  list2env(get_question_data(config, question), envir = environment())
 
-  opinion_rap_data <- data[data$heard_of_RAP == "Yes", ]
+  labels <- config[[question]][["cols"]]
 
-  questions <- c("RAP_confident",
-                 "RAP_supported",
-                 "RAP_resources",
-                 "RAP_components",
-                 "RAP_important",
-                 "RAP_implementing",
-                 "RAP_planning")
+  cols <- cols[!grepl("other", cols)]
 
-  levels <- c("Strongly Disagree",
-              "Disagree",
-              "Neutral",
-              "Agree",
-              "Strongly Agree")
-
-  labels <- c("I feel confident implementing RAP in my work",
-              "I feel supported to implement RAP in my work",
-              "I know where to find resources to help me implement RAP",
-              "I understand what the key components of the RAP methodology are",
-              "I think it is important to implement RAP in my work",
-              "I and/or my team are currently implementing RAP",
-              "I or my team are planning on implementing RAP in the next 12 months")
-
-
-  frequencies <- calculate_freqs(opinion_rap_data, questions, levels, labels, sample = sample)
+  frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
   return(frequencies)
 
