@@ -25,7 +25,10 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     working_practices = summarise_multi_col_data(data, config, question = "working_practices"),
     doc = summarise_multi_col_data(data, config, question = "doc"),
     rap_knowledge = summarise_data(data, config, question = "heard_of_rap"),
-    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions")
+    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions"),
+    qs_aware = summarise_data(data, config, question = "qs_aware"),
+    qs_comply = summarise_data(data, config, question = "qs_comply"),
+    qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE)
    # line_manage = summarise_line_manage(data),
    # git_knowledge = summarise_knowledge_git(data),
    # git_access = summarise_access_git(data, sample = sample),
