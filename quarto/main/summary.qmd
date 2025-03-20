@@ -1,5 +1,5 @@
 ---
-title: "The state of UK public sector analysis code: 2023"
+title: "The state of UK public sector analysis code: 2024"
 output:
   html:
     self-contained: true
@@ -23,7 +23,7 @@ samples <- CARS::sample_sizes(data)
 
 ```
 :::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
 We advise linking directly to this document when distributing to ensure the most up to date information.
 :::
 
@@ -36,9 +36,9 @@ For more detail, [see the data collection page](data_collection.qmd).
 
 ## Coding frequency and tools
 
-We asked all respondents "In your current role, how often do you write code to complete your work objectives?"
+We asked all respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
 
-#### 2023 data
+#### 2024 data
 
 ```{r}
 
@@ -186,9 +186,9 @@ CARS::wrap_outputs("git-knowledge", plot, table)
 
 ### Where respondents first learned to code
 
-Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'. Those who reported first learning to code outside of a work or educational environment were categorised as 'self-taught' based on free-text responses.
+Respondents with coding experience were asked where they first learned to code.
 
-These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
+These data only show where people first learned to code. They do not show all the settings in which they learned to code, to what extent, or how long ago.
 
 
 ```{r}
@@ -204,6 +204,19 @@ table <- CARS::df_to_table(tables$where_learned,
 CARS::wrap_outputs("where-learned", plot, table)
 
 ```
+
+### Coding experience
+
+We asked respondents with coding experience how many years of experience they had in a coding role, excluding any years in education.
+
+This data includes any experience in other roles and sectors, but does not define what type of experience.
+
+```{r}
+
+# plot coding_exp
+
+```
+
 
 ### Change in coding ability during current role
 
@@ -226,6 +239,32 @@ CARS::wrap_outputs("ability-change", plot, table)
 
 ```
 
+## AI tools
+
+### Use of AI tools
+We asked all respondents who use code in their role, it they use AI tools when coding at work.
+
+The term 'AI' was not defined in this question.
+
+```{r}
+# use_ai
+```
+
+### How AI tools are used
+We asked all respondents who use AI tools when coding at work, what they use these tools for. The 'other' option allowed a free-text response, with the most commonly reports other used being...
+
+
+```{r}
+
+```
+
+### Trust in AI
+We asked all respondents who use AI tools when coding at work, how much they trust the accuracy and reliability of the outputs. 
+
+```{r}
+AI trust
+```
+
 
 ## Reproducible analytical pipelines (RAP)
 
@@ -238,7 +277,7 @@ The following links contain more resources on RAP:
 
 ### Awareness of RAP over time
 
-We asked respondents who used coding at work, if they had heard of RAP.
+We asked all respondents if they had heard of RAP.
 
 ```{r}
 freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)
@@ -256,39 +295,6 @@ table <- CARS::df_to_table(freqs[c(2,5:7)],
                            proportion_col = 2:4)
 
 CARS::wrap_outputs("rap-awareness-over-time", plot, table)
-```
-
-### RAP Champions
-
-We asked respondents who had heard of RAP, if their department has a RAP champion and if they know who it is.
-
-[RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) support and promote the use of RAP across government. 
-
-Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any enquiries about RAP or the champions network.
-
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$rap_champ_status, n = samples$heard_of_RAP, break_q_names_col = "value", max_lines = 2, xlab = "Department RAP champions?", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$rap_champ_status, n = samples$heard_of_RAP, column_headers = c("Knowledge", "Percent"))
-
-CARS::wrap_outputs("rap-champ-status", plot, table)
-
-```
-
-### Awareness of RAP strategy
-
-We asked respondents who had heard of RAP, if they had heard of the RAP strategy.
-
-The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government.
-
-```{r}
-plot <- CARS::plot_freqs(tables$strategy_knowledge, break_q_names_col = 1, max_lines = 3, font_size = 14, orientation = "v", n = samples$heard_of_RAP)
-
-table <- CARS::df_to_table(tables$strategy_knowledge, c("Awareness of the RAP strategy", "Percent"), n = samples$heard_of_RAP)
-
-CARS::wrap_outputs("RAP-strat", plot, table)
-
 ```
 
 ### Opinions on RAP
