@@ -193,50 +193,38 @@ tidy_colnames <- function(raw_data) {
 #'
 #' @export
 
-get_all_waves <- function(mode = c("api", "file")) {
+get_all_waves <- function() {
 
-  mode <- match.arg(mode)
+    data <- get_tidy_data_file ("2024_data.csv")
+    w5_data <- get_tidy_data_file ("2023_data.csv")
+    w4_data <- get_tidy_data_file ("2022_data.csv")
+    w3_data <- get_tidy_data_file ("2021_data.csv")
 
-  if (mode == "api") {
-    data <- get_tidy_data_api()
-    w4_data <- get_tidy_data_api(survey = "1167489")
-    w3_data <- get_tidy_data_api(survey = "961613")
-    w2_data <- get_tidy_data_api(survey = "790800")
-  } else if (mode == "file") {
-    data <- read_file("2023_data.csv")
-    w4_data <- read_file("2022_data.csv")
-    w3_data <- read_file("2021_data.csv")
-    w2_data <- read_file("2020_data.csv")
-  }
+    data <- clean_data(data, config)
+    data <- derive_language_status(data)
+    data$year <- 2024
 
-  data <- data %>%
-    tidy_colnames() %>%
-    rename_cols() %>%
-    apply_skip_logic() %>%
-    clean_data() %>%
-    derive_vars()
-  data$year <- 2023
+
+  w5_data <- w5_data %>%
+    w5_rename_cols() %>%
+    w5_apply_skip_logic() %>%
+    w5_clean_data() %>%
+    w5_derive_vars()
+  w5_data$year <- 2023
 
   w4_data <- w4_data %>%
-    tidy_colnames() %>%
     w4_rename_cols() %>%
     w4_enforce_streaming() %>%
     w4_clean_departments()
   w4_data$year <- 2022
 
   w3_data <- w3_data %>%
-    tidy_colnames() %>%
     w3_rename_cols() %>%
     w3_enforce_streaming()
   w3_data$year <- 2021
 
-  w2_data <- w2_data %>%
-    tidy_colnames() %>%
-    w2_rename_cols() %>%
-    w2_enforce_streaming()
-  w2_data$year <- 2020
 
-  data <- dplyr::bind_rows(data, w4_data, w3_data, w2_data)
+  data <- dplyr::bind_rows(data, w5_data, w4_data, w3_data)
 
   return(data)
 }

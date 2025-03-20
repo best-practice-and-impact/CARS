@@ -5,6 +5,7 @@
 #' @param data tidied CARS wave 3 data (data.frame).
 #'
 #' @return data.frame
+#' @export
 
 derive_language_status <- function(data) {
 
