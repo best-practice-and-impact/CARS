@@ -28,10 +28,10 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions"),
     qs_aware = summarise_data(data, config, question = "qs_aware"),
     qs_comply = summarise_data(data, config, question = "qs_comply"),
-    qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE)
-   # line_manage = summarise_line_manage(data),
-   # git_knowledge = summarise_knowledge_git(data),
-   # git_access = summarise_access_git(data, sample = sample),
+    qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE),
+    management = summarise_data(data, config, question = "management"),
+    git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge"),
+    access_git = summarise_git(data, config, question = "coding_tools_access"),
 
   )
 
@@ -338,57 +338,24 @@ summarise_line_manage <- function(data){
 }
 
 
-#' @title Summarise knowledge of git
+#' @title Summarise access to git and knowledge of git
 #'
-#' @description calculate frequency table for if someone knows how to version control using git
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_knowledge_git <- function(data){
-
-  # Validation checks
-  if (!"knowledge_git" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'knowledge_git'")
-  }
-
-  questions <- "knowledge_git"
-
-  levels <- c("Yes",
-              "No",
-              "I don't know")
-
-  frequencies <- calculate_freqs(data, questions, levels)
-
-  return(frequencies)
-
-}
-
-
-#' @title Summarise access to git
-#'
-#' @description calculate frequency table for if someone has access to git
+#' @description calculate frequency table for if someone has access to git and calculate frequency table for if someone knows how to version control using git
 #'
 #' @param data full CARS dataset after pre-processing
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_access_git <- function(data, sample = FALSE){
+summarise_git <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
-  # Validation checks
-  if (!"access_git" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'access_git'")
-  }
+  list2env(get_question_data(config, question), envir = environment())
 
-  questions <- "access_git"
+  cols <- cols[grepl("git", cols)]
 
-  levels <- c("Yes",
-              "No",
-              "I don't know")
+  data[] <- lapply(data, factor, levels = levels)
 
-  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
+  frequencies <- calculate_freqs(data, cols, labels, prop = TRUE, sample = FALSE)
 
   return(frequencies)
 
