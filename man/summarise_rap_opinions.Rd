@@ -4,7 +4,7 @@
 \alias{summarise_rap_opinions}
 \title{Opinions of RAP}
 \usage{
-summarise_rap_opinions(data, sample = FALSE)
+summarise_rap_opinions(data, config, question, prop = TRUE, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

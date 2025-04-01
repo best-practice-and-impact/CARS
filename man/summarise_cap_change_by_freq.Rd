@@ -4,7 +4,14 @@
 \alias{summarise_cap_change_by_freq}
 \title{Summarise capability change by coding frequency}
 \usage{
-summarise_cap_change_by_freq(data, sample = FALSE)
+summarise_cap_change_by_freq(
+  data,
+  config,
+  question1,
+  question2,
+  prop = TRUE,
+  sample = FALSE
+)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
