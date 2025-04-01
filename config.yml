@@ -10,14 +10,12 @@ tracking_link:
 
 workplace:
   question: "Where do you primarily work?"
-  cols: workplace
   levels: ["Civil service, including devolved administrations",
            "NHS or local healthcare service",
            "Other"]
 
 cs_grade:
   question: "What is your civil service grade?"
-  cols: cs_grade
   levels: ["SCS Pay Band 1 (or equivalent)",
           "Grade 6 (or equivalent)",
           "Grade 7 (or equivalent)",
@@ -32,7 +30,6 @@ cs_grade:
 
 department:
   question: "Which Civil Service department do you primarily work in?"
-  cols: department
   levels: ["Attorney General's Office",
           "Cabinet Office (excl. agencies)",
           "Department for Business & Trade (excl. agencies)",
@@ -154,7 +151,6 @@ professions:
 
 ons_directorate:
   question: "Which ONS directorate do you belong to?"
-  cols: ons_directorate
   levels: ["Business Surveys",
             "Communications & Digital Publishing",
             "Data Growth and Operations",

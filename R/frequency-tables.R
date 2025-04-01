@@ -40,8 +40,8 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     output_list <- c(output_list,
                      list(
                         capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change"),
-                       # capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
-                       # capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
+                        capability_change_by_management = summarise_cap_change_by_management(data, config, question1 = "ability_change", question2 = "management"),
+                        capability_change_by_grade = summarise_cap_change_by_grade(data, config, question1 = "ability_change", question2 = "cs_grade"),
                        # basic_score_by_implementation = summarise_basic_score_by_imp(data),
                        # adv_score_by_implementation = summarise_adv_score_by_imp(data),
                        # basic_score_by_understanding = summarise_basic_score_by_understanding(data),
@@ -393,28 +393,27 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
 #'
 #' @description calculate the cross tab of capability change by management responsibility
 #'
-#' @param data full CARS dataset after pre-processing
+#' @param data cleaned CARS dataset
+#' @param config CARS config
+#' @param question1 ability change
+#' @param question2 management
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
+#' @param sample additionally returns count and sample size. FALSE by default
+#'
 #'
 #' @return frequency table (data.frame)
 
-summarise_cap_change_by_line_manage <- function(data){
+summarise_cap_change_by_management <- function(data, config, question1, question2, prop = TRUE, sample = FALSE){
 
-  col1 <- "management"
+  q1 <- get_question_data(config, question1)
+  col1 <- q1[["cols"]]
+  levels1 <- q1[["levels"]]
 
-  col2 <- "coding_ability_change"
+  q2 <- get_question_data(config, question2)
+  col2 <- q2[["cols"]]
+  levels2 <- q2[["levels"]]
 
-  levels1 <- c("Yes",
-               "No - I manage people who do not write code",
-               "No - I don't line manage anyone")
-
-  levels2 <- c(
-    "It has become significantly worse",
-    "It has become slightly worse",
-    "It has stayed the same",
-    "It has become slightly better",
-    "It has become significantly better")
-
-  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop, sample)
 
   return(frequencies)
 
@@ -425,34 +424,39 @@ summarise_cap_change_by_line_manage <- function(data){
 #'
 #' @description calculate the cross tab of capability change by CS grade
 #'
-#' @param data full CARS dataset after pre-processing
+#' @param data cleaned CARS dataset
+#' @param config CARS config
+#' @param question1 ability change
+#' @param question2 cs_grade
+#' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
+#' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
-summarise_cap_change_by_CS_grade <- function(data){
+summarise_cap_change_by_grade <- function(data, config, question1, question2, prop = TRUE, sample = FALSE){
 
-  col1 <- "CS_grade"
+  q1 <- get_question_data(config, question1)
+  col1 <- q1[["cols"]]
+  levels1 <- q1[["levels"]]
 
-  col2 <- "coding_ability_change"
-
-  levels1 <- c("Higher Executive Officer (or equivalent)",
-               "Senior Executive Officer (or equivalent)",
-               "Grade 6 and 7")
-
-  levels2 <- c(
-    "It has become significantly worse",
-    "It has become slightly worse",
-    "It has stayed the same",
-    "It has become slightly better",
-    "It has become significantly better")
+  q2 <- get_question_data(config, question2)
+  col2 <- q2[["cols"]]
+  levels2 <- c("Grade 6 and 7",
+               "SEO and HEO",
+               "EO and AO")
 
   selected_data <- data %>%
-    dplyr::select(CS_grade, coding_ability_change) %>%
-    dplyr::mutate(CS_grade = dplyr::case_when(CS_grade %in% c("Grade 7 (or equivalent)",
+    dplyr::select(cs_grade, ability_change) %>%
+    dplyr::mutate(cs_grade = dplyr::case_when(cs_grade %in% c("Grade 7 (or equivalent)",
                                                               "Grade 6 (or equivalent)") ~ "Grade 6 and 7",
-                                              TRUE ~ CS_grade))
+                                              cs_grade %in% c("Senior Executive Officer (or equivalent)",
+                                                              "Higher Executive Officer (or equivalent)",
+                                                              "Fast Stream") ~ "SEO and HEO",
+                                              cs_grade %in% c("Executive Officer (or equivalent)",
+                                                              "Administrative Officer (or equivalent)") ~ "EO and AO",
+                                              TRUE ~ cs_grade))
 
-  frequencies <- calculate_multi_table_freqs(selected_data, col1, col2, levels1, levels2)
+  frequencies <- calculate_multi_table_freqs(selected_data, col1, col2, levels1, levels2, prop, sample)
 
   return(frequencies)
 
@@ -846,19 +850,19 @@ add_sample_size <- function(frequencies, data, prop){
 
 calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE, sample = FALSE){
 
-  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
+  selected_data <- data %>% dplyr::select(dplyr::all_of(c(col1, col2)))
 
   selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
 
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
-    count(across(all_of(c(col1, col2))), .drop=FALSE) %>%
-    drop_na() %>%
+    dplyr::count(dplyr::across(dplyr::all_of(c(col1, col2))), .drop=FALSE) %>%
+    tidyr::drop_na() %>%
     data.frame()
 
   if (sample) {
-    frequencies <- add_sample_size(frequencies, data, prop)
+    frequencies <- CARS::add_sample_size(frequencies, data, prop)
   }
 
   if(prop){
