@@ -28,10 +28,14 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions"),
     qs_aware = summarise_data(data, config, question = "qs_aware"),
     qs_comply = summarise_data(data, config, question = "qs_comply"),
-    qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE),
+    qq_aware = summarise_data(data, config, question = "qq_aware"),
     management = summarise_data(data, config, question = "management"),
     git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge"),
     access_git = summarise_git(data, config, question = "coding_tools_access"),
+    ai = summarise_data(data, config, question = "ai"),
+    ai_tools = summarise_data(data, config, question = "ai_tools"),
+    ai_use = summarise_data(data, config, question = "ai_use"),
+    ai_trust = summarise_data(data, config, question = "ai_trust"),
 
   )
 
