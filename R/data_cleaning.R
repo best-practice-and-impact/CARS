@@ -113,8 +113,14 @@ rename_cols <- function(data, config) {
     stop("Unexpected input: incorrect number of columns. Please use the 2024 CARS dataset.")
   }
 
-  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
   colnames(data)[c(1:ncol(data))] <- c(
+    "UserID",
+    "Unique.ID",
+    "Name",
+    "Email",
+    "IP.Address",
+    "Started",
+    "Ended",
     "ID",
     "tracking_link",
     "workplace",
@@ -156,6 +162,8 @@ rename_cols <- function(data, config) {
     "comments",
     "future_surveys"
   )
+
+  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
   return(data)
 }
