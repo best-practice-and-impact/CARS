@@ -117,8 +117,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @description Produce bar chart (plotly) for single factor frequency data.
 #'
-#' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
-#' @param n sample size (optional)
+#' @param data Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())
 #' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
@@ -134,7 +133,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @export
 
 
-plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line"),
+plot_freqs <- function(data, colour, break_q_names_col, type = c("bar", "line"),
                        max_lines = 2,  xlab = "", ylab = "", font_size = 12,
                        orientation = c("v", "h"), ...) {
 
@@ -148,8 +147,8 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 2) {
-    stop("Unexpected input - data does not contain two columns.")
+  } else if (ncol(data) != 4) {
+    stop("Unexpected input - data does not contain four columns.")
   } else if (!is.numeric(data[[2]])) {
     stop("Unexpected input - data column 2 is not numeric.")
   }
@@ -196,7 +195,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  sample <- paste0("Sample size = ", data$sample)
 
   if (type == "bar") {
     fig <- plotly::plot_ly(

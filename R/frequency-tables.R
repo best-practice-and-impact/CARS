@@ -31,7 +31,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
     qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE),
     management = summarise_data(data, config, question = "management"),
     git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge"),
-    access_git = summarise_git(data, config, question = "coding_tools_access"),
+    access_git = summarise_git(data, config, question = "coding_tools_access")
 
   )
 
@@ -67,7 +67,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 #' @return frequency table df
 #' @export
 
-summarise_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
+summarise_data <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 
@@ -846,15 +846,15 @@ add_sample_size <- function(frequencies, data, prop){
 
 calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE, sample = FALSE){
 
-  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
+  selected_data <- data %>% dplyr::select(dplyr::all_of(c(col1, col2)))
 
   selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
 
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
   frequencies <- selected_data %>%
-    count(across(all_of(c(col1, col2))), .drop=FALSE) %>%
-    drop_na() %>%
+    count(dplyr::across(dplyr::all_of(c(col1, col2))), .drop=FALSE) %>%
+    tidyr::drop_na() %>%
     data.frame()
 
   if (sample) {
