@@ -1,0 +1,472 @@
+tracking_link:
+  "Default Web Link": "Default link"
+  "Data Science Slack": "Slack"
+  "RAP Champions": "RAP Champions"
+  "AF Newsletter": "Profession newsletter"
+  "Profession Newsletter": "Profession newsletter"
+  "RAS Newsletter ONS": "ONS Newsletter"
+  "Quality Champions ONS": "Quality Champions"
+  "ONS RAP Network": "ONS RAP Network"
+
+workplace:
+  question: "Where do you primarily work?"
+  cols: workplace
+  levels: ["Civil service, including devolved administrations",
+           "NHS or local healthcare service",
+           "Other"]
+
+cs_grade:
+  question: "What is your civil service grade?"
+  cols: cs_grade
+  levels: ["SCS Pay Band 1 (or equivalent)",
+          "Grade 6 (or equivalent)",
+          "Grade 7 (or equivalent)",
+          "Senior Executive Officer (or equivalent)",
+          "Higher Executive Officer (or equivalent)",
+          "Executive Officer (or equivalent)",
+          "Administrative Officer (or equivalent)",
+          "Fast Stream",
+          "Other (please specify)"]
+
+
+
+department:
+  question: "Which Civil Service department do you primarily work in?"
+  cols: department
+  levels: ["Attorney General's Office",
+          "Cabinet Office (excl. agencies)",
+          "Department for Business & Trade (excl. agencies)",
+          "Department for Culture, Media & Sport",
+          "Department for Education (excl. agencies)",
+          "Department for Energy Security & Net Zero",
+          "Department for Environment Food & Rural Affairs (excl. agencies)",
+          "Department for Science, Innovation & Technology (excl. agencies)",
+          "Department for Transport (excl. agencies)",
+          "Department for Work & Pensions",
+          "Department of Health & Social Care (excl. agencies)",
+          "Foreign, Commonwealth & Development Office (excl. agencies)",
+          "HM Treasury (excl. agencies)",
+          "Home Office",
+          "Ministry of Defence (excl. agencies)",
+          "Ministry of Housing, Communities & Local Government (excl. agencies)",
+          "Ministry of Justice (excl. agencies)",
+          "Northern Ireland Office",
+          "Office of the Advocate General for Scotland",
+          "Office of the Leader of the House of Commons",
+          "Office of the Leader of the House of Lords",
+          "Office of the Secretary of State for Scotland",
+          "UK Export Finance",
+          "Wales Office",
+          "The Charity Commission",
+          "Competition and Markets Authority",
+          "Crown Prosecution Service",
+          "Food Standards Agency",
+          "Forestry Commission (excl. agencies)",
+          "Government Actuary's Department",
+          "Government Legal Department",
+          "HM Land Registry",
+          "HM Revenue & Customs (excl. agencies)",
+          "NS&I",
+          "The National Archives",
+          "National Crime Agency",
+          "Office of Rail and Road",
+          "Ofgem",
+          "Ofqual",
+          "Ofsted",
+          "Serious Fraud Office",
+          "Supreme Court of the United Kingdom",
+          "UK Statistics Authority",
+          "The Water Services Regulation Authority (Ofwat)",
+          "Prime Minister's Office, 10 Downing Street",
+          "Crown Commercial Service",
+          "Government Property Agency",
+          "Companies House",
+          "The Insolvency Service",
+          "Building Digital UK",
+          "Intellectual Property Office",
+          "Met Office",
+          "UK Space Agency",
+          "Planning Inspectorate",
+          "Queen Elizabeth II Conference Centre",
+          "Education and Skills Funding Agency",
+          "Teaching Regulation Agency",
+          "Standards and Testing Agency",
+          "Animal and Plant Health Agency",
+          "Centre for Environment, Fisheries and Aquaculture Science",
+          "Rural Payments Agency",
+          "Veterinary Medicines Directorate",
+          "Active Travel England",
+          "Driver and Vehicle Licensing Agency",
+          "Driver and Vehicle Standards Agency",
+          "Maritime and Coastguard Agency",
+          "Vehicle Certification Agency",
+          "Medicines and Healthcare products Regulatory Agency",
+          "UK Health Security Agency",
+          "Wilton Park",
+          "Government Internal Audit Agency",
+          "National Infrastructure Commission",
+          "UK Debt Management Office",
+          "Defence Electronics and Components Agency",
+          "Defence Equipment and Support",
+          "Defence Science and Technology Laboratory",
+          "UK Hydrographic Office",
+          "Submarine Delivery Agency",
+          "Criminal Injuries Compensation Authority",
+          "HM Courts & Tribunals Service",
+          "HM Prison and Probation Service",
+          "Legal Aid Agency",
+          "Office of the Public Guardian",
+          "Forest Research",
+          "Forestry England",
+          "Valuation Office Agency",
+          "Office for National Statistics",
+          "Northern Ireland Executive",
+          "Scottish Government (excl. agencies)",
+          "Welsh Government",
+          "Accountant in Bankruptcy",
+          "Disclosure Scotland",
+          "Education Scotland",
+          "Forestry and Land Scotland",
+          "Scottish Forestry",
+          "Scottish Prison Service",
+          "Scottish Public Pensions Agency",
+          "Social Security Scotland",
+          "Student Awards Agency for Scotland",
+          "Transport Scotland"]
+
+
+professions:
+  question: "Do you belong to any of these civil service professions?"
+  cols:
+    prof_DE: "Data Engineers"
+    prof_DS: "Data Scientists"
+    prof_GDD: "Government Digital and Data"
+    prof_GAD: "Government Actuary's Department"
+    prof_GES: "Government Economic Service"
+    prof_geog: "Government Geography Profession"
+    prof_GORS: "Government Operational Research Service"
+    prof_GSE: "Government Science & Engineering"
+    prof_GSR: "Government Social Research"
+    prof_GSG: "Government Statistician Group"
+    prof_none: "Civil Service, no profession membership"
+    prof_other: "Other Civil Service profession"
+  levels: ["Yes", "No"]
+
+ons_directorate:
+  question: "Which ONS directorate do you belong to?"
+  cols: ons_directorate
+  levels: ["Business Surveys",
+            "Communications & Digital Publishing",
+            "Data Growth and Operations",
+            "Data Science Campus",
+            "Digital Services and Technology",
+            "Economic Statistics Change",
+            "Economic Statistics Production and Analysis",
+            "Finance, Planning & Performance",
+            "Health and International",
+            "Integrated Data Programme and Service",
+            "Macroeconomic and Environment Statistics and Analysis",
+            "Methodology and Quality",
+            "People & Business Services",
+            "Population Transformation",
+            "Population Statistics",
+            "Public Policy Analysis",
+            "Social Surveys",
+            "Other"]
+
+pay_band:
+  question: "Which pay bands cover your role?"
+  levels: ["NHS",
+          "Local Authority or NJC",
+          "Other / Not sure"]
+
+nhs_band:
+  question: "What is your NHS band (or equivalent)?"
+  levels: ["Band 2",
+          "Band 3",
+          "Band 4",
+          "Band 5",
+          "Band 6",
+          "Band 7",
+          "Band 8a",
+          "Band 8b",
+          "Band 8c",
+          "Band 8d",
+          "Band 9"]
+
+njc_grade:
+  question: "What is your local authority or NJC grade (or equivalent)?"
+  levels: ["Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Grade 6",
+          "Grade 7",
+          "Grade 8",
+          "Grade 9",
+          "Grade 10",
+          "Grade 11",
+          "Other"]
+
+nhs_country:
+  question: "Which UK country do you primarily work in?"
+  levels: ["England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"]
+
+nhs_england:
+  question: "In England, which type of NHS organisation are you primarily based in?"
+  levels: ["NHS England",
+          "NHS Trust",
+          "Other"]
+
+nhs_scotland:
+  question: "In Scotland, which type of NHS organisation are you primarily based in?"
+  levels: ["NHS Scotland",
+          "Public Health Scotland",
+          "Regional Health Board",
+          "Special Health Board",
+          "Other"]
+
+nhs_wales:
+  question: "In Wales, which type of NHS organisation are you primarily based in?"
+  levels: ["Public Health Wales",
+          "Local Health Board",
+          "NHS Trust",
+          "Other"]
+
+nhs_ni:
+  question: "In Northern Ireland, which type of NHS organisation are you primarily based in?"
+  levels: ["Public Health Agency",
+          "Health and Social Care Trust",
+          "Other"]
+
+coding_exp:
+  question: "Do you have any coding experience?"
+  levels: ["Yes",
+          "No"]
+
+team:
+  question: "Do you work in a team with people who write code to complete their work?"
+  levels: ["Yes",
+          "No"]
+
+management:
+  question: "Do you line manage anyone who writes code to complete their work?"
+  levels: ["Yes",
+          "No - I manage people who do not write code",
+          "No - I don't line manage anyone"]
+
+code_freq:
+  question: "In your current role, how often do you write code to complete your work objectives?"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always"]
+
+code_leisure:
+  question: "How often do you write code outside of work?"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always"]
+
+first_learned:
+  question: "Where did you first learn to code?"
+  levels: ["Self-taught",
+          "Primary/secondary education",
+          "Higher Education",
+          "Current role",
+          "Previous public sector employment",
+          "Previous private sector employment",
+          "Other"]
+
+coding_years:
+  question: "How many years of experience do you have in a coding role?"
+  levels: ["None",
+          "Less than 1 year",
+          "1 - 3 years",
+          "3 - 5 years",
+          "Over 5 years"]
+
+ability_change:
+  question: "How has your coding ability changed during your current role?"
+  levels: ["It has become significantly better",
+          "It has become slightly better",
+          "It has stayed the same",
+          "It has become slightly worse",
+          "It has become significantly worse"]
+
+coding_tools_access:
+  question: "Is this tool available to use for your work?"
+  levels: ["Yes",
+          "No",
+          "Don't know"]
+  cols:
+    access_python: "Python"
+    access_R: "R"
+    access_matlab: "Matlab"
+    access_SAS: "SAS"
+    access_SPSS: "SPSS"
+    access_SQL: "SQL"
+    access_stata: "Stata"
+    access_VBA: "VBA"
+    access_git: "Git"
+    access_other: "Other"
+
+coding_tools_knowledge:
+  question: "Do you know how to use this tool for your work?"
+  levels: ["Yes",
+            "No",
+            "Not required for my work"]
+  cols:
+    knowledge_python: "Python"
+    knowledge_R: "R"
+    knowledge_matlab: "Matlab"
+    knowledge_SAS: "SAS"
+    knowledge_SPSS: "SPSS"
+    knowledge_SQL: "SQL"
+    knowledge_stata: "Stata"
+    knowledge_VBA: "VBA"
+    knowledge_git: "Git"
+    knowledge_other: "Other"
+
+coding_practices:
+  question: "When coding in your current role, how often do you do the following?"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always",
+          "I don't understand this question"]
+  cols:
+    prac_open_source: "Use open source software"
+    prac_code_style: "Use a standard code style"
+    prac_functions: "Write functions"
+    prac_control_flow: "Use control flow"
+    prac_config: "Separate settings from code"
+    prac_review: "Have code reviewed"
+    prac_manual_tests: "Manually test code"
+    prac_auto_tests: "Write automated tests"
+
+working_practices:
+  question: "When coding in your current role, how often do you do the following?"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always",
+          "I don't understand this question"]
+  cols:
+    work_git: "Use version control"
+    work_succession: "Ensure longevity"
+    work_aims: "Understand project aims"
+    work_roles: "Understand project roles"
+    work_publish_code: "Publish code in the open"
+    work_qa: "Work to quality standards"
+
+doc:
+  question: "When coding in your current role, how often do you do the following?"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always",
+          "I don't understand this question"]
+  cols:
+    doc_readme: "Create README files"
+    doc_function: "Document functions"
+    doc_dependencies: "Document dependencies"
+    doc_design: "Document pipeline design"
+    doc_qa: "Document manual QA steps"
+
+ai:
+  question: "Do you use any AI tools when coding at work?"
+  levels: ["Yes",
+          "No"]
+
+ai_tools:
+  question: "Which of the following AI tools do you use when coding at work?"
+  levels: ["Yes",
+          "No"]
+  cols:
+    ai_gpt: "ChatGPT"
+    ai_github: "GitHub Copilot"
+    ai_google: "Google Gemini"
+    ai_microsoft: "Microsoft Copilot"
+    ai_vscode: "Visual Studio Intellicode"
+    ai_other: "Other"
+
+ai_use:
+  question: "What do you use AI tools for when coding at work?"
+  levels: ["Yes",
+          "No"]
+  cols:
+    ai_use_write: "Writing code"
+    ai_use_debug: "Debugging code"
+    ai_use_efficiency: "Improving efficiency of code"
+    ai_use_convert: "Converting code to a new language"
+    ai_use_doc: "Documenting code"
+    ai_use_question: "Getting answers to a coding question"
+    ai_use_testing: "Testing code"
+    ai_use_data: "Generating synthetic data"
+    ai_use_other: "Other"
+
+ai_trust:
+  question: "How much do you trust the accuracy and reliability of outputs from AI tools when coding at work?"
+  levels: ["Strongly trust",
+          "Somewhat trust",
+          "Neutral/not sure",
+          "Somewhat distrust",
+          "Strongly distrust"]
+
+heard_of_rap:
+  question: "Have you heard anything about reproducible analytical pipelines (RAPs)?"
+  levels: ["Yes",
+          "No"]
+
+rap_opinions:
+  question: "For each of the following please answer to what degree you agree with the statement."
+  levels: ["Strongly Disagree",
+          "Disagree",
+          "Neutral",
+          "Agree",
+          "Strongly Agree"]
+  cols:
+    rap_important: "I think it is important to implement RAP in my work"
+    rap_resources: "I have the resources I need to help me implement RAP in my work"
+    rap_implementing: "I am currently implementing RAP in my work"
+    dept_values_rap: "My department values RAP"
+    rap_other: "Other"
+
+qs_aware:
+  question: "The ONS Quality Standard for Analysis gives the minimal standard of quality expected for all analysis in ONS. How aware, if at all, are you of the Quality Standard?"
+  levels: ["I am aware of the Quality Standard",
+           "I am not aware of the Quality Standard"]
+
+qs_comply:
+  question: "Overall, how does any analysis you produce comply with the Quality Standard?"
+  levels: ["I don’t produce analysis",
+          "The analysis I produce does not comply with the Quality Standard at all",
+          "I’m not sure if analysis complies with the Quality Standard",
+          "The analysis I produce partly complies with the Quality Standard",
+          "The analysis I produce complies fully with the Quality Standard"]
+
+qq_aware:
+ question: "The ONS Quality Questions have been designed to help analysts assure their work so that it complies with the ONS Quality Standard. Which statement best describes your experience of the ONS Quality Questions?"
+ levels: ["I am aware of the ONS Quality Questions but don’t use them",
+          "I am aware of the ONS Quality Questions and use them",
+          "I am not aware of the ONS Quality Questions"]
+
+comments:
+  question: "Do you have any further comments on your experiences with coding in government analysis and research?"
+
+future_surveys:
+  question: "What would you like to see in future surveys?"
+
+
+

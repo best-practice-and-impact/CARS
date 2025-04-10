@@ -4,7 +4,7 @@
 \alias{get_all_waves}
 \title{Get all CARS data, including previous waves}
 \usage{
-get_all_waves(mode = c("api", "file"))
+get_all_waves()
 }
 \arguments{
 \item{mode}{data source - "api"/"file"}

@@ -4,7 +4,7 @@
 \alias{clean_data}
 \title{Clean data}
 \usage{
-clean_data(data)
+clean_data(data, config)
 }
 \arguments{
 \item{data}{cleaned CARS dataset}
@@ -13,5 +13,5 @@ clean_data(data)
 CARS dataset
 }
 \description{
-Recategorise department, workplace and first_learned data
+Rename columns, enforce streaming
 }

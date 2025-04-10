@@ -4,27 +4,20 @@
 \alias{calculate_freqs}
 \title{Calculate frequencies}
 \usage{
-calculate_freqs(
-  data,
-  questions,
-  levels,
-  labels = NULL,
-  prop = TRUE,
-  sample = FALSE
-)
+calculate_freqs(data, cols, labels, prop = TRUE, sample = FALSE)
 }
 \arguments{
 \item{data}{full CARS data frame  after pre-processing}
-
-\item{questions}{columns to filter data on}
-
-\item{levels}{all possible factor values in the filtered columns}
 
 \item{labels}{labels to rename the column headers. Only needed for multi-column frequencies}
 
 \item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}
 
 \item{sample}{additionally returns count and sample size. FALSE by default}
+
+\item{questions}{columns to filter data on}
+
+\item{levels}{all possible factor values in the filtered columns}
 }
 \value{
 data.frame
