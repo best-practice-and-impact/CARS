@@ -12,7 +12,9 @@
 
 df_to_table <- function(data, config, question, crosstab = FALSE, column_headers) {
 
-  list2env(get_question_data(config, question), envir = environment())
+  if !missing(config, question){
+    list2env(get_question_data(config, question), envir = environment())
+  }
 
   data <- data[[cols]]
 

@@ -7,19 +7,16 @@ output:
 
 ```{r echo=FALSE}
 
-library(magrittr)
+data <- CARS::get_tidy_data_file("2024_data.csv")
+config <- yaml::read_yaml("./config.yml")
 
-data <- CARS::get_tidy_data_file("2023_data.csv") %>%
-  CARS::rename_cols() %>%
-  CARS::apply_skip_logic() %>%
-  CARS::clean_data() %>%
-  CARS::derive_vars()
+data <- CARS::clean_data(data, config)
 
-all_wave_data <- CARS::get_all_waves(mode = "file")
+all_wave_data <- CARS::get_all_waves()
 
-tables <- CARS::summarise_all(data, all_tables = TRUE)
+tables <- CARS::summarise_all(data, all_tables = FALSE)
 
-samples <- CARS::sample_sizes(data)
+#samples <- CARS::sample_sizes(data)
 
 ```
 :::{.callout-note}
@@ -42,8 +39,8 @@ We asked all respondents with coding experience "In your current role, how often
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$code_freq, n = samples$all, xlab = "Coding frequency", font_size = 14)
-table <- CARS::df_to_table(tables$code_freq, n = samples$all, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "Percent"))
+plot <- CARS::plot_freqs(tables$code_freq, xlab = "Coding frequency", font_size = 14)
+table <- CARS::df_to_table(data = tables, config = config, question = "code_freq")
 
 CARS::wrap_outputs("coding-freq", plot, table)
 
@@ -54,22 +51,22 @@ CARS::wrap_outputs("coding-freq", plot, table)
 ```{r}
 
 all_wave_data$code_freq <- factor(all_wave_data$code_freq, levels = c(
-  "Never", 
+  "Never",
   "Rarely",
   "Sometimes",
   "Regularly",
   "All the time"
 ))
 
-code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) %>% 
-  data.frame %>% 
-  dplyr::group_by(Var1) %>% 
-  dplyr::mutate(n = sum(Freq), percent = Freq / sum(Freq)) %>% 
+code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) %>%
+  data.frame %>%
+  dplyr::group_by(Var1) %>%
+  dplyr::mutate(n = sum(Freq), percent = Freq / sum(Freq)) %>%
   data.frame() %>%
   CARS::get_ci(3, 4)
 
 plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], orientation = "v", type = "bar", font_size = 14, xlab = "Year") %>%
-  plotly::layout(legend = list(traceorder = "reversed")) 
+  plotly::layout(legend = list(traceorder = "reversed"))
 
 table <- CARS::df_to_table(code_freqs_by_year[c(2,1,5)], crosstab = T, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "2020", "2021", "2022", "2023"))
 
@@ -79,7 +76,7 @@ CARS::wrap_outputs("code-freq", plot, table)
 
 ### Access to and knowledge of programming languages
 
-Given a list of programming tools, we asked all respondents if the tool was available to use for their work. 
+Given a list of programming tools, we asked all respondents if the tool was available to use for their work.
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 

@@ -4,7 +4,7 @@
 \alias{summarise_data}
 \title{Generic summarise data into frequency table}
 \usage{
-summarise_data(data, config, question, prop = TRUE, sample = FALSE)
+summarise_data(data, config, question, prop = TRUE, sample = TRUE)
 }
 \arguments{
 \item{data}{cleaned CARS dataset}

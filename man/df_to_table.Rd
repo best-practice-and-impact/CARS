@@ -4,19 +4,18 @@
 \alias{df_to_table}
 \title{Data frame to html table}
 \usage{
-df_to_table(data, column_headers, n, crosstab = FALSE, proportion_col)
+df_to_table(data, config, question, crosstab = FALSE, column_headers)
 }
 \arguments{
-\item{data}{frequency table in tidy format. Last column should contain proportions.
-First one or two columns should contain factors.}
+\item{data}{list of CARS frequency tables, table names should match config}
 
-\item{column_headers}{optional: list of column headers for the output table}
+\item{config}{CARS config}
 
-\item{n}{optional: sample size}
+\item{question}{string, question of interest. Name should match config.}
 
 \item{crosstab}{whether to create a cross tabulation. FALSE by default}
 
-\item{proportion_col}{optional: columns to be turned into a percentage. Last column only be default}
+\item{column_headers}{optional: list of column headers for the output table}
 }
 \value{
 HTML table

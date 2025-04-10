@@ -13,8 +13,8 @@ get_tidy_data_api <- function(...) {
 
   ingest(...) # First API request always fails so the API is pinged twice to circumvent this.
 
-  data <- ingest(...) %>%
-    convert_raw() %>%
+  data <- ingest(...) |>
+    convert_raw() |>
     tidy_colnames()
 
   return(data)
@@ -33,7 +33,7 @@ get_tidy_data_api <- function(...) {
 
 get_tidy_data_file <- function(...) {
 
-  data <- read_file(...) %>%
+  data <- read_file(...) |>
     tidy_colnames()
 
   return(data)
@@ -195,32 +195,32 @@ tidy_colnames <- function(raw_data) {
 
 get_all_waves <- function() {
 
-    data <- get_tidy_data_file ("2024_data.csv")
-    w5_data <- get_tidy_data_file ("2023_data.csv")
-    w4_data <- get_tidy_data_file ("2022_data.csv")
-    w3_data <- get_tidy_data_file ("2021_data.csv")
+    data <- CARS::get_tidy_data_file ("2024_data.csv")
+    w5_data <- CARS::get_tidy_data_file ("2023_data.csv")
+    w4_data <- CARS::get_tidy_data_file ("2022_data.csv")
+    w3_data <- CARS::get_tidy_data_file ("2021_data.csv")
 
-    data <- clean_data(data, config)
-    data <- derive_language_status(data)
+    data <- CARS::clean_data(data, config)
+    data <- CARS::derive_language_status(data)
     data$year <- 2024
 
 
-  w5_data <- w5_data %>%
-    w5_rename_cols() %>%
-    w5_apply_skip_logic() %>%
-    w5_clean_data() %>%
-    w5_derive_vars()
+  w5_data <- w5_data |>
+    CARS::w5_rename_cols() |>
+    CARS::w5_apply_skip_logic() |>
+    CARS::w5_clean_data() |>
+    CARS::w5_derive_vars()
   w5_data$year <- 2023
 
-  w4_data <- w4_data %>%
-    w4_rename_cols() %>%
-    w4_enforce_streaming() %>%
-    w4_clean_departments()
+  w4_data <- w4_data |>
+    CARS::w4_rename_cols() |>
+    CARS::w4_enforce_streaming() |>
+    CARS::w4_clean_departments()
   w4_data$year <- 2022
 
-  w3_data <- w3_data %>%
-    w3_rename_cols() %>%
-    w3_enforce_streaming()
+  w3_data <- w3_data |>
+    CARS::w3_rename_cols() |>
+    CARS::w3_enforce_streaming()
   w3_data$year <- 2021
 
 
