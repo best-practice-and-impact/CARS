@@ -708,8 +708,9 @@ get_question_data <- function(config, question){
   }
 
   levels <- config[[question]][["levels"]]
+  full_question <- config[[question]][["question"]]
 
-  return(list(cols = cols, labels = labels, levels = levels))
+  return(list(cols = cols, labels = labels, levels = levels, full_question = full_question))
 
 }
 
