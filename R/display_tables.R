@@ -12,11 +12,10 @@
 
 df_to_table <- function(data, config, question, crosstab = FALSE, column_headers) {
 
-  if !missing(config, question){
+  if (!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
+    data <- data[[cols]]
   }
-
-  data <- data[[cols]]
 
   table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
 
@@ -36,11 +35,11 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
     colnames(table_data) <- c(full_question, "Percentage")
   }
 
-  html <- knitr::kable(table_data, align = alignment, format = "html") %>% kableExtra::kable_styling()
+  html <- knitr::kable(table_data, align = alignment, format = "html") |> kableExtra::kable_styling()
 
-
-  html <- kableExtra::add_footnote(html, paste0("Sample size = ", data$sample[1]), notation = "none")
-
+  if (crosstab == FALSE){
+    html <- kableExtra::add_footnote(html, paste0("Sample size = ", data$sample[1]), notation = "none")
+  }
 
   return(html)
 }
@@ -58,7 +57,8 @@ df_to_crosstab <- function(data) {
     stop("Unexpected input: expecting a dataframe with three columns.")
   }
 
-  data <- tidyr::pivot_wider(data, id_cols = 1, names_from = 2, values_from = 3) %>% data.frame(check.names = FALSE)
+  data <- tidyr::pivot_wider(data, id_cols = 1, names_from = 2, values_from = 3) |>
+    data.frame(check.names = FALSE)
 
   return(data)
 }

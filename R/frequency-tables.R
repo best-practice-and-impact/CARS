@@ -642,17 +642,17 @@ summarise_os_vs_prop <- function(data) {
 
   os_freqs <- data %>%
     dplyr::group_by(year) %>%
-    dplyr::summarise(Freq = sum(open_source_lang_knowledge), n = dplyr::n()) %>%
-    data.frame %>%
-    get_ci(freq_col = 2, n_col = 3)
+    dplyr::summarise(Freq = sum(open_source_lang_knowledge, na.rm = TRUE), sample = dplyr::n()) %>%
+    data.frame() %>%
+    CARS::get_ci(freq_col = 2, n_col = 3)
 
   os_freqs <- cbind(lang_type = "Open Source", os_freqs)
 
   prop_freqs <- data %>%
     dplyr::group_by(year) %>%
-    dplyr::summarise(Freq = sum(prop_lang_knowledge), n = dplyr::n()) %>%
+    dplyr::summarise(Freq = sum(prop_lang_knowledge, na.rm = TRUE), sample = dplyr::n()) %>%
     data.frame %>%
-    get_ci(freq_col = 2, n_col = 3)
+    CARS::get_ci(freq_col = 2, n_col = 3)
 
   prop_freqs <- cbind(lang_type = "Proprietary", prop_freqs)
 

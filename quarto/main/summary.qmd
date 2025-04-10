@@ -50,25 +50,28 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```{r}
 
-all_wave_data$code_freq <- factor(all_wave_data$code_freq, levels = c(
-  "Never",
-  "Rarely",
-  "Sometimes",
-  "Regularly",
-  "All the time"
-))
+all_wave_data$code_freq <- gsub("All the time", "Always", all_wave_data$code_freq)
 
-code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) %>%
-  data.frame %>%
-  dplyr::group_by(Var1) %>%
-  dplyr::mutate(n = sum(Freq), percent = Freq / sum(Freq)) %>%
-  data.frame() %>%
+all_wave_data$code_freq <- factor(all_wave_data$code_freq, config$code_freq$levels)
+
+code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) |>
+  data.frame() |>
+  dplyr::group_by(Var1) |>
+  dplyr::mutate(sample = sum(Freq), n = Freq / sum(Freq)) |>
+  data.frame() |>
   CARS::get_ci(3, 4)
 
-plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], orientation = "v", type = "bar", font_size = 14, xlab = "Year") %>%
+plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], 
+                           orientation = "v", 
+                           type = "bar", 
+                           font_size = 14, 
+                           xlab = "Year") |>
   plotly::layout(legend = list(traceorder = "reversed"))
 
-table <- CARS::df_to_table(code_freqs_by_year[c(2,1,5)], crosstab = T, column_headers = c("In your current role, how often do you write code to complete your work objectives?", "2020", "2021", "2022", "2023"))
+table <- CARS::df_to_table(code_freqs_by_year[c(2,1, 4, 5)], 
+                     crosstab = TRUE, 
+                     column_headers = c("In your current role, how often do you write code to complete your work objectives?", 
+                                        "2020", "2021", "2022", "2023"))
 
 CARS::wrap_outputs("code-freq", plot, table)
 
@@ -83,24 +86,22 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 ### Access to coding tools
 ```{r}
 
-plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$access, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
 ```
 
-
-
-Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
+Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
 
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
 ### Knowledge of coding tools
 ```{r}
 
-plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
