@@ -133,9 +133,15 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @export
 
 
-plot_freqs <- function(data, colour, break_q_names_col, type = c("bar", "line"),
+plot_freqs <- function(data, config, question, colour, break_q_names_col, type = c("bar", "line"),
                        max_lines = 2,  xlab = "", ylab = "", font_size = 12,
                        orientation = c("v", "h"), ...) {
+
+  if(!missing(config)){
+    list2env(get_question_data(config, question), envir = environment())
+    data <- data[[cols]]
+    xlab <- full_question
+  }
 
   # Set default bar colour
   if (missing(colour)) {

@@ -10,7 +10,7 @@
 #' @return HTML table
 #' @export
 
-df_to_table <- function(data, config, question, crosstab = FALSE, column_headers) {
+df_to_table <- function(data, config, question, crosstab = FALSE, column_headers, sample = TRUE) {
 
   if (!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
@@ -37,7 +37,7 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
 
   html <- knitr::kable(table_data, align = alignment, format = "html") |> kableExtra::kable_styling()
 
-  if (crosstab == FALSE){
+  if (sample == TRUE){
     html <- kableExtra::add_footnote(html, paste0("Sample size = ", data$sample[1]), notation = "none")
   }
 
