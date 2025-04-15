@@ -140,7 +140,6 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
   if(!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
     data <- data[[cols]]
-    xlab <- full_question
   }
 
   # Set default bar colour
@@ -190,6 +189,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
     y_vals <- data[[2]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
+    title_text <- xlab
   } else if (orientation == "h") {
     data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
     x_vals <- data[[2]]
@@ -528,8 +528,8 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
-    stop("Unexpected input - data should have at three columns.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data should have five columns.")
   }
 
   # Validate labels
@@ -561,7 +561,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
-    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines)
+    data[[break_q_names_col]] <- CARS::break_q_names(data[[break_q_names_col]], max_lines)
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = unique(data[[break_q_names_col]]))
   }
 

@@ -99,9 +99,9 @@ clean_departments <- function(data) {
 
 }
 
-#' @title Clean department data
+#' @title Clean first_learned data
 #'
-#' @description add NHS to department list and merge departments where needed.
+#' @description categorise 'other' responses.
 #'
 #' @param data cleaned CARS dataset
 #'

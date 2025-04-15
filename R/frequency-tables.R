@@ -183,6 +183,8 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
+  frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
+
   return(frequencies)
 
 }
@@ -677,10 +679,11 @@ summarise_rap_awareness_over_time <- function(data) {
     RAP_awareness <- table(data$heard_of_RAP, data$year) |>
     data.frame() |>
     dplyr::group_by(Var2) |>
-    dplyr::mutate(n = sum(Freq)) |>
+    dplyr::mutate(Count = sum(Freq)) |>
     dplyr::filter(Var1 == "Yes") |>
     data.frame()  |>
-    get_ci(freq_col = 3, n_col = 4)
+    CARS::get_ci(freq_col = 3, n_col = 4) |>
+    dplyr::rename(n = "percent")
 
     return(RAP_awareness)
 }

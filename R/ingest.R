@@ -203,7 +203,7 @@ get_all_waves <- function() {
     data <- CARS::clean_data(data, config)
     data <- CARS::derive_language_status(data)
     data$year <- 2024
-
+  data <- dplyr::rename(data, heard_of_RAP = "heard_of_rap")
 
   w5_data <- w5_data |>
     CARS::w5_rename_cols() |>
