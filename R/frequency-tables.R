@@ -100,6 +100,8 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
+  frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
+
   return(frequencies)
 
 }

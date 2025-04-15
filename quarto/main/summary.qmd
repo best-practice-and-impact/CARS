@@ -172,9 +172,14 @@ Please note these outputs include people who do not code at work.
 ### Access to git
 
 ```{r}
-plot <- CARS::plot_freqs(data = tables$git_access, xlab = "Is Git available to use for your work?", font_size = 14) |> CARS::set_axis_range(0, 1, axis = "y")
+plot <- CARS::plot_freqs(data = tables$git_access, 
+                         xlab = "Is Git available to use for your work?", 
+                         font_size = 14) |> 
+  CARS::set_axis_range(0, 1, axis = "y")
 
-table <- CARS::df_to_table(data = tables, config = config, question = "git_access")
+table <- CARS::df_to_table(data = tables$git_access, 
+                           column_headers = c("Is Git available to use for your work?", 
+                                              "Percentage"))
 
 CARS::wrap_outputs("git-access", plot, table)
 
@@ -182,9 +187,14 @@ CARS::wrap_outputs("git-access", plot, table)
 
 ### Knowledge of git
 ```{r}
-plot <- CARS::plot_freqs(tables$git_knowledge, font_size = 14, xlab = "Do you know how to use Git for your work?") |> CARS::set_axis_range(0, 1, axis = "y")
+plot <- CARS::plot_freqs(data = tables$git_knowledge, 
+                         font_size = 14, 
+                         xlab = "Do you know how to use Git for your work?") |> 
+  CARS::set_axis_range(0, 1, axis = "y")
 
-table <- CARS::df_to_table(data = tables, config = config, question = "git_knowledge")
+table <- CARS::df_to_table(data = tables$git_knowledge, 
+                           column_headers = c("Do you know how to use Git for your work?", 
+                                              "Percentage"))
 
 CARS::wrap_outputs("git-knowledge", plot, table)
 
@@ -349,7 +359,7 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ```{r}
 
-plot <- plot_likert(tables$rap_opinions,
+plot <- CARS::plot_likert(tables$rap_opinions,
                           mid = 3, break_q_names_col = "name",
                           max_lines = 2, font_size = 14,
                           height = 700, width = "100%")
@@ -379,24 +389,24 @@ Open sourcing was defined as 'making code freely available to be modified and re
 
 ```{r}
 
-tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) |> data.frame
-
-tables$rap_components$name <- as.character(tables$rap_components$name)
-
-tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
-
-plot <- CARS::plot_grouped(tables$rap_components,
-                           n = samples$code_at_work,
-                           orientation = "h",
-                           xlab = "RAP component", font_size = 14)
-
-table <- CARS::df_to_table(tables$rap_components,
-                           n = samples$code_at_work,
-                           column_headers = c("RAP component",
-                                              "Type",
-                                              "Percentage of analysts who code in their work"))
-
-CARS::wrap_outputs("rap-comp", plot, table)
+# tables$rap_components <-  tables$rap_components |> dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) |> data.frame()
+# 
+# tables$rap_components$name <- as.character(tables$rap_components$name)
+# 
+# tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
+# 
+# plot <- CARS::plot_grouped(tables$rap_components,
+#                            n = samples$code_at_work,
+#                            orientation = "h",
+#                            xlab = "RAP component", font_size = 14)
+# 
+# table <- CARS::df_to_table(tables$rap_components,
+#                            n = samples$code_at_work,
+#                            column_headers = c("RAP component",
+#                                               "Type",
+#                                               "Percentage of analysts who code in their work"))
+# 
+# CARS::wrap_outputs("rap-comp", plot, table)
 
 ```
 
@@ -408,7 +418,6 @@ We asked respondents who reported writing code at work how frequently they apply
 ```{r}
 
 plot <- CARS::plot_likert(tables$coding_practices,
-                          n = samples$code_at_work,
                           mid = 5, neutral_mid = FALSE,
                           break_q_names_col = "name",
                           max_lines = 2, font_size = 14,
@@ -424,7 +433,6 @@ table <- CARS::df_to_table(tables$coding_practices,
                              "Regularly (%)",
                              "All the time (%)"
                              ),
-                           n = samples$code_at_work,
                            crosstab = TRUE)
 
 CARS::wrap_outputs("good-practices", plot, table)
@@ -440,7 +448,6 @@ We asked respondents who reported writing code at work how frequently they write
 ```{r}
 
 plot <- CARS::plot_likert(tables$doc,
-                          n = samples$code_at_work,
                           mid = 5, neutral_mid = FALSE,
                           break_q_names_col = "name",
                           max_lines = 2, font_size = 14,
@@ -456,7 +463,6 @@ table <- CARS::df_to_table(tables$doc,
                              "Regularly (%)",
                              "All the time (%)"
                              ),
-                           n = samples$code_at_work,
                            crosstab = TRUE)
 
 CARS::wrap_outputs("doc", plot, table)

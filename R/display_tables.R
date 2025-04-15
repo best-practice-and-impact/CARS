@@ -14,7 +14,7 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
 
   if (!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
-    data <- data[[cols]]
+      data <- data[[cols]]
   }
 
   table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))

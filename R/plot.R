@@ -168,6 +168,11 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
     stop("Unexpected input - font_size is not numeric.")
   }
 
+  # Validate sample size
+  if (!"sample" %in% colnames(data)) {
+    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
+  }
+
   orientation <- match.arg(orientation)
   type <- match.arg(type)
 
@@ -270,7 +275,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
+  } else if (ncol(data) != 5) {
     stop("Unexpected input - data should have three columns.")
   }
 
@@ -282,6 +287,11 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   # Validate font size
   if (!is.numeric(font_size)) {
     stop("Unexpected input - font_size is not numeric.")
+  }
+
+  # Validate sample size
+  if (!"sample" %in% colnames(data)) {
+    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
   }
 
   # Apply break_q_names to a column
@@ -301,14 +311,14 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   # Get bar colours
   ncolours <- length(unique(data[[2]]))
   if (colour_scale == "gradient") {
-    colours <- get_gradient(ncolours)
+    colours <- CARS::get_gradient(ncolours)
   } else if (colour_scale == "scale") {
-    colours <- get_2colour_scale(ncolours)
+    colours <- CARS::get_2colour_scale(ncolours)
   } else if (colour_scale == "2gradients") {
     mid <- ceiling(ncolours/2)
-    colours <- get_2colour_gradients(ncolours, mid = mid, neutral_mid = neutral_mid)
+    colours <- CARS::get_2colour_gradients(ncolours, mid = mid, neutral_mid = neutral_mid)
   } else if (colour_scale == "3scale") {
-    colours <- get_3colour_scale(ncolours)
+    colours <- CARS::get_3colour_scale(ncolours)
   }
 
   colours <- lapply(colours, rep, length(unique(data[[1]]))) %>% unlist
@@ -332,7 +342,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  sample <- paste0("Sample size = ", data$sample)
 
   if (type == "bar") {
   fig <- plotly::plot_ly(y = y_vals,
@@ -416,8 +426,8 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
-    stop("Unexpected input - data does not contain 3 columns.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data does not contain 5 columns.")
   } else if (!is.numeric(data[[3]])) {
     stop("Unexpected input - data column 3 is not numeric.")
   }
@@ -542,6 +552,11 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
     stop("Unexpected input - font_size is not numeric.")
   }
 
+  # Validate sample size
+  if (!"sample" %in% colnames(data)) {
+    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
+  }
+
   n_questions <- length(unique(data[[1]]))
   n_answers <- length(unique(data[[2]]))
 
@@ -598,7 +613,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  sample <- paste0("Sample size = ", data$sample)
 
   fig <- plotly::plot_ly(y = data[[1]],
                          x = data[[3]],
