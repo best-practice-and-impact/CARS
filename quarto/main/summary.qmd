@@ -76,7 +76,7 @@ plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)],
 table <- CARS::df_to_table(data = code_freqs_by_year[c(2,1, 4, 5)], 
                      crosstab = TRUE, 
                      column_headers = c("In your current role, how often do you write code to complete your work objectives?", 
-                                        "2020", "2021", "2022", "2023"))
+                                        "2021", "2023", "2023", "2024"))
 
 CARS::wrap_outputs("code-freq", plot, table)
 
@@ -239,7 +239,7 @@ table <- CARS::df_to_table(data = tables,
                            config = config,
                            question = "coding_years")
 
-CARS::wrap_outputs("where-learned", plot, table)
+CARS::wrap_outputs("coding-years", plot, table)
 
 ```
 
@@ -284,7 +284,7 @@ The term 'AI' was not defined in this question.
 #                            config = config,
 #                            question = "ai")
 # 
-# CARS::wrap_outputs("ability-change", plot, table)
+# CARS::wrap_outputs("ai", plot, table)
 ```
 
 ### How AI tools are used
@@ -302,7 +302,7 @@ We asked all respondents who use AI tools when coding at work, what they use the
 #                            config = config,
 #                            question = "ai_use")
 # 
-# CARS::wrap_outputs("ability-change", plot, table)
+# CARS::wrap_outputs("ai-use", plot, table)
 ```
 
 ### Trust in AI
@@ -319,7 +319,7 @@ We asked all respondents who use AI tools when coding at work, how much they tru
 #                            config = config,
 #                            question = "ai_trust")
 # 
-# CARS::wrap_outputs("ability-change", plot, table)
+# CARS::wrap_outputs("ai-trust", plot, table)
 ```
 
 

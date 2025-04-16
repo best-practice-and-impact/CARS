@@ -168,11 +168,6 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
     stop("Unexpected input - font_size is not numeric.")
   }
 
-  # Validate sample size
-  if (!"sample" %in% colnames(data)) {
-    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
-  }
-
   orientation <- match.arg(orientation)
   type <- match.arg(type)
 
@@ -206,7 +201,11 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- paste0("Sample size = ", data$sample)
+  if("sample" %in% colnames(data)){
+    sample <-  paste0("Sample size = ", data$sample)
+  } else {
+    sample <- ""
+  }
 
   if (type == "bar") {
     fig <- plotly::plot_ly(
@@ -270,13 +269,11 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 #'
 #' @export
 
-plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 5) {
-    stop("Unexpected input - data should have three columns.")
   }
 
   # Validate labels
@@ -289,10 +286,7 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
     stop("Unexpected input - font_size is not numeric.")
   }
 
-  # Validate sample size
-  if (!"sample" %in% colnames(data)) {
-    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
-  }
+
 
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
@@ -342,16 +336,20 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- paste0("Sample size = ", data$sample)
+  if("sample" %in% colnames(data)){
+    sample <-  paste0("Sample size = ", data$sample)
+  } else {
+    sample <- ""
+  }
 
   if (type == "bar") {
-  fig <- plotly::plot_ly(y = y_vals,
-                         x = x_vals,
-                         color = data[[2]],
-                         type = "bar",
-                         orientation = orientation,
-                         marker = list(color = colours),
-                         ...)
+    fig <- plotly::plot_ly(y = y_vals,
+                           x = x_vals,
+                           color = data[[2]],
+                           type = "bar",
+                           orientation = orientation,
+                           marker = list(color = colours),
+                           ...)
   } else if (type == "line") {
     fig <- plotly::plot_ly(y = y_vals,
                            x = x_vals,
@@ -390,7 +388,6 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
 
   return(fig)
-
 }
 
 
