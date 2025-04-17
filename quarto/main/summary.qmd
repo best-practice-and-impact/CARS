@@ -16,8 +16,6 @@ all_wave_data <- CARS::get_all_waves()
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
 
-#samples <- CARS::sample_sizes(data)
-
 ```
 :::{.callout-note}
 Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
