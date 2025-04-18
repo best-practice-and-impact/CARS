@@ -8,10 +8,11 @@
 #' @param n optional: sample size
 #' @param crosstab whether to create a cross tabulation. FALSE by default
 #' @param proportion_col optional: columns to be turned into a percentage. Last column only be default
+#' @param sample optional: add sample size as additional column
 #' @return HTML table
 #' @export
 
-df_to_table <- function(data, column_headers, n, crosstab = FALSE, proportion_col) {
+df_to_table <- function(data, column_headers, n, crosstab = FALSE, proportion_col, sample) {
 
   if (missing(proportion_col)) {
     proportion_col <- length(data)
@@ -22,8 +23,17 @@ df_to_table <- function(data, column_headers, n, crosstab = FALSE, proportion_co
   if (crosstab) {
     data <- df_to_crosstab(data)
 
+    if (!missing(sample)) {
+      data <- dplyr::mutate(data, Sample = sample)
+    }
+
     alignment <- c("l", rep("r", ncol(data)-1))
   } else {
+
+    if (!missing(sample)) {
+      data <- dplyr::mutate(data, Sample = sample)
+    }
+
     alignment <- c(rep("l", ncol(data)-1), "r")
   }
 

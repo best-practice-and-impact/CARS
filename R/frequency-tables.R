@@ -126,15 +126,11 @@ sample_sizes <- function(data) {
                      "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG"),
                    function(prof) {
                      prof_count <- sum(data[prof] == "Yes", na.rm = TRUE)
-                     if (prof_count > 0) {
-                       prof_sample <- paste0(prof_count, " (", substring(prof, 6), ")")
-                       return(prof_sample)
-                       }
+                     return(prof_count)
                      }
                    )
-
-  )
-}
+    )
+  }
 
 
 #' @title Summarise coding tools
@@ -504,7 +500,8 @@ summarise_languages_by_prof <- function(data, sample = FALSE) {
 
   outputs <- do.call(rbind, outputs)
 
-  colnames(outputs) <- c("lang", "prof", "n")
+  outputs <- outputs[c(2,1,3)]
+  colnames(outputs) <- c("prof", "lang", "n")
   rownames(outputs) <- NULL
 
   outputs$prof <- recode(outputs$prof, !!!prof_names)
