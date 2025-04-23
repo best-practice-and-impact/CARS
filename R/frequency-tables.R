@@ -96,7 +96,7 @@ summarise_data <- function(data, config, question, prop = TRUE, sample = TRUE) {
 #' @return frequency table (data.frame)
 #' @export
 
-summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
+summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 
@@ -113,38 +113,6 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
 }
 
 
-#' @title Sample sizes for table/plot outputs
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return list of sample sizes
-#'
-#' @export
-#'
-
-sample_sizes <- function(data) {
-  list(
-    all = nrow(data),
-    code_at_work = sum(!is.na(data$code_freq) & data$code_freq != "Never"),
-    other_code_experience = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$other_coding_experience == "Yes" & data$first_learned != "Current employment"),
-    heard_of_RAP = sum(!is.na(data$code_freq) & data$code_freq != "Never" & data$heard_of_RAP == "Yes"),
-    not_RAP_champ = sum(is.na(data$know_RAP_champ) | data$know_RAP_champ != "I am a RAP champion"),
-
-    profs = sapply(c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES",
-                     "prof_geog", "prof_GORS", "prof_GSR", "prof_GSG"),
-                   function(prof) {
-                     prof_count <- sum(data[prof] == "Yes", na.rm = TRUE)
-                     if (prof_count > 0) {
-                       prof_sample <- paste0(prof_count, " (", substring(prof, 6), ")")
-                       return(prof_sample)
-                       }
-                     }
-                   )
-
-  )
-}
-
-
 #' @title Summarise coding tools
 #'
 #' @description calculate frequency table coding tools (knowledge or access)
@@ -157,7 +125,7 @@ sample_sizes <- function(data) {
 #' @return frequency table (data.frame)
 #' @export
 
-summarise_coding_tools <- function(data, config, question, prop = TRUE, sample = FALSE) {
+summarise_coding_tools <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 
@@ -180,8 +148,9 @@ summarise_coding_tools <- function(data, config, question, prop = TRUE, sample =
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
-
-summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample = FALSE) {
+#' @export
+#'
+summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 
@@ -360,7 +329,7 @@ summarise_line_manage <- function(data){
 #' @return frequency table (data.frame)
 #' @export
 
-summarise_git <- function(data, config, question, prop = TRUE, sample = FALSE) {
+summarise_git <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 

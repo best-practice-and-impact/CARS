@@ -14,20 +14,22 @@ We advise linking directly to this document when distributing to ensure the most
 
 Below are links to profession-specific reports These contain summary statistics, filtered by profession. Only professions with 20 or more respondents are included.
 
-- [Government data engineers](professions/data-engineers.html)
+- [Data Engineers](professions/data-engineers.html)
 
-- [Government data scientists](professions/data-scientists.html)
+- [Data Scientists](professions/data-scientists.html)
 
-- [Digital and data profession (DDAT)](professions/digital-and-data.html)
+- [Government Digital and Data](professions/government-digital-and-data.html)
 
-- [Government economic service (GES)](professions/government-economic-service.html)
+- [Government Economic Service](professions/government-economic-service.html)
 
-- [Government geography profession](professions/government-geography.html)
+- [Government Geography Profession](professions/government-geography-profession.html)
 
-- [Government operational research (GORS)](professions/government-operational-research.html)
+- [Government Operational Research Service](professions/government-operational-research-service.html)
 
-- [Government social research (GSR)](professions/government-social-research.html)
+- [Government Science & Engineering](professions/government-science-&-engineering.html)
 
-- [Government statistician group (GSG)](professions/government-statistician-group.html)
+- [Government Social Research](professions/government-social-research.html)
+
+- [Government Statistician Group](professions/government-statistician-group.html)
 
 

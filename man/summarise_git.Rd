@@ -4,7 +4,7 @@
 \alias{summarise_git}
 \title{Summarise access to git and knowledge of git}
 \usage{
-summarise_git(data, config, question, prop = TRUE, sample = FALSE)
+summarise_git(data, config, question, prop = TRUE, sample = TRUE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

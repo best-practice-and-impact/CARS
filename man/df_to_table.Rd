@@ -4,7 +4,14 @@
 \alias{df_to_table}
 \title{Data frame to html table}
 \usage{
-df_to_table(data, config, question, crosstab = FALSE, column_headers)
+df_to_table(
+  data,
+  config,
+  question,
+  crosstab = FALSE,
+  column_headers,
+  sample = TRUE
+)
 }
 \arguments{
 \item{data}{list of CARS frequency tables, table names should match config}
