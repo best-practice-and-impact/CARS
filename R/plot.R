@@ -117,8 +117,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #'
 #' @description Produce bar chart (plotly) for single factor frequency data.
 #'
-#' @param data Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())
-#' @param n sample size (optional)
+#' @param data Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())
 #' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
@@ -134,9 +133,14 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @export
 
 
-plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line"),
+plot_freqs <- function(data, config, question, colour, break_q_names_col, type = c("bar", "line"),
                        max_lines = 2,  xlab = "", ylab = "", font_size = 12,
                        orientation = c("v", "h"), ...) {
+
+  if(!missing(config)){
+    list2env(get_question_data(config, question), envir = environment())
+    data <- data[[cols]]
+  }
 
   # Set default bar colour
   if (missing(colour)) {
@@ -148,8 +152,8 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 2) {
-    stop("Unexpected input - data does not contain two columns.")
+  } else if (ncol(data) != 4) {
+    stop("Unexpected input - data does not contain four columns.")
   } else if (!is.numeric(data[[2]])) {
     stop("Unexpected input - data column 2 is not numeric.")
   }
@@ -185,6 +189,7 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
     y_vals <- data[[2]]
     x_axis <- axes$cat_axis
     y_axis <- axes$scale_axis
+    title_text <- xlab
   } else if (orientation == "h") {
     data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
     x_vals <- data[[2]]
@@ -196,7 +201,11 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  if("sample" %in% colnames(data)){
+    sample <-  paste0("Sample size = ", data$sample)
+  } else {
+    sample <- ""
+  }
 
   if (type == "bar") {
     fig <- plotly::plot_ly(
@@ -260,13 +269,11 @@ plot_freqs <- function(data, n, colour, break_q_names_col, type = c("bar", "line
 #'
 #' @export
 
-plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
+plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_lines = 2, xlab = "", ylab = "", colour_scale = c("2gradients", "gradient", "scale", "3scale"), font_size = 12, neutral_mid = TRUE, orientation = c("h", "v"), ...) {
 
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
-    stop("Unexpected input - data should have three columns.")
   }
 
   # Validate labels
@@ -278,6 +285,8 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   if (!is.numeric(font_size)) {
     stop("Unexpected input - font_size is not numeric.")
   }
+
+
 
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
@@ -296,14 +305,14 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   # Get bar colours
   ncolours <- length(unique(data[[2]]))
   if (colour_scale == "gradient") {
-    colours <- get_gradient(ncolours)
+    colours <- CARS::get_gradient(ncolours)
   } else if (colour_scale == "scale") {
-    colours <- get_2colour_scale(ncolours)
+    colours <- CARS::get_2colour_scale(ncolours)
   } else if (colour_scale == "2gradients") {
     mid <- ceiling(ncolours/2)
-    colours <- get_2colour_gradients(ncolours, mid = mid, neutral_mid = neutral_mid)
+    colours <- CARS::get_2colour_gradients(ncolours, mid = mid, neutral_mid = neutral_mid)
   } else if (colour_scale == "3scale") {
-    colours <- get_3colour_scale(ncolours)
+    colours <- CARS::get_3colour_scale(ncolours)
   }
 
   colours <- lapply(colours, rep, length(unique(data[[1]]))) %>% unlist
@@ -327,16 +336,20 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
 
   y_axis$title <- "" # Y axis title is created as a caption instead
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  if("sample" %in% colnames(data)){
+    sample <-  paste0("Sample size = ", data$sample)
+  } else {
+    sample <- ""
+  }
 
   if (type == "bar") {
-  fig <- plotly::plot_ly(y = y_vals,
-                         x = x_vals,
-                         color = data[[2]],
-                         type = "bar",
-                         orientation = orientation,
-                         marker = list(color = colours),
-                         ...)
+    fig <- plotly::plot_ly(y = y_vals,
+                           x = x_vals,
+                           color = data[[2]],
+                           type = "bar",
+                           orientation = orientation,
+                           marker = list(color = colours),
+                           ...)
   } else if (type == "line") {
     fig <- plotly::plot_ly(y = y_vals,
                            x = x_vals,
@@ -375,7 +388,6 @@ plot_stacked <- function(data, n, break_q_names_col, type = c("bar", "line"), ma
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
 
   return(fig)
-
 }
 
 
@@ -411,8 +423,8 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
-    stop("Unexpected input - data does not contain 3 columns.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data does not contain 5 columns.")
   } else if (!is.numeric(data[[3]])) {
     stop("Unexpected input - data column 3 is not numeric.")
   }
@@ -523,8 +535,8 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
-  } else if (ncol(data) != 3) {
-    stop("Unexpected input - data should have at three columns.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data should have five columns.")
   }
 
   # Validate labels
@@ -535,6 +547,11 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
   # Validate font size
   if (!is.numeric(font_size)) {
     stop("Unexpected input - font_size is not numeric.")
+  }
+
+  # Validate sample size
+  if (!"sample" %in% colnames(data)) {
+    stop("Unexpected input - sample column not present. Run summarise_all with sample = TRUE")
   }
 
   n_questions <- length(unique(data[[1]]))
@@ -556,7 +573,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
-    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines)
+    data[[break_q_names_col]] <- CARS::break_q_names(data[[break_q_names_col]], max_lines)
     data[[break_q_names_col]] <- factor(data[[break_q_names_col]], levels = unique(data[[break_q_names_col]]))
   }
 
@@ -593,7 +610,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
-  sample <- ifelse(!missing(n), paste0("Sample size = ", n), "")
+  sample <- paste0("Sample size = ", data$sample)
 
   fig <- plotly::plot_ly(y = data[[1]],
                          x = data[[3]],

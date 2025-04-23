@@ -337,12 +337,12 @@ coding_tools_knowledge:
 
 coding_practices:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["Never",
+  levels: ["I don't understand this question",
+          "Never",
           "Rarely",
           "Sometimes",
           "Regularly",
-          "Always",
-          "I don't understand this question"]
+          "Always"]
   cols:
     prac_open_source: "Use open source software"
     prac_code_style: "Use a standard code style"
@@ -355,12 +355,12 @@ coding_practices:
 
 working_practices:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["Never",
+  levels: ["I don't understand this question",
+          "Never",
           "Rarely",
           "Sometimes",
           "Regularly",
-          "Always",
-          "I don't understand this question"]
+          "Always"]
   cols:
     work_git: "Use version control"
     work_succession: "Ensure longevity"
@@ -371,12 +371,12 @@ working_practices:
 
 doc:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["Never",
+  levels: ["I don't understand this question",
+          "Never",
           "Rarely",
           "Sometimes",
           "Regularly",
-          "Always",
-          "I don't understand this question"]
+          "Always"]
   cols:
     doc_readme: "Create README files"
     doc_function: "Document functions"
