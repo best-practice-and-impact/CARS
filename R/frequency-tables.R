@@ -35,7 +35,7 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     ai = summarise_data(data, config, question = "ai"),
     ai_tools = summarise_data(data, config, question = "ai_tools"),
     ai_use = summarise_data(data, config, question = "ai_use"),
-    ai_trust = summarise_data(data, config, question = "ai_trust"),
+    ai_trust = summarise_data(data, config, question = "ai_trust")
 
   )
 
@@ -43,7 +43,7 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
 
     output_list <- c(output_list,
                      list(
-                        capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change"),
+                        capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change")
                        # capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
                        # capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
                        # basic_score_by_implementation = summarise_basic_score_by_imp(data),

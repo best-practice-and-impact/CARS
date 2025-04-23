@@ -170,12 +170,12 @@ Please note these outputs include people who do not code at work.
 ### Access to git
 
 ```{r}
-plot <- CARS::plot_freqs(data = tables$git_access, 
+plot <- CARS::plot_freqs(data = tables$access_git, 
                          xlab = "Is Git available to use for your work?", 
                          font_size = 14) |> 
   CARS::set_axis_range(0, 1, axis = "y")
 
-table <- CARS::df_to_table(data = tables$git_access, 
+table <- CARS::df_to_table(data = tables$access_git, 
                            column_headers = c("Is Git available to use for your work?", 
                                               "Percentage"))
 
