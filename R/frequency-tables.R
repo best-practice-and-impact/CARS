@@ -354,6 +354,7 @@ summarise_line_manage <- function(data){
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
+#' @export
 
 summarise_git <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
