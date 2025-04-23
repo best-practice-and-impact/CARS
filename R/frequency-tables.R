@@ -102,6 +102,8 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
 
   labels <- config[[question]][["cols"]]
 
+  data[] <- lapply(data, factor, levels = levels)
+
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
   frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
@@ -186,6 +188,8 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
   labels <- config[[question]][["cols"]]
 
   cols <- cols[!grepl("other", cols)]
+
+  data[] <- lapply(data, factor, levels = levels)
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
@@ -750,7 +754,6 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
   if (is.null(labels) & (length(cols) > 1)) {
     stop("Missing input: labels needed for mutli-column frequencies.")
   }
-
 
   data <- data |>
     dplyr::select(dplyr::any_of(cols))
