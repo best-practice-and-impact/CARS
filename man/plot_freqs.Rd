@@ -6,7 +6,6 @@
 \usage{
 plot_freqs(
   data,
-  n,
   colour,
   break_q_names_col,
   type = c("bar", "line"),
@@ -19,9 +18,7 @@ plot_freqs(
 )
 }
 \arguments{
-\item{data}{Frequency data (data frame). Expected input: data.frame(categories = c(), frequencies = c())}
-
-\item{n}{sample size (optional)}
+\item{data}{Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())}
 
 \item{colour}{Colour name. Defaults to blue (see @get_gradient())}
 

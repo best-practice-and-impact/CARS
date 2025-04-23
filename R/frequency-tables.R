@@ -10,28 +10,28 @@
 #'
 #' @export
 
-summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
+summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
 
   output_list <- list(
-    code_freq = summarise_data(data, config, question = "code_freq"),
-    code_leisure = summarise_data(data, config, question = "code_leisure"),
-    knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge"),
-    access = summarise_coding_tools(data, config, question = "coding_tools_access"),
+    code_freq = summarise_data(data, config, question = "code_freq", sample = sample),
+    code_leisure = summarise_data(data, config, question = "code_leisure", sample = sample),
+    knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge", sample = sample),
+    access = summarise_coding_tools(data, config, question = "coding_tools_access", sample = sample),
    # language_status = summarise_language_status(data),
-    first_learned = summarise_data(data, config, question = "first_learned"),
-    ability_change = summarise_data(data, config, question = "ability_change"),
-    coding_years = summarise_data(data, config, question = "coding_years"),
-    coding_practices = summarise_multi_col_data(data, config, question = "coding_practices"),
-    working_practices = summarise_multi_col_data(data, config, question = "working_practices"),
-    doc = summarise_multi_col_data(data, config, question = "doc"),
-    rap_knowledge = summarise_data(data, config, question = "heard_of_rap"),
-    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions"),
-    qs_aware = summarise_data(data, config, question = "qs_aware"),
-    qs_comply = summarise_data(data, config, question = "qs_comply"),
-    qq_aware = summarise_data(data, config, question = "qq_aware", sample = TRUE),
-    management = summarise_data(data, config, question = "management"),
-    git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge"),
-    access_git = summarise_git(data, config, question = "coding_tools_access"),
+    first_learned = summarise_data(data, config, question = "first_learned", sample = sample),
+    ability_change = summarise_data(data, config, question = "ability_change", sample = sample),
+    coding_years = summarise_data(data, config, question = "coding_years", sample = sample),
+    coding_practices = summarise_multi_col_data(data, config, question = "coding_practices", sample = sample),
+    working_practices = summarise_multi_col_data(data, config, question = "working_practices", sample = sample),
+    doc = summarise_multi_col_data(data, config, question = "doc", sample = sample),
+    rap_knowledge = summarise_data(data, config, question = "heard_of_rap", sample = sample),
+    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions", sample = sample),
+    qs_aware = summarise_data(data, config, question = "qs_aware", sample = sample),
+    qs_comply = summarise_data(data, config, question = "qs_comply", sample = sample),
+    qq_aware = summarise_data(data, config, question = "qq_aware", sample = sample),
+    management = summarise_data(data, config, question = "management", sample = sample),
+    git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge", sample = sample),
+    git_access = summarise_git(data, config, question = "coding_tools_access", sample = sample)
 
   )
 
@@ -67,7 +67,7 @@ summarise_all <- function(data, all_tables = FALSE, sample = FALSE) {
 #' @return frequency table df
 #' @export
 
-summarise_data <- function(data, config, question, prop = TRUE, sample = FALSE) {
+summarise_data <- function(data, config, question, prop = TRUE, sample = TRUE) {
 
   list2env(get_question_data(config, question), envir = environment())
 
@@ -99,6 +99,8 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
   labels <- config[[question]][["cols"]]
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
+
+  frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
 
   return(frequencies)
 
@@ -183,6 +185,8 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
+  frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
+
   return(frequencies)
 
 }
@@ -264,7 +268,7 @@ summarise_ability_change <- function(data, sample = FALSE) {
 
   frequencies <- calculate_freqs(data, questions, levels, sample = sample)
 
-  frequencies$value <- frequencies$value %>%
+  frequencies$value <- frequencies$value |>
     dplyr::recode_factor("It has become significantly worse" = "Significantly worse",
                          "It has become slightly worse" = "Slightly worse",
                          "It has stayed the same" = "Stayed the same",
@@ -355,7 +359,7 @@ summarise_git <- function(data, config, question, prop = TRUE, sample = FALSE) {
 
   data[] <- lapply(data, factor, levels = levels)
 
-  frequencies <- calculate_freqs(data, cols, labels, prop = TRUE, sample = FALSE)
+  frequencies <- calculate_freqs(data, cols, labels, prop = TRUE, sample = sample)
 
   return(frequencies)
 
@@ -446,8 +450,8 @@ summarise_cap_change_by_CS_grade <- function(data){
     "It has become slightly better",
     "It has become significantly better")
 
-  selected_data <- data %>%
-    dplyr::select(CS_grade, coding_ability_change) %>%
+  selected_data <- data |>
+    dplyr::select(CS_grade, coding_ability_change) |>
     dplyr::mutate(CS_grade = dplyr::case_when(CS_grade %in% c("Grade 7 (or equivalent)",
                                                               "Grade 6 (or equivalent)") ~ "Grade 6 and 7",
                                               TRUE ~ CS_grade))
@@ -599,9 +603,9 @@ summarise_heard_of_RAP_by_prof <- function(data) {
 
   frequencies <- calculate_freqs(filtered_data, questions, profs)
 
-  frequencies <- frequencies %>%
-    dplyr::mutate(value = factor(value, levels = profs)) %>%
-    dplyr::arrange(value) %>%
+  frequencies <- frequencies |>
+    dplyr::mutate(value = factor(value, levels = profs)) |>
+    dplyr::arrange(value) |>
     dplyr::mutate(n = colSums(filtered_RAP_data[profs] == "Yes") / ifelse(colSums(filtered_data[profs] == "Yes") != 0,
                                                                           colSums(filtered_data[profs] == "Yes"),
                                                                           1))
@@ -640,19 +644,19 @@ summarise_os_vs_prop <- function(data) {
     TRUE, FALSE
   )
 
-  os_freqs <- data %>%
-    dplyr::group_by(year) %>%
-    dplyr::summarise(Freq = sum(open_source_lang_knowledge), n = dplyr::n()) %>%
-    data.frame %>%
-    get_ci(freq_col = 2, n_col = 3)
+  os_freqs <- data |>
+    dplyr::group_by(year) |>
+    dplyr::summarise(Freq = sum(open_source_lang_knowledge, na.rm = TRUE), sample = dplyr::n()) |>
+    data.frame() |>
+    CARS::get_ci(freq_col = 2, n_col = 3)
 
   os_freqs <- cbind(lang_type = "Open Source", os_freqs)
 
-  prop_freqs <- data %>%
-    dplyr::group_by(year) %>%
-    dplyr::summarise(Freq = sum(prop_lang_knowledge), n = dplyr::n()) %>%
-    data.frame %>%
-    get_ci(freq_col = 2, n_col = 3)
+  prop_freqs <- data |>
+    dplyr::group_by(year) |>
+    dplyr::summarise(Freq = sum(prop_lang_knowledge, na.rm = TRUE), sample = dplyr::n()) |>
+    data.frame() |>
+    CARS::get_ci(freq_col = 2, n_col = 3)
 
   prop_freqs <- cbind(lang_type = "Proprietary", prop_freqs)
 
@@ -674,13 +678,14 @@ summarise_rap_awareness_over_time <- function(data) {
 
     data <- data[data$code_freq != "Never", ]
 
-    RAP_awareness <- table(data$heard_of_RAP, data$year) %>%
-    data.frame %>%
-    dplyr::group_by(Var2) %>%
-    dplyr::mutate(n = sum(Freq)) %>%
-    dplyr::filter(Var1 == "Yes") %>%
-    data.frame()  %>%
-    get_ci(freq_col = 3, n_col = 4)
+    RAP_awareness <- table(data$heard_of_RAP, data$year) |>
+    data.frame() |>
+    dplyr::group_by(Var2) |>
+    dplyr::mutate(Count = sum(Freq)) |>
+    dplyr::filter(Var1 == "Yes") |>
+    data.frame()  |>
+    CARS::get_ci(freq_col = 3, n_col = 4) |>
+    dplyr::rename(n = "percent")
 
     return(RAP_awareness)
 }
@@ -708,8 +713,9 @@ get_question_data <- function(config, question){
   }
 
   levels <- config[[question]][["levels"]]
+  full_question <- config[[question]][["question"]]
 
-  return(list(cols = cols, labels = labels, levels = levels))
+  return(list(cols = cols, labels = labels, levels = levels, full_question = full_question))
 
 }
 
@@ -751,15 +757,15 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
     colnames(frequencies) <- c("value", "n")
 
   } else {
-    frequencies <- data %>%
+    frequencies <- data |>
       tidyr::pivot_longer(cols = dplyr::any_of(cols),
                           names_to = "name",
-                          values_to = "value") %>%
-      dplyr::group_by(name) %>%
-      dplyr::count(value, .drop=FALSE) %>%
-      dplyr::mutate(name = dplyr::recode(name, !!!labels)) %>%
-      dplyr::arrange(name, by_group=TRUE) %>%
-      tidyr::drop_na() %>%
+                          values_to = "value") |>
+      dplyr::group_by(name) |>
+      dplyr::count(value, .drop=FALSE) |>
+      dplyr::mutate(name = dplyr::recode(name, !!!labels)) |>
+      dplyr::arrange(name, by_group=TRUE) |>
+      tidyr::drop_na() |>
       data.frame()
 
     colnames(frequencies) <- c("name", "value", "n")
@@ -793,9 +799,9 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
 
 count_to_prop <- function(data){
 
-  data <- data %>%
-    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) %>%
-    dplyr::mutate(n = n / ifelse(sum(n, na.rm = TRUE)==0, 1, sum(n, na.rm = TRUE))) %>%
+  data <- data |>
+    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) |>
+    dplyr::mutate(n = n / ifelse(sum(n, na.rm = TRUE)==0, 1, sum(n, na.rm = TRUE))) |>
     data.frame()
 
   return(data)
@@ -812,9 +818,9 @@ count_to_prop <- function(data){
 
 add_sample_size <- function(frequencies, data, prop){
 
-  frequencies <- frequencies %>%
-    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) %>%
-    dplyr::mutate(count = n) %>%
+  frequencies <- frequencies |>
+    dplyr::group_by(dplyr::across(dplyr::any_of("name"))) |>
+    dplyr::mutate(count = n) |>
     data.frame()
 
   frequencies$sample <- sum(!is.na(data[1]))
@@ -846,15 +852,15 @@ add_sample_size <- function(frequencies, data, prop){
 
 calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop = TRUE, sample = FALSE){
 
-  selected_data <- data %>% dplyr::select(all_of(c(col1, col2)))
+  selected_data <- data |> dplyr::select(dplyr::all_of(c(col1, col2)))
 
   selected_data[col1] <- factor(selected_data[[col1]], levels = levels1)
 
   selected_data[col2] <- factor(selected_data[[col2]], levels = levels2)
 
-  frequencies <- selected_data %>%
-    count(across(all_of(c(col1, col2))), .drop=FALSE) %>%
-    drop_na() %>%
+  frequencies <- selected_data |>
+    count(dplyr::across(dplyr::all_of(c(col1, col2))), .drop=FALSE) |>
+    tidyr::drop_na() |>
     data.frame()
 
   if (sample) {

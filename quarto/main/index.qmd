@@ -2,7 +2,7 @@
 title: "Home"
 ---
 :::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
 We advise linking directly to this document when distributing to ensure the most up to date information.
 :::
 
@@ -10,7 +10,7 @@ We advise linking directly to this document when distributing to ensure the most
 
 The Coding in Analysis and Research Survey (CARS) was developed to understand better how government analysts use programming. Most questions focused on whether and how analysts use coding in their work. The survey is also concerned with [Reproducible Analytical Pipelines (RAP)](#rap). 
 
-The survey was distributed to government analysts and researchers in the autumn of 2023. The results presented summarise the key findings from 1297 respondents from over 50 public sector organisations.
+The survey was distributed to government analysts and researchers in the autumn of 2024. The results presented summarise the key findings from 1300 respondents from over 50 public sector organisations.
 
 
 ## Who is this research for?

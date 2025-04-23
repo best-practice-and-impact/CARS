@@ -48,7 +48,8 @@ clean_data <- function(data, config){
  data <- rename_cols(data, config)
  data <- data |>
    apply_skip_logic() |>
-   clean_departments()
+   clean_departments() |>
+   clean_first_learned()
 
  return(data)
 
@@ -98,6 +99,44 @@ clean_departments <- function(data) {
 
 }
 
+#' @title Clean first_learned data
+#'
+#' @description categorise 'other' responses.
+#'
+#' @param data cleaned CARS dataset
+#'
+#' @return CARS dataset
+#' @export
+
+clean_first_learned <- function(data) {
+
+  he_match <- c("PhD",
+               "MSc",
+               "University")
+
+  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(he_match, collapse = "|"))] <- "Higher Education"
+
+  se_match <- c("College",
+                "AS level")
+
+  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(he_match, collapse = "|"))] <- "Primary/secondary education"
+
+
+  set_responses <- c(
+  "Higher Education",
+  "Primary/secondary education",
+  "Self-taught",
+  "Previous public sector employment",
+  "Current role",
+  "Previous private sector employment"
+  )
+
+  data$first_learned[!(data$first_learned %in% set_responses) & !is.na(data$first_learned)] <- "Other"
+
+  return(data)
+
+}
+
 #' @title Rename columns
 #'
 #' @description Renames columns and removes unnecessary columns
@@ -113,9 +152,15 @@ rename_cols <- function(data, config) {
     stop("Unexpected input: incorrect number of columns. Please use the 2024 CARS dataset.")
   }
 
-  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
   colnames(data)[c(1:ncol(data))] <- c(
+    "UserID",
     "ID",
+    "Name",
+    "Email",
+    "IP.Address",
+    "Unique.ID",
+    "Started",
+    "Ended",
     "tracking_link",
     "workplace",
     "cs_grade",
@@ -156,6 +201,8 @@ rename_cols <- function(data, config) {
     "comments",
     "future_surveys"
   )
+
+  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
   return(data)
 }
