@@ -469,4 +469,19 @@ future_surveys:
   question: "What would you like to see in future surveys?"
 
 
-
+rap_components:
+  cols:
+    use_open_source_score: "Use open source software"
+    open_code_score: "Open source own code"
+    version_control_score: "Version control"
+    peer_review_score: "Peer review"
+    manual_test_score: "Manually test code"
+    proportionate_QA_score: "Work to quality standards"
+    doc_score: "Project documentation"
+    function_score: "Write functions"
+    auto_test_score: "Write automated tests"
+    function_doc_score: "Document functions"
+    control_flow_score: "Use control flow"
+    config_score: "Use configuration files"
+    code_style_score: "Follow code style guidelines"
+    dep_management_score: "Document dependencies"

@@ -317,23 +317,21 @@ For each RAP component a percent positive was calculated. Positive responses wer
 ### RAP components
 
 ```{r}
-# tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
-# 
-# tables$rap_components$name <- as.character(tables$rap_components$name)
-# 
-# tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
-# 
-# plot <- CARS::plot_grouped(tables$rap_components, 
-#                            n = samples$code_at_work,
-#                            orientation = "h", 
-#                            xlab = "RAP component", font_size = 14)
-# 
-# table <- CARS::df_to_table(tables$rap_components, 
-#                            n = samples$code_at_work,
-#                            column_headers = c("RAP component",
-#                                               "Type",
-#                                               "Percentage of analysts who code in their work"))
-# 
-# CARS::wrap_outputs("rap-comp", plot, table)
+tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
+
+tables$rap_components$name <- as.character(tables$rap_components$name)
+
+tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
+
+plot <- CARS::plot_grouped(tables$rap_components,
+                           orientation = "h",
+                           xlab = "RAP component", font_size = 14)
+
+table <- CARS::df_to_table(tables$rap_components,
+                           column_headers = c("RAP component",
+                                              "Type",
+                                              "Percentage of analysts who code in their work"))
+
+CARS::wrap_outputs("rap-comp", plot, table)
 
 ```

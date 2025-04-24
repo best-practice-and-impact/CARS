@@ -35,7 +35,8 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     ai = summarise_data(data, config, question = "ai"),
     ai_tools = summarise_data(data, config, question = "ai_tools"),
     ai_use = summarise_data(data, config, question = "ai_use"),
-    ai_trust = summarise_data(data, config, question = "ai_trust")
+    ai_trust = summarise_data(data, config, question = "ai_trust"),
+    rap_components = summarise_rap_comp(data, config, question = "rap_components")
 
   )
 
@@ -260,6 +261,48 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop, sample)
 
   return(frequencies)
+
+}
+
+#' @title RAP score components
+#'
+#' @description Create frequency table of basic and advanced RAP score components
+#'
+#' @param data full CARS dataset after pre-processing
+#' @param sample additionally returns count and sample size. FALSE by default
+#'
+#' @return frequency table (data.frame)
+#'
+#' @importFrom dplyr mutate arrange
+
+summarise_rap_comp <- function(data, config, question, sample = TRUE) {
+
+  list2env(get_question_data(config, question), envir = environment())
+
+  labels <- config[[question]][["cols"]]
+
+  levels <- c(1)
+  selected_data <- data
+  selected_data[] <- lapply(data, factor, levels = levels)
+
+  components <- calculate_freqs(selected_data, cols, labels, prop = FALSE, sample = FALSE)
+
+  components <- components %>%
+    mutate(name = factor(name, levels = labels)) %>%
+    arrange(name) %>%
+    mutate(value = c(rep("Basic", 7), rep("Advanced", 7))) %>%
+    mutate(n = colSums(data[cols], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
+
+  names(components$n) <- NULL
+
+  if (sample == TRUE) {
+    components <- components %>%
+      mutate(count = colSums(data[cols], na.rm = TRUE))
+
+    components$sample <- sum(data$code_freq != "Never", na.rm = TRUE)
+  }
+
+  return(components)
 
 }
 
