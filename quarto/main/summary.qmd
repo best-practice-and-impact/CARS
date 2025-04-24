@@ -272,17 +272,17 @@ We asked all respondents who use code in their role, it they use AI tools when c
 The term 'AI' was not defined in this question.
 
 ```{r}
-# plot <- CARS::plot_freqs(data = tables,
-#                    config = config,
-#                    question = "ai", 
-#                    font_size = 14,
-#                    orientation = "h")
-# 
-# table <- CARS::df_to_table(data = tables,
-#                            config = config,
-#                            question = "ai")
-# 
-# CARS::wrap_outputs("ai", plot, table)
+plot <- CARS::plot_freqs(data = tables,
+                   config = config,
+                   question = "ai",
+                   xlab = "Do you use any AI tools when coding at work?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "ai")
+
+CARS::wrap_outputs("ai", plot, table)
 ```
 
 ### How AI tools are used
@@ -290,34 +290,44 @@ We asked all respondents who use AI tools when coding at work, what they use the
 
 
 ```{r}
-# plot <- CARS::plot_freqs(data = tables,
-#                    config = config,
-#                    question = "ai_use", 
-#                    font_size = 14,
-#                    orientation = "h")
-# 
-# table <- CARS::df_to_table(data = tables,
-#                            config = config,
-#                            question = "ai_use")
-# 
-# CARS::wrap_outputs("ai-use", plot, table)
+
+ai_use_data <- dplyr::filter(tables$ai_use, name != "Other") 
+
+
+plot <- CARS::plot_stacked(data = ai_use_data,
+                           colour_scale = "scale",
+                   font_size = 14)
+
+#CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+
+table <- CARS::df_to_table(data = tables$ai_use,
+                           column_headers = c("AI use", "Yes", "No"), crosstab = TRUE)
+
+
+#table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
+
+CARS::wrap_outputs("ai-use", plot, table)
 ```
 
 ### Trust in AI
 We asked all respondents who use AI tools when coding at work, how much they trust the accuracy and reliability of the outputs.
 
 ```{r}
-# plot <- CARS::plot_freqs(data = tables,
-#                    config = config,
-#                    question = "ai_trust", 
-#                    font_size = 14,
-#                    orientation = "h")
-# 
-# table <- CARS::df_to_table(data = tables,
-#                            config = config,
-#                            question = "ai_trust")
-# 
-# CARS::wrap_outputs("ai-trust", plot, table)
+
+likert_ai <- tables$ai_trust
+likert_ai$name <- "How much do you trust the accuracy and reliability of outputs from AI tools when coding at work?"
+likert_ai <- dplyr::relocate(likert_ai, name) |> dplyr::arrange(desc(dplyr::row_number()))
+
+plot <- CARS::plot_likert(likert_ai,
+                          mid = 3, break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 300, width = "100%")
+
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "ai_trust")
+
+CARS::wrap_outputs("ai-trust", plot, table)
 ```
 
 

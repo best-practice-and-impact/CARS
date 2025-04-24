@@ -307,7 +307,7 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
   if (colour_scale == "gradient") {
     colours <- CARS::get_gradient(ncolours)
   } else if (colour_scale == "scale") {
-    colours <- CARS::get_2colour_scale(ncolours)
+    colours <- get_2colour_scale(ncolours)
   } else if (colour_scale == "2gradients") {
     mid <- ceiling(ncolours/2)
     colours <- CARS::get_2colour_gradients(ncolours, mid = mid, neutral_mid = neutral_mid)
@@ -532,7 +532,7 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
 plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "", ylab = "", font_size = 12, neutral_mid = TRUE, ...) {
 
-  # Validate data
+  #Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
   } else if (ncol(data) != 5) {

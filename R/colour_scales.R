@@ -95,7 +95,7 @@ get_2colour_gradients <- function(n, colour1 = c(18, 67, 109), colour2 = c(244, 
 #'
 #' @export
 
-get_2colour_scale <- function(n, colour1 = c(18, 67, 109), colour2 = c(244, 106, 37), colour_names = TRUE) {
+get_2colour_scale <- function(n, colour1 = c(244, 106, 37), colour2 =  c(18, 67, 109), colour_names = TRUE) {
 
   if (!is.numeric(n) | length(n) > 1) {
     stop("n is not a numeric value")
