@@ -11,6 +11,7 @@ data <- CARS::get_tidy_data_file("2024_data.csv")
 config <- yaml::read_yaml("../../config.yml")
 
 data <- CARS::clean_data(data, config)
+data <- CARS::derive_vars(data)
 
 all_wave_data <- CARS::get_all_waves()
 
@@ -286,7 +287,8 @@ CARS::wrap_outputs("ai", plot, table)
 ```
 
 ### How AI tools are used
-We asked all respondents who use AI tools when coding at work, what they use these tools for. The 'other' option allowed a free-text response, with the most commonly reports other used being...
+
+We asked all respondents who use AI tools when coding at work, what they use these tools for. 
 
 
 ```{r}
@@ -310,6 +312,7 @@ CARS::wrap_outputs("ai-use", plot, table)
 ```
 
 ### Trust in AI
+
 We asked all respondents who use AI tools when coding at work, how much they trust the accuracy and reliability of the outputs.
 
 ```{r}
@@ -342,7 +345,7 @@ The following links contain more resources on RAP:
 
 ### Awareness of RAP over time
 
-We asked all respondents if they had heard of RAP.
+We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).
 
 ```{r}
 freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)

@@ -169,93 +169,6 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 }
 
 
-#' @title Frequency of documentation use
-#'
-#' @description Create frequency table of documentation use
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-
-summarise_doc <- function(data, sample = FALSE) {
-
-  # Validation checks
-  if (!"code_freq" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'code_freq'")
-  }
-
-  documentation_data <- data[data$code_freq != "Never", ]
-
-  questions <- c("doc_comments",
-                 "doc_functions",
-                 "doc_readme",
-                 "doc_desk_notes",
-                 "doc_registers",
-                 "doc_AQA_logs",
-                 "doc_flow_charts")
-
-  levels <- c("I don't understand this question",
-              "Never",
-              "Rarely",
-              "Sometimes",
-              "Regularly",
-              "All the time")
-
-  labels <- c("Code comments",
-              "Documentation for each function or class",
-              "README files",
-              "Desk notes",
-              "Analytical Quality Assurance (AQA) logs",
-              "Data or assumptions registers",
-              "Flow charts")
-
-
-  frequencies <- calculate_freqs(documentation_data, questions, levels, labels, sample = sample)
-
-  return(frequencies)
-
-}
-
-#' @title Summarise ability change frequency
-#'
-#' @description calculate frequency table for ability change
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
-#'
-#' @return frequency table (data.frame)
-
-summarise_ability_change <- function(data, sample = FALSE) {
-
-  # Validation checks
-  if (!"coding_ability_change" %in% colnames(data)) {
-    stop("unexpected_input: no column called 'coding_ability_change'")
-  }
-
-  data <- data[data$first_learned != "Current employment", ]
-
-  questions <- "coding_ability_change"
-
-  levels <- c("It has become significantly worse",
-              "It has become slightly worse",
-              "It has stayed the same",
-              "It has become slightly better",
-              "It has become significantly better")
-
-  frequencies <- calculate_freqs(data, questions, levels, sample = sample)
-
-  frequencies$value <- frequencies$value |>
-    dplyr::recode_factor("It has become significantly worse" = "Significantly worse",
-                         "It has become slightly worse" = "Slightly worse",
-                         "It has stayed the same" = "Stayed the same",
-                         "It has become slightly better" = "Slightly better",
-                         "It has become significantly better" = "Significantly better")
-
-  return(frequencies)
-
-}
-
 
 #' @title Summarise programming language status
 #'
@@ -296,27 +209,6 @@ summarise_language_status <- function(data) {
 }
 
 
-#' @title Summarise manage someone who codes
-#'
-#' @description calculate frequency table for if someone line manages someone who codes
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_line_manage <- function(data){
-
-  questions <- "management"
-
-  levels <- c("Yes",
-              "No - I manage people who do not write code",
-              "No - I don't line manage anyone")
-
-  frequencies <- calculate_freqs(data, questions, levels)
-
-  return(frequencies)
-
-}
 
 
 #' @title Summarise access to git and knowledge of git

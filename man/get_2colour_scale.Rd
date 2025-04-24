@@ -6,8 +6,8 @@
 \usage{
 get_2colour_scale(
   n,
-  colour1 = c(18, 67, 109),
-  colour2 = c(244, 106, 37),
+  colour1 = c(244, 106, 37),
+  colour2 = c(18, 67, 109),
   colour_names = TRUE
 )
 }
