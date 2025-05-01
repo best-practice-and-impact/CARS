@@ -15,7 +15,7 @@ data <- CARS::derive_vars(data)
 
 all_wave_data <- CARS::get_all_waves()
 
-tables <- CARS::summarise_all(data, config, all_tables = FALSE)
+tables <- CARS::summarise_all(data, config, all_tables = TRUE)
 
 ```
 :::{.callout-note}

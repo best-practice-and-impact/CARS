@@ -16,7 +16,6 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     code_freq = summarise_data(data, config, question = "code_freq", sample = sample),
     knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge", sample = sample),
     access = summarise_coding_tools(data, config, question = "coding_tools_access", sample = sample),
-    languages_by_prof = summarise_languages_by_prof(data, config, question = "professions" , sample = sample),
     first_learned = summarise_data(data, config, question = "first_learned", sample = sample),
     ability_change = summarise_data(data, config, question = "ability_change" , sample = sample),
     coding_years = summarise_data(data, config, question = "coding_years" , sample = sample),
@@ -25,16 +24,8 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     doc = summarise_multi_col_data(data, config, question = "doc" , sample = sample),
     rap_knowledge = summarise_data(data, config, question = "heard_of_rap" , sample = sample),
     rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions" , sample = sample),
-    qs_aware = summarise_data(data, config, question = "qs_aware" , sample = sample),
-    qs_comply = summarise_data(data, config, question = "qs_comply" , sample = sample),
-    qq_aware = summarise_data(data, config, question = "qq_aware" , sample = sample),
-    management = summarise_data(data, config, question = "management" , sample = sample),
     git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge" , sample = sample),
     access_git = summarise_git(data, config, question = "coding_tools_access" , sample = sample),
-    ai = summarise_data(data, config, question = "ai" , sample = sample),
-    ai_tools = summarise_data(data, config, question = "ai_tools" , sample = sample),
-    ai_use = summarise_data(data, config, question = "ai_use" , sample = sample),
-    ai_trust = summarise_data(data, config, question = "ai_trust" , sample = sample),
     rap_components = summarise_rap_comp(data, config, question = "rap_components", sample = sample)
 
   )
@@ -47,7 +38,15 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
                        team = summarise_data(data, config, question = "team", sample = sample),
                        management = summarise_data(data, config, question = "management", sample = sample),
                        code_leisure = summarise_data(data, config, question = "code_leisure", sample = sample),
-                       capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change", sample = sample)
+                       ai = summarise_data(data, config, question = "ai" , sample = sample),
+                       ai_tools = summarise_data(data, config, question = "ai_tools" , sample = sample),
+                       ai_use = summarise_data(data, config, question = "ai_use" , sample = sample),
+                       ai_trust = summarise_data(data, config, question = "ai_trust" , sample = sample),
+                       qs_aware = summarise_data(data, config, question = "qs_aware" , sample = sample),
+                       qs_comply = summarise_data(data, config, question = "qs_comply" , sample = sample),
+                       qq_aware = summarise_data(data, config, question = "qq_aware" , sample = sample),
+                       capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change", sample = sample),
+                       languages_by_prof = summarise_languages_by_prof(data, config, question = "professions" , sample = sample)
                        # capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
                        # capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
                        # basic_score_by_implementation = summarise_basic_score_by_imp(data),
