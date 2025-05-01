@@ -99,10 +99,9 @@ tracking_link_freqs <- table(all_wave_data$year, all_wave_data$tracking_link) %>
 
 order <- rev(order(tracking_link_freqs$n[tracking_link_freqs$Var1=="2024"]))
 tracking_link_freqs <- tracking_link_freqs[c(order, order+5, order+10, order+15) ,]
-tracking_link_freqs <- dplyr::rename(tracking_link_freqs, "Tracking link" = Var2)
 
 CARS::df_to_table(tracking_link_freqs[c(2,1,5)], 
-                  column_headers = c("2021", "2022", "2023", "2024"), 
+                  column_headers = c("Tracking link", "2021", "2022", "2023", "2024"), 
                   crosstab = T,
                   sample = FALSE)
 

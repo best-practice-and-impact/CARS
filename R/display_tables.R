@@ -26,7 +26,10 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
 
     alignment <- c("l", rep("r", ncol(table_data)-1))
 
-    column_headers <- colnames(table_data)
+    if (missing(column_headers)) {
+      column_headers <- colnames(table_data)
+    }
+
   } else {
     alignment <- c(rep("l", ncol(table_data)-1), "r")
   }
