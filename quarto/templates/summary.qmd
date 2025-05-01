@@ -15,11 +15,11 @@ data <- CARS::get_tidy_data_file("2024_data.csv")
 config <- yaml::read_yaml("../../../config.yml")
 
 data <- CARS::clean_data(data, config)
+data <- CARS::derive_vars(data)
 
 data <- {{{filter}}}
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
-
 
 
 ```
@@ -254,6 +254,33 @@ CARS::wrap_outputs("doc", plot, table)
 
 ```
 
+### Working practices
+
+We asked respondents who reported writing code at work how frequently they use good working practices in the coding projects they work on.
+
+```{r}
+
+plot <- CARS::plot_likert(tables$working_practices,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
+
+table <- CARS::df_to_table(tables$working_practices,
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)",
+                             "Rarely (%)",
+                             "Sometimes (%)",
+                             "Regularly (%)",
+                             "Always (%)"
+                             ),
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("working_practices", plot, table)
+
+```
 
 ## Reproducible analytical pipelines (RAP)
 

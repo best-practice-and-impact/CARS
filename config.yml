@@ -2,8 +2,8 @@ tracking_link:
   "Default Web Link": "Default link"
   "Data Science Slack": "Slack"
   "RAP Champions": "RAP Champions"
-  "AF Newsletter": "Profession newsletter"
-  "Profession Newsletter": "Profession newsletter"
+  "AF Newsletter": "Profession newsletters/mailing lists"
+  "Profession Newsletter": "Profession newsletters/mailing lists"
   "RAS Newsletter ONS": "ONS Newsletter"
   "Quality Champions ONS": "Quality Champions"
   "ONS RAP Network": "ONS RAP Network"
@@ -309,10 +309,10 @@ coding_tools_access:
   cols:
     access_python: "Python"
     access_R: "R"
+    access_SQL: "SQL"
     access_matlab: "Matlab"
     access_SAS: "SAS"
     access_SPSS: "SPSS"
-    access_SQL: "SQL"
     access_stata: "Stata"
     access_VBA: "VBA"
     access_git: "Git"
@@ -326,10 +326,10 @@ coding_tools_knowledge:
   cols:
     knowledge_python: "Python"
     knowledge_R: "R"
+    knowledge_SQL: "SQL"
     knowledge_matlab: "Matlab"
     knowledge_SAS: "SAS"
     knowledge_SPSS: "SPSS"
-    knowledge_SQL: "SQL"
     knowledge_stata: "Stata"
     knowledge_VBA: "VBA"
     knowledge_git: "Git"
@@ -363,7 +363,7 @@ working_practices:
           "Always"]
   cols:
     work_git: "Use version control"
-    work_succession: "Ensure longevity"
+    work_succession: "Have a succession plan"
     work_aims: "Understand project aims"
     work_roles: "Understand project roles"
     work_publish_code: "Publish code in the open"
@@ -417,7 +417,7 @@ ai_use:
     ai_use_other: "Other"
 
 ai_trust:
-  question: "How much do you trust the accuracy and reliability of outputs from AI tools when coding at work?"
+  question: "Do you trust the outputs from AI tools when coding at work?"
   levels: ["Strongly trust",
           "Somewhat trust",
           "Neutral/not sure",
@@ -475,10 +475,10 @@ rap_components:
     open_code_score: "Open source own code"
     version_control_score: "Version control"
     peer_review_score: "Peer review"
-    manual_test_score: "Manually test code"
-    proportionate_QA_score: "Work to quality standards"
-    doc_score: "Project documentation"
+    qa_score: "Work to quality standards"
+    doc_score: "Create project README"
     function_score: "Write functions"
+    manual_test_score: "Manually test code"
     auto_test_score: "Write automated tests"
     function_doc_score: "Document functions"
     control_flow_score: "Use control flow"

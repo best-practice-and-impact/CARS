@@ -25,6 +25,8 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
     table_data <- df_to_crosstab(table_data)
 
     alignment <- c("l", rep("r", ncol(table_data)-1))
+
+    column_headers <- colnames(table_data)
   } else {
     alignment <- c(rep("l", ncol(table_data)-1), "r")
   }
@@ -34,6 +36,7 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
   } else {
     colnames(table_data) <- c(full_question, "Percentage")
   }
+
 
   html <- knitr::kable(table_data, align = alignment, format = "html") |> kableExtra::kable_styling()
 
@@ -52,7 +55,9 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
 #'
 #' @return wide data.frame
 
+
 df_to_crosstab <- function(data) {
+
   if (ncol(data) != 3) {
     stop("Unexpected input: expecting a dataframe with three columns.")
   }

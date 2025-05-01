@@ -71,9 +71,7 @@ derive_basic_rap_scores <- function(data) {
                         "work_publish_code",
                         "work_git",
                         "prac_review",
-                        "prac_manual_tests",
                         "work_qa",
-                        "doc_qa",
                         "doc_readme")
 
   if (!is.data.frame(data)) {
@@ -89,13 +87,12 @@ derive_basic_rap_scores <- function(data) {
                        "open_code_score",
                        "version_control_score",
                        "peer_review_score",
-                       "manual_test_score",
-                       "proportionate_QA_score",
+                       "qa_score",
                        "doc_score")
 
-  high_vals <- c("Regularly", "All the time")
+  high_vals <- c("Regularly", "Always")
 
-  prac_cols <- expected_columns[!(expected_columns %in% c("code_freq", "doc_qa", "doc_readme"))]
+  prac_cols <- expected_columns[!(expected_columns %in% c("code_freq"))]
 
   data <- data %>%
     dplyr::mutate(dplyr::across(.cols = expected_columns[expected_columns != "code_freq"],
@@ -103,8 +100,6 @@ derive_basic_rap_scores <- function(data) {
                               .x %in% high_vals ~ 1,
                               TRUE ~ 0),
                   .names = "{.col}_score")) %>%
-    dplyr::mutate(doc_score = as.integer(doc_qa_score & doc_readme_score)) %>%
-    dplyr::select(-c(doc_qa_score, doc_readme_score)) %>%
     dplyr::rename_with(~ score_col_names[which(paste0(prac_cols, "_score") == .x)],
                 .cols = paste0(prac_cols,
                                "_score")) %>%
@@ -129,6 +124,7 @@ derive_advanced_rap_scores <- function(data) {
 
   expected_columns <- c("code_freq",
                         "prac_functions",
+                        "prac_manual_tests",
                         "prac_auto_tests",
                         "doc_function",
                         "prac_control_flow",
@@ -146,6 +142,7 @@ derive_advanced_rap_scores <- function(data) {
   }
 
   score_col_names <- c("function_score",
+                       "manual_test_score",
                        "auto_test_score",
                        "function_doc_score",
                        "control_flow_score",
@@ -153,7 +150,7 @@ derive_advanced_rap_scores <- function(data) {
                        "code_style_score",
                        "dep_management_score")
 
-  high_vals <- c("Regularly", "All the time", "Yes")
+  high_vals <- c("Regularly", "Always")
 
   data <- data %>%
     dplyr::mutate(dplyr::across(.cols = expected_columns[expected_columns != "code_freq"],

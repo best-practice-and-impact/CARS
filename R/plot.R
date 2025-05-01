@@ -207,6 +207,8 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
     sample <- ""
   }
 
+  hovertext <- paste0(data[[1]], ": ", round(abs(data[[2]]) * 100, 1), "%", " <extra></extra>")
+
   if (type == "bar") {
     fig <- plotly::plot_ly(
       x = x_vals,
@@ -214,6 +216,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       marker = list(color = colour),
       type = "bar",
       orientation = orientation,
+      hovertemplate = hovertext,
       ...
     )
   } else if (type == "line") {
@@ -225,10 +228,10 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       type = "scatter",
       mode = "markers+lines",
       orientation = orientation,
+      hovertemplate = hovertext,
       ...
     )
   }
-
 
   fig <- plotly::config(fig, displayModeBar = F)
   fig <- plotly::layout(fig,
@@ -342,12 +345,15 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
     sample <- ""
   }
 
+  hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
+
   if (type == "bar") {
     fig <- plotly::plot_ly(y = y_vals,
                            x = x_vals,
                            color = data[[2]],
                            type = "bar",
                            orientation = orientation,
+                           hovertemplate = hovertext,
                            marker = list(color = colours),
                            ...)
   } else if (type == "line") {
@@ -357,6 +363,7 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
                            type = "scatter",
                            mode = "markers+lines",
                            orientation = orientation,
+                           hovertemplate = hovertext,
                            marker = list(color = colours),
                            line = list(color = colours),
                            ...)
@@ -631,6 +638,13 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                         annotations = list(x = 1, y = 0, text = sample,
                                            showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
                                            xref='paper', yref='paper', font=list(size = font_size)),
+                        #legend = list(font = list(size = 13),
+                        #              orientation = "h",   # show entries horizontally
+                        #              yanchor = "center",  # use center of legend as anchor
+                        #               yanchor = "bottom",
+                        #               y = 1.1,
+                        #               traceorder = "normal"),
+                        #               font = list(size = 14)),
                         xaxis = x,
                         yaxis = y,
                         hoverlabel = list(bgcolor = "white", font = list(size = font_size)))
@@ -644,6 +658,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
                                       tickvals = tick_values,
                                       title = xlab))
 
+
   fig <- plotly::layout(fig, legend = list(xanchor = "left",
                                            yanchor = "bottom",
                                            orientation = "h",
@@ -654,12 +669,12 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   # Disable interactive legend
 
-  id <- paste0("plot", stringi::stri_rand_strings(1, 10))
-  javascript <- paste0(id, ".on('plotly_legenddoubleclick', function(d, i) {return false});",
-                       id, ".on('plotly_legendclick', function(d, i) {return false});")
+id <- paste0("plot", stringi::stri_rand_strings(1, 10))
+javascript <- paste0(id, ".on('plotly_legenddoubleclick', function(d, i) {return false});",
+                     id, ".on('plotly_legendclick', function(d, i) {return false});")
 
-  fig$elementId <- id
-  fig <- htmlwidgets::prependContent(fig, htmlwidgets::onStaticRenderComplete(javascript), data=list(''))
+fig$elementId <- id
+fig <- htmlwidgets::prependContent(fig, htmlwidgets::onStaticRenderComplete(javascript), data=list(''))
 
   return(fig)
 

@@ -15,11 +15,11 @@ data <- CARS::get_tidy_data_file("2024_data.csv")
 config <- yaml::read_yaml("../../../config.yml")
 
 data <- CARS::clean_data(data, config)
+data <- CARS::derive_vars(data)
 
 data <- data[!is.na(data$department) & data$department == "Northern Ireland Statistics and Research Agency", ]
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
-
 
 
 ```
@@ -133,9 +133,9 @@ CARS::wrap_outputs("git-knowledge", plot, table)
 
 ### Where respondents first learned to code
 
-Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'. Those who reported first learning to code outside of a work or educational environment were categorised as 'self-taught' based on free-text responses.
+Respondents with coding experience were asked where they first learned to code.
 
-These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
+These data only show where people first learned to code. They do not show all the settings in which they learned to code, to what extent, or how long ago.
 
 ```{r}
 
@@ -147,6 +147,26 @@ table <- CARS::df_to_table(data = tables,
                            question = "first_learned")
 
 CARS::wrap_outputs("where-learned", plot, table)
+
+```
+
+### Coding experience
+
+We asked respondents with coding experience how many years of experience they had in a coding role, excluding any years in education.
+
+This data includes any experience in other roles and sectors, but does not define the type of experience.
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$coding_years,
+                         xlab = "How many years of experience do you have in a coding role?", 
+                         font_size = 14,
+                         orientation = "h")
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "coding_years")
+
+CARS::wrap_outputs("coding-years", plot, table)
 
 ```
 
@@ -234,6 +254,33 @@ CARS::wrap_outputs("doc", plot, table)
 
 ```
 
+### Working practices
+
+We asked respondents who reported writing code at work how frequently they use good working practices in the coding projects they work on.
+
+```{r}
+
+plot <- CARS::plot_likert(tables$working_practices,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
+
+table <- CARS::df_to_table(tables$working_practices,
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)",
+                             "Rarely (%)",
+                             "Sometimes (%)",
+                             "Regularly (%)",
+                             "Always (%)"
+                             ),
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("working_practices", plot, table)
+
+```
 
 ## Reproducible analytical pipelines (RAP)
 
@@ -245,14 +292,18 @@ The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.u
 
 ### Knowledge of RAP
 
-We asked respondents who reported writing code at work, if they had heard of RAP.
+We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).
 
 ```{r}
 
-# plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$code_at_work, xlab = "Heard of RAP?", font_size = 14, orientation = "v")
-# table <- CARS::df_to_table(tables$rap_knowledge, n = samples$code_at_work, column_headers = c("Knowledge", "Percent"))
-# 
-# CARS::wrap_outputs("rap-knowledge", plot, table)
+plot <- CARS::plot_freqs(tables$rap_knowledge,  
+                         xlab = "Have you heard of RAP?", 
+                         font_size = 14,
+                         orientation = "v")
+table <- CARS::df_to_table(tables$rap_knowledge, 
+                           column_headers = c("Have you heard of RAP?", "Percent"))
+ 
+CARS::wrap_outputs("rap-knowledge", plot, table)
 
 ```
 
@@ -293,23 +344,21 @@ For each RAP component a percent positive was calculated. Positive responses wer
 ### RAP components
 
 ```{r}
-# tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
-# 
-# tables$rap_components$name <- as.character(tables$rap_components$name)
-# 
-# tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
-# 
-# plot <- CARS::plot_grouped(tables$rap_components, 
-#                            n = samples$code_at_work,
-#                            orientation = "h", 
-#                            xlab = "RAP component", font_size = 14)
-# 
-# table <- CARS::df_to_table(tables$rap_components, 
-#                            n = samples$code_at_work,
-#                            column_headers = c("RAP component",
-#                                               "Type",
-#                                               "Percentage of analysts who code in their work"))
-# 
-# CARS::wrap_outputs("rap-comp", plot, table)
+tables$rap_components %<>% dplyr::arrange(dplyr::desc(value), dplyr::desc(n)) %>% data.frame
+
+tables$rap_components$name <- as.character(tables$rap_components$name)
+
+tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
+
+plot <- CARS::plot_grouped(tables$rap_components,
+                           orientation = "h",
+                           xlab = "RAP component", font_size = 14)
+
+table <- CARS::df_to_table(tables$rap_components,
+                           column_headers = c("RAP component",
+                                              "Type",
+                                              "Percentage of analysts who code in their work"))
+
+CARS::wrap_outputs("rap-comp", plot, table)
 
 ```

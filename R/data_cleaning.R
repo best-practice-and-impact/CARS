@@ -49,7 +49,8 @@ clean_data <- function(data, config){
  data <- data |>
    apply_skip_logic() |>
    clean_departments() |>
-   clean_first_learned()
+   clean_first_learned() |>
+   clean_quality_qs()
 
  return(data)
 
@@ -205,4 +206,20 @@ rename_cols <- function(data, config) {
   data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
   return(data)
+}
+
+#' Clean quality question columns to remove whitespace
+#'
+#' @param data CARS 2024 dataset
+#'
+#' @return cleaned quality question columns
+#'
+#' @examples
+clean_quality_qs <- function(data){
+
+  cols <- c("qs_aware", "qs_comply", "qq_aware")
+  data <- dplyr::mutate(data, dplyr::across(dplyr::all_of(cols), \(x) gsub("\u00a0", "", x)))
+  data <- dplyr::mutate(data, dplyr::across(dplyr::all_of(cols), trimws))
+
+
 }

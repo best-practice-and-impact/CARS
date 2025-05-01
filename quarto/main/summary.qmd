@@ -34,6 +34,8 @@ For more detail, [see the data collection page](data_collection.qmd).
 
 We asked all respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
 
+To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
+
 #### 2024 data
 
 ```{r}
@@ -50,40 +52,10 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-#### Coding frequency over time
-
-```{r}
-
-all_wave_data$code_freq <- gsub("All the time", "Always", all_wave_data$code_freq)
-
-all_wave_data$code_freq <- factor(all_wave_data$code_freq, config$code_freq$levels)
-
-code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) |>
-  data.frame() |>
-  dplyr::group_by(Var1) |>
-  dplyr::mutate(sample = sum(Freq), n = Freq / sum(Freq)) |>
-  data.frame() |>
-  CARS::get_ci(3, 4)
-
-plot <- CARS::plot_stacked(code_freqs_by_year[c(1,2,5)], 
-                           orientation = "v", 
-                           type = "bar", 
-                           font_size = 14, 
-                           xlab = "Year") |>
-  plotly::layout(legend = list(traceorder = "reversed"))
-
-table <- CARS::df_to_table(data = code_freqs_by_year[c(2,1, 4, 5)], 
-                     crosstab = TRUE, 
-                     column_headers = c("In your current role, how often do you write code to complete your work objectives?", 
-                                        "2021", "2023", "2023", "2024"))
-
-CARS::wrap_outputs("code-freq", plot, table)
-
-```
 
 ### Access to and knowledge of programming languages
 
-Given a list of programming tools, we asked all respondents if the tool was available to use for their work.
+Given a list of programming tools, we asked all respondents with coding experience if the tool was available to use for their work. Note this includes respondents who do not code in their current role.
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 
@@ -97,7 +69,7 @@ CARS::wrap_outputs("access", plot, table)
 
 ```
 
-Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
+Given the same list of programming tools, the same respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
 
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
@@ -145,17 +117,20 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 ```
 
 
-<!-- ### Professions capability in different tools -->
+### Professions capability in different tools
 
-<!-- Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions. -->
+Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
 
-<!-- Please note that respondents might be members of more than one profession, and may report capability in more than one tool. -->
+Please note that respondents might be members of more than one profession, and may report capability in more than one tool.
 
-<!-- ```{R} -->
-<!-- colnames(tables$languages_by_prof)[2] <- "Profession" -->
+```{R}
 
-<!-- tables$languages_by_prof[c(2,1,3)] |> CARS::df_to_table(crosstab = T, proportion_col = 3) -->
-<!-- ``` -->
+CARS::df_to_table(tables$languages_by_prof[c(2,1,3)], 
+            column_headers = "", 
+            crosstab = TRUE, 
+            sample = FALSE)
+
+```
 
 
 ### Access to and knowledge of git
@@ -166,7 +141,7 @@ We asked respondents to answer "Yes", "No" or "Don't know" for the following que
 - Is git available to use in your work?
 - Do you know how to use git to version-control your work?
 
-Please note these outputs include people who do not code at work.
+Please note these outputs include people with coding experience who do not code in their current role.
 
 ### Access to git
 
@@ -300,13 +275,9 @@ plot <- CARS::plot_stacked(data = ai_use_data,
                            colour_scale = "scale",
                    font_size = 14)
 
-#CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-
 table <- CARS::df_to_table(data = tables$ai_use,
                            column_headers = c("AI use", "Yes", "No"), crosstab = TRUE)
 
-
-#table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
 
 CARS::wrap_outputs("ai-use", plot, table)
 ```
@@ -317,14 +288,12 @@ We asked all respondents who use AI tools when coding at work, how much they tru
 
 ```{r}
 
-likert_ai <- tables$ai_trust
-likert_ai$name <- "How much do you trust the accuracy and reliability of outputs from AI tools when coding at work?"
-likert_ai <- dplyr::relocate(likert_ai, name) |> dplyr::arrange(desc(dplyr::row_number()))
-
-plot <- CARS::plot_likert(likert_ai,
-                          mid = 3, break_q_names_col = "name",
-                          max_lines = 2, font_size = 14,
-                          height = 300, width = "100%")
+plot <- CARS::plot_freqs(data = tables,
+                   config = config,
+                   question = "ai_trust",
+                   xlab = "Do you trust the outputs from AI tools when coding at work?",
+                   font_size = 14,
+                   orientation = "h")
 
 table <- CARS::df_to_table(data = tables,
                            config = config,
@@ -352,7 +321,12 @@ freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)
 ```
 
 ```{r}
-plot <- CARS::plot_freqs(freqs[c(2,5:7)], type = "line", xlab = "Year", font_size = 14, error_y = CARS::set_error_bars(freqs$lower_ci, freqs$upper_ci)) |> CARS::set_axis_range(0, 1, axis = "y")
+plot <- CARS::plot_freqs(freqs[c(2,5:7)], 
+                         type = "line", 
+                         xlab = "Year", 
+                         font_size = 14, 
+                         error_y = CARS::set_error_bars(freqs$lower_ci, freqs$upper_ci)) |> 
+  CARS::set_axis_range(0, 1, axis = "y")
 
 table <- CARS::df_to_table(freqs[c(2,5:7)],
                            column_headers = c(
@@ -478,4 +452,31 @@ CARS::wrap_outputs("doc", plot, table)
 
 ```
 
+### Working practices
+
+We asked respondents who reported writing code at work how frequently they use good working practices in the coding projects they work on.
+
+```{r}
+
+plot <- CARS::plot_likert(tables$working_practices,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
+
+table <- CARS::df_to_table(tables$working_practices,
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)",
+                             "Rarely (%)",
+                             "Sometimes (%)",
+                             "Regularly (%)",
+                             "Always (%)"
+                             ),
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("working_practices", plot, table)
+
+```
 

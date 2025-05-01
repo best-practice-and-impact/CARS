@@ -4,7 +4,13 @@
 \alias{summarise_languages_by_prof}
 \title{Summarise programming language knowledge by profession}
 \usage{
-summarise_languages_by_prof(data, sample = FALSE)
+summarise_languages_by_prof(
+  data,
+  config,
+  question,
+  prop = TRUE,
+  sample = FALSE
+)
 }
 \arguments{
 \item{data}{CARS data (pre-processed)}
