@@ -126,7 +126,6 @@ Please note that respondents might be members of more than one profession, and m
 ```{R}
 
 CARS::df_to_table(tables$languages_by_prof[c(2,1,3)], 
-            column_headers = "", 
             crosstab = TRUE, 
             sample = FALSE)
 
@@ -414,7 +413,7 @@ table <- CARS::df_to_table(tables$coding_practices,
                              "Rarely (%)",
                              "Sometimes (%)",
                              "Regularly (%)",
-                             "All the time (%)"
+                             "Always (%)"
                              ),
                            crosstab = TRUE)
 
