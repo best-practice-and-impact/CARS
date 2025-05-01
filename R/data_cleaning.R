@@ -213,8 +213,7 @@ rename_cols <- function(data, config) {
 #' @param data CARS 2024 dataset
 #'
 #' @return cleaned quality question columns
-#'
-#' @examples
+
 clean_quality_qs <- function(data){
 
   cols <- c("qs_aware", "qs_comply", "qq_aware")

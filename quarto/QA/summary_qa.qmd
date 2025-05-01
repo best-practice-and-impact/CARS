@@ -9,35 +9,35 @@ output:
 ```{r output = FALSE}
 library(magrittr)
 
-# loads CARS from local repo to include recent changes
-devtools::load_all()
 
-data <- CARS::get_tidy_data_file("2023_data.csv") %>%
-  CARS::rename_cols() %>%
-  CARS::apply_skip_logic() %>%
-  CARS::clean_data() %>%
+data <- CARS::get_tidy_data_file("2024_data.csv")
+config <- yaml::read_yaml("../../config.yml")
+
+data <- CARS::clean_data(data, config)
+data <- CARS::derive_vars(data)
+
+all_wave_data <- CARS::get_all_waves()
+
+tables <- CARS::summarise_all(data, config, all_tables = TRUE)
+
+
+raw_data <- CARS::get_tidy_data_file("2024_data.csv") 
+raw_data <- CARS::rename_cols(raw_data, config) 
+raw_data <- raw_data |> 
+  CARS::clean_departments() |>
+  CARS::clean_first_learned() |> 
   CARS::derive_vars()
 
-
-raw_data <- CARS::get_tidy_data_file("2023_data.csv") %>%
-  CARS::rename_cols() %>%
-  CARS::clean_data() %>%
-  CARS::derive_vars()
-
-all_wave_data <- CARS::get_all_waves(mode = "file")
-
-tables <- CARS::summarise_all(data, all_tables = TRUE, sample = TRUE)
-
-exp_samples <- CARS::sample_sizes(raw_data)
+exp_samples <- CARS::expected_sample_sizes(raw_data)
 
 ```
 
 ### QA checklist:
 
-* Spelling, grammar and readability
-* All charts and tables are present
-* All charts have titles, legends and axis labels
-* All links work as expected
+[] Spelling, grammar and readability
+[] All charts and tables are present
+[] All charts have titles, legends and correct hover labels
+[] All links work as expected
 
 In addition, this document can be used to QA the data underlying each of the frequency tables and charts. Denominator checks take the expected sample size based on the raw data following the logic rules of the sample_sizes function, as an additional check for question routing. The expected sample size will vary for each question depending on question streaming rules. Other checks include raw data tables used for percentage calculations, which can be used to cross-check calculations are correct.
 
@@ -56,30 +56,11 @@ knitr::kable(tables$code_freq)
 
 Denominator check:
 ```{r echo = FALSE}
-if(tables$code_freq$sample[1] != exp_samples$all) {
+if(tables$code_freq$sample[1] != exp_samples$coder) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$all))
+  print(paste0("Denominator as expected: ", exp_samples$coder))
 }
-```
-#### Coding frequency over time
-Sample size should be the total response for each year. Percentages are calculated within the summary.qmd code.
-```{r echo = FALSE}
-
-all_wave_data$code_freq <- factor(all_wave_data$code_freq, levels = c(
-  "Never", 
-  "Rarely",
-  "Sometimes",
-  "Regularly",
-  "All the time"
-))
-
-table(all_wave_data$year, all_wave_data$code_freq) %>% 
-  data.frame %>% 
-  dplyr::group_by(Var1) %>% 
-  dplyr::summarise(sample = sum(Freq)) %>%
-  knitr::kable()
-  
 ```
 
 ### Access to and knowledge of programming languages
@@ -91,10 +72,10 @@ knitr::kable(tables$access)
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$access$sample[1] != exp_samples$all) {
+if(tables$access$sample[1] != exp_samples$coder) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$all))
+  print(paste0("Denominator as expected: ", exp_samples$coder))
   
 }
 ```
@@ -107,10 +88,10 @@ knitr::kable(tables$knowledge)
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$knowledge$sample[1] != exp_samples$all) {
+if(tables$knowledge$sample[1] != exp_samples$coder) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$all))
+  print(paste0("Denominator as expected: ", exp_samples$coder))
   
 }
 ```
@@ -128,24 +109,24 @@ knitr::kable(tables$languages_by_prof)
 ```
 Denominator check - numbers of respondents in each profession, cross check with above:
 ```{r echo = FALSE}
-raw_data %>%
-  tidyr::pivot_longer(contains("prof"), names_to = "prof", values_to = "value") %>%
-  dplyr::group_by(prof) %>%
-  dplyr::summarise(n = sum(value == "Yes")) %>%
+raw_data |> 
+  tidyr::pivot_longer(contains("prof"), names_to = "prof", values_to = "value") |> 
+  dplyr::group_by(prof) |> 
+  dplyr::summarise(n = sum(value == "Yes")) |> 
   knitr::kable()
 ```
 #### Access to git
 Check data against figure, check proportions are correct
 ```{r echo = FALSE}
-knitr::kable(tables$git_access)
+knitr::kable(tables$access_git)
 ```
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$git_access$sample[1] != exp_samples$all) {
+if(tables$access_git$sample[1] != exp_samples$coder) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$all))
+  print(paste0("Denominator as expected: ", exp_samples$coder))
 }
 ```
 
@@ -153,18 +134,35 @@ if(tables$git_access$sample[1] != exp_samples$all) {
 #### First learned
 Check data against figure, check proportions are correct
 ```{r echo = FALSE}
-knitr::kable(tables$where_learned)
+knitr::kable(tables$first_learned)
 ```
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$where_learned$sample[1] != exp_samples$code_at_work) {
+if(tables$first_learned$sample[1] != exp_samples$coder) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$code_at_work))
+  print(paste0("Denominator as expected: ", exp_samples$coder))
   
 }
 ```
+
+#### Coding experience
+Check data against figure, check proportions are correct
+```{r echo = FALSE}
+knitr::kable(tables$coding_years)
+```
+Denominator check:
+```{r echo = FALSE}
+
+if(tables$coding_years$sample[1] != exp_samples$coder) {
+  warning("Denominator different from expected")
+} else {
+  print(paste0("Denominator as expected: ", exp_samples$coder))
+  
+}
+```
+
 
 #### Ability change
 Check data against figure, check proportions are correct
@@ -174,10 +172,10 @@ knitr::kable(tables$ability_change)
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$ability_change$sample[1] != exp_samples$other_code_experience) {
+if(tables$ability_change$sample[1] != exp_samples$ability_change) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$other_code_experience))
+  print(paste0("Denominator as expected: ", exp_samples$ability_change))
 }
 ```
 
@@ -190,12 +188,60 @@ knitr::kable(tables$capability_change_by_freq)
 Sample size check:
 ```{r echo = FALSE}
 
-if(tables$capability_change_by_freq$sample[1] != exp_samples$other_code_experience) {
+if(tables$capability_change_by_freq$sample[1] != exp_samples$ability_change) {
   warning("Sample size different from expected")
-  print(paste0("Expected: ", exp_samples$other_code_experience))
+  print(paste0("Expected: ", exp_samples$ability_change))
   print(paste0("Actual: ", tables$capability_change_by_freq$sample[1]))
 } else {
-  print(paste0("Sample size as expected: ", exp_samples$other_code_experience))
+  print(paste0("Sample size as expected: ", exp_samples$ability_change))
+}
+```
+## AI tools
+
+#### Use of AI tools
+Check data against figure, check proportions are correct
+```{r echo = FALSE}
+knitr::kable(tables$ai)
+```
+
+Denominator check:
+```{r echo = FALSE}
+
+if(tables$ai$sample[1] != exp_samples$code_at_work) {
+  warning("Denominator different from expected")
+} else {
+  print(paste0("Denominator as expected: ", exp_samples$code_at_work))
+}
+```
+
+#### How AI tools are used
+Check data against figure, check proportions are correct
+```{r echo = FALSE}
+knitr::kable(tables$ai_use)
+```
+
+Denominator check:
+```{r echo = FALSE}
+
+if(tables$ai_use$sample[1] != exp_samples$use_ai) {
+  warning("Denominator different from expected")
+} else {
+  print(paste0("Denominator as expected: ", exp_samples$use_ai))
+}
+```
+#### AI Trust
+Check data against figure, check proportions are correct
+```{r echo = FALSE}
+knitr::kable(tables$ai_trust)
+```
+
+Denominator check:
+```{r echo = FALSE}
+
+if(tables$ai_trust$sample[1] != exp_samples$use_ai) {
+  warning("Denominator different from expected")
+} else {
+  print(paste0("Denominator as expected: ", exp_samples$use_ai))
 }
 ```
 
@@ -215,46 +261,13 @@ knitr::kable(tables$rap_knowledge)
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$rap_knowledge$sample[1] != exp_samples$code_at_work) {
+if(tables$rap_knowledge$sample[1] != exp_samples$all) {
   warning("Denominator different from expected")
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$code_at_work))
+  print(paste0("Denominator as expected: ", exp_samples$all))
 }
 ```
 
-
-#### RAP champs
-Check data against figure, check proportions are correct
-```{r echo = FALSE}
-knitr::kable(tables$rap_champ_status)
-```
-
-Denominator check:
-```{r echo = FALSE}
-
-if(tables$rap_champ_status$sample[1] != exp_samples$heard_of_RAP) {
-  warning("Denominator different from expected")
-} else {
-  print(paste0("Denominator as expected: ", exp_samples$heard_of_RAP))
-}
-```
-
-
-#### RAP strategy knowledge
-Check data against figure, check proportions are correct
-```{r echo = FALSE}
-knitr::kable(tables$strategy_knowledge)
-```
-
-Denominator check:
-```{r echo = FALSE}
-
-if(tables$strategy_knowledge$sample[1] != exp_samples$heard_of_RAP) {
-  warning("Denominator different from expected")
-} else {
-  print(paste0("Denominator as expected: ", exp_samples$heard_of_RAP))
-}
-```
 
 
 #### RAP opinions
@@ -266,12 +279,12 @@ knitr::kable(tables$rap_opinions)
 Denominator check:
 ```{r echo = FALSE}
 
-if(tables$rap_opinions$sample[1] != exp_samples$heard_of_RAP) {
+if(tables$rap_opinions$sample[1] != exp_samples$heard_of_rap) {
   warning("Denominator different from expected")
-  print(paste0("Expected: ", exp_samples$heard_of_RAP))
-  print(paste0("Actual: ", tables$rap_opinions[1]))
+  print(paste0("Expected: ", exp_samples$heard_of_rap))
+  print(paste0("Actual: ", tables$rap_opinions$sample[1]))
 } else {
-  print(paste0("Denominator as expected: ", exp_samples$heard_of_RAP))
+  print(paste0("Denominator as expected: ", exp_samples$heard_of_rap))
 }
 ```
 
@@ -325,6 +338,24 @@ if(tables$doc$sample[1] != exp_samples$code_at_work) {
   warning("Denominator different from expected")
   print(paste0("Expected: ", exp_samples$code_at_work))
   print(paste0("Actual: ", tables$doc$sample[1]))
+} else {
+  print(paste0("Denominator as expected: ", exp_samples$code_at_work))
+}
+
+```
+#### Working practices
+Check data against figure, check proportions are correct
+```{r}
+knitr::kable(tables$working_practices)
+```
+
+Denominator check:
+```{r}
+
+if(tables$working_practices$sample[1] != exp_samples$code_at_work) {
+  warning("Denominator different from expected")
+  print(paste0("Expected: ", exp_samples$code_at_work))
+  print(paste0("Actual: ", tables$working_practices$sample[1]))
 } else {
   print(paste0("Denominator as expected: ", exp_samples$code_at_work))
 }

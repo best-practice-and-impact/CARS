@@ -260,7 +260,7 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
   col2 <- q2[["cols"]]
   levels2 <- q2[["levels"]]
 
-  data <- dplyr::filter(data, (code_freq != "Never" & coding_exp == "Yes" & data$first_learned != "Current role"))
+  data <- dplyr::filter(data, (coding_exp == "Yes" & data$first_learned != "Current role"))
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop, sample)
 
