@@ -1,5 +1,5 @@
 ---
-title: "Profession summary: government data scientists"
+title: "Profession summary: Data Scientists"
 output:
   html_document
 ---
@@ -11,23 +11,27 @@ output:
 
 library(magrittr)
 
-data <- CARS::get_tidy_data_file("2022_data.csv") %>%
-  CARS::rename_cols() %>%
-  CARS::apply_skip_logic() %>%
-  CARS::clean_departments() %>%
-  CARS::derive_vars()
+data <- CARS::get_tidy_data_file("2024_data.csv")
+config <- yaml::read_yaml("../../../config.yml")
+
+data <- CARS::clean_data(data, config)
+data <- CARS::derive_vars(data)
 
 data <- data[!is.na(data$prof_DS) & data$prof_DS == "Yes", ]
 
-tables <- CARS::summarise_all(data, all_tables = FALSE)
+tables <- CARS::summarise_all(data, config, all_tables = FALSE)
 
-samples <- CARS::sample_sizes(data)
 
 ```
 
+:::{.callout-note}
+Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+We advise linking directly to this document when distributing to ensure the most up to date information.
+:::
+
 ## How to use this research
 
-Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. We are unable to provide details about response rates by department or profession. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
+Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
 
 For more detail, [see the data collection page](../data_collection.qmd). 
 
@@ -37,59 +41,48 @@ For more detail, [see the data collection page](../data_collection.qmd).
 
 We asked respondents "In your current role, how often do you write code to complete your work objectives?"
 
+
 ```{r}
 
-plot <- CARS::plot_freqs(tables$code_freq, n = samples$all, xlab = "Coding frequency", font_size = 14)
-table <- CARS::df_to_table(tables$code_freq, n = samples$all, column_headers = c("Coding frequency", "Percent"))
+plot <- CARS::plot_freqs(data = tables$code_freq, 
+                   xlab = "How often do you write code in your current role?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "code_freq")
 
 CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-
-### What code is being used for
-
-We asked respondents what data operations they carry out in their work, and whether they use code to do them. Please note, we did not ask how much of each data operation is done with code or how often.
-
-Respondents who don't do the operation at all have been removed.
-
-```{r}
-
-plot <- CARS::plot_stacked(tables$operations, xlab = "Operation", font_size = 14)
-table <- CARS::df_to_table(tables$operations, column_headers = c("Operation", "I do some or all of this by coding (%)", "I do this without coding (%)"), crosstab = TRUE)
-
-CARS::wrap_outputs("operations", plot, table)
-
-```
-
 ### Access to and knowledge of programming languages
 
-Given a list of programming tools, we asked respondents to answer "Yes", "No" or "Don't know" for the following questions;  
-
-- Is this tool available to use for your work?  
-- Do you know how to program with this tool to a level suitable for your work?  
+Given a list of programming tools, we asked all respondents if the tool was available to use for their work. 
 
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
-
-Please note that capability in programming languages is self-reported here and was not objectively defined or tested
 
 ### Access to coding tools
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$access, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$access, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$access, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
 ```
 
-### Coding tool knowledge
+Given the same list of programming tools, all respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work". 
+
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
+
+### Knowledge of coding tools
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$knowledge, n = samples$all, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge, n = samples$all, column_headers = c("Programming tool", "Yes", "Don't Know", "No"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -97,34 +90,85 @@ CARS::wrap_outputs("knowledge", plot, table)
 
 ### Access to and knowledge of git
 
+
 We asked respondents to answer "Yes", "No" or "Don't know" for the following questions:
 
 - Is git available to use in your work?
 - Do you know how to use git to version-control your work?
 
+Please note these outputs include people who do not code at work.
+
 ### Access to git
 
 ```{r}
+plot <- CARS::plot_freqs(data = tables$access_git, 
+                         xlab = "Is Git available to use for your work?", 
+                         font_size = 14) |> 
+  CARS::set_axis_range(0, 1, axis = "y")
 
-plot <- CARS::plot_freqs(tables$git_access, n = samples$all, xlab = "git access", font_size = 14)
-table <- CARS::df_to_table(tables$git_access, n = samples$all, column_headers = c("git access", "Percent"))
+table <- CARS::df_to_table(data = tables$access_git, 
+                           column_headers = c("Is Git available to use for your work?", 
+                                              "Percentage"))
 
 CARS::wrap_outputs("git-access", plot, table)
 
 ```
 
-### Git knowledge
-
+### Knowledge of git
 ```{r}
+plot <- CARS::plot_freqs(data = tables$git_knowledge, 
+                         font_size = 14, 
+                         xlab = "Do you know how to use Git for your work?") |> 
+  CARS::set_axis_range(0, 1, axis = "y")
 
-plot <- CARS::plot_freqs(tables$git_knowledge, n = samples$all, xlab = "git knowledge", font_size = 14)
-table <- CARS::df_to_table(tables$git_knowledge, n = samples$all, column_headers = c("git knowledge", "Percent"))
+table <- CARS::df_to_table(data = tables$git_knowledge, 
+                           column_headers = c("Do you know how to use Git for your work?", 
+                                              "Percentage"))
 
 CARS::wrap_outputs("git-knowledge", plot, table)
 
 ```
 
-## Coding capability
+## Coding capability and change
+
+### Where respondents first learned to code
+
+Respondents with coding experience were asked where they first learned to code.
+
+These data only show where people first learned to code. They do not show all the settings in which they learned to code, to what extent, or how long ago.
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$first_learned,
+                         xlab = "Where did you first learn to code?", font_size = 14,
+                         orientation = "h")
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "first_learned")
+
+CARS::wrap_outputs("where-learned", plot, table)
+
+```
+
+### Coding experience
+
+We asked respondents with coding experience how many years of experience they had in a coding role, excluding any years in education.
+
+This data includes any experience in other roles and sectors, but does not define the type of experience.
+
+```{r}
+
+plot <- CARS::plot_freqs(tables$coding_years,
+                         xlab = "How many years of experience do you have in a coding role?", 
+                         font_size = 14,
+                         orientation = "h")
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "coding_years")
+
+CARS::wrap_outputs("coding-years", plot, table)
+
+```
 
 ### Change in coding ability during current role
 
@@ -134,25 +178,17 @@ This question was only asked of respondents with coding experience outside of th
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$ability_change, n = samples$other_code_experience, xlab = "Ability change", font_size = 14)
-table <- CARS::df_to_table(tables$ability_change, n = samples$other_code_experience, column_headers = c("Ability change", "Percent"))
+plot <- CARS::plot_freqs(data = tables,
+                   config = config,
+                   question = "ability_change", 
+                   font_size = 14,
+                   orientation = "h")
+
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "ability_change")
 
 CARS::wrap_outputs("ability-change", plot, table)
-
-```
-
-### Where respondents first learned to code
-
-Respondents with coding experience outside their current role were asked where they first learned to code. Those analysts who code in their current role but reported no other coding experience, are included as having learned 'In current role'.
-
-These data only show where people first learned to code. They do not show all the settings in which they had learned to code, to what extent, or how long ago.
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$where_learned, n = samples$can_code, xlab = "Where learned", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$where_learned, n = samples$can_code, column_headers = c("Where learned", "Percent"))
-
-CARS::wrap_outputs("where-learned", plot, table)
 
 ```
 
@@ -161,24 +197,27 @@ CARS::wrap_outputs("where-learned", plot, table)
 
 We asked respondents who said they currently use code in their work, how often they carry out various coding practices. For more information on the practices presented below, please read our guidance on [Quality Assurance of Code for Analysis and Research](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
-### Good analysis coding practices
+Open sourcing was defined as 'making code freely available to be modified and redistributed'
 
+### Consistency of good coding practices
 ```{r}
 
-plot <- CARS::plot_likert(tables$coding_practices, n = samples$code_at_work,
-          mid = 5, neutral_mid = FALSE, break_q_names_col = "name",
-          max_lines = 2, font_size = 14, height = 800, width = "100%")
-table <- CARS::df_to_table(tables$coding_practices, 
+plot <- CARS::plot_likert(tables$coding_practices,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
+
+table <- CARS::df_to_table(tables$coding_practices,
                            column_headers = c(
                              "Statement",
                              "I don't understand this question (%)",
-                             "Never (%)", 
-                             "Rarely (%)", 
+                             "Never (%)",
+                             "Rarely (%)",
                              "Sometimes (%)",
-                             "Regularly (%)", 
+                             "Regularly (%)",
                              "All the time (%)"
                              ),
-                           n = samples$code_at_work,
                            crosstab = TRUE)
 
 CARS::wrap_outputs("good-practices", plot, table)
@@ -187,113 +226,84 @@ CARS::wrap_outputs("good-practices", plot, table)
 
 ### Documentation
 
+We asked respondents who reported writing code at work how frequently they write different forms of documentation when programming in their current role.
+
 [Embedded documentation](https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html) is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$doc, n = samples$code_at_work, mid = 5, neutral_mid = FALSE, font_size = 14, height = 600, width = "100%")
-table <- CARS::df_to_table(tables$doc, 
-         column_headers = c(
-           "Statement",
-           "I don't understand this question (%)",
-           "Never (%)", 
-           "Rarely (%)", 
-           "Sometimes (%)",
-           "Regularly (%)", 
-           "All the time (%)"
-           ),
-         n = samples$code_at_work,
-         crosstab = TRUE)
+plot <- CARS::plot_likert(tables$doc,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
+
+table <- CARS::df_to_table(tables$doc,
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)",
+                             "Rarely (%)",
+                             "Sometimes (%)",
+                             "Regularly (%)",
+                             "Always (%)"
+                             ),
+                           crosstab = TRUE)
 
 CARS::wrap_outputs("doc", plot, table)
 
 ```
 
-### Dependency Management
+### Working practices
 
-We provided examples of tools that may be used for dependency management:
-
-- Requirements files, e.g. python requirements.txt or R DESCRIPTION files  
-- Virtual environments (e.g. venv or renv) or virtual machines  
-- Containers e.g. Docker
+We asked respondents who reported writing code at work how frequently they use good working practices in the coding projects they work on.
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$dependency_management, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use dependency management software", font_size = 14)
-table <- CARS::df_to_table(tables$dependency_management, n = samples$code_at_work, column_headers = c("Use dependency management software", "Percent"))
+plot <- CARS::plot_likert(tables$working_practices,
+                          mid = 5, neutral_mid = FALSE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
 
-CARS::wrap_outputs("dependency-management", plot, table)
+table <- CARS::df_to_table(tables$working_practices,
+                           column_headers = c(
+                             "Statement",
+                             "I don't understand this question (%)",
+                             "Never (%)",
+                             "Rarely (%)",
+                             "Sometimes (%)",
+                             "Regularly (%)",
+                             "Always (%)"
+                             ),
+                           crosstab = TRUE)
 
-```
-
-### Continuous integration
-
-As above, respondents were provided with examples of continuous integration technologies:
-
-- GitHub actions  
-- Jenkins  
-- Travis
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$ci, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use continuous integration", font_size = 14)
-table <- CARS::df_to_table(tables$ci, n = samples$code_at_work, column_headers = c("Use continuous integration", "Percent"))
-
-CARS::wrap_outputs("ci", plot, table)
+CARS::wrap_outputs("working_practices", plot, table)
 
 ```
 
-### Reproducible workflow packages
-Respondents were asked whether they use reproducible workflow packages. Respondents were provided with the following examples:
+## Reproducible analytical pipelines (RAP)
 
-- drake  
-- make  
-- pymake  
+We asked respondents about their knowledge of and opinions on [reproducible analytical pipelines (RAP)](https://gss.civilservice.gov.uk/reproducible-analytical-pipelines/). RAP refers to the use of practices from software engineering to make analysis more reproducible. These practices build on the advantages of writing analysis as code by ensuring increased quality, trust, efficiency, business continuity and knowledge management. 
 
-```{r}
+The [RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments. Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any enquiries about RAP or the champions network.
 
-plot <- CARS::plot_freqs(tables$rep_workflow, n = samples$code_at_work, break_q_names_col = "value", xlab = "Use reproduciable workflow packages", font_size = 14)
-table <- CARS::df_to_table(tables$rep_workflow, n = samples$code_at_work, column_headers = c("Use reproduciable workflow packages", "Percent"))
-
-CARS::wrap_outputs("rep-workflow", plot, table)
-
-```
-
-## RAP knowledge and opinions
-
-We asked respondents about their knowledge of and opinions on [reproducible analytical pipelines (RAP)](https://gss.civilservice.gov.uk/reproducible-analytical-pipelines/). RAP refers to the use of practices from software engineering to make analysis more reproducible. These practices build on the advantages of writing analysis as code by ensuring increased quality, trust, efficiency, business continuity and knowledge management. The [RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments.
+The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government.
 
 ### Knowledge of RAP
 
-We asked respondents:
-
-- Have you heard of RAP?
-- Do you know what a RAP champion is?  
-- Do you know who the RAP champion in your department is?
-
-Respondents who have neither access nor knowledge have been removed.
+We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).
 
 ```{r}
 
-plot <- CARS::plot_freqs(tables$rap_knowledge, n = samples$not_RAP_champ, break_q_names_col = "value", max_lines = 3, xlab = "Knowledge", font_size = 14, orientation = "h")
-table <- CARS::df_to_table(tables$rap_knowledge, n = samples$not_RAP_champ, column_headers = c("Knowledge", "Percent"))
-
+plot <- CARS::plot_freqs(tables$rap_knowledge,  
+                         xlab = "Have you heard of RAP?", 
+                         font_size = 14,
+                         orientation = "v")
+table <- CARS::df_to_table(tables$rap_knowledge, 
+                           column_headers = c("Have you heard of RAP?", "Percent"))
+ 
 CARS::wrap_outputs("rap-knowledge", plot, table)
-
-```
-
-### Knowledge of RAP strategy
-
-We asked the respondents "What is your familiarity with the Analysis Function reproducible analytical pipelines (RAP) strategy?".
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$strategy_knowledge, n = samples$heard_of_RAP,
-         break_q_names_col = "value", max_lines = 3,
-         xlab = "RAP strategy knowledge", font_size = 14)
-table <- CARS::df_to_table(tables$strategy_knowledge, n = samples$heard_of_RAP, column_headers = c("RAP strategy knowledge", "Percent"))
-
-CARS::wrap_outputs("strategy-knowledge", plot, table)
 
 ```
 
@@ -303,18 +313,21 @@ We asked respondents who had heard of RAP whether they agreed with a series of s
 
 ```{r}
 
-plot <- CARS::plot_likert(tables$rap_opinions, n = samples$heard_of_RAP, mid = 3, break_q_names_col = "name", max_lines = 2, font_size = 14, height = 575, width = "100%")
-table <- CARS::df_to_table(tables$rap_opinions, 
-         column_headers = c(
-           "Statement",
-           "Strongly Disagree (%)",
-           "Disagree (%)", 
-           "Neutral (%)", 
-           "Agree (%)",
-           "Strongly Agree (%)"
-           ),
-         n = samples$heard_of_RAP,
-         crosstab = TRUE)
+plot <- CARS::plot_likert(tables$rap_opinions,
+                          mid = 3, break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 700, width = "100%")
+
+table <- CARS::df_to_table(tables$rap_opinions,
+                           column_headers = c(
+                             "Statement",
+                             "Strongly Disagree (%)",
+                             "Disagree (%)",
+                             "Neutral (%)",
+                             "Agree (%)",
+                             "Strongly Agree (%)"
+                             ),
+                           crosstab = TRUE)
 
 CARS::wrap_outputs("rap-opinions", plot, table)
 
@@ -326,9 +339,7 @@ In this section we present RAP components and RAP scores.
 
 For each RAP component a percent positive was calculated. Positive responses were recorded where an answer of "regularly" or "all the time" was given. For documentation, a positive response was recorded if both code comments and README files questions received positive responses. For the continuous integration and dependency management components, responses of "yes" were recorded as positive.
 
-RAP scores are then calculated for each respondent as the total of their positive responses. A score of 3 suggests that a respondent is implementing 3 components of RAP at least regularly. 
-
-"Basic components" are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). "Advanced components" are components which help improve reproducibility, but are not considered part of the minimum standard.
+"Basic" components are the components which make up the [RAP MVP](https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md). "Advanced" components are components which help improve reproducibility, but are not considered part of the minimum standard.
 
 ### RAP components
 
@@ -339,41 +350,15 @@ tables$rap_components$name <- as.character(tables$rap_components$name)
 
 tables$rap_components$name <- factor(tables$rap_components$name, levels = tables$rap_components$name)
 
-plot <- CARS::plot_grouped(tables$rap_components, 
-                           n = samples$code_at_work,
-                           orientation = "h", 
+plot <- CARS::plot_grouped(tables$rap_components,
+                           orientation = "h",
                            xlab = "RAP component", font_size = 14)
 
-table <- CARS::df_to_table(tables$rap_components, 
-                           n = samples$code_at_work,
+table <- CARS::df_to_table(tables$rap_components,
                            column_headers = c("RAP component",
                                               "Type",
                                               "Percentage of analysts who code in their work"))
 
 CARS::wrap_outputs("rap-comp", plot, table)
-
-```
-
-### Basic RAP scores
-
-```{r}
-
-bar_colour <- CARS::get_2colour_scale(2)[2][[1]]
-
-plot <- CARS::plot_freqs(tables$basic_rap_scores, n = samples$code_at_work, bar_colour = bar_colour, xlab = "Basic RAP scores", font_size = 14)
-table <- CARS::df_to_table(tables$basic_rap_scores, n = samples$code_at_work, column_headers = c("Basic RAP scores", "Percent"))
-
-CARS::wrap_outputs("basic-rap-scores", plot, table)
-
-```
-
-### Advanced RAP scores
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$advanced_rap_scores, n = samples$code_at_work, xlab = "Advanced RAP scores", font_size = 14)
-table <- CARS::df_to_table(tables$advanced_rap_scores, n = samples$code_at_work, column_headers = c("Advanced RAP scores", "Percent"))
-
-CARS::wrap_outputs("advanced-rap-scores", plot, table)
 
 ```

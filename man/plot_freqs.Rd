@@ -6,6 +6,8 @@
 \usage{
 plot_freqs(
   data,
+  config,
+  question,
   colour,
   break_q_names_col,
   type = c("bar", "line"),

@@ -4,7 +4,7 @@
 \alias{summarise_all}
 \title{Summarise all}
 \usage{
-summarise_all(data, all_tables = FALSE, sample = FALSE)
+summarise_all(data, config, all_tables = FALSE, sample = TRUE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

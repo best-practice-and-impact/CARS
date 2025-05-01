@@ -49,7 +49,8 @@ clean_data <- function(data, config){
  data <- data |>
    apply_skip_logic() |>
    clean_departments() |>
-   clean_first_learned()
+   clean_first_learned() |>
+   clean_quality_qs()
 
  return(data)
 
@@ -74,7 +75,7 @@ clean_departments <- function(data) {
   data$department[data$department_other == "Environment Agency"] <- "Environment Agency"
   data$department[data$workplace %in% c("Environment Agency", "EA")] <- "Environment Agency"
   data$department[data$department_other == "Home Office "] <- "Home Office"
-  data$department[data$department_other == "Centre for Environment Fisheries and Aquaculture Science"] <- "Centre for Environment Fisheries and Aquaculture Science"
+  data$department[data$department_other == "Centre for Environment Fisheries and Aquaculture Science"] <- "Centre for Environment, Fisheries and Aquaculture Science"
   data$department[data$department_other == "Department of Finance"] <- "Northern Ireland Executive"
   data$department[data$department_other == "National Records of Scotland"] <- "National Records of Scotland"
   data$department[data$department_other %in% c("Health and Safety Executive ", "Health and Safety Executive")] <- "Health and Safety Executive"
@@ -205,4 +206,20 @@ rename_cols <- function(data, config) {
   data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
   return(data)
+}
+
+#' Clean quality question columns to remove whitespace
+#'
+#' @param data CARS 2024 dataset
+#'
+#' @return cleaned quality question columns
+#'
+#' @examples
+clean_quality_qs <- function(data){
+
+  cols <- c("qs_aware", "qs_comply", "qq_aware")
+  data <- dplyr::mutate(data, dplyr::across(dplyr::all_of(cols), \(x) gsub("\u00a0", "", x)))
+  data <- dplyr::mutate(data, dplyr::across(dplyr::all_of(cols), trimws))
+
+
 }

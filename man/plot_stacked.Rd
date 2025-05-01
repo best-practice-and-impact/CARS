@@ -6,7 +6,6 @@
 \usage{
 plot_stacked(
   data,
-  n,
   break_q_names_col,
   type = c("bar", "line"),
   max_lines = 2,
@@ -21,8 +20,6 @@ plot_stacked(
 }
 \arguments{
 \item{data}{Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)}
-
-\item{n}{sample size}
 
 \item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
 
@@ -43,6 +40,8 @@ plot_stacked(
 \item{orientation}{plot orientation ("h" = horizontal, "v" = verical). Vertical by default}
 
 \item{...}{additional plotly_ly arguments}
+
+\item{n}{sample size}
 }
 \value{
 bar chart

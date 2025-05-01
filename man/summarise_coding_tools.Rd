@@ -4,7 +4,7 @@
 \alias{summarise_coding_tools}
 \title{Summarise coding tools}
 \usage{
-summarise_coding_tools(data, config, question, prop = TRUE, sample = FALSE)
+summarise_coding_tools(data, config, question, prop = TRUE, sample = TRUE)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}

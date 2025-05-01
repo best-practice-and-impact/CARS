@@ -4,7 +4,7 @@
 \alias{get_gradient}
 \title{Create single colour gradient}
 \usage{
-get_gradient(n, colour = c(0, 69, 86), colour_names = TRUE)
+get_gradient(n, colour = c(18, 67, 109), colour_names = TRUE)
 }
 \arguments{
 \item{n}{the number of colours needed}

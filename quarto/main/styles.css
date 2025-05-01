@@ -2,43 +2,42 @@
   background-color: white;
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
-  color: black !important;
+  color: #373a3c !important;
 }
 
 #TOC > ul > li > a.active {
   background-color: white;
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
-  color: black !important;
+  color: #373a3c !important;
+  font-weight: bold;
 }
+
 
 #TOC > ul > li > ul > li > a.active {
   background-color: white;
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
-  color: black !important;
-}
-
-#TOC > ul > li > ul > li > a.active {
-  background-color: white;
-  border-bottom: none;
-  border-left: 1px solid #F46A25 !important;
-  color: black !important;
+  color: #373a3c !important;
+  font-weight: bold;
 }
 
 
 #TOC > ul > li > a:hover {
   background-color: #F46A25;
   border-left: 1px solid #F46A25;
-  color: black !important;
+  color: #373a3c !important;
 }
 
 #TOC > ul > li > ul > li > a:hover {
   background-color: #F46A25;
   border-left: 1px solid #F46A25;
-  color: black !important;
+  color: #373a3c !important;
 }
 
+.sidebar nav[role=doc-toc]>h2 {
+  font-weight: bold;
+}
 
 .navbar {
   background-color: #12436D;
