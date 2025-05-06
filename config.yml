@@ -312,7 +312,7 @@ coding_tools_access:
     access_matlab: "Matlab"
     access_SAS: "SAS"
     access_SPSS: "SPSS"
-    knowledge_SQL: "SQL"
+    access_SQL: "SQL"
     access_stata: "Stata"
     access_VBA: "VBA"
     access_git: "Git"
