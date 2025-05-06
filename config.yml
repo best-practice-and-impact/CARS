@@ -309,10 +309,10 @@ coding_tools_access:
   cols:
     access_python: "Python"
     access_R: "R"
-    access_SQL: "SQL"
     access_matlab: "Matlab"
     access_SAS: "SAS"
     access_SPSS: "SPSS"
+    knowledge_SQL: "SQL"
     access_stata: "Stata"
     access_VBA: "VBA"
     access_git: "Git"
@@ -326,10 +326,10 @@ coding_tools_knowledge:
   cols:
     knowledge_python: "Python"
     knowledge_R: "R"
-    knowledge_SQL: "SQL"
     knowledge_matlab: "Matlab"
     knowledge_SAS: "SAS"
     knowledge_SPSS: "SPSS"
+    knowledge_SQL: "SQL"
     knowledge_stata: "Stata"
     knowledge_VBA: "VBA"
     knowledge_git: "Git"
