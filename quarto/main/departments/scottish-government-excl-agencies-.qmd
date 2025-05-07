@@ -66,6 +66,16 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 
 ```{r}
 
+tables$access <- tables$access |> 
+  dplyr::arrange(factor(name, levels = c("Python",
+                                         "R", 
+                                         "SQL",
+                                         "Matlab",
+                                         "SAS",
+                                         "SPSS", 
+                                         "Stata",
+                                         "VBA")))
+
 plot <- CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
 table <- CARS::df_to_table(tables$access, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
 
@@ -80,6 +90,16 @@ Please note that capability in programming languages is self-reported here and w
 ### Knowledge of coding tools
 
 ```{r}
+
+tables$knowledge <- tables$knowledge |> 
+  dplyr::arrange(factor(name, levels = c("Python",
+                                         "R", 
+                                         "SQL",
+                                         "Matlab",
+                                         "SAS",
+                                         "SPSS", 
+                                         "Stata",
+                                         "VBA")))
 
 plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
 table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
