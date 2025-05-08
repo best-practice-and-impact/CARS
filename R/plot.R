@@ -277,6 +277,8 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data should have five columns.")
   }
 
   # Validate labels
@@ -340,7 +342,7 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
   y_axis$title <- "" # Y axis title is created as a caption instead
 
   if("sample" %in% colnames(data)){
-    sample <-  paste0("Sample size = ", data$sample)
+    sample <-  paste0("Sample size = ", data$sample[1])
   } else {
     sample <- ""
   }
