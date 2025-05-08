@@ -617,7 +617,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
-  sample <- paste0("Sample size = ", data$sample)
+  sample <- paste0("Sample size = ", data$sample[1])
 
   fig <- plotly::plot_ly(y = data[[1]],
                          x = data[[3]],
