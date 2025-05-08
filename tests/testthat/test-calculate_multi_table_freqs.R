@@ -13,6 +13,7 @@ col2 <- "Q2"
 levels1 <- c("test1", "test2", "test3")
 levels2 <- c(1, 2, 3)
 
+
 expected <- data.frame(Q1 = factor(rep(c("test1",
                                          "test2",
                                          "test3"),
@@ -34,13 +35,42 @@ test_that("calculate_multi_table_freqs missing data is handled correctly", {
 
 })
 
-test_that("calculate_multi_table_freqs output is as expected", {
+test_that("calculate_multi_table_freqs count output is as expected", {
 
   got <- calculate_multi_table_freqs(data = dummy_data,
                                      col1 = col1,
                                      col2 = col2,
                                      levels1 = levels1,
-                                     levels2 = levels2)
+                                     levels2 = levels2,
+                                     prop = FALSE)
+  expect_equal(got, expected)
+
+})
+
+test_that("calculate_multi_table_freqs prop output is as expected", {
+
+  got <- calculate_multi_table_freqs(data = dummy_data,
+                                     col1 = col1,
+                                     col2 = col2,
+                                     levels1 = levels1,
+                                     levels2 = levels2,
+                                     prop = TRUE)
+
+  expected$n <- c(0, 0, 1/3, 1/3, 0, 0, 0, 1/3, 0)
+  expect_equal(got, expected)
+
+})
+
+test_that("calculate_multi_table_freqs sample output is as expected", {
+
+  got <- calculate_multi_table_freqs(data = dummy_data,
+                                     col1 = col1,
+                                     col2 = col2,
+                                     levels1 = levels1,
+                                     levels2 = levels2,
+                                     prop = FALSE,
+                                     sample = TRUE)
+  expected$sample <- c(3, 3, 3, 3, 3, 3, 3, 3, 3)
   expect_equal(got, expected)
 
 })
