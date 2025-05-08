@@ -47,7 +47,7 @@ derive_language_status <- function(data) {
                      access_col != "Yes" & knowledge_col != "Yes" ~ "Neither")
   })
 
-  names(new_vars) <- paste0("status_", lang_list)
+  colnames(new_vars) <- paste0("status_", lang_list)
 
   return(data.frame(data, new_vars))
 }
