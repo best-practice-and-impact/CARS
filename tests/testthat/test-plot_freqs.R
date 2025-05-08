@@ -1,15 +1,17 @@
 
 dummy_data <- data.frame(Q1 = factor(c("This is test number one", "This is test 2", "test3"),
                                      levels = c("This is test number one", "This is test 2", "test3")),
-                         n = c(0.5, 0.2, 0.8))
+                         n = c(0.5, 0.2, 0.8),
+                         count = c(5, 2, 8),
+                         sample = c(10, 10, 10))
 
 
-testthat::test_that("validity checks work",
+test_that("validity checks work",
                     {
                       testthat::expect_error(plot_freqs(dummy_data, colour = c("blue", "green")), "Unexpected input - colour should be a single colour name.")
                       testthat::expect_error(plot_freqs(dummy_data, colour = 1), "Unexpected input - colour should be a single colour name.")
                       testthat::expect_error(plot_freqs(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
-                      testthat::expect_error(plot_freqs(dplyr::mutate(dummy_data, Q2 = Q1)), "Unexpected input - data does not contain two columns.")
+                      testthat::expect_error(plot_freqs(dplyr::mutate(dummy_data, Q2 = Q1)), "Unexpected input - data does not contain four columns.")
                       testthat::expect_error(plot_freqs(dplyr::mutate(dummy_data, n = as.character(n))), "Unexpected input - data column 2 is not numeric.")
                       testthat::expect_error(plot_freqs(dummy_data, xlab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_freqs(dummy_data, ylab = 1), "Unexpected input - labels should be single character strings.")
@@ -18,10 +20,10 @@ testthat::test_that("validity checks work",
                       testthat::expect_error(plot_freqs(dummy_data, font_size = "x"), "Unexpected input - font_size is not numeric.")
                     })
 
-testthat::test_that("expected outputs for vertical chart achieved",
+test_that("expected outputs for vertical chart achieved",
                     {
 
-                      got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_freqs(dummy_data, xlab = "x", ylab = "y",
                                         break_q_names_col = TRUE,
                                         type = "bar",
                                         orientation = "v")
@@ -32,13 +34,13 @@ testthat::test_that("expected outputs for vertical chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.5, 0.2, 0.8))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, "#004556")
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, "#12436D")
 
                       # Plot orientation
                       testthat::expect_equal(got$x$attrs[[1]]$orientation, "v")
 
                       # Sample size
-                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 10")
 
                       # Axis labels
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$title, "x")
@@ -54,10 +56,10 @@ testthat::test_that("expected outputs for vertical chart achieved",
 
                     })
 
-testthat::test_that("expected outputs for horizontal chart achieved",
+test_that("expected outputs for horizontal chart achieved",
                     {
 
-                      got <- plot_freqs(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_freqs(dummy_data, xlab = "x", ylab = "y",
                                         break_q_names_col = TRUE,
                                         type = "line",
                                         orientation = "h")
@@ -68,13 +70,13 @@ testthat::test_that("expected outputs for horizontal chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.5, 0.2, 0.8))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, "#004556")
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, "#12436D")
 
                       # Plot orientation
                       testthat::expect_equal(got$x$attrs[[1]]$orientation, "h")
 
                       # Sample size
-                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 10")
 
                       # Axis labels
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$title, "y")

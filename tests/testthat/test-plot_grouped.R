@@ -3,13 +3,15 @@ levels1 <- c("This is test number one", "This is test 2", "test3", "test4", "tes
 dummy_data <- data.frame(Q1 = factor(levels1,
                                     levels = levels1),
                          Q2 = c(1, 1, 1, 2, 2),
-                         n = c(0.2, 0.5, 0.3, 0.8, 0.6))
+                         n = c(0.2, 0.5, 0.3, 0.8, 0.6),
+                         count = c(2, 5, 3, 8, 6),
+                         sample = c(10, 10, 10, 10, 10))
 
 
-testthat::test_that("validity checks work",
+test_that("validity checks work",
                     {
                       testthat::expect_error(plot_grouped(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
-                      testthat::expect_error(plot_grouped(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data does not contain 3 columns.")
+                      testthat::expect_error(plot_grouped(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data does not contain 5 columns.")
                       testthat::expect_error(plot_grouped(dplyr::mutate(dummy_data, n = as.character(n))), "Unexpected input - data column 3 is not numeric.")
                       testthat::expect_error(plot_grouped(dummy_data, xlab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_grouped(dummy_data, ylab = 1), "Unexpected input - labels should be single character strings.")
@@ -18,10 +20,10 @@ testthat::test_that("validity checks work",
                       testthat::expect_error(plot_grouped(dummy_data, font_size = "x"), "Unexpected input - font_size is not numeric.")
                     })
 
-testthat::test_that("expected outputs for vertical chart achieved",
+test_that("expected outputs for vertical chart achieved",
                     {
 
-                      got <- plot_grouped(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_grouped(dummy_data, xlab = "x", ylab = "y",
                                           break_q_names_col = TRUE,
                                           orientation = "v")
 
@@ -31,10 +33,10 @@ testthat::test_that("expected outputs for vertical chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.2, 0.5, 0.3, 0.8, 0.6))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#FF6900", "#FF6900", "#FF6900", "#004556", "#004556"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#F46A25", "#F46A25", "#F46A25", "#12436D", "#12436D"))
 
                       # Sample size
-                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "")
 
                       # Axis labels
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$title, "x")
@@ -50,10 +52,10 @@ testthat::test_that("expected outputs for vertical chart achieved",
 
                     })
 
-testthat::test_that("expected outputs for horizontal chart achieved",
+test_that("expected outputs for horizontal chart achieved",
                     {
 
-                      got <- plot_grouped(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_grouped(dummy_data, xlab = "x", ylab = "y",
                                           break_q_names_col = TRUE,
                                           orientation = "h")
 
@@ -63,10 +65,10 @@ testthat::test_that("expected outputs for horizontal chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), rev(c(0.2, 0.5, 0.3, 0.8, 0.6)))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, rev(c("#FF6900", "#FF6900", "#FF6900", "#004556", "#004556")))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, rev(c("#F46A25", "#F46A25", "#F46A25", "#12436D", "#12436D")))
 
                       # Sample size
-                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "Sample size = 100")
+                      testthat::expect_equal(got$x$layoutAttrs[[1]]$annotations$text, "")
 
                       # Axis labels
                       testthat::expect_equal(got$x$layoutAttrs[[1]]$xaxis$title, "y")

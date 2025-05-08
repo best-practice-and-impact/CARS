@@ -13,13 +13,13 @@ dummy_data <- data.frame(Q1 = factor(c(rep("test1", 3),
 testthat::test_that("validity check works",
                     {
                       testthat::expect_error(
-                        freq_subplots(dummy_data, xlab = "x", ylab = "y",
+                        CARS::freq_subplots(dummy_data, xlab = "x", ylab = "y",
                                       height = 20, width = 20, nrows = 1),
                         "Unexpected input: n_rows should be 2 or greater.")
                     })
 
 
-got <- freq_subplots(dummy_data, xlab = "x", ylab = "y",
+got <- CARS::freq_subplots(dummy_data, xlab = "x", ylab = "y",
               height = 500, width = 300, nrows = 3,
               y_margin = .3, x_margin = .3, orientation = "v")
 
@@ -44,7 +44,7 @@ for(i in 1:length(unique(dummy_data[[2]]))){
                       })
 }
 
-got <- freq_subplots(dummy_data, xlab = "x", ylab = "y",
+got <- CARS::freq_subplots(dummy_data, xlab = "x", ylab = "y",
                      height = 500, width = 300, nrows = 3,
                      y_margin = .3, x_margin = .3, orientation = "h")
 

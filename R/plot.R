@@ -202,7 +202,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
   y_axis$title <- "" # Y axis title is created as a caption instead
 
   if("sample" %in% colnames(data)){
-    sample <-  paste0("Sample size = ", data$sample)
+    sample <-  paste0("Sample size = ", data$sample[1])
   } else {
     sample <- ""
   }
