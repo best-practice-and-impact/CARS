@@ -681,7 +681,7 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
 
   if (sample) {
 
-    frequencies <- add_sample_size(frequencies, data, prop)
+    frequencies <- add_sample_size(frequencies, prop)
   }
 
   if (prop) {
@@ -716,22 +716,22 @@ count_to_prop <- function(data){
 
 #' @title Add sample size column
 #'
-#' @param data frequency table with three columns (can be of any name): name, value and count
+#' @param frequencies frequency table with three columns (can be of any name): name, value and count
+#' @param prop whether to return proportion data (0-1).
 #'
 #' @return input data with the third column as sample size (total number of responses)
 #'
 #' @import dplyr
 
-add_sample_size <- function(frequencies, data, prop){
+add_sample_size <- function(frequencies, prop){
 
   frequencies <- frequencies |>
     dplyr::group_by(dplyr::across(dplyr::any_of("name"))) |>
     dplyr::mutate(count = n) |>
+    dplyr::mutate(sample = sum(n)) |>
     data.frame()
 
-  frequencies$sample <- sum(!is.na(data[1]))
-
-  if (!prop){
+  if (!prop) {
     frequencies <- dplyr::select(frequencies, -count)
   }
 
@@ -770,10 +770,10 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
     data.frame()
 
   if (sample) {
-    frequencies <- add_sample_size(frequencies, data, prop)
+    frequencies <- add_sample_size(frequencies, prop)
   }
 
-  if(prop){
+  if (prop) {
     frequencies <- count_to_prop(frequencies)
   }
 
