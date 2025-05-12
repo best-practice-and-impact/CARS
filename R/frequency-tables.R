@@ -167,6 +167,8 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
 
+  frequencies$name <- factor(frequencies$name, levels = labels)
+
   frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
 
   return(frequencies)
