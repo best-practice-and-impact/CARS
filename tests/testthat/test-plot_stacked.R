@@ -22,7 +22,7 @@ test_that("validity checks work",
 test_that("expected outputs for horizontal chart achieved",
                     {
 
-                      got <- plot_stacked(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_stacked(dummy_data, xlab = "x", ylab = "y",
                                           orientation = "h",
                                           break_q_names_col = TRUE)
 
@@ -60,7 +60,7 @@ test_that("expected outputs for horizontal chart achieved",
 test_that("expected outputs for vertical chart achieved",
                     {
 
-                      got <- plot_stacked(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_stacked(dummy_data, xlab = "x", ylab = "y",
                                           orientation = "v",
                                           type = "line",
                                           break_q_names_col = TRUE)
