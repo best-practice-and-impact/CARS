@@ -21,7 +21,7 @@ dummy_data <- data.frame(
     "Rarely",
     "Sometimes",
     "Regularly",
-    "All the time"),
+    "Always"),
     each = 12),
 
   knowledge_R = knowledge_response,
@@ -35,11 +35,12 @@ dummy_data <- data.frame(
 
   prof_DE = prof_response,
   prof_DS = prof_response,
-  prof_DDAT = prof_response,
+  prof_GDD = prof_response,
   prof_GAD = prof_response,
   prof_GES = prof_response,
   prof_geog = prof_response,
   prof_GORS = prof_response,
+  prof_GSE = prof_response,
   prof_GSR = prof_response,
   prof_GSG = prof_response
 
@@ -47,7 +48,7 @@ dummy_data <- data.frame(
 
 test_that("summarise_languages_by_prof missing data is handled correctly", {
 
-  got <- summarise_languages_by_prof(dummy_data)
+  got <- summarise_languages_by_prof(dummy_data, config, question = "professions")
 
 
   expect_false(any(is.na.data.frame(got)))
@@ -56,34 +57,35 @@ test_that("summarise_languages_by_prof missing data is handled correctly", {
 
 test_that("summarise_languages_by_prof output is as expected", {
 
-  got <- summarise_languages_by_prof(dummy_data)
+  got <- summarise_languages_by_prof(dummy_data, config, question = "professions")
 
   expected <- data.frame(
 
-    lang = rep(c(
+    Language = rep(c(
       "Python",
       "R",
-      "SQL",
       "Matlab",
       "SAS",
       "SPSS",
+      "SQL",
       "Stata",
       "VBA"),
-      times = 9),
+      times = 10),
 
-    prof = rep(c(
-      "Data engineers",
-      "Data scientists",
-      "Digital and data (DDAT)",
-      "Actuaries",
-      "Economists (GES)",
-      "Geographers",
-      "Operational researchers (GORS)",
-      "Social researchers (GSR)",
-      "Statisticians (GSG)"),
+    Profession = rep(c(
+      "Data Engineers",
+      "Data Scientists",
+      "Government Digital and Data",
+      "Government Actuary's Department",
+      "Government Economic Service",
+      "Government Geography Profession",
+      "Government Operational Research Service",
+      "Government Science & Engineering",
+      "Government Social Research",
+      "Government Statistician Group"),
       each = 8),
 
-    n = rep(1/3, times = 72)
+    n = rep(1/3, times = 80)
 
   )
 

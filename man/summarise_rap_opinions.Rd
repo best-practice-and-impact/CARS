@@ -9,7 +9,13 @@ summarise_rap_opinions(data, config, question, prop = TRUE, sample = TRUE)
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
-\item{sample}{additionally returns count and sample size. FALSE by default}
+\item{config}{CARS config}
+
+\item{question}{rap opinions question, taken from config}
+
+\item{prop}{returns proportion, TRUE by default}
+
+\item{sample}{additionally returns count and sample size. TRUE by default}
 }
 \value{
 frequency table (data.frame)

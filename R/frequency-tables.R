@@ -3,6 +3,7 @@
 #' @description Produce all summary tables and return as a named list.
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param config CARS config
 #' @param all_tables logical: whether to produce all summary output tables. Defaults to FALSE.
 #' @param sample additionally returns count and sample size for selected tables for QA. FALSE by default
 #'
@@ -121,6 +122,7 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
 #' @description calculate frequency table coding tools (knowledge or access)
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param config CARS config
 #' @param question question name taken from config
 #' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #' @param sample additionally returns count and sample size. FALSE by default
@@ -150,7 +152,10 @@ summarise_coding_tools <- function(data, config, question, prop = TRUE, sample =
 #' @description Create frequency table of opinions of RAP
 #'
 #' @param data full CARS dataset after pre-processing
-#' @param sample additionally returns count and sample size. FALSE by default
+#' @param config CARS config
+#' @param question rap opinions question, taken from config
+#' @param prop returns proportion, TRUE by default
+#' @param sample additionally returns count and sample size. TRUE by default
 #'
 #' @return frequency table (data.frame)
 #' @export
@@ -166,6 +171,8 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
   data[] <- lapply(data, factor, levels = levels)
 
   frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
+
+  frequencies$name <- factor(frequencies$name, levels = labels)
 
   frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
 
@@ -221,6 +228,9 @@ summarise_language_status <- function(data) {
 #' @description calculate frequency table for if someone has access to git and calculate frequency table for if someone knows how to version control using git
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param config CARS config
+#' @param question coding tools knowledge or access question, taken from config
+#' @param prop returns proportion, TRUE by default
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
@@ -246,7 +256,11 @@ summarise_git <- function(data, config, question, prop = TRUE, sample = TRUE) {
 #' @description calculate the cross tab of coding frequency by capability change
 #'
 #' @param data full CARS dataset after pre-processing
-#' @param sample returns proportion, count and, group size and sample size. FALSE by default
+#' @param config CARS config
+#' @param question1 code freq question, string, taken from config
+#' @param question2 capability change question, string, taken from config
+#' @param prop returns proportion, TRUE by default
+#' @param sample returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
 
@@ -273,6 +287,8 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
 #' @description Create frequency table of basic and advanced RAP score components
 #'
 #' @param data full CARS dataset after pre-processing
+#' @param config CARS config
+#' @param question rap components question, taken from config
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return frequency table (data.frame)
@@ -292,16 +308,16 @@ summarise_rap_comp <- function(data, config, question, sample = TRUE) {
   components <- calculate_freqs(selected_data, cols, labels, prop = FALSE, sample = FALSE)
 
   components <- components %>%
-    mutate(name = factor(name, levels = labels)) %>%
-    arrange(name) %>%
-    mutate(value = c(rep("Basic", 6), rep("Advanced", 8))) %>%
-    mutate(n = colSums(data[cols], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
+    dplyr::mutate(name = factor(name, levels = labels)) %>%
+    dplyr::arrange(name) %>%
+    dplyr::mutate(value = c(rep("Basic", 6), rep("Advanced", 8))) %>%
+    dplyr::mutate(n = colSums(data[cols], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
 
   names(components$n) <- NULL
 
   if (sample == TRUE) {
     components <- components %>%
-      mutate(count = colSums(data[cols], na.rm = TRUE))
+      dplyr::mutate(count = colSums(data[cols], na.rm = TRUE))
 
     components$sample <- sum(data$code_freq != "Never", na.rm = TRUE)
   }
@@ -384,6 +400,9 @@ summarise_cap_change_by_CS_grade <- function(data){
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
 #'
 #' @param data CARS data (pre-processed)
+#' @param config CARS config
+#' @param question professions question, taken from config
+#' @param prop returns proportion, TRUE by default
 #' @param sample additionally returns count and sample size. FALSE by default
 #'
 #' @return data.frame
@@ -631,8 +650,7 @@ get_question_data <- function(config, question){
 #' @description Returns a frequency table in tidy data format.
 #'
 #' @param data full CARS data frame  after pre-processing
-#' @param questions columns to filter data on
-#' @param levels all possible factor values in the filtered columns
+#' @param cols columns to filter data on
 #' @param labels labels to rename the column headers. Only needed for multi-column frequencies
 #' @param prop whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.
 #' @param sample additionally returns count and sample size. FALSE by default
@@ -681,7 +699,7 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
 
   if (sample) {
 
-    frequencies <- add_sample_size(frequencies, data, prop)
+    frequencies <- add_sample_size(frequencies, prop)
   }
 
   if (prop) {
@@ -716,22 +734,22 @@ count_to_prop <- function(data){
 
 #' @title Add sample size column
 #'
-#' @param data frequency table with three columns (can be of any name): name, value and count
+#' @param frequencies frequency table with three columns (can be of any name): name, value and count
+#' @param prop whether to return proportion data (0-1).
 #'
 #' @return input data with the third column as sample size (total number of responses)
 #'
 #' @import dplyr
 
-add_sample_size <- function(frequencies, data, prop){
+add_sample_size <- function(frequencies, prop){
 
   frequencies <- frequencies |>
     dplyr::group_by(dplyr::across(dplyr::any_of("name"))) |>
     dplyr::mutate(count = n) |>
+    dplyr::mutate(sample = sum(n)) |>
     data.frame()
 
-  frequencies$sample <- sum(!is.na(data[1]))
-
-  if (!prop){
+  if (!prop) {
     frequencies <- dplyr::select(frequencies, -count)
   }
 
@@ -770,10 +788,10 @@ calculate_multi_table_freqs <- function(data, col1, col2, levels1, levels2, prop
     data.frame()
 
   if (sample) {
-    frequencies <- add_sample_size(frequencies, data, prop)
+    frequencies <- add_sample_size(frequencies, prop)
   }
 
-  if(prop){
+  if (prop) {
     frequencies <- count_to_prop(frequencies)
   }
 

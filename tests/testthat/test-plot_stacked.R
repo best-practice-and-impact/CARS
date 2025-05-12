@@ -4,12 +4,14 @@ dummy_data <- data.frame(Q1 = rep(c("This is test number one",
                                     "test3"), each = 3),
                          Q2 = factor(rep(c(1, 2, 3), 3),
                                      levels = c(1, 2, 3)),
-                         n = c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
+                         n = c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34),
+                         count = c(10, 30, 60, 50, 25, 25, 33, 33, 34),
+                         sample = c(100, 100, 100, 100, 100, 100, 100, 100, 100))
 
-testthat::test_that("validity checks work",
+test_that("validity checks work",
                     {
                       testthat::expect_error(plot_stacked(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
-                      testthat::expect_error(plot_stacked(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data should have three columns.")
+                      testthat::expect_error(plot_stacked(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data should have five columns.")
                       testthat::expect_error(plot_stacked(dummy_data, xlab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_stacked(dummy_data, ylab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_stacked(dummy_data, xlab = c("1", "2")), "Unexpected input - labels should be single character strings.")
@@ -17,12 +19,12 @@ testthat::test_that("validity checks work",
                       testthat::expect_error(plot_stacked(dummy_data, font_size = "x"), "Unexpected input - font_size is not numeric.")
                     })
 
-testthat::test_that("expected outputs for horizontal chart achieved",
+test_that("expected outputs for horizontal chart achieved",
                     {
 
-                      got <- plot_stacked(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_stacked(dummy_data, xlab = "x", ylab = "y",
                                           orientation = "h",
-                                          break_q_names_col = TRUE,)
+                                          break_q_names_col = TRUE)
 
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(rep(c("This is test<br>number one", "This is test<br>2", "test3"), each = 3),
@@ -30,7 +32,7 @@ testthat::test_that("expected outputs for horizontal chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#004556", "#004556", "#004556", "#AFAFAF", "#AFAFAF", "#AFAFAF", "#FF6900", "#FF6900", "#FF6900"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#12436D", "#12436D", "#12436D","#AFAFAF", "#AFAFAF", "#AFAFAF", "#F46A25", "#F46A25", "#F46A25"))
 
                       # Plot orientation
                       testthat::expect_equal(got$x$attrs[[1]]$orientation, "h")
@@ -55,13 +57,13 @@ testthat::test_that("expected outputs for horizontal chart achieved",
 
 
 
-testthat::test_that("expected outputs for vertical chart achieved",
+test_that("expected outputs for vertical chart achieved",
                     {
 
-                      got <- plot_stacked(dummy_data, n = 100, xlab = "x", ylab = "y",
+                      got <- plot_stacked(dummy_data, xlab = "x", ylab = "y",
                                           orientation = "v",
                                           type = "line",
-                                          break_q_names_col = TRUE,)
+                                          break_q_names_col = TRUE)
 
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), factor(rep(c("This is test<br>number one", "This is test<br>2", "test3"), each = 3),
@@ -69,7 +71,7 @@ testthat::test_that("expected outputs for vertical chart achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#004556", "#004556", "#004556", "#AFAFAF", "#AFAFAF", "#AFAFAF", "#FF6900", "#FF6900", "#FF6900"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#12436D", "#12436D", "#12436D","#AFAFAF", "#AFAFAF", "#AFAFAF", "#F46A25", "#F46A25", "#F46A25"))
 
                       # Plot orientation
                       testthat::expect_equal(got$x$attrs[[1]]$orientation, "v")

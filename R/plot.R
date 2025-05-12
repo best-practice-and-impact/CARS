@@ -118,6 +118,8 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @description Produce bar chart (plotly) for single factor frequency data.
 #'
 #' @param data Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())
+#' @param config CARS config (optional)
+#' @param question question to display. String, matching config (optional)
 #' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
@@ -202,7 +204,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
   y_axis$title <- "" # Y axis title is created as a caption instead
 
   if("sample" %in% colnames(data)){
-    sample <-  paste0("Sample size = ", data$sample)
+    sample <-  paste0("Sample size = ", data$sample[1])
   } else {
     sample <- ""
   }
@@ -256,7 +258,6 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 #' @description Produce stacked bar chart (plotly).
 #'
 #' @param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
-#' @param n sample size
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
@@ -277,6 +278,8 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
   # Validate data
   if (!is.data.frame(data)) {
     stop("Unexpected input - data is not a data.frame.")
+  } else if (ncol(data) != 5) {
+    stop("Unexpected input - data should have five columns.")
   }
 
   # Validate labels
@@ -340,7 +343,7 @@ plot_stacked <- function(data, break_q_names_col, type = c("bar", "line"), max_l
   y_axis$title <- "" # Y axis title is created as a caption instead
 
   if("sample" %in% colnames(data)){
-    sample <-  paste0("Sample size = ", data$sample)
+    sample <-  paste0("Sample size = ", data$sample[1])
   } else {
     sample <- ""
   }
@@ -617,7 +620,7 @@ plot_likert <- function(data, mid, n, break_q_names_col, max_lines = 2, xlab = "
 
   hovertext <- paste0(data[[2]], ": ", round(abs(data[[3]]) * 100, 1), "%", " <extra></extra>")
 
-  sample <- paste0("Sample size = ", data$sample)
+  sample <- paste0("Sample size = ", data$sample[1])
 
   fig <- plotly::plot_ly(y = data[[1]],
                          x = data[[3]],

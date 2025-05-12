@@ -24,7 +24,8 @@ Imports:
     quarto,
     kableExtra,
     readr,
-    Hmisc
+    Hmisc,
+    purrr
 Suggests:
     devtools,
     testthat (>= 3.0.0)

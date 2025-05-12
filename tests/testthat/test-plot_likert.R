@@ -4,12 +4,14 @@ dummy_data <- data.frame(Q1 = rep(c("test1",
                                     "test3"), each = 3),
                          Q2 = factor(rep(c(1, 2, 3), 3),
                                      levels = c(1, 2, 3)),
-                         n = c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
+                         n = c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34),
+                         count = c(10, 30, 60, 50, 25, 25, 33, 33, 34),
+                         sample = c(100, 100, 100, 100, 100, 100, 100, 100, 100))
 
-testthat::test_that("validity checks work",
+test_that("validity checks work",
                     {
                       testthat::expect_error(plot_likert(as.list(dummy_data)), "Unexpected input - data is not a data.frame.")
-                      testthat::expect_error(plot_likert(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data should have at three columns.")
+                      testthat::expect_error(plot_likert(dplyr::mutate(dummy_data, Q3 = Q1)), "Unexpected input - data should have five columns.")
                       testthat::expect_error(plot_likert(dummy_data, xlab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_likert(dummy_data, ylab = 1), "Unexpected input - labels should be single character strings.")
                       testthat::expect_error(plot_likert(dummy_data, xlab = c("1", "2")), "Unexpected input - labels should be single character strings.")
@@ -24,7 +26,7 @@ testthat::test_that("validity checks work",
 got <- plot_likert(dummy_data, mid = 2, n = 100, xlab = "x", ylab = "y")
 
 
-testthat::test_that("expected outputs achieved",
+test_that("expected outputs achieved",
                     {
                       # x and y values
                       testthat::expect_equal(c(got$x$attrs[[1]]$y), factor(rep(c("test1", "test2", "test3"), each = 3),
@@ -32,7 +34,7 @@ testthat::test_that("expected outputs achieved",
                       testthat::expect_equal(c(got$x$attrs[[1]]$x), c(0.1, 0.3, 0.6, 0.5, 0.25, 0.25, 0.33, 0.33, 0.34))
 
                       # Bar colors
-                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#004556", "#004556", "#004556", "#AFAFAF", "#AFAFAF", "#AFAFAF", "#FF6900", "#FF6900", "#FF6900"))
+                      testthat::expect_equal(got$x$attrs[[1]]$marker$color, c("#12436D", "#12436D", "#12436D","#AFAFAF", "#AFAFAF", "#AFAFAF", "#F46A25", "#F46A25", "#F46A25"))
 
                       # Plot orientation
                       testthat::expect_equal(got$x$attrs[[1]]$orientation, "h")

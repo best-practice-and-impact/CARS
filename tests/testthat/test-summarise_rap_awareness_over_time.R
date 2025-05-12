@@ -14,7 +14,7 @@ code_freq <- c(NA,
                      "Rarely",
                      "Sometimes",
                      "Regularly",
-                     "All the time"),
+                     "Always"),
                    times = 6))
 
 dummy_data <- data.frame(heard_of_RAP, year, code_freq)
@@ -36,8 +36,8 @@ test_that("summarise_rap_awareness_over_time output is as expected", {
                          Var2 = factor(c("2020", "2021", "2022"),
                                        levels = c("2020", "2021", "2022")),
                          Freq = c(4),
-                         n = c(8),
-                         percent = c(0.5),
+                         Count = c(8),
+                         n = c(0.5),
                          lower = c(0.21521606),
                          upper = c(0.78478394),
                          lower_ci = c(0.28478394),

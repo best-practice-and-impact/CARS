@@ -40,8 +40,6 @@ plot_stacked(
 \item{orientation}{plot orientation ("h" = horizontal, "v" = verical). Vertical by default}
 
 \item{...}{additional plotly_ly arguments}
-
-\item{n}{sample size}
 }
 \value{
 bar chart

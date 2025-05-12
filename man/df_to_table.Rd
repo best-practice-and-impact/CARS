@@ -23,6 +23,8 @@ df_to_table(
 \item{crosstab}{whether to create a cross tabulation. FALSE by default}
 
 \item{column_headers}{optional: list of column headers for the output table}
+
+\item{sample}{additionally returns sample size. TRUE by default}
 }
 \value{
 HTML table

@@ -187,8 +187,6 @@ tidy_colnames <- function(raw_data) {
 #'
 #' @description Ingest and preprocess all previous CARS data
 #'
-#' @param mode data source - "api"/"file"
-#'
 #' @return data frame
 #'
 #' @export
