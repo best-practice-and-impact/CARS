@@ -294,16 +294,16 @@ summarise_rap_comp <- function(data, config, question, sample = TRUE) {
   components <- calculate_freqs(selected_data, cols, labels, prop = FALSE, sample = FALSE)
 
   components <- components %>%
-    mutate(name = factor(name, levels = labels)) %>%
-    arrange(name) %>%
-    mutate(value = c(rep("Basic", 6), rep("Advanced", 8))) %>%
-    mutate(n = colSums(data[cols], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
+    dplyr::mutate(name = factor(name, levels = labels)) %>%
+    dplyr::arrange(name) %>%
+    dplyr::mutate(value = c(rep("Basic", 6), rep("Advanced", 8))) %>%
+    dplyr::mutate(n = colSums(data[cols], na.rm = TRUE) / sum(data$code_freq != "Never", na.rm = TRUE))
 
   names(components$n) <- NULL
 
   if (sample == TRUE) {
     components <- components %>%
-      mutate(count = colSums(data[cols], na.rm = TRUE))
+      dplyr::mutate(count = colSums(data[cols], na.rm = TRUE))
 
     components$sample <- sum(data$code_freq != "Never", na.rm = TRUE)
   }
