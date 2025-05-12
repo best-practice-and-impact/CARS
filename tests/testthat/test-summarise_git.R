@@ -1,7 +1,7 @@
 dummy_data <- data.frame(git = c(NA,
-                                rep("Yes", 2),
-                                rep("No", 3),
-                                rep("I don't know", 4)))
+                                 rep("Yes", 2),
+                                 rep("No", 3),
+                                 rep("I don't know", 4)))
 
 dummy_config <- list(git = list(levels = c("Yes", "No", "I don't know")))
 
