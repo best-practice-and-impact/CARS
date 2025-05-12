@@ -6,7 +6,7 @@ dummy_data <- data.frame(git = c(NA,
 dummy_config <- list(git = list(levels = c("Yes", "No", "I don't know")))
 
 
-testthat::test_that("summarise_git output is as expected", {
+test_that("summarise_git output is as expected", {
 
   got <- summarise_git(dummy_data, dummy_config, question = "git")
 
@@ -22,5 +22,13 @@ testthat::test_that("summarise_git output is as expected", {
 
 
   testthat::expect_equal(got, expected)
+
+})
+
+test_that("summarise_access_git missing data is handled correctly", {
+
+  got <- summarise_git(dummy_data, dummy_config, question = "git")
+
+  expect_false(any(is.na.data.frame(got)))
 
 })

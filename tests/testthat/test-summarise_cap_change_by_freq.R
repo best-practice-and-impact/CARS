@@ -1,37 +1,35 @@
 
 dummy_data <- data.frame(
-  coding_ability_change = rep(c(
+  ability_change = rep(c(
     NA,
     "It has become significantly worse",
     "It has become slightly worse",
     "It has stayed the same",
     "It has become slightly better",
     "It has become significantly better"),
-    each = 90),
+    each = 60),
   code_freq = rep(c(
     NA,
     "Sometimes",
-    "All the time",
+    "Always",
     "Rarely",
     "Regularly"),
-    times = 108),
-  other_coding_experience = rep(c(
+    times = 72),
+  coding_exp = rep(c(
     NA,
     "Yes",
     "No"),
-    times = 180),
+    times = 120),
   first_learned = rep(c(NA,
-                        "Current employment",
+                        "Current role",
                         "Education",
-                        "Previous public sector employment",
-                        "Previous private sector employment",
-                        "Other"),
-                      times =90)
+                        "Previous public sector employment"),
+                      times = 90)
   )
 
 test_that("summarise_cap_change_by_freq missing data is handled correctly", {
 
-  got <- summarise_cap_change_by_freq(dummy_data)
+  got <- summarise_cap_change_by_freq(dummy_data, config, question1 = "code_freq", question2 = "ability_change")
 
   expect_false(any(is.na.data.frame(got)))
 
@@ -39,7 +37,7 @@ test_that("summarise_cap_change_by_freq missing data is handled correctly", {
 
 test_that("summarise_cap_change_by_freq output is as expected", {
 
-  got <- summarise_cap_change_by_freq(dummy_data)
+  got <- summarise_cap_change_by_freq(dummy_data, config, question1 = "code_freq", question2 = "ability_change")
 
   expected <- data.frame(
 
@@ -47,29 +45,29 @@ test_that("summarise_cap_change_by_freq output is as expected", {
       "Rarely",
       "Sometimes",
       "Regularly",
-      "All the time"),
+      "Always"),
       each = 5),
       levels = c(
         "Rarely",
         "Sometimes",
         "Regularly",
-        "All the time")),
+        "Always")),
 
-    coding_ability_change = factor(rep(c(
-      "It has become significantly worse",
-      "It has become slightly worse",
-      "It has stayed the same",
+    ability_change = factor(rep(c(
+      "It has become significantly better",
       "It has become slightly better",
-      "It has become significantly better"),
+      "It has stayed the same",
+      "It has become slightly worse",
+      "It has become significantly worse"),
       times = 4),
       levels = c(
-        "It has become significantly worse",
-        "It has become slightly worse",
-        "It has stayed the same",
+        "It has become significantly better",
         "It has become slightly better",
-        "It has become significantly better")),
+        "It has stayed the same",
+        "It has become slightly worse",
+        "It has become significantly worse")),
 
-    n = rep(1/5, times = 20)
+    n = rep(1/20, times = 20)
 
   )
 
