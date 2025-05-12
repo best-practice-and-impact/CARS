@@ -9,6 +9,8 @@ summarise_all(data, config, all_tables = FALSE, sample = TRUE)
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
+\item{config}{CARS config}
+
 \item{all_tables}{logical: whether to produce all summary output tables. Defaults to FALSE.}
 
 \item{sample}{additionally returns count and sample size for selected tables for QA. FALSE by default}

@@ -4,10 +4,12 @@
 \alias{add_sample_size}
 \title{Add sample size column}
 \usage{
-add_sample_size(frequencies, data, prop)
+add_sample_size(frequencies, prop)
 }
 \arguments{
-\item{data}{frequency table with three columns (can be of any name): name, value and count}
+\item{frequencies}{frequency table with three columns (can be of any name): name, value and count}
+
+\item{prop}{whether to return proportion data (0-1).}
 }
 \value{
 input data with the third column as sample size (total number of responses)

@@ -40,6 +40,7 @@ apply_skip_logic <- function(data) {
 #' @description Rename columns, enforce streaming
 #'
 #' @param data cleaned CARS dataset
+#' @param config CARS config
 #'
 #' @return CARS dataset
 #' @export
@@ -144,6 +145,7 @@ clean_first_learned <- function(data) {
 #' @description Renames columns and removes unnecessary columns
 #'
 #' @param data tidy CARS dataset
+#' @param config CARS config
 #'
 #' @return data.frame
 #'

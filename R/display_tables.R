@@ -7,6 +7,7 @@
 #' @param question string, question of interest. Name should match config.
 #' @param column_headers optional: list of column headers for the output table
 #' @param crosstab whether to create a cross tabulation. FALSE by default
+#' @param sample additionally returns sample size. TRUE by default
 #' @return HTML table
 #' @export
 

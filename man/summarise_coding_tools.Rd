@@ -9,6 +9,8 @@ summarise_coding_tools(data, config, question, prop = TRUE, sample = TRUE)
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
+\item{config}{CARS config}
+
 \item{question}{question name taken from config}
 
 \item{prop}{whether to return proportion data (0-1). TRUE by default. Assumes mutually exclusive response options.}

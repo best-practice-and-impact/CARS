@@ -8,6 +8,8 @@ summarise_cap_change_by_line_manage(data)
 }
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
+
+\item{config}{CARS config}
 }
 \value{
 frequency table (data.frame)

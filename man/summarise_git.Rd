@@ -9,6 +9,12 @@ summarise_git(data, config, question, prop = TRUE, sample = TRUE)
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
+\item{config}{CARS config}
+
+\item{question}{coding tools knowledge or access question, taken from config}
+
+\item{prop}{returns proportion, TRUE by default}
+
 \item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{

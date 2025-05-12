@@ -22,6 +22,10 @@ plot_freqs(
 \arguments{
 \item{data}{Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())}
 
+\item{config}{CARS config (optional)}
+
+\item{question}{question to display. String, matching config (optional)}
+
 \item{colour}{Colour name. Defaults to blue (see @get_gradient())}
 
 \item{break_q_names_col}{applies break_q_names to the column. Not applied by default}

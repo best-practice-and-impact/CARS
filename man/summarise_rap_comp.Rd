@@ -9,6 +9,10 @@ summarise_rap_comp(data, config, question, sample = TRUE)
 \arguments{
 \item{data}{full CARS dataset after pre-processing}
 
+\item{config}{CARS config}
+
+\item{question}{rap components question, taken from config}
+
 \item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{

@@ -118,6 +118,8 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @description Produce bar chart (plotly) for single factor frequency data.
 #'
 #' @param data Frequency data with sample column (data frame). Expected input: data.frame(categories = c(), frequencies = c(), count = c(), sample = c())
+#' @param config CARS config (optional)
+#' @param question question to display. String, matching config (optional)
 #' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
@@ -256,7 +258,6 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 #' @description Produce stacked bar chart (plotly).
 #'
 #' @param data Frequency data for stacked bar chart (data frame). 3 columns: variable 1, variable 2 and values (tidy data)
-#' @param n sample size
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
 #' @param type optional: chart type ("bar" or "line").
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()

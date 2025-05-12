@@ -8,6 +8,8 @@ rename_cols(data, config)
 }
 \arguments{
 \item{data}{tidy CARS dataset}
+
+\item{config}{CARS config}
 }
 \value{
 data.frame

@@ -8,6 +8,8 @@ clean_data(data, config)
 }
 \arguments{
 \item{data}{cleaned CARS dataset}
+
+\item{config}{CARS config}
 }
 \value{
 CARS dataset

@@ -15,6 +15,12 @@ summarise_languages_by_prof(
 \arguments{
 \item{data}{CARS data (pre-processed)}
 
+\item{config}{CARS config}
+
+\item{question}{professions question, taken from config}
+
+\item{prop}{returns proportion, TRUE by default}
+
 \item{sample}{additionally returns count and sample size. FALSE by default}
 }
 \value{
