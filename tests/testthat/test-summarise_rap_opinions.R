@@ -17,15 +17,10 @@ test_that("summarise_rap_opinions output is as expected", {
 
   got <- summarise_rap_opinions(dummy_data, config, question = "rap_opinions")
 
-  expected <- data.frame(name = factor(c(rep("I think it is important to implement RAP in my work", 5),
+  expected <- data.frame(name = c(rep("I think it is important to implement RAP in my work", 5),
                                   rep("I have the resources I need to help me implement RAP in my work", 5),
                                   rep("I am currently implementing RAP in my work", 5),
                                   rep("My department values RAP", 5)),
-                                  levels = c("I think it is important to implement RAP in my work",
-                                             "I have the resources I need to help me implement RAP in my work",
-                                             "I am currently implementing RAP in my work",
-                                             "My department values RAP",
-                                             "Other")),
                          value = factor(c("Strongly Disagree",
                                           "Disagree",
                                           "Neutral",

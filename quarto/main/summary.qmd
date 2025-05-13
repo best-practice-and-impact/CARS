@@ -110,8 +110,10 @@ The proportion of respondents who report having the capability to use R and Pyth
 freqs <- CARS::summarise_os_vs_prop(all_wave_data)
 
 colnames(freqs) <- gsub("percent", "n", colnames(freqs))
+freqs <- dplyr::relocate(freqs, year)
+freqs <- dplyr::relocate(freqs, n, .after = "lang_type")
 
-table <- CARS::df_to_table(freqs[c(1, 2, 5:7)],
+table <- CARS::df_to_table(freqs[c(1:3, 6, 7)],
                            column_headers = c("Programming language type",
                                               "Year",
                                               "Know how to programme with these tools (percent)",
@@ -120,7 +122,7 @@ table <- CARS::df_to_table(freqs[c(1, 2, 5:7)],
                            sample = FALSE)
 
 
-plot <- CARS::plot_stacked(freqs[c(2,1,5)], 
+plot <- CARS::plot_stacked(freqs[c(1:5)], 
                            type = "line", 
                            orientation = "v", 
                            font_size = 14,
@@ -350,7 +352,8 @@ table <- CARS::df_to_table(freqs[c(2,5:7)],
                              "Year",
                              "Heard of RAP (percent)",
                              "Lower confidence limit",
-                             "Upper confidence limit"))
+                             "Upper confidence limit"),
+                           sample = FALSE)
 
 CARS::wrap_outputs("rap-awareness-over-time", plot, table)
 ```
