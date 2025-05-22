@@ -14,8 +14,6 @@ We advise linking directly to this document when distributing to ensure the most
 
 Below are links to profession-specific reports These contain summary statistics, filtered by profession. Only professions with 20 or more respondents are included.
 
-- [Data Engineers](professions/data-engineers.html)
-
 - [Data Scientists](professions/data-scientists.html)
 
 - [Government Digital and Data](professions/government-digital-and-data.html)

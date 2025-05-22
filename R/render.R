@@ -40,22 +40,18 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
   dir.create(filtered_pages_path)
 
   if (type == "professions") {
-    prof_names <- unlist(config[["professions"]][["cols"]])
-    prof_names <- gsub("Civil Service, no profession membership", "No government profession", prof_names)
-    prof_names <- gsub("Other Civil Service profession", "Other government profession", prof_names)
-    filenames <- unlist(purrr::map(prof_names, ~ paste0(gsub("\\s+", "-", tolower(.x)), ".qmd")))
-
-    prof_ref <- data.frame(prof_cols =  grep("prof", colnames(data), value = TRUE),
-                           prof_names,
-                           filenames)
-
     prof_cols <- data %>%
       dplyr::select(dplyr::contains("prof") & !dplyr::contains("none")) %>%
-      dplyr::select_if(~ any(. == "Yes")) %>%
+      dplyr::select_if(~ sum(. == "Yes", na.rm = TRUE) >= 20) %>%
       colnames()
 
-    prof_names <- prof_ref$prof_names[prof_ref$prof_cols %in% prof_cols]
-    filenames <- prof_ref$filenames[prof_ref$prof_cols %in% prof_cols]
+    prof_names <- unlist(config[["professions"]][["cols"]])
+    prof_names <- dplyr::recode(prof_cols, !!!prof_names)
+    filenames <- unlist(purrr::map(prof_names, ~ paste0(gsub("\\s+", "-", tolower(.x)), ".qmd")))
+
+    prof_ref <- data.frame(prof_cols,
+                           prof_names,
+                           filenames)
 
     n_pages <- length(prof_cols)
   } else if (type == "departments") {

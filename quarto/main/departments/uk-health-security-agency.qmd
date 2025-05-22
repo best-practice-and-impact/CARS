@@ -39,7 +39,7 @@ For more detail, [see the data collection page](../data_collection.qmd).
 
 ### How often analysts are using code at work
 
-We asked all respondents if they had any coding experience, inside or outside of work. Of `r nrow(data)` respondents , `r round(sum(data$coding_exp == "Yes") / nrow(data) * 100, 1)`% reported having coding experience. We asked respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
+We asked all respondents if they had any coding experience, inside or outside of work. Of `r nrow(data)` respondents, `r round(sum(data$coding_exp == "Yes") / nrow(data) * 100, 1)`% reported having coding experience. We asked respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
 
 
 ```{r}

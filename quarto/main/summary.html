@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Coding in Analysis and Research Survey 2024 - The state of UK public sector analysis code: 2024</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Coding in Analysis and Research Survey 2024</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data_collection.html" rel="" target="">
+ <span class="menu-text">Data collection</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./summary.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Summary statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./departments.html" rel="" target="">
+ <span class="menu-text">Department summaries</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./professions.html" rel="" target="">
+ <span class="menu-text">Profession summaries</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-use-this-research" id="toc-how-to-use-this-research" class="nav-link active" data-scroll-target="#how-to-use-this-research">How to use this research</a></li>
+  <li><a href="#coding-frequency-and-tools" id="toc-coding-frequency-and-tools" class="nav-link" data-scroll-target="#coding-frequency-and-tools">Coding frequency and tools</a>
+  <ul class="collapse">
+  <li><a href="#access-to-and-knowledge-of-programming-languages" id="toc-access-to-and-knowledge-of-programming-languages" class="nav-link" data-scroll-target="#access-to-and-knowledge-of-programming-languages">Access to and knowledge of programming languages</a></li>
+  <li><a href="#access-to-coding-tools" id="toc-access-to-coding-tools" class="nav-link" data-scroll-target="#access-to-coding-tools">Access to coding tools</a></li>
+  <li><a href="#knowledge-of-coding-tools" id="toc-knowledge-of-coding-tools" class="nav-link" data-scroll-target="#knowledge-of-coding-tools">Knowledge of coding tools</a></li>
+  <li><a href="#open-source-capability-over-time" id="toc-open-source-capability-over-time" class="nav-link" data-scroll-target="#open-source-capability-over-time">Open source capability over time</a></li>
+  <li><a href="#professions-capability-in-different-tools" id="toc-professions-capability-in-different-tools" class="nav-link" data-scroll-target="#professions-capability-in-different-tools">Professions capability in different tools</a></li>
+  <li><a href="#access-to-and-knowledge-of-git" id="toc-access-to-and-knowledge-of-git" class="nav-link" data-scroll-target="#access-to-and-knowledge-of-git">Access to and knowledge of git</a></li>
+  <li><a href="#access-to-git" id="toc-access-to-git" class="nav-link" data-scroll-target="#access-to-git">Access to git</a></li>
+  <li><a href="#knowledge-of-git" id="toc-knowledge-of-git" class="nav-link" data-scroll-target="#knowledge-of-git">Knowledge of git</a></li>
+  </ul></li>
+  <li><a href="#coding-capability-and-change" id="toc-coding-capability-and-change" class="nav-link" data-scroll-target="#coding-capability-and-change">Coding capability and change</a>
+  <ul class="collapse">
+  <li><a href="#where-respondents-first-learned-to-code" id="toc-where-respondents-first-learned-to-code" class="nav-link" data-scroll-target="#where-respondents-first-learned-to-code">Where respondents first learned to code</a></li>
+  <li><a href="#coding-experience" id="toc-coding-experience" class="nav-link" data-scroll-target="#coding-experience">Coding experience</a></li>
+  <li><a href="#change-in-coding-ability-during-current-role" id="toc-change-in-coding-ability-during-current-role" class="nav-link" data-scroll-target="#change-in-coding-ability-during-current-role">Change in coding ability during current role</a></li>
+  </ul></li>
+  <li><a href="#ai-tools" id="toc-ai-tools" class="nav-link" data-scroll-target="#ai-tools">AI tools</a>
+  <ul class="collapse">
+  <li><a href="#use-of-ai-tools" id="toc-use-of-ai-tools" class="nav-link" data-scroll-target="#use-of-ai-tools">Use of AI tools</a></li>
+  <li><a href="#how-ai-tools-are-used" id="toc-how-ai-tools-are-used" class="nav-link" data-scroll-target="#how-ai-tools-are-used">How AI tools are used</a></li>
+  <li><a href="#trust-in-ai" id="toc-trust-in-ai" class="nav-link" data-scroll-target="#trust-in-ai">Trust in AI</a></li>
+  </ul></li>
+  <li><a href="#reproducible-analytical-pipelines-rap" id="toc-reproducible-analytical-pipelines-rap" class="nav-link" data-scroll-target="#reproducible-analytical-pipelines-rap">Reproducible analytical pipelines (RAP)</a>
+  <ul class="collapse">
+  <li><a href="#awareness-of-rap-over-time" id="toc-awareness-of-rap-over-time" class="nav-link" data-scroll-target="#awareness-of-rap-over-time">Awareness of RAP over time</a></li>
+  <li><a href="#opinions-on-rap" id="toc-opinions-on-rap" class="nav-link" data-scroll-target="#opinions-on-rap">Opinions on RAP</a></li>
+  </ul></li>
+  <li><a href="#good-coding-practices" id="toc-good-coding-practices" class="nav-link" data-scroll-target="#good-coding-practices">Good coding practices</a>
+  <ul class="collapse">
+  <li><a href="#consistency-of-good-coding-practices" id="toc-consistency-of-good-coding-practices" class="nav-link" data-scroll-target="#consistency-of-good-coding-practices">Consistency of good coding practices</a></li>
+  <li><a href="#code-documentation" id="toc-code-documentation" class="nav-link" data-scroll-target="#code-documentation">Code documentation</a></li>
+  <li><a href="#working-practices" id="toc-working-practices" class="nav-link" data-scroll-target="#working-practices">Working practices</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The state of UK public sector analysis code: 2024</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. We advise linking directly to this document when distributing to ensure the most up to date information.</p>
+</div>
+</div>
+<section id="how-to-use-this-research" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-use-this-research">How to use this research</h2>
+<p>Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated.</p>
+<p>For more detail, <a href="./data_collection.html">see the data collection page</a>.</p>
+</section>
+<section id="coding-frequency-and-tools" class="level2">
+<h2 class="anchored" data-anchor-id="coding-frequency-and-tools">Coding frequency and tools</h2>
+<p>We asked respondents if they had any coding experience, inside or outside of work. Of 1300 respondents, 92.9% had coding experience. We asked all respondents with coding experience “In your current role, how often do you write code to complete your work objectives?”</p>
+<p>To see how this compares to other years, <a href="./data_collection.html#coding-frequency">see the data collection page</a></p>
+<section id="data" class="level4">
+<h4 class="anchored" data-anchor-id="data">2024 data</h4>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-coding-freq" href="#coding-freq" onclick="show_chart('coding-freq')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-coding-freq" href="#coding-freq" onclick="show_table('coding-freq')"> Show table </a>
+<style>
+  #show-chart-coding-freq {display: none;}
+  #coding-freq-table {display: none;}
+</style>
+<div id="coding-freq-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-0e4cfa45d2bff77e46c5" style="width:100%;height:464px;"></div>
+</div>
+<div id="coding-freq-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">In your current role, how often do you write code to complete your work objectives?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Never</td>
+<td style="text-align: right;">9.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rarely</td>
+<td style="text-align: right;">12.7%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sometimes</td>
+<td style="text-align: right;">17.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Regularly</td>
+<td style="text-align: right;">36.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Always</td>
+<td style="text-align: right;">24.1%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-0e4cfa45d2bff77e46c5">{"x":{"visdat":{"4fec372511c1":["function () ","plotlyVisDat"]},"cur_data":"4fec372511c1","attrs":{"4fec372511c1":{"x":["Never","Rarely","Sometimes","Regularly","Always"],"y":[0.0935430463576159,0.12748344370860928,0.17715231788079469,0.36092715231788081,0.24089403973509935],"marker":{"color":"#12436D"},"orientation":"v","hovertemplate":["Never: 9.4% <extra><\/extra>","Rarely: 12.7% <extra><\/extra>","Sometimes: 17.7% <extra><\/extra>","Regularly: 36.1% <extra><\/extra>","Always: 24.1% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"How often do you write code in your current role?","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Never","Rarely","Sometimes","Regularly","Always"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Never","Rarely","Sometimes","Regularly","Always"],"y":[0.0935430463576159,0.12748344370860928,0.17715231788079469,0.36092715231788081,0.24089403973509935],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"v","hovertemplate":["Never: 9.4% <extra><\/extra>","Rarely: 12.7% <extra><\/extra>","Sometimes: 17.7% <extra><\/extra>","Regularly: 36.1% <extra><\/extra>","Always: 24.1% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="access-to-and-knowledge-of-programming-languages" class="level3">
+<h3 class="anchored" data-anchor-id="access-to-and-knowledge-of-programming-languages">Access to and knowledge of programming languages</h3>
+<p>Given a list of programming tools, we asked all respondents with coding experience if the tool was available to use for their work. Note this includes respondents who do not code in their current role.</p>
+<p>Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.</p>
+</section>
+<section id="access-to-coding-tools" class="level3">
+<h3 class="anchored" data-anchor-id="access-to-coding-tools">Access to coding tools</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-access" href="#access" onclick="show_chart('access')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-access" href="#access" onclick="show_table('access')"> Show table </a>
+<style>
+  #show-chart-access {display: none;}
+  #access-table {display: none;}
+</style>
+<div id="access-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-8a08554ef6dd66844d6a" style="width:100%;height:464px;"></div>
+</div>
+<div id="access-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Programming tool</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Yes</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Don't know</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Python</td>
+<td style="text-align: right;">76.1%</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">12.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">92.9%</td>
+<td style="text-align: right;">4.5%</td>
+<td style="text-align: right;">2.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SQL</td>
+<td style="text-align: right;">71.9%</td>
+<td style="text-align: right;">7%</td>
+<td style="text-align: right;">21.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Matlab</td>
+<td style="text-align: right;">4.6%</td>
+<td style="text-align: right;">40.5%</td>
+<td style="text-align: right;">54.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SAS</td>
+<td style="text-align: right;">22.4%</td>
+<td style="text-align: right;">31.7%</td>
+<td style="text-align: right;">45.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPSS</td>
+<td style="text-align: right;">23.7%</td>
+<td style="text-align: right;">30.4%</td>
+<td style="text-align: right;">45.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stata</td>
+<td style="text-align: right;">15.8%</td>
+<td style="text-align: right;">30.7%</td>
+<td style="text-align: right;">53.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VBA</td>
+<td style="text-align: right;">43%</td>
+<td style="text-align: right;">16%</td>
+<td style="text-align: right;">41%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-8a08554ef6dd66844d6a">{"x":{"visdat":{"4fec105724bb":["function () ","plotlyVisDat"]},"cur_data":"4fec105724bb","attrs":{"4fec105724bb":{"y":["Python","Python","Python","R","R","R","SQL","SQL","SQL","Matlab","Matlab","Matlab","SAS","SAS","SAS","SPSS","SPSS","SPSS","Stata","Stata","Stata","VBA","VBA","VBA"],"x":[0.76076158940397354,0.11506622516556292,0.12417218543046357,0.92880794701986757,0.044701986754966887,0.026490066225165563,0.7185430463576159,0.070364238410596025,0.21109271523178808,0.046357615894039736,0.40480132450331124,0.54884105960264906,0.22433774834437087,0.31705298013245031,0.45860927152317882,0.23675496688741721,0.30380794701986757,0.45943708609271522,0.15811258278145696,0.30711920529801323,0.53476821192052981,0.43046357615894038,0.15976821192052981,0.40976821192052981],"orientation":"h","hovertemplate":["Yes: 76.1% <extra><\/extra>","No: 11.5% <extra><\/extra>","Don't know: 12.4% <extra><\/extra>","Yes: 92.9% <extra><\/extra>","No: 4.5% <extra><\/extra>","Don't know: 2.6% <extra><\/extra>","Yes: 71.9% <extra><\/extra>","No: 7% <extra><\/extra>","Don't know: 21.1% <extra><\/extra>","Yes: 4.6% <extra><\/extra>","No: 40.5% <extra><\/extra>","Don't know: 54.9% <extra><\/extra>","Yes: 22.4% <extra><\/extra>","No: 31.7% <extra><\/extra>","Don't know: 45.9% <extra><\/extra>","Yes: 23.7% <extra><\/extra>","No: 30.4% <extra><\/extra>","Don't know: 45.9% <extra><\/extra>","Yes: 15.8% <extra><\/extra>","No: 30.7% <extra><\/extra>","Don't know: 53.5% <extra><\/extra>","Yes: 43% <extra><\/extra>","No: 16% <extra><\/extra>","Don't know: 41% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197"]},"color":["Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know","Yes","No","Don't know"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","showlegend":true,"legend":{"orientation":"h","xanchor":"center","yanchor":"bottom","x":0.5,"y":1,"traceorder":"normal","font":{"size":14}},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["VBA","Stata","SPSS","SAS","Matlab","SQL","R","Python"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"Programming tool","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.76076158940397354,0.92880794701986757,0.7185430463576159,0.046357615894039736,0.22433774834437087,0.23675496688741721,0.15811258278145696,0.43046357615894038],"orientation":"h","hovertemplate":["Yes: 76.1% <extra><\/extra>","Yes: 92.9% <extra><\/extra>","Yes: 71.9% <extra><\/extra>","Yes: 4.6% <extra><\/extra>","Yes: 22.4% <extra><\/extra>","Yes: 23.7% <extra><\/extra>","Yes: 15.8% <extra><\/extra>","Yes: 43% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"Yes","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.11506622516556292,0.044701986754966887,0.070364238410596025,0.40480132450331124,0.31705298013245031,0.30380794701986757,0.30711920529801323,0.15976821192052981],"orientation":"h","hovertemplate":["No: 11.5% <extra><\/extra>","No: 4.5% <extra><\/extra>","No: 7% <extra><\/extra>","No: 40.5% <extra><\/extra>","No: 31.7% <extra><\/extra>","No: 30.4% <extra><\/extra>","No: 30.7% <extra><\/extra>","No: 16% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"No","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.12417218543046357,0.026490066225165563,0.21109271523178808,0.54884105960264906,0.45860927152317882,0.45943708609271522,0.53476821192052981,0.40976821192052981],"orientation":"h","hovertemplate":["Don't know: 12.4% <extra><\/extra>","Don't know: 2.6% <extra><\/extra>","Don't know: 21.1% <extra><\/extra>","Don't know: 54.9% <extra><\/extra>","Don't know: 45.9% <extra><\/extra>","Don't know: 45.9% <extra><\/extra>","Don't know: 53.5% <extra><\/extra>","Don't know: 41% <extra><\/extra>"],"marker":{"color":["#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Don't know","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Given the same list of programming tools, the same respondents were asked if they knew how to program with the tool to a level suitable for their work, answering “Yes”, “No” or “Not required for my work”.</p>
+<p>Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement “not required for my work” was similarly not defined.</p>
+</section>
+<section id="knowledge-of-coding-tools" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-of-coding-tools">Knowledge of coding tools</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-knowledge" href="#knowledge" onclick="show_chart('knowledge')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-knowledge" href="#knowledge" onclick="show_table('knowledge')"> Show table </a>
+<style>
+  #show-chart-knowledge {display: none;}
+  #knowledge-table {display: none;}
+</style>
+<div id="knowledge-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-9a8d80478a02f79b90b8" style="width:100%;height:464px;"></div>
+</div>
+<div id="knowledge-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Programming tool</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Yes</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Not required for my work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Python</td>
+<td style="text-align: right;">50.3%</td>
+<td style="text-align: right;">34%</td>
+<td style="text-align: right;">15.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R</td>
+<td style="text-align: right;">80.1%</td>
+<td style="text-align: right;">13.2%</td>
+<td style="text-align: right;">6.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SQL</td>
+<td style="text-align: right;">62.3%</td>
+<td style="text-align: right;">22.1%</td>
+<td style="text-align: right;">15.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Matlab</td>
+<td style="text-align: right;">11.8%</td>
+<td style="text-align: right;">45.9%</td>
+<td style="text-align: right;">42.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SAS</td>
+<td style="text-align: right;">19.7%</td>
+<td style="text-align: right;">43.7%</td>
+<td style="text-align: right;">36.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SPSS</td>
+<td style="text-align: right;">26.7%</td>
+<td style="text-align: right;">36.6%</td>
+<td style="text-align: right;">36.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stata</td>
+<td style="text-align: right;">11.7%</td>
+<td style="text-align: right;">49.4%</td>
+<td style="text-align: right;">38.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VBA</td>
+<td style="text-align: right;">21.8%</td>
+<td style="text-align: right;">44.5%</td>
+<td style="text-align: right;">33.8%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-9a8d80478a02f79b90b8">{"x":{"visdat":{"4fec2b6257e":["function () ","plotlyVisDat"]},"cur_data":"4fec2b6257e","attrs":{"4fec2b6257e":{"y":["Python","Python","Python","R","R","R","SQL","SQL","SQL","Matlab","Matlab","Matlab","SAS","SAS","SAS","SPSS","SPSS","SPSS","Stata","Stata","Stata","VBA","VBA","VBA"],"x":[0.50331125827814571,0.34023178807947019,0.1564569536423841,0.80132450331125826,0.13245033112582782,0.066225165562913912,0.62251655629139069,0.22102649006622516,0.1564569536423841,0.1183774834437086,0.45860927152317882,0.42301324503311261,0.19701986754966888,0.4370860927152318,0.36589403973509932,0.26655629139072845,0.36589403973509932,0.36754966887417218,0.11672185430463576,0.49420529801324503,0.38907284768211919,0.21771523178807947,0.44453642384105962,0.33774834437086093],"orientation":"h","hovertemplate":["Yes: 50.3% <extra><\/extra>","No: 34% <extra><\/extra>","Not required for my work: 15.6% <extra><\/extra>","Yes: 80.1% <extra><\/extra>","No: 13.2% <extra><\/extra>","Not required for my work: 6.6% <extra><\/extra>","Yes: 62.3% <extra><\/extra>","No: 22.1% <extra><\/extra>","Not required for my work: 15.6% <extra><\/extra>","Yes: 11.8% <extra><\/extra>","No: 45.9% <extra><\/extra>","Not required for my work: 42.3% <extra><\/extra>","Yes: 19.7% <extra><\/extra>","No: 43.7% <extra><\/extra>","Not required for my work: 36.6% <extra><\/extra>","Yes: 26.7% <extra><\/extra>","No: 36.6% <extra><\/extra>","Not required for my work: 36.8% <extra><\/extra>","Yes: 11.7% <extra><\/extra>","No: 49.4% <extra><\/extra>","Not required for my work: 38.9% <extra><\/extra>","Yes: 21.8% <extra><\/extra>","No: 44.5% <extra><\/extra>","Not required for my work: 33.8% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197"]},"color":["Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work","Yes","No","Not required for my work"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","showlegend":true,"legend":{"orientation":"h","xanchor":"center","yanchor":"bottom","x":0.5,"y":1,"traceorder":"normal","font":{"size":14}},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["VBA","Stata","SPSS","SAS","Matlab","SQL","R","Python"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"Programming tool","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.50331125827814571,0.80132450331125826,0.62251655629139069,0.1183774834437086,0.19701986754966888,0.26655629139072845,0.11672185430463576,0.21771523178807947],"orientation":"h","hovertemplate":["Yes: 50.3% <extra><\/extra>","Yes: 80.1% <extra><\/extra>","Yes: 62.3% <extra><\/extra>","Yes: 11.8% <extra><\/extra>","Yes: 19.7% <extra><\/extra>","Yes: 26.7% <extra><\/extra>","Yes: 11.7% <extra><\/extra>","Yes: 21.8% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"Yes","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.34023178807947019,0.13245033112582782,0.22102649006622516,0.45860927152317882,0.4370860927152318,0.36589403973509932,0.49420529801324503,0.44453642384105962],"orientation":"h","hovertemplate":["No: 34% <extra><\/extra>","No: 13.2% <extra><\/extra>","No: 22.1% <extra><\/extra>","No: 45.9% <extra><\/extra>","No: 43.7% <extra><\/extra>","No: 36.6% <extra><\/extra>","No: 49.4% <extra><\/extra>","No: 44.5% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"No","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Python","R","SQL","Matlab","SAS","SPSS","Stata","VBA"],"x":[0.1564569536423841,0.066225165562913912,0.1564569536423841,0.42301324503311261,0.36589403973509932,0.36754966887417218,0.38907284768211919,0.33774834437086093],"orientation":"h","hovertemplate":["Not required for my work: 15.6% <extra><\/extra>","Not required for my work: 6.6% <extra><\/extra>","Not required for my work: 15.6% <extra><\/extra>","Not required for my work: 42.3% <extra><\/extra>","Not required for my work: 36.6% <extra><\/extra>","Not required for my work: 36.8% <extra><\/extra>","Not required for my work: 38.9% <extra><\/extra>","Not required for my work: 33.8% <extra><\/extra>"],"marker":{"color":["#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197","#28A197"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Not required for my work","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="open-source-capability-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="open-source-capability-over-time">Open source capability over time</h3>
+<p>The proportion of respondents who report having the capability to use R and Python, is shown alongside the proportion who are able to use SAS, SPSS or Stata, for the past four years of the survey.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-tools-over-time" href="#tools-over-time" onclick="show_chart('tools-over-time')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-tools-over-time" href="#tools-over-time" onclick="show_table('tools-over-time')"> Show table </a>
+<style>
+  #show-chart-tools-over-time {display: none;}
+  #tools-over-time-table {display: none;}
+</style>
+<div id="tools-over-time-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-41020d1ef4dae8754997" style="width:100%;height:464px;"></div>
+</div>
+<div id="tools-over-time-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Programming language type</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Know how to programme with these tools (percent)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Lower confidence limit (percent)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Upper confidence limit (percent)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">Open Source</td>
+<td style="text-align: left;">77%</td>
+<td style="text-align: left;">0.7413160</td>
+<td style="text-align: right;">0.7958949</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Open Source</td>
+<td style="text-align: left;">80.3%</td>
+<td style="text-align: left;">0.7802509</td>
+<td style="text-align: right;">0.8231395</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Open Source</td>
+<td style="text-align: left;">72.6%</td>
+<td style="text-align: left;">0.7005951</td>
+<td style="text-align: right;">0.7491138</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Open Source</td>
+<td style="text-align: left;">80.9%</td>
+<td style="text-align: left;">0.7869734</td>
+<td style="text-align: right;">0.8296660</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">Proprietary</td>
+<td style="text-align: left;">60.1%</td>
+<td style="text-align: left;">0.5687348</td>
+<td style="text-align: right;">0.6321733</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Proprietary</td>
+<td style="text-align: left;">56.3%</td>
+<td style="text-align: left;">0.5359005</td>
+<td style="text-align: right;">0.5893030</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Proprietary</td>
+<td style="text-align: left;">36.1%</td>
+<td style="text-align: left;">0.3351431</td>
+<td style="text-align: right;">0.3873442</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Proprietary</td>
+<td style="text-align: left;">40.7%</td>
+<td style="text-align: left;">0.3805305</td>
+<td style="text-align: right;">0.4338641</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-41020d1ef4dae8754997">{"x":{"visdat":{"4fec4ced2498":["function () ","plotlyVisDat"]},"cur_data":"4fec4ced2498","attrs":{"4fec4ced2498":{"y":[0.76973684210526316,0.80257186081694398,0.72552043176561298,0.8092307692307692,0.60087719298245612,0.56278366111951583,0.36083269082498071,0.40692307692307694],"x":["2021","2022","2023","2024","2021","2022","2023","2024"],"mode":"markers+lines","orientation":"v","hovertemplate":["Open Source: 77% <extra><\/extra>","Open Source: 80.3% <extra><\/extra>","Open Source: 72.6% <extra><\/extra>","Open Source: 80.9% <extra><\/extra>","Proprietary: 60.1% <extra><\/extra>","Proprietary: 56.3% <extra><\/extra>","Proprietary: 36.1% <extra><\/extra>","Proprietary: 40.7% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#F46A25","#F46A25","#F46A25","#F46A25"]},"line":{"color":["#12436D","#12436D","#12436D","#12436D","#F46A25","#F46A25","#F46A25","#F46A25"]},"error_y":{"symmetric":"false","array":[0.026158055849061057,0.020567642087220173,0.023593391547803821,0.020435194276849811,0.031296110824442391,0.02651932446753047,0.026511537337549351,0.026940994124348416],"arrayminus":[0.02842085572865094,0.022320969886552966,0.024925340873339863,0.022257344137256996,0.032142361185915069,0.02688313998589198,0.025689599377688555,0.026392536081788154],"color":"black"},"color":["Open Source","Open Source","Open Source","Open Source","Proprietary","Proprietary","Proprietary","Proprietary"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","showlegend":true,"legend":{"orientation":"v","xanchor":"center","yanchor":"bottom","x":100,"y":0.80000000000000004,"traceorder":"normal","font":{"size":14}},"xaxis":{"domain":[0,1],"automargin":true,"title":"Year","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["2021","2022","2023","2024"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%","zerolinecolor":"#ffff","range":[0,1]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 912","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"Know how to programme with these tools","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":[0.76973684210526316,0.80257186081694398,0.72552043176561298,0.8092307692307692],"x":["2021","2022","2023","2024"],"mode":"markers+lines","orientation":"v","hovertemplate":["Open Source: 77% <extra><\/extra>","Open Source: 80.3% <extra><\/extra>","Open Source: 72.6% <extra><\/extra>","Open Source: 80.9% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"line":{"color":"#12436D"},"error_y":{"color":"black","symmetric":"false","array":[0.026158055849061057,0.020567642087220173,0.023593391547803821,0.020435194276849811],"arrayminus":[0.02842085572865094,0.022320969886552966,0.024925340873339863,0.022257344137256996]},"type":"scatter","name":"Open Source","textfont":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[0.60087719298245612,0.56278366111951583,0.36083269082498071,0.40692307692307694],"x":["2021","2022","2023","2024"],"mode":"markers+lines","orientation":"v","hovertemplate":["Proprietary: 60.1% <extra><\/extra>","Proprietary: 56.3% <extra><\/extra>","Proprietary: 36.1% <extra><\/extra>","Proprietary: 40.7% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(141,160,203,1)"}},"line":{"color":"#F46A25"},"error_y":{"color":"black","symmetric":"false","array":[0.031296110824442391,0.02651932446753047,0.026511537337549351,0.026940994124348416],"arrayminus":[0.032142361185915069,0.02688313998589198,0.025689599377688555,0.026392536081788154]},"type":"scatter","name":"Proprietary","textfont":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="professions-capability-in-different-tools" class="level3">
+<h3 class="anchored" data-anchor-id="professions-capability-in-different-tools">Professions capability in different tools</h3>
+<p>Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.</p>
+<p>Please note that respondents might be members of more than one profession, and may report capability in more than one tool.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Profession</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Python</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">R</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Matlab</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SAS</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SPSS</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SQL</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Stata</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">VBA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Data Engineers</td>
+<td style="text-align: right;">84.2%</td>
+<td style="text-align: right;">78.9%</td>
+<td style="text-align: right;">21.1%</td>
+<td style="text-align: right;">15.8%</td>
+<td style="text-align: right;">31.6%</td>
+<td style="text-align: right;">89.5%</td>
+<td style="text-align: right;">5.3%</td>
+<td style="text-align: right;">31.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Scientists</td>
+<td style="text-align: right;">88.5%</td>
+<td style="text-align: right;">90.4%</td>
+<td style="text-align: right;">19.9%</td>
+<td style="text-align: right;">14.7%</td>
+<td style="text-align: right;">13.5%</td>
+<td style="text-align: right;">84%</td>
+<td style="text-align: right;">7.1%</td>
+<td style="text-align: right;">21.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Government Digital and Data</td>
+<td style="text-align: right;">67.2%</td>
+<td style="text-align: right;">65.5%</td>
+<td style="text-align: right;">15.5%</td>
+<td style="text-align: right;">29.3%</td>
+<td style="text-align: right;">13.8%</td>
+<td style="text-align: right;">75.9%</td>
+<td style="text-align: right;">5.2%</td>
+<td style="text-align: right;">24.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Government Economic Service</td>
+<td style="text-align: right;">39.2%</td>
+<td style="text-align: right;">79.4%</td>
+<td style="text-align: right;">3.9%</td>
+<td style="text-align: right;">11.8%</td>
+<td style="text-align: right;">9.8%</td>
+<td style="text-align: right;">38.2%</td>
+<td style="text-align: right;">36.3%</td>
+<td style="text-align: right;">11.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Government Geography Profession</td>
+<td style="text-align: right;">80%</td>
+<td style="text-align: right;">80%</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">15%</td>
+<td style="text-align: right;">80%</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">30%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Government Operational Research Service</td>
+<td style="text-align: right;">65.6%</td>
+<td style="text-align: right;">87%</td>
+<td style="text-align: right;">22.9%</td>
+<td style="text-align: right;">22.9%</td>
+<td style="text-align: right;">8.4%</td>
+<td style="text-align: right;">74%</td>
+<td style="text-align: right;">7.6%</td>
+<td style="text-align: right;">33.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Government Science &amp; Engineering</td>
+<td style="text-align: right;">64.9%</td>
+<td style="text-align: right;">83.8%</td>
+<td style="text-align: right;">27%</td>
+<td style="text-align: right;">16.2%</td>
+<td style="text-align: right;">13.5%</td>
+<td style="text-align: right;">64.9%</td>
+<td style="text-align: right;">8.1%</td>
+<td style="text-align: right;">18.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Government Social Research</td>
+<td style="text-align: right;">25.2%</td>
+<td style="text-align: right;">75.7%</td>
+<td style="text-align: right;">3.5%</td>
+<td style="text-align: right;">9.6%</td>
+<td style="text-align: right;">53.9%</td>
+<td style="text-align: right;">30.4%</td>
+<td style="text-align: right;">13.9%</td>
+<td style="text-align: right;">3.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Government Statistician Group</td>
+<td style="text-align: right;">43.7%</td>
+<td style="text-align: right;">86.8%</td>
+<td style="text-align: right;">11%</td>
+<td style="text-align: right;">28.5%</td>
+<td style="text-align: right;">35.9%</td>
+<td style="text-align: right;">64.8%</td>
+<td style="text-align: right;">9.8%</td>
+<td style="text-align: right;">20%</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="access-to-and-knowledge-of-git" class="level3">
+<h3 class="anchored" data-anchor-id="access-to-and-knowledge-of-git">Access to and knowledge of git</h3>
+<p>We asked respondents to answer “Yes”, “No” or “Don’t know” for the following questions:</p>
+<ul>
+<li>Is git available to use in your work?</li>
+<li>Do you know how to use git to version-control your work?</li>
+</ul>
+<p>Please note these outputs include people with coding experience who do not code in their current role.</p>
+</section>
+<section id="access-to-git" class="level3">
+<h3 class="anchored" data-anchor-id="access-to-git">Access to git</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-git-access" href="#git-access" onclick="show_chart('git-access')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-git-access" href="#git-access" onclick="show_table('git-access')"> Show table </a>
+<style>
+  #show-chart-git-access {display: none;}
+  #git-access-table {display: none;}
+</style>
+<div id="git-access-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-3ed00479afad30847143" style="width:100%;height:464px;"></div>
+</div>
+<div id="git-access-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Is Git available to use for your work?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">82.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Don't know</td>
+<td style="text-align: right;">11.5%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-3ed00479afad30847143">{"x":{"visdat":{"4fec6dd9463":["function () ","plotlyVisDat"]},"cur_data":"4fec6dd9463","attrs":{"4fec6dd9463":{"x":["Yes","No","Don't know"],"y":[0.82533112582781454,0.059602649006622516,0.11506622516556292],"marker":{"color":"#12436D"},"orientation":"v","hovertemplate":["Yes: 82.5% <extra><\/extra>","No: 6% <extra><\/extra>","Don't know: 11.5% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Is Git available to use for your work?","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Yes","No","Don't know"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%","zerolinecolor":"#ffff","range":[0,1]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Yes","No","Don't know"],"y":[0.82533112582781454,0.059602649006622516,0.11506622516556292],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"v","hovertemplate":["Yes: 82.5% <extra><\/extra>","No: 6% <extra><\/extra>","Don't know: 11.5% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="knowledge-of-git" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-of-git">Knowledge of git</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-git-knowledge" href="#git-knowledge" onclick="show_chart('git-knowledge')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-git-knowledge" href="#git-knowledge" onclick="show_table('git-knowledge')"> Show table </a>
+<style>
+  #show-chart-git-knowledge {display: none;}
+  #git-knowledge-table {display: none;}
+</style>
+<div id="git-knowledge-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ae75765e43bd04a18df5" style="width:100%;height:464px;"></div>
+</div>
+<div id="git-knowledge-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Do you know how to use Git for your work?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">66.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">23.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Not required for my work</td>
+<td style="text-align: right;">9.8%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-ae75765e43bd04a18df5">{"x":{"visdat":{"4fec675d4095":["function () ","plotlyVisDat"]},"cur_data":"4fec675d4095","attrs":{"4fec675d4095":{"x":["Yes","No","Not required for my work"],"y":[0.66390728476821192,0.23841059602649006,0.097682119205298013],"marker":{"color":"#12436D"},"orientation":"v","hovertemplate":["Yes: 66.4% <extra><\/extra>","No: 23.8% <extra><\/extra>","Not required for my work: 9.8% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Do you know how to use Git for your work?","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Yes","No","Not required for my work"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%","zerolinecolor":"#ffff","range":[0,1]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Yes","No","Not required for my work"],"y":[0.66390728476821192,0.23841059602649006,0.097682119205298013],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"v","hovertemplate":["Yes: 66.4% <extra><\/extra>","No: 23.8% <extra><\/extra>","Not required for my work: 9.8% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="coding-capability-and-change" class="level2">
+<h2 class="anchored" data-anchor-id="coding-capability-and-change">Coding capability and change</h2>
+<section id="where-respondents-first-learned-to-code" class="level3">
+<h3 class="anchored" data-anchor-id="where-respondents-first-learned-to-code">Where respondents first learned to code</h3>
+<p>Respondents with coding experience were asked where they first learned to code.</p>
+<p>These data only show where people first learned to code. They do not show all the settings in which they learned to code, to what extent, or how long ago.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-where-learned" href="#where-learned" onclick="show_chart('where-learned')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-where-learned" href="#where-learned" onclick="show_table('where-learned')"> Show table </a>
+<style>
+  #show-chart-where-learned {display: none;}
+  #where-learned-table {display: none;}
+</style>
+<div id="where-learned-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-4b693c9bfac79c739c50" style="width:100%;height:464px;"></div>
+</div>
+<div id="where-learned-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Where did you first learn to code?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Self-taught</td>
+<td style="text-align: right;">25.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Primary/secondary education</td>
+<td style="text-align: right;">5.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Higher Education</td>
+<td style="text-align: right;">43.2%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Current role</td>
+<td style="text-align: right;">8.7%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Previous public sector employment</td>
+<td style="text-align: right;">13.2%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Previous private sector employment</td>
+<td style="text-align: right;">2.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">1.7%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-4b693c9bfac79c739c50">{"x":{"visdat":{"4fec7bd568c9":["function () ","plotlyVisDat"]},"cur_data":"4fec7bd568c9","attrs":{"4fec7bd568c9":{"x":[0.2508278145695364,0.058774834437086095,0.43211920529801323,0.086920529801324503,0.1316225165562914,0.022350993377483443,0.017384105960264899],"y":["Self-taught","Primary/secondary education","Higher Education","Current role","Previous public sector employment","Previous private sector employment","Other"],"marker":{"color":"#12436D"},"orientation":"h","hovertemplate":["Self-taught: 25.1% <extra><\/extra>","Primary/secondary education: 5.9% <extra><\/extra>","Higher Education: 43.2% <extra><\/extra>","Current role: 8.7% <extra><\/extra>","Previous public sector employment: 13.2% <extra><\/extra>","Previous private sector employment: 2.2% <extra><\/extra>","Other: 1.7% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Other","Previous private sector employment","Previous public sector employment","Current role","Higher Education","Primary/secondary education","Self-taught"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"Where did you first learn to code?","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":[0.2508278145695364,0.058774834437086095,0.43211920529801323,0.086920529801324503,0.1316225165562914,0.022350993377483443,0.017384105960264899],"y":["Self-taught","Primary/secondary education","Higher Education","Current role","Previous public sector employment","Previous private sector employment","Other"],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"h","hovertemplate":["Self-taught: 25.1% <extra><\/extra>","Primary/secondary education: 5.9% <extra><\/extra>","Higher Education: 43.2% <extra><\/extra>","Current role: 8.7% <extra><\/extra>","Previous public sector employment: 13.2% <extra><\/extra>","Previous private sector employment: 2.2% <extra><\/extra>","Other: 1.7% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="coding-experience" class="level3">
+<h3 class="anchored" data-anchor-id="coding-experience">Coding experience</h3>
+<p>We asked respondents with coding experience how many years of experience they had in a coding role, excluding any years in education.</p>
+<p>This data includes any experience in other roles and sectors, but does not define the type of experience.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-coding-years" href="#coding-years" onclick="show_chart('coding-years')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-coding-years" href="#coding-years" onclick="show_table('coding-years')"> Show table </a>
+<style>
+  #show-chart-coding-years {display: none;}
+  #coding-years-table {display: none;}
+</style>
+<div id="coding-years-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-9c557787ce485804f777" style="width:100%;height:464px;"></div>
+</div>
+<div id="coding-years-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">How many years of experience do you have in a coding role?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">None</td>
+<td style="text-align: right;">4.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Less than 1 year</td>
+<td style="text-align: right;">12.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1 - 3 years</td>
+<td style="text-align: right;">25.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">3 - 5 years</td>
+<td style="text-align: right;">18.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Over 5 years</td>
+<td style="text-align: right;">38.9%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1208</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-9c557787ce485804f777">{"x":{"visdat":{"4fec1e576be6":["function () ","plotlyVisDat"]},"cur_data":"4fec1e576be6","attrs":{"4fec1e576be6":{"x":[0.047185430463576157,0.1216887417218543,0.25662251655629137,0.18543046357615894,0.38907284768211919],"y":["None","Less than 1 year","1 - 3 years","3 - 5 years","Over 5 years"],"marker":{"color":"#12436D"},"orientation":"h","hovertemplate":["None: 4.7% <extra><\/extra>","Less than 1 year: 12.2% <extra><\/extra>","1 - 3 years: 25.7% <extra><\/extra>","3 - 5 years: 18.5% <extra><\/extra>","Over 5 years: 38.9% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Over 5 years","3 - 5 years","1 - 3 years","Less than 1 year","None"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1208","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"How many years of experience do you have in a coding role?","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":[0.047185430463576157,0.1216887417218543,0.25662251655629137,0.18543046357615894,0.38907284768211919],"y":["None","Less than 1 year","1 - 3 years","3 - 5 years","Over 5 years"],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"h","hovertemplate":["None: 4.7% <extra><\/extra>","Less than 1 year: 12.2% <extra><\/extra>","1 - 3 years: 25.7% <extra><\/extra>","3 - 5 years: 18.5% <extra><\/extra>","Over 5 years: 38.9% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="change-in-coding-ability-during-current-role" class="level3">
+<h3 class="anchored" data-anchor-id="change-in-coding-ability-during-current-role">Change in coding ability during current role</h3>
+<p>We asked “Has your coding ability changed during your current role?”</p>
+<p>This question was only asked of respondents with coding experience outside of their current role. This means analysts who first learned to code in their current role are not included in the data.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-ability-change" href="#ability-change" onclick="show_chart('ability-change')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-ability-change" href="#ability-change" onclick="show_table('ability-change')"> Show table </a>
+<style>
+  #show-chart-ability-change {display: none;}
+  #ability-change-table {display: none;}
+</style>
+<div id="ability-change-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-2dda614fc4a6c38e84c3" style="width:100%;height:464px;"></div>
+</div>
+<div id="ability-change-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">How has your coding ability changed during your current role?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">It has become significantly better</td>
+<td style="text-align: right;">34.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">It has become slightly better</td>
+<td style="text-align: right;">32.7%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">It has stayed the same</td>
+<td style="text-align: right;">16.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">It has become slightly worse</td>
+<td style="text-align: right;">10%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">It has become significantly worse</td>
+<td style="text-align: right;">5.7%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1103</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-2dda614fc4a6c38e84c3">{"x":{"visdat":{"4fecc224d69":["function () ","plotlyVisDat"]},"cur_data":"4fecc224d69","attrs":{"4fecc224d69":{"x":[0.34904805077062556,0.32728921124206711,0.16681776971894832,0.099728014505893026,0.057116953762466005],"y":["It has become significantly better","It has become slightly better","It has stayed the same","It has become slightly worse","It has become significantly worse"],"marker":{"color":"#12436D"},"orientation":"h","hovertemplate":["It has become significantly better: 34.9% <extra><\/extra>","It has become slightly better: 32.7% <extra><\/extra>","It has stayed the same: 16.7% <extra><\/extra>","It has become slightly worse: 10% <extra><\/extra>","It has become significantly worse: 5.7% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["It has become significantly worse","It has become slightly worse","It has stayed the same","It has become slightly better","It has become significantly better"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1103","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":[0.34904805077062556,0.32728921124206711,0.16681776971894832,0.099728014505893026,0.057116953762466005],"y":["It has become significantly better","It has become slightly better","It has stayed the same","It has become slightly worse","It has become significantly worse"],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"h","hovertemplate":["It has become significantly better: 34.9% <extra><\/extra>","It has become slightly better: 32.7% <extra><\/extra>","It has stayed the same: 16.7% <extra><\/extra>","It has become slightly worse: 10% <extra><\/extra>","It has become significantly worse: 5.7% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="ai-tools" class="level2">
+<h2 class="anchored" data-anchor-id="ai-tools">AI tools</h2>
+<section id="use-of-ai-tools" class="level3">
+<h3 class="anchored" data-anchor-id="use-of-ai-tools">Use of AI tools</h3>
+<p>We asked all respondents who use code in their role, it they use AI tools when coding at work.</p>
+<p>The term ‘AI’ was not defined in this question.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-ai" href="#ai" onclick="show_chart('ai')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-ai" href="#ai" onclick="show_table('ai')"> Show table </a>
+<style>
+  #show-chart-ai {display: none;}
+  #ai-table {display: none;}
+</style>
+<div id="ai-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-ead9d0b28ce277aafe10" style="width:100%;height:464px;"></div>
+</div>
+<div id="ai-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Do you use any AI tools when coding at work?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Yes</td>
+<td style="text-align: right;">39.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No</td>
+<td style="text-align: right;">60.6%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1095</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-ead9d0b28ce277aafe10">{"x":{"visdat":{"4fec76eaa69":["function () ","plotlyVisDat"]},"cur_data":"4fec76eaa69","attrs":{"4fec76eaa69":{"x":["Yes","No"],"y":[0.39360730593607307,0.60639269406392693],"marker":{"color":"#12436D"},"orientation":"v","hovertemplate":["Yes: 39.4% <extra><\/extra>","No: 60.6% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Do you use any AI tools when coding at work?","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Yes","No"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 1095","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["Yes","No"],"y":[0.39360730593607307,0.60639269406392693],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"v","hovertemplate":["Yes: 39.4% <extra><\/extra>","No: 60.6% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="how-ai-tools-are-used" class="level3">
+<h3 class="anchored" data-anchor-id="how-ai-tools-are-used">How AI tools are used</h3>
+<p>We asked all respondents who use AI tools when coding at work, what they use these tools for.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-ai-use" href="#ai-use" onclick="show_chart('ai-use')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-ai-use" href="#ai-use" onclick="show_table('ai-use')"> Show table </a>
+<style>
+  #show-chart-ai-use {display: none;}
+  #ai-use-table {display: none;}
+</style>
+<div id="ai-use-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-36f90c3ca48c803aabec" style="width:100%;height:464px;"></div>
+</div>
+<div id="ai-use-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">AI use</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Yes</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Converting code to a new language</td>
+<td style="text-align: right;">29.5%</td>
+<td style="text-align: right;">70.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Debugging code</td>
+<td style="text-align: right;">67.1%</td>
+<td style="text-align: right;">32.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Documenting code</td>
+<td style="text-align: right;">20%</td>
+<td style="text-align: right;">80%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Generating synthetic data</td>
+<td style="text-align: right;">12.1%</td>
+<td style="text-align: right;">87.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Getting answers to a coding question</td>
+<td style="text-align: right;">78.7%</td>
+<td style="text-align: right;">21.3%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Improving efficiency of code</td>
+<td style="text-align: right;">45.2%</td>
+<td style="text-align: right;">54.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Other</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">100%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Testing code</td>
+<td style="text-align: right;">14.2%</td>
+<td style="text-align: right;">85.8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Writing code</td>
+<td style="text-align: right;">68.2%</td>
+<td style="text-align: right;">31.8%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 431</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-36f90c3ca48c803aabec">{"x":{"visdat":{"4fec2b1f1e67":["function () ","plotlyVisDat"]},"cur_data":"4fec2b1f1e67","attrs":{"4fec2b1f1e67":{"y":["Converting code to a new language","Converting code to a new language","Debugging code","Debugging code","Documenting code","Documenting code","Generating synthetic data","Generating synthetic data","Getting answers to a coding question","Getting answers to a coding question","Improving efficiency of code","Improving efficiency of code","Testing code","Testing code","Writing code","Writing code"],"x":[0.29466357308584684,0.7053364269141531,0.67053364269141535,0.3294663573085847,0.19953596287703015,0.80046403712296987,0.12064965197215777,0.87935034802784218,0.78654292343387466,0.21345707656612528,0.45243619489559167,0.54756380510440839,0.14153132250580047,0.85846867749419953,0.68213457076566131,0.31786542923433875],"orientation":"h","hovertemplate":["Yes: 29.5% <extra><\/extra>","No: 70.5% <extra><\/extra>","Yes: 67.1% <extra><\/extra>","No: 32.9% <extra><\/extra>","Yes: 20% <extra><\/extra>","No: 80% <extra><\/extra>","Yes: 12.1% <extra><\/extra>","No: 87.9% <extra><\/extra>","Yes: 78.7% <extra><\/extra>","No: 21.3% <extra><\/extra>","Yes: 45.2% <extra><\/extra>","No: 54.8% <extra><\/extra>","Yes: 14.2% <extra><\/extra>","No: 85.8% <extra><\/extra>","Yes: 68.2% <extra><\/extra>","No: 31.8% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"]},"color":["Yes","No","Yes","No","Yes","No","Yes","No","Yes","No","Yes","No","Yes","No","Yes","No"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","showlegend":true,"legend":{"orientation":"h","xanchor":"center","yanchor":"bottom","x":0.5,"y":1,"traceorder":"normal","font":{"size":14}},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Writing code","Testing code","Improving efficiency of code","Getting answers to a coding question","Generating synthetic data","Documenting code","Debugging code","Converting code to a new language"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 431","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Converting code to a new language","Debugging code","Documenting code","Generating synthetic data","Getting answers to a coding question","Improving efficiency of code","Testing code","Writing code"],"x":[0.29466357308584684,0.67053364269141535,0.19953596287703015,0.12064965197215777,0.78654292343387466,0.45243619489559167,0.14153132250580047,0.68213457076566131],"orientation":"h","hovertemplate":["Yes: 29.5% <extra><\/extra>","Yes: 67.1% <extra><\/extra>","Yes: 20% <extra><\/extra>","Yes: 12.1% <extra><\/extra>","Yes: 78.7% <extra><\/extra>","Yes: 45.2% <extra><\/extra>","Yes: 14.2% <extra><\/extra>","Yes: 68.2% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"Yes","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Converting code to a new language","Debugging code","Documenting code","Generating synthetic data","Getting answers to a coding question","Improving efficiency of code","Testing code","Writing code"],"x":[0.7053364269141531,0.3294663573085847,0.80046403712296987,0.87935034802784218,0.21345707656612528,0.54756380510440839,0.85846867749419953,0.31786542923433875],"orientation":"h","hovertemplate":["No: 70.5% <extra><\/extra>","No: 32.9% <extra><\/extra>","No: 80% <extra><\/extra>","No: 87.9% <extra><\/extra>","No: 21.3% <extra><\/extra>","No: 54.8% <extra><\/extra>","No: 85.8% <extra><\/extra>","No: 31.8% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"No","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="trust-in-ai" class="level3">
+<h3 class="anchored" data-anchor-id="trust-in-ai">Trust in AI</h3>
+<p>We asked all respondents who use AI tools when coding at work, how much they trust the accuracy and reliability of the outputs.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-ai-trust" href="#ai-trust" onclick="show_chart('ai-trust')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-ai-trust" href="#ai-trust" onclick="show_table('ai-trust')"> Show table </a>
+<style>
+  #show-chart-ai-trust {display: none;}
+  #ai-trust-table {display: none;}
+</style>
+<div id="ai-trust-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-2e583a68509087410b40" style="width:100%;height:464px;"></div>
+</div>
+<div id="ai-trust-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Do you trust the outputs from AI tools when coding at work?</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Strongly trust</td>
+<td style="text-align: right;">5.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Somewhat trust</td>
+<td style="text-align: right;">56.4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neutral/not sure</td>
+<td style="text-align: right;">19.3%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Somewhat distrust</td>
+<td style="text-align: right;">16.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Strongly distrust</td>
+<td style="text-align: right;">2.3%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 431</td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-2e583a68509087410b40">{"x":{"visdat":{"4fec76096fc0":["function () ","plotlyVisDat"]},"cur_data":"4fec76096fc0","attrs":{"4fec76096fc0":{"x":[0.058004640371229696,0.56380510440835263,0.1925754060324826,0.16241299303944315,0.023201856148491878],"y":["Strongly trust","Somewhat trust","Neutral/not sure","Somewhat distrust","Strongly distrust"],"marker":{"color":"#12436D"},"orientation":"h","hovertemplate":["Strongly trust: 5.8% <extra><\/extra>","Somewhat trust: 56.4% <extra><\/extra>","Neutral/not sure: 19.3% <extra><\/extra>","Somewhat distrust: 16.2% <extra><\/extra>","Strongly distrust: 2.3% <extra><\/extra>"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Strongly distrust","Somewhat distrust","Neutral/not sure","Somewhat trust","Strongly trust"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"Sample size = 431","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"Do you trust the outputs from AI tools when coding at work?","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":[0.058004640371229696,0.56380510440835263,0.1925754060324826,0.16241299303944315,0.023201856148491878],"y":["Strongly trust","Somewhat trust","Neutral/not sure","Somewhat distrust","Strongly distrust"],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"orientation":"h","hovertemplate":["Strongly trust: 5.8% <extra><\/extra>","Somewhat trust: 56.4% <extra><\/extra>","Neutral/not sure: 19.3% <extra><\/extra>","Somewhat distrust: 16.2% <extra><\/extra>","Strongly distrust: 2.3% <extra><\/extra>"],"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="reproducible-analytical-pipelines-rap" class="level2">
+<h2 class="anchored" data-anchor-id="reproducible-analytical-pipelines-rap">Reproducible analytical pipelines (RAP)</h2>
+<p>RAP refers to the use of good software engineering practices to make analysis pipelines more reproducible. This approach aims to use automation to improve the quality and efficiency of analytical processes.</p>
+<p>The following links contain more resources on RAP:</p>
+<ul>
+<li>you can find minimum RAP standards in the <a href="rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md at master · best-practice-and-impact/rap_mvp_maturity_guidance · GitHub">RAP MVP</a></li>
+<li>you can find guidance on quality assuring code in the <a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html">Duck Book</a></li>
+</ul>
+<section id="awareness-of-rap-over-time" class="level3">
+<h3 class="anchored" data-anchor-id="awareness-of-rap-over-time">Awareness of RAP over time</h3>
+<p>We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-rap-awareness-over-time" href="#rap-awareness-over-time" onclick="show_chart('rap-awareness-over-time')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-rap-awareness-over-time" href="#rap-awareness-over-time" onclick="show_table('rap-awareness-over-time')"> Show table </a>
+<style>
+  #show-chart-rap-awareness-over-time {display: none;}
+  #rap-awareness-over-time-table {display: none;}
+</style>
+<div id="rap-awareness-over-time-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-640ae79b7da0fdaa9c5a" style="width:100%;height:464px;"></div>
+</div>
+<div id="rap-awareness-over-time-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Heard of RAP (percent)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Lower confidence limit</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Upper confidence limit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">75.8%</td>
+<td style="text-align: left;">0.7276143</td>
+<td style="text-align: right;">0.7867370</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">82.1%</td>
+<td style="text-align: left;">0.7982960</td>
+<td style="text-align: right;">0.8423761</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">88.2%</td>
+<td style="text-align: left;">0.8615990</td>
+<td style="text-align: right;">0.8993581</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">86.2%</td>
+<td style="text-align: left;">0.8404089</td>
+<td style="text-align: right;">0.8812603</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-640ae79b7da0fdaa9c5a">{"x":{"visdat":{"4fec19046f63":["function () ","plotlyVisDat"]},"cur_data":"4fec19046f63","attrs":{"4fec19046f63":{"x":["2021","2022","2023","2024"],"y":[0.75840597758405981,0.82139775668679893,0.88177777777777777,0.86210045662100454],"marker":{"color":"#12436D"},"line":{"color":"#12436D"},"mode":"markers+lines","orientation":"v","hovertemplate":["2021: 75.8% <extra><\/extra>","2022: 82.1% <extra><\/extra>","2023: 88.2% <extra><\/extra>","2024: 86.2% <extra><\/extra>"],"error_y":{"symmetric":"false","array":[0.028331060710872991,0.02097830836084158,0.017580349938102313,0.019159808468481865],"arrayminus":[0.030791657922526694,0.023101790006616163,0.020178737161621885,0.021691554940001079],"color":"black"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Year","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["2021","2022","2023","2024"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%","zerolinecolor":"#ffff","range":[0,1]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":["2021","2022","2023","2024"],"y":[0.75840597758405981,0.82139775668679893,0.88177777777777777,0.86210045662100454],"marker":{"color":"#12436D","line":{"color":"rgba(31,119,180,1)"}},"line":{"color":"#12436D"},"mode":"markers+lines","orientation":"v","hovertemplate":["2021: 75.8% <extra><\/extra>","2022: 82.1% <extra><\/extra>","2023: 88.2% <extra><\/extra>","2024: 86.2% <extra><\/extra>"],"error_y":{"color":"black","symmetric":"false","array":[0.028331060710872991,0.02097830836084158,0.017580349938102313,0.019159808468481865],"arrayminus":[0.030791657922526694,0.023101790006616163,0.020178737161621885,0.021691554940001079]},"type":"scatter","error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="opinions-on-rap" class="level3">
+<h3 class="anchored" data-anchor-id="opinions-on-rap">Opinions on RAP</h3>
+<p>We asked respondents who had heard of RAP whether they agreed with a series of statements.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<script>
+HTMLWidgets.addPostRenderHandler(function() {
+plotNBwvfFcZ7U.on('plotly_legenddoubleclick', function(d, i) {return false});plotNBwvfFcZ7U.on('plotly_legendclick', function(d, i) {return false});
+});
+</script>
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-rap-opinions" href="#rap-opinions" onclick="show_chart('rap-opinions')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-rap-opinions" href="#rap-opinions" onclick="show_table('rap-opinions')"> Show table </a>
+<style>
+  #show-chart-rap-opinions {display: none;}
+  #rap-opinions-table {display: none;}
+</style>
+<div id="rap-opinions-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div id="plotNBwvfFcZ7U" style="width:100%;height:700px;" class="plotly html-widget"></div>
+</div>
+<div id="rap-opinions-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statement</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Strongly Disagree (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Disagree (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Neutral (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Agree (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Strongly Agree (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">I think it is important to implement RAP in my work</td>
+<td style="text-align: right;">1.6%</td>
+<td style="text-align: right;">3.9%</td>
+<td style="text-align: right;">11.6%</td>
+<td style="text-align: right;">33.3%</td>
+<td style="text-align: right;">49.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">I have the resources I need to help me implement RAP in my work</td>
+<td style="text-align: right;">5.7%</td>
+<td style="text-align: right;">14.5%</td>
+<td style="text-align: right;">23.2%</td>
+<td style="text-align: right;">31.5%</td>
+<td style="text-align: right;">25.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">I am currently implementing RAP in my work</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">14.2%</td>
+<td style="text-align: right;">17.6%</td>
+<td style="text-align: right;">29%</td>
+<td style="text-align: right;">29.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">My department values RAP</td>
+<td style="text-align: right;">2.8%</td>
+<td style="text-align: right;">6.3%</td>
+<td style="text-align: right;">21.9%</td>
+<td style="text-align: right;">36.7%</td>
+<td style="text-align: right;">32.3%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1068</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="plotNBwvfFcZ7U">{"x":{"visdat":{"4fec23dc49a9":["function () ","plotlyVisDat"]},"cur_data":"4fec23dc49a9","attrs":{"4fec23dc49a9":{"y":["I think it is important to implement<br>RAP in my work","I think it is important to implement<br>RAP in my work","I think it is important to implement<br>RAP in my work","I think it is important to implement<br>RAP in my work","I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","I am currently implementing RAP in<br>my work","I am currently implementing RAP in<br>my work","I am currently implementing RAP in<br>my work","I am currently implementing RAP in<br>my work","My department values RAP","My department values RAP","My department values RAP","My department values RAP","My department values RAP"],"x":[0.015917602996254682,0.039325842696629212,0.11610486891385768,0.33333333333333331,0.49531835205992508,0.057116104868913858,0.14513108614232209,0.23220973782771537,0.3146067415730337,0.25093632958801498,0.10018726591760299,0.14232209737827714,0.17602996254681649,0.29026217228464418,0.29119850187265917,0.028089887640449437,0.062734082397003746,0.21910112359550563,0.36704119850187267,0.32303370786516855],"orientation":"h","base":[-0.11329588014981273,-0.097378277153558054,-0.058052434456928842,0.058052434456928842,0.39138576779026213,-0.31835205992509363,-0.2612359550561798,-0.11610486891385768,0.11610486891385768,0.43071161048689144,-0.33052434456928836,-0.23033707865168537,-0.088014981273408233,0.088014981273408233,0.37827715355805247,-0.20037453183520598,-0.17228464419475653,-0.1095505617977528,0.10955056179775285,0.47659176029962552],"hovertemplate":["Strongly Disagree: 1.6% <extra><\/extra>","Disagree: 3.9% <extra><\/extra>","Neutral: 11.6% <extra><\/extra>","Agree: 33.3% <extra><\/extra>","Strongly Agree: 49.5% <extra><\/extra>","Strongly Disagree: 5.7% <extra><\/extra>","Disagree: 14.5% <extra><\/extra>","Neutral: 23.2% <extra><\/extra>","Agree: 31.5% <extra><\/extra>","Strongly Agree: 25.1% <extra><\/extra>","Strongly Disagree: 10% <extra><\/extra>","Disagree: 14.2% <extra><\/extra>","Neutral: 17.6% <extra><\/extra>","Agree: 29% <extra><\/extra>","Strongly Agree: 29.1% <extra><\/extra>","Strongly Disagree: 2.8% <extra><\/extra>","Disagree: 6.3% <extra><\/extra>","Neutral: 21.9% <extra><\/extra>","Agree: 36.7% <extra><\/extra>","Strongly Agree: 32.3% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#AFAFAF","#AFAFAF","#AFAFAF","#AFAFAF","#F9B492","#F9B492","#F9B492","#F9B492","#F46A25","#F46A25","#F46A25","#F46A25"]},"color":["Strongly Disagree","Disagree","Neutral","Agree","Strongly Agree","Strongly Disagree","Disagree","Neutral","Agree","Strongly Agree","Strongly Disagree","Disagree","Neutral","Agree","Strongly Agree","Strongly Disagree","Disagree","Neutral","Agree","Strongly Agree"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"width":"100%","height":700,"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","annotations":[{"x":1,"y":0,"text":"Sample size = 1068","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"range":[-1,1],"ticktext":["100%","50%","0%","50%","100%"],"tickvals":[-1,-0.5,0,0.5,1]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["My department values RAP","I am currently implementing RAP in<br>my work","I have the resources I need to help<br>me implement RAP in my work","I think it is important to implement<br>RAP in my work"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"legend":{"xanchor":"left","yanchor":"bottom","orientation":"h","y":1,"traceorder":"normal","font":{"size":14}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","My department values RAP"],"x":[0.015917602996254682,0.057116104868913858,0.10018726591760299,0.028089887640449437],"orientation":"h","base":[-0.11329588014981273,-0.31835205992509363,-0.33052434456928836,-0.20037453183520598],"hovertemplate":["Strongly Disagree: 1.6% <extra><\/extra>","Strongly Disagree: 5.7% <extra><\/extra>","Strongly Disagree: 10% <extra><\/extra>","Strongly Disagree: 2.8% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"Strongly Disagree","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","My department values RAP"],"x":[0.039325842696629212,0.14513108614232209,0.14232209737827714,0.062734082397003746],"orientation":"h","base":[-0.097378277153558054,-0.2612359550561798,-0.23033707865168537,-0.17228464419475653],"hovertemplate":["Disagree: 3.9% <extra><\/extra>","Disagree: 14.5% <extra><\/extra>","Disagree: 14.2% <extra><\/extra>","Disagree: 6.3% <extra><\/extra>"],"marker":{"color":["#88A1B6","#88A1B6","#88A1B6","#88A1B6"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"Disagree","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","My department values RAP"],"x":[0.11610486891385768,0.23220973782771537,0.17602996254681649,0.21910112359550563],"orientation":"h","base":[-0.058052434456928842,-0.11610486891385768,-0.088014981273408233,-0.1095505617977528],"hovertemplate":["Neutral: 11.6% <extra><\/extra>","Neutral: 23.2% <extra><\/extra>","Neutral: 17.6% <extra><\/extra>","Neutral: 21.9% <extra><\/extra>"],"marker":{"color":["#AFAFAF","#AFAFAF","#AFAFAF","#AFAFAF"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Neutral","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","My department values RAP"],"x":[0.33333333333333331,0.3146067415730337,0.29026217228464418,0.36704119850187267],"orientation":"h","base":[0.058052434456928842,0.11610486891385768,0.088014981273408233,0.10955056179775285],"hovertemplate":["Agree: 33.3% <extra><\/extra>","Agree: 31.5% <extra><\/extra>","Agree: 29% <extra><\/extra>","Agree: 36.7% <extra><\/extra>"],"marker":{"color":["#F9B492","#F9B492","#F9B492","#F9B492"],"line":{"color":"rgba(231,138,195,1)"}},"type":"bar","name":"Agree","textfont":{"color":"rgba(231,138,195,1)"},"error_y":{"color":"rgba(231,138,195,1)"},"error_x":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["I think it is important to implement<br>RAP in my work","I have the resources I need to help<br>me implement RAP in my work","I am currently implementing RAP in<br>my work","My department values RAP"],"x":[0.49531835205992508,0.25093632958801498,0.29119850187265917,0.32303370786516855],"orientation":"h","base":[0.39138576779026213,0.43071161048689144,0.37827715355805247,0.47659176029962552],"hovertemplate":["Strongly Agree: 49.5% <extra><\/extra>","Strongly Agree: 25.1% <extra><\/extra>","Strongly Agree: 29.1% <extra><\/extra>","Strongly Agree: 32.3% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(166,216,84,1)"}},"type":"bar","name":"Strongly Agree","textfont":{"color":"rgba(166,216,84,1)"},"error_y":{"color":"rgba(166,216,84,1)"},"error_x":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="good-coding-practices" class="level2">
+<h2 class="anchored" data-anchor-id="good-coding-practices">Good coding practices</h2>
+<p>We asked respondents who reported writing code at work about the good practices they apply when writing code at work. These questions cover many of the coding practices recommended in the quality assurance of code for analysis and research guidance, as well as the <a href="https://github.com/best-practice-and-impact/rap_mvp_maturity_guidance/blob/master/Reproducible-Analytical-Pipelines-MVP.md">minimum RAP standards</a> set by the cross-government <a href="https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/">RAP champions network</a>.</p>
+<p>Coding practices have been classified as either ‘Basic’ or ‘Advanced’. Basic practices are those that make up the minimum RAP standards, while Advanced practices help improve reproducibility. The percentage of respondents who reported applying these practices either ‘Regularly’ or ‘All the time’ is shown below.</p>
+<p>Open sourcing was defined as ‘making code freely available to be modified and redistributed’</p>
+<div class="cell">
+<div class="cell-output-display">
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-rap-comp" href="#rap-comp" onclick="show_chart('rap-comp')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-rap-comp" href="#rap-comp" onclick="show_table('rap-comp')"> Show table </a>
+<style>
+  #show-chart-rap-comp {display: none;}
+  #rap-comp-table {display: none;}
+</style>
+<div id="rap-comp-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-98c80ac170c5a12b5e45" style="width:100%;height:464px;"></div>
+</div>
+<div id="rap-comp-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">RAP component</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Type</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Percentage of analysts who code in their work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Use open source software</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">79.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Work to quality standards</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">69%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Peer review</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">58.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Version control</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">56.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Create project README</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">43.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Open source own code</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: right;">15.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Manually test code</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">79.3%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Use control flow</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">58.4%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Follow code style guidelines</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">56.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Write functions</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">56.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Use configuration files</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">53.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Document dependencies</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">34.6%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Document functions</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">31.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Write automated tests</td>
+<td style="text-align: left;">Advanced</td>
+<td style="text-align: right;">16.6%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1095</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="htmlwidget-98c80ac170c5a12b5e45">{"x":{"visdat":{"4fec35c7588b":["function () ","plotlyVisDat"]},"cur_data":"4fec35c7588b","attrs":{"4fec35c7588b":{"x":[0.16621004566210046,0.31780821917808222,0.34611872146118722,0.53881278538812782,0.56164383561643838,0.56894977168949767,0.58356164383561648,0.79269406392694064,0.15525114155251141,0.43561643835616437,0.56529680365296808,0.58721461187214608,0.69041095890410964,0.79908675799086759],"y":["Write automated tests","Document functions","Document dependencies","Use configuration files","Write functions","Follow code style guidelines","Use control flow","Manually test code","Open source own code","Create project README","Version control","Peer review","Work to quality standards","Use open source software"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"]},"hovertemplate":["Write automated tests: 16.6% <extra><\/extra>","Document functions: 31.8% <extra><\/extra>","Document dependencies: 34.6% <extra><\/extra>","Use configuration files: 53.9% <extra><\/extra>","Write functions: 56.2% <extra><\/extra>","Follow code style guidelines: 56.9% <extra><\/extra>","Use control flow: 58.4% <extra><\/extra>","Manually test code: 79.3% <extra><\/extra>","Open source own code: 15.5% <extra><\/extra>","Create project README: 43.6% <extra><\/extra>","Version control: 56.5% <extra><\/extra>","Peer review: 58.7% <extra><\/extra>","Work to quality standards: 69% <extra><\/extra>","Use open source software: 79.9% <extra><\/extra>"],"color":["Advanced","Advanced","Advanced","Advanced","Advanced","Advanced","Advanced","Advanced","Basic","Basic","Basic","Basic","Basic","Basic"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":100,"l":60,"t":28,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Write automated tests","Document functions","Document dependencies","Use configuration files","Write functions","Follow code style guidelines","Use control flow","Manually test code","Open source own code","Create project README","Version control","Peer review","Work to quality standards","Use open source software"]},"legend":{"traceorder":"reversed"},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"annotations":[{"x":1,"y":0,"text":"","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"RAP component","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"x":[0.16621004566210046,0.31780821917808222,0.34611872146118722,0.53881278538812782,0.56164383561643838,0.56894977168949767,0.58356164383561648,0.79269406392694064],"y":["Write automated tests","Document functions","Document dependencies","Use configuration files","Write functions","Follow code style guidelines","Use control flow","Manually test code"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"hovertemplate":["Write automated tests: 16.6% <extra><\/extra>","Document functions: 31.8% <extra><\/extra>","Document dependencies: 34.6% <extra><\/extra>","Use configuration files: 53.9% <extra><\/extra>","Write functions: 56.2% <extra><\/extra>","Follow code style guidelines: 56.9% <extra><\/extra>","Use control flow: 58.4% <extra><\/extra>","Manually test code: 79.3% <extra><\/extra>"],"type":"bar","orientation":"h","name":"Advanced","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.15525114155251141,0.43561643835616437,0.56529680365296808,0.58721461187214608,0.69041095890410964,0.79908675799086759],"y":["Open source own code","Create project README","Version control","Peer review","Work to quality standards","Use open source software"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(141,160,203,1)"}},"hovertemplate":["Open source own code: 15.5% <extra><\/extra>","Create project README: 43.6% <extra><\/extra>","Version control: 56.5% <extra><\/extra>","Peer review: 58.7% <extra><\/extra>","Work to quality standards: 69% <extra><\/extra>","Use open source software: 79.9% <extra><\/extra>"],"type":"bar","orientation":"h","name":"Basic","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="consistency-of-good-coding-practices" class="level3">
+<h3 class="anchored" data-anchor-id="consistency-of-good-coding-practices">Consistency of good coding practices</h3>
+<p>We asked respondents who reported writing code at work how frequently they apply good coding practices when writing code at work.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<script>
+HTMLWidgets.addPostRenderHandler(function() {
+plotqkQu8VJZ1F.on('plotly_legenddoubleclick', function(d, i) {return false});plotqkQu8VJZ1F.on('plotly_legendclick', function(d, i) {return false});
+});
+</script>
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-good-practices" href="#good-practices" onclick="show_chart('good-practices')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-good-practices" href="#good-practices" onclick="show_table('good-practices')"> Show table </a>
+<style>
+  #show-chart-good-practices {display: none;}
+  #good-practices-table {display: none;}
+</style>
+<div id="good-practices-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div id="plotqkQu8VJZ1F" style="width:100%;height:800px;" class="plotly html-widget"></div>
+</div>
+<div id="good-practices-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statement</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">I don't understand this question (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Never (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rarely (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sometimes (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Regularly (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Always (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Have code reviewed</td>
+<td style="text-align: right;">0.1%</td>
+<td style="text-align: right;">6.3%</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">23.4%</td>
+<td style="text-align: right;">27.7%</td>
+<td style="text-align: right;">31.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Manually test code</td>
+<td style="text-align: right;">0.7%</td>
+<td style="text-align: right;">3.7%</td>
+<td style="text-align: right;">4.1%</td>
+<td style="text-align: right;">12.2%</td>
+<td style="text-align: right;">32%</td>
+<td style="text-align: right;">47.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Separate settings from code</td>
+<td style="text-align: right;">6.6%</td>
+<td style="text-align: right;">9%</td>
+<td style="text-align: right;">9.8%</td>
+<td style="text-align: right;">20.7%</td>
+<td style="text-align: right;">27.2%</td>
+<td style="text-align: right;">26.7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Use a standard code style</td>
+<td style="text-align: right;">9.9%</td>
+<td style="text-align: right;">13.6%</td>
+<td style="text-align: right;">5.7%</td>
+<td style="text-align: right;">14%</td>
+<td style="text-align: right;">28.8%</td>
+<td style="text-align: right;">28.1%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Use control flow</td>
+<td style="text-align: right;">2.5%</td>
+<td style="text-align: right;">8.7%</td>
+<td style="text-align: right;">10.2%</td>
+<td style="text-align: right;">20.3%</td>
+<td style="text-align: right;">29.6%</td>
+<td style="text-align: right;">28.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Use open source software</td>
+<td style="text-align: right;">0.7%</td>
+<td style="text-align: right;">4.9%</td>
+<td style="text-align: right;">6.4%</td>
+<td style="text-align: right;">8%</td>
+<td style="text-align: right;">23.7%</td>
+<td style="text-align: right;">56.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Write automated tests</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">35.6%</td>
+<td style="text-align: right;">20.4%</td>
+<td style="text-align: right;">17.4%</td>
+<td style="text-align: right;">10.4%</td>
+<td style="text-align: right;">6.2%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Write functions</td>
+<td style="text-align: right;">1.1%</td>
+<td style="text-align: right;">7.2%</td>
+<td style="text-align: right;">9.9%</td>
+<td style="text-align: right;">25.7%</td>
+<td style="text-align: right;">26.8%</td>
+<td style="text-align: right;">29.4%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1095</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="plotqkQu8VJZ1F">{"x":{"visdat":{"4fec7d042e0a":["function () ","plotlyVisDat"]},"cur_data":"4fec7d042e0a","attrs":{"4fec7d042e0a":{"y":["Have code reviewed","Have code reviewed","Have code reviewed","Have code reviewed","Have code reviewed","Have code reviewed","Manually test code","Manually test code","Manually test code","Manually test code","Manually test code","Manually test code","Separate settings<br>from code","Separate settings<br>from code","Separate settings<br>from code","Separate settings<br>from code","Separate settings<br>from code","Separate settings<br>from code","Use a standard<br>code style","Use a standard<br>code style","Use a standard<br>code style","Use a standard<br>code style","Use a standard<br>code style","Use a standard<br>code style","Use control flow","Use control flow","Use control flow","Use control flow","Use control flow","Use control flow","Use open source<br>software","Use open source<br>software","Use open source<br>software","Use open source<br>software","Use open source<br>software","Use open source<br>software","Write automated<br>tests","Write automated<br>tests","Write automated<br>tests","Write automated<br>tests","Write automated<br>tests","Write automated<br>tests","Write functions","Write functions","Write functions","Write functions","Write functions","Write functions"],"x":[0.00091324200913242006,0.063013698630136991,0.11506849315068493,0.23378995433789954,0.27671232876712326,0.31050228310502281,0.0073059360730593605,0.036529680365296802,0.041095890410958902,0.12237442922374429,0.31963470319634701,0.47305936073059363,0.06575342465753424,0.090410958904109592,0.097716894977168955,0.20730593607305936,0.27214611872146116,0.26666666666666666,0.098630136986301367,0.13607305936073058,0.056621004566210047,0.13972602739726028,0.28767123287671231,0.28127853881278536,0.024657534246575342,0.086757990867579904,0.10228310502283106,0.20273972602739726,0.29589041095890412,0.28767123287671231,0.0073059360730593605,0.049315068493150684,0.063926940639269403,0.080365296803652966,0.23652968036529681,0.56255707762557072,0.1004566210045662,0.35616438356164382,0.20365296803652969,0.17351598173515981,0.10410958904109589,0.062100456621004566,0.010958904109589041,0.072146118721461192,0.098630136986301367,0.25662100456621006,0.26757990867579906,0.29406392694063926],"orientation":"h","base":[-0.41278538812785387,-0.41187214611872147,-0.34885844748858447,-0.23378995433789954,0,0.27671232876712332,-0.20730593607305936,-0.20000000000000001,-0.16347031963470321,-0.12237442922374429,0,0.31963470319634701,-0.46118721461187218,-0.39543378995433792,-0.30502283105022832,-0.20730593607305936,0,0.27214611872146111,-0.43105022831050227,-0.33242009132420092,-0.19634703196347031,-0.13972602739726026,0,0.28767123287671231,-0.41643835616438357,-0.39178082191780822,-0.30502283105022832,-0.20273972602739726,0,0.29589041095890406,-0.20091324200913241,-0.19360730593607306,-0.14429223744292236,-0.080365296803652966,0,0.23652968036529681,-0.83378995433789949,-0.73333333333333328,-0.37716894977168947,-0.17351598173515981,0,0.10410958904109591,-0.43835616438356168,-0.42739726027397262,-0.35525114155251147,-0.25662100456621006,0,0.26757990867579901],"hovertemplate":["I don't understand this question: 0.1% <extra><\/extra>","Never: 6.3% <extra><\/extra>","Rarely: 11.5% <extra><\/extra>","Sometimes: 23.4% <extra><\/extra>","Regularly: 27.7% <extra><\/extra>","Always: 31.1% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","Never: 3.7% <extra><\/extra>","Rarely: 4.1% <extra><\/extra>","Sometimes: 12.2% <extra><\/extra>","Regularly: 32% <extra><\/extra>","Always: 47.3% <extra><\/extra>","I don't understand this question: 6.6% <extra><\/extra>","Never: 9% <extra><\/extra>","Rarely: 9.8% <extra><\/extra>","Sometimes: 20.7% <extra><\/extra>","Regularly: 27.2% <extra><\/extra>","Always: 26.7% <extra><\/extra>","I don't understand this question: 9.9% <extra><\/extra>","Never: 13.6% <extra><\/extra>","Rarely: 5.7% <extra><\/extra>","Sometimes: 14% <extra><\/extra>","Regularly: 28.8% <extra><\/extra>","Always: 28.1% <extra><\/extra>","I don't understand this question: 2.5% <extra><\/extra>","Never: 8.7% <extra><\/extra>","Rarely: 10.2% <extra><\/extra>","Sometimes: 20.3% <extra><\/extra>","Regularly: 29.6% <extra><\/extra>","Always: 28.8% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","Never: 4.9% <extra><\/extra>","Rarely: 6.4% <extra><\/extra>","Sometimes: 8% <extra><\/extra>","Regularly: 23.7% <extra><\/extra>","Always: 56.3% <extra><\/extra>","I don't understand this question: 10% <extra><\/extra>","Never: 35.6% <extra><\/extra>","Rarely: 20.4% <extra><\/extra>","Sometimes: 17.4% <extra><\/extra>","Regularly: 10.4% <extra><\/extra>","Always: 6.2% <extra><\/extra>","I don't understand this question: 1.1% <extra><\/extra>","Never: 7.2% <extra><\/extra>","Rarely: 9.9% <extra><\/extra>","Sometimes: 25.7% <extra><\/extra>","Regularly: 26.8% <extra><\/extra>","Always: 29.4% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#396285","#396285","#396285","#396285","#396285","#396285","#396285","#396285","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"]},"color":["I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"width":"100%","height":800,"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","annotations":[{"x":1,"y":0,"text":"Sample size = 1095","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"range":[-1,1],"ticktext":["100%","50%","0%","50%","100%"],"tickvals":[-1,-0.5,0,0.5,1]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Write functions","Write automated<br>tests","Use open source<br>software","Use control flow","Use a standard<br>code style","Separate settings<br>from code","Manually test code","Have code reviewed"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"legend":{"xanchor":"left","yanchor":"bottom","orientation":"h","y":1,"traceorder":"normal","font":{"size":14}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.00091324200913242006,0.0073059360730593605,0.06575342465753424,0.098630136986301367,0.024657534246575342,0.0073059360730593605,0.1004566210045662,0.010958904109589041],"orientation":"h","base":[-0.41278538812785387,-0.20730593607305936,-0.46118721461187218,-0.43105022831050227,-0.41643835616438357,-0.20091324200913241,-0.83378995433789949,-0.43835616438356168],"hovertemplate":["I don't understand this question: 0.1% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","I don't understand this question: 6.6% <extra><\/extra>","I don't understand this question: 9.9% <extra><\/extra>","I don't understand this question: 2.5% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","I don't understand this question: 10% <extra><\/extra>","I don't understand this question: 1.1% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"I don't understand this question","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.063013698630136991,0.036529680365296802,0.090410958904109592,0.13607305936073058,0.086757990867579904,0.049315068493150684,0.35616438356164382,0.072146118721461192],"orientation":"h","base":[-0.41187214611872147,-0.20000000000000001,-0.39543378995433792,-0.33242009132420092,-0.39178082191780822,-0.19360730593607306,-0.73333333333333328,-0.42739726027397262],"hovertemplate":["Never: 6.3% <extra><\/extra>","Never: 3.7% <extra><\/extra>","Never: 9% <extra><\/extra>","Never: 13.6% <extra><\/extra>","Never: 8.7% <extra><\/extra>","Never: 4.9% <extra><\/extra>","Never: 35.6% <extra><\/extra>","Never: 7.2% <extra><\/extra>"],"marker":{"color":["#396285","#396285","#396285","#396285","#396285","#396285","#396285","#396285"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"Never","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.11506849315068493,0.041095890410958902,0.097716894977168955,0.056621004566210047,0.10228310502283106,0.063926940639269403,0.20365296803652969,0.098630136986301367],"orientation":"h","base":[-0.34885844748858447,-0.16347031963470321,-0.30502283105022832,-0.19634703196347031,-0.30502283105022832,-0.14429223744292236,-0.37716894977168947,-0.35525114155251147],"hovertemplate":["Rarely: 11.5% <extra><\/extra>","Rarely: 4.1% <extra><\/extra>","Rarely: 9.8% <extra><\/extra>","Rarely: 5.7% <extra><\/extra>","Rarely: 10.2% <extra><\/extra>","Rarely: 6.4% <extra><\/extra>","Rarely: 20.4% <extra><\/extra>","Rarely: 9.9% <extra><\/extra>"],"marker":{"color":["#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Rarely","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.23378995433789954,0.12237442922374429,0.20730593607305936,0.13972602739726028,0.20273972602739726,0.080365296803652966,0.17351598173515981,0.25662100456621006],"orientation":"h","base":[-0.23378995433789954,-0.12237442922374429,-0.20730593607305936,-0.13972602739726026,-0.20273972602739726,-0.080365296803652966,-0.17351598173515981,-0.25662100456621006],"hovertemplate":["Sometimes: 23.4% <extra><\/extra>","Sometimes: 12.2% <extra><\/extra>","Sometimes: 20.7% <extra><\/extra>","Sometimes: 14% <extra><\/extra>","Sometimes: 20.3% <extra><\/extra>","Sometimes: 8% <extra><\/extra>","Sometimes: 17.4% <extra><\/extra>","Sometimes: 25.7% <extra><\/extra>"],"marker":{"color":["#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6"],"line":{"color":"rgba(231,138,195,1)"}},"type":"bar","name":"Sometimes","textfont":{"color":"rgba(231,138,195,1)"},"error_y":{"color":"rgba(231,138,195,1)"},"error_x":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.27671232876712326,0.31963470319634701,0.27214611872146116,0.28767123287671231,0.29589041095890412,0.23652968036529681,0.10410958904109589,0.26757990867579906],"orientation":"h","base":[0,0,0,0,0,0,0,0],"hovertemplate":["Regularly: 27.7% <extra><\/extra>","Regularly: 32% <extra><\/extra>","Regularly: 27.2% <extra><\/extra>","Regularly: 28.8% <extra><\/extra>","Regularly: 29.6% <extra><\/extra>","Regularly: 23.7% <extra><\/extra>","Regularly: 10.4% <extra><\/extra>","Regularly: 26.8% <extra><\/extra>"],"marker":{"color":["#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492"],"line":{"color":"rgba(166,216,84,1)"}},"type":"bar","name":"Regularly","textfont":{"color":"rgba(166,216,84,1)"},"error_y":{"color":"rgba(166,216,84,1)"},"error_x":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have code reviewed","Manually test code","Separate settings<br>from code","Use a standard<br>code style","Use control flow","Use open source<br>software","Write automated<br>tests","Write functions"],"x":[0.31050228310502281,0.47305936073059363,0.26666666666666666,0.28127853881278536,0.28767123287671231,0.56255707762557072,0.062100456621004566,0.29406392694063926],"orientation":"h","base":[0.27671232876712332,0.31963470319634701,0.27214611872146111,0.28767123287671231,0.29589041095890406,0.23652968036529681,0.10410958904109591,0.26757990867579901],"hovertemplate":["Always: 31.1% <extra><\/extra>","Always: 47.3% <extra><\/extra>","Always: 26.7% <extra><\/extra>","Always: 28.1% <extra><\/extra>","Always: 28.8% <extra><\/extra>","Always: 56.3% <extra><\/extra>","Always: 6.2% <extra><\/extra>","Always: 29.4% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(255,217,47,1)"}},"type":"bar","name":"Always","textfont":{"color":"rgba(255,217,47,1)"},"error_y":{"color":"rgba(255,217,47,1)"},"error_x":{"color":"rgba(255,217,47,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="code-documentation" class="level3">
+<h3 class="anchored" data-anchor-id="code-documentation">Code documentation</h3>
+<p>We asked respondents who reported writing code at work how frequently they write different forms of documentation when programming in their current role.</p>
+<p><a href="https://best-practice-and-impact.github.io/qa-of-code-guidance/code_documentation.html">Embedded documentation</a> is one of the components which make up a RAP minimum viable product. Documentation is important to help others be clear on how to use the product and what the code is intended to do.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<script>
+HTMLWidgets.addPostRenderHandler(function() {
+plotlOww9oe0vx.on('plotly_legenddoubleclick', function(d, i) {return false});plotlOww9oe0vx.on('plotly_legendclick', function(d, i) {return false});
+});
+</script>
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-doc" href="#doc" onclick="show_chart('doc')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-doc" href="#doc" onclick="show_table('doc')"> Show table </a>
+<style>
+  #show-chart-doc {display: none;}
+  #doc-table {display: none;}
+</style>
+<div id="doc-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div id="plotlOww9oe0vx" style="width:100%;height:800px;" class="plotly html-widget"></div>
+</div>
+<div id="doc-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statement</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">I don't understand this question (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Never (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rarely (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sometimes (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Regularly (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Always (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Create README files</td>
+<td style="text-align: right;">2.3%</td>
+<td style="text-align: right;">20.3%</td>
+<td style="text-align: right;">13.5%</td>
+<td style="text-align: right;">20.4%</td>
+<td style="text-align: right;">20.7%</td>
+<td style="text-align: right;">22.8%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Document dependencies</td>
+<td style="text-align: right;">4.3%</td>
+<td style="text-align: right;">28.1%</td>
+<td style="text-align: right;">14.5%</td>
+<td style="text-align: right;">18.4%</td>
+<td style="text-align: right;">17.7%</td>
+<td style="text-align: right;">16.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Document functions</td>
+<td style="text-align: right;">12.1%</td>
+<td style="text-align: right;">33.1%</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">16.3%</td>
+<td style="text-align: right;">15.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Document manual QA steps</td>
+<td style="text-align: right;">3.5%</td>
+<td style="text-align: right;">14%</td>
+<td style="text-align: right;">11.9%</td>
+<td style="text-align: right;">26.3%</td>
+<td style="text-align: right;">27.2%</td>
+<td style="text-align: right;">17.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Document pipeline design</td>
+<td style="text-align: right;">9.3%</td>
+<td style="text-align: right;">23.3%</td>
+<td style="text-align: right;">15.4%</td>
+<td style="text-align: right;">23%</td>
+<td style="text-align: right;">19.3%</td>
+<td style="text-align: right;">9.7%</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1095</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="plotlOww9oe0vx">{"x":{"visdat":{"4fec7287e42":["function () ","plotlyVisDat"]},"cur_data":"4fec7287e42","attrs":{"4fec7287e42":{"y":["Create README<br>files","Create README<br>files","Create README<br>files","Create README<br>files","Create README<br>files","Create README<br>files","Document dependencies","Document dependencies","Document dependencies","Document dependencies","Document dependencies","Document dependencies","Document functions","Document functions","Document functions","Document functions","Document functions","Document functions","Document manual<br>QA steps","Document manual<br>QA steps","Document manual<br>QA steps","Document manual<br>QA steps","Document manual<br>QA steps","Document manual<br>QA steps","Document pipeline<br>design","Document pipeline<br>design","Document pipeline<br>design","Document pipeline<br>design","Document pipeline<br>design","Document pipeline<br>design"],"x":[0.022831050228310501,0.20273972602739726,0.13515981735159818,0.20365296803652969,0.20730593607305936,0.22831050228310501,0.042922374429223746,0.28127853881278536,0.14520547945205478,0.18447488584474886,0.17716894977168951,0.16894977168949771,0.12146118721461187,0.33059360730593607,0.11506849315068493,0.11506849315068493,0.16347031963470321,0.15433789954337901,0.034703196347031964,0.13972602739726028,0.11872146118721461,0.26301369863013696,0.27214611872146116,0.17168949771689498,0.093150684931506855,0.23287671232876711,0.15433789954337901,0.23013698630136986,0.19269406392694063,0.09680365296803653],"orientation":"h","base":[-0.56438356164383563,-0.54155251141552507,-0.33881278538812787,-0.20365296803652966,0,0.20730593607305936,-0.65388127853881273,-0.61095890410958897,-0.32968036529680361,-0.18447488584474886,0,0.17716894977168951,-0.68219178082191778,-0.56073059360730593,-0.23013698630136986,-0.1150684931506849,0,0.16347031963470326,-0.55616438356164377,-0.52146118721461177,-0.38173515981735151,-0.26301369863013691,0,0.27214611872146122,-0.71050228310502284,-0.61735159817351604,-0.38447488584474887,-0.23013698630136986,0,0.19269406392694066],"hovertemplate":["I don't understand this question: 2.3% <extra><\/extra>","Never: 20.3% <extra><\/extra>","Rarely: 13.5% <extra><\/extra>","Sometimes: 20.4% <extra><\/extra>","Regularly: 20.7% <extra><\/extra>","Always: 22.8% <extra><\/extra>","I don't understand this question: 4.3% <extra><\/extra>","Never: 28.1% <extra><\/extra>","Rarely: 14.5% <extra><\/extra>","Sometimes: 18.4% <extra><\/extra>","Regularly: 17.7% <extra><\/extra>","Always: 16.9% <extra><\/extra>","I don't understand this question: 12.1% <extra><\/extra>","Never: 33.1% <extra><\/extra>","Rarely: 11.5% <extra><\/extra>","Sometimes: 11.5% <extra><\/extra>","Regularly: 16.3% <extra><\/extra>","Always: 15.4% <extra><\/extra>","I don't understand this question: 3.5% <extra><\/extra>","Never: 14% <extra><\/extra>","Rarely: 11.9% <extra><\/extra>","Sometimes: 26.3% <extra><\/extra>","Regularly: 27.2% <extra><\/extra>","Always: 17.2% <extra><\/extra>","I don't understand this question: 9.3% <extra><\/extra>","Never: 23.3% <extra><\/extra>","Rarely: 15.4% <extra><\/extra>","Sometimes: 23% <extra><\/extra>","Regularly: 19.3% <extra><\/extra>","Always: 9.7% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#396285","#396285","#396285","#396285","#396285","#61819D","#61819D","#61819D","#61819D","#61819D","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"]},"color":["I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"width":"100%","height":800,"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","annotations":[{"x":1,"y":0,"text":"Sample size = 1095","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"range":[-1,1],"ticktext":["100%","50%","0%","50%","100%"],"tickvals":[-1,-0.5,0,0.5,1]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Document pipeline<br>design","Document manual<br>QA steps","Document functions","Document dependencies","Create README<br>files"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"legend":{"xanchor":"left","yanchor":"bottom","orientation":"h","y":1,"traceorder":"normal","font":{"size":14}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.022831050228310501,0.042922374429223746,0.12146118721461187,0.034703196347031964,0.093150684931506855],"orientation":"h","base":[-0.56438356164383563,-0.65388127853881273,-0.68219178082191778,-0.55616438356164377,-0.71050228310502284],"hovertemplate":["I don't understand this question: 2.3% <extra><\/extra>","I don't understand this question: 4.3% <extra><\/extra>","I don't understand this question: 12.1% <extra><\/extra>","I don't understand this question: 3.5% <extra><\/extra>","I don't understand this question: 9.3% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"I don't understand this question","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.20273972602739726,0.28127853881278536,0.33059360730593607,0.13972602739726028,0.23287671232876711],"orientation":"h","base":[-0.54155251141552507,-0.61095890410958897,-0.56073059360730593,-0.52146118721461177,-0.61735159817351604],"hovertemplate":["Never: 20.3% <extra><\/extra>","Never: 28.1% <extra><\/extra>","Never: 33.1% <extra><\/extra>","Never: 14% <extra><\/extra>","Never: 23.3% <extra><\/extra>"],"marker":{"color":["#396285","#396285","#396285","#396285","#396285"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"Never","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.13515981735159818,0.14520547945205478,0.11506849315068493,0.11872146118721461,0.15433789954337901],"orientation":"h","base":[-0.33881278538812787,-0.32968036529680361,-0.23013698630136986,-0.38173515981735151,-0.38447488584474887],"hovertemplate":["Rarely: 13.5% <extra><\/extra>","Rarely: 14.5% <extra><\/extra>","Rarely: 11.5% <extra><\/extra>","Rarely: 11.9% <extra><\/extra>","Rarely: 15.4% <extra><\/extra>"],"marker":{"color":["#61819D","#61819D","#61819D","#61819D","#61819D"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Rarely","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.20365296803652969,0.18447488584474886,0.11506849315068493,0.26301369863013696,0.23013698630136986],"orientation":"h","base":[-0.20365296803652966,-0.18447488584474886,-0.1150684931506849,-0.26301369863013691,-0.23013698630136986],"hovertemplate":["Sometimes: 20.4% <extra><\/extra>","Sometimes: 18.4% <extra><\/extra>","Sometimes: 11.5% <extra><\/extra>","Sometimes: 26.3% <extra><\/extra>","Sometimes: 23% <extra><\/extra>"],"marker":{"color":["#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6"],"line":{"color":"rgba(231,138,195,1)"}},"type":"bar","name":"Sometimes","textfont":{"color":"rgba(231,138,195,1)"},"error_y":{"color":"rgba(231,138,195,1)"},"error_x":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.20730593607305936,0.17716894977168951,0.16347031963470321,0.27214611872146116,0.19269406392694063],"orientation":"h","base":[0,0,0,0,0],"hovertemplate":["Regularly: 20.7% <extra><\/extra>","Regularly: 17.7% <extra><\/extra>","Regularly: 16.3% <extra><\/extra>","Regularly: 27.2% <extra><\/extra>","Regularly: 19.3% <extra><\/extra>"],"marker":{"color":["#F9B492","#F9B492","#F9B492","#F9B492","#F9B492"],"line":{"color":"rgba(166,216,84,1)"}},"type":"bar","name":"Regularly","textfont":{"color":"rgba(166,216,84,1)"},"error_y":{"color":"rgba(166,216,84,1)"},"error_x":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Create README<br>files","Document dependencies","Document functions","Document manual<br>QA steps","Document pipeline<br>design"],"x":[0.22831050228310501,0.16894977168949771,0.15433789954337901,0.17168949771689498,0.09680365296803653],"orientation":"h","base":[0.20730593607305936,0.17716894977168951,0.16347031963470326,0.27214611872146122,0.19269406392694066],"hovertemplate":["Always: 22.8% <extra><\/extra>","Always: 16.9% <extra><\/extra>","Always: 15.4% <extra><\/extra>","Always: 17.2% <extra><\/extra>","Always: 9.7% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(255,217,47,1)"}},"type":"bar","name":"Always","textfont":{"color":"rgba(255,217,47,1)"},"error_y":{"color":"rgba(255,217,47,1)"},"error_x":{"color":"rgba(255,217,47,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="working-practices" class="level3">
+<h3 class="anchored" data-anchor-id="working-practices">Working practices</h3>
+<p>We asked respondents who reported writing code at work how frequently they use good working practices in the coding projects they work on.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<script>
+HTMLWidgets.addPostRenderHandler(function() {
+plotajS7k1d29I.on('plotly_legenddoubleclick', function(d, i) {return false});plotajS7k1d29I.on('plotly_legendclick', function(d, i) {return false});
+});
+</script>
+
+
+  <script>
+    function show_table(output_name) {
+      $("#show-table-" + output_name).hide();
+      $("#show-chart-" + output_name).show();
+      $("#" + output_name + "-chart").hide();
+      $("#" + output_name + "-table").show();
+      $("#show-chart-" + output_name).focus();
+    }
+
+    function show_chart(output_name) {
+      $("#show-table-" + output_name).show();
+      $("#show-chart-" + output_name).hide();
+      $("#" + output_name + "-chart").show();
+      $("#" + output_name + "-table").hide();
+      $("#show-table-" + output_name).focus();
+    }
+  </script>
+
+<a role="button" class="toggle-button" id="show-chart-working_practices" href="#working_practices" onclick="show_chart('working_practices')"> Show chart </a>
+<a role="button" class="toggle-button" id="show-table-working_practices" href="#working_practices" onclick="show_table('working_practices')"> Show table </a>
+<style>
+  #show-chart-working_practices {display: none;}
+  #working_practices-table {display: none;}
+</style>
+<div id="working_practices-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">
+<div id="plotajS7k1d29I" style="width:100%;height:800px;" class="plotly html-widget"></div>
+</div>
+<div id="working_practices-table">
+
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statement</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">I don't understand this question (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Never (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rarely (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sometimes (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Regularly (%)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Always (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Have a succession plan</td>
+<td style="text-align: right;">0.8%</td>
+<td style="text-align: right;">5.6%</td>
+<td style="text-align: right;">4.9%</td>
+<td style="text-align: right;">13.3%</td>
+<td style="text-align: right;">37%</td>
+<td style="text-align: right;">38.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Publish code in the open</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">43.8%</td>
+<td style="text-align: right;">18.8%</td>
+<td style="text-align: right;">16.8%</td>
+<td style="text-align: right;">10.3%</td>
+<td style="text-align: right;">5.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Understand project aims</td>
+<td style="text-align: right;">0.1%</td>
+<td style="text-align: right;">1.6%</td>
+<td style="text-align: right;">1%</td>
+<td style="text-align: right;">10.4%</td>
+<td style="text-align: right;">40.5%</td>
+<td style="text-align: right;">46.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Understand project roles</td>
+<td style="text-align: right;">0.7%</td>
+<td style="text-align: right;">3%</td>
+<td style="text-align: right;">4.5%</td>
+<td style="text-align: right;">16.3%</td>
+<td style="text-align: right;">39.1%</td>
+<td style="text-align: right;">36.3%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Use version control</td>
+<td style="text-align: right;">2.7%</td>
+<td style="text-align: right;">20.1%</td>
+<td style="text-align: right;">8.5%</td>
+<td style="text-align: right;">12.1%</td>
+<td style="text-align: right;">22.1%</td>
+<td style="text-align: right;">34.4%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Work to quality standards</td>
+<td style="text-align: right;">4.1%</td>
+<td style="text-align: right;">5.6%</td>
+<td style="text-align: right;">5.5%</td>
+<td style="text-align: right;">15.8%</td>
+<td style="text-align: right;">37.4%</td>
+<td style="text-align: right;">31.7%</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0; border: 0;"><sup></sup> Sample size = 1095</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+<script type="application/json" data-for="plotajS7k1d29I">{"x":{"visdat":{"4fec222972dd":["function () ","plotlyVisDat"]},"cur_data":"4fec222972dd","attrs":{"4fec222972dd":{"y":["Have a succession<br>plan","Have a succession<br>plan","Have a succession<br>plan","Have a succession<br>plan","Have a succession<br>plan","Have a succession<br>plan","Publish code in<br>the open","Publish code in<br>the open","Publish code in<br>the open","Publish code in<br>the open","Publish code in<br>the open","Publish code in<br>the open","Understand project<br>aims","Understand project<br>aims","Understand project<br>aims","Understand project<br>aims","Understand project<br>aims","Understand project<br>aims","Understand project<br>roles","Understand project<br>roles","Understand project<br>roles","Understand project<br>roles","Understand project<br>roles","Understand project<br>roles","Use version control","Use version control","Use version control","Use version control","Use version control","Use version control","Work to quality<br>standards","Work to quality<br>standards","Work to quality<br>standards","Work to quality<br>standards","Work to quality<br>standards","Work to quality<br>standards"],"x":[0.00821917808219178,0.055707762557077628,0.049315068493150684,0.13333333333333333,0.36986301369863012,0.38356164383561642,0.050228310502283102,0.43835616438356162,0.18812785388127853,0.16803652968036531,0.10319634703196347,0.052054794520547946,0.00091324200913242006,0.01643835616438356,0.010045662100456621,0.10410958904109589,0.40456621004566212,0.46392694063926943,0.0073059360730593605,0.030136986301369864,0.044748858447488583,0.16347031963470321,0.39086757990867582,0.36347031963470322,0.027397260273972601,0.20091324200913241,0.084931506849315067,0.12146118721461187,0.22100456621004566,0.34429223744292237,0.041095890410958902,0.055707762557077628,0.054794520547945202,0.15799086757990868,0.37351598173515982,0.31689497716894977],"orientation":"h","base":[-0.24657534246575341,-0.23835616438356164,-0.18264840182648401,-0.1333333333333333,0,0.36986301369863017,-0.84474885844748859,-0.79452054794520555,-0.35616438356164387,-0.16803652968036531,0,0.10319634703196345,-0.13150684931506848,-0.13059360730593605,-0.11415525114155251,-0.10410958904109588,0,0.40456621004566207,-0.24566210045662101,-0.23835616438356166,-0.20821917808219179,-0.16347031963470321,0,0.39086757990867588,-0.43470319634703192,-0.40730593607305932,-0.20639269406392691,-0.12146118721461185,0,0.22100456621004572,-0.30958904109589042,-0.26849315068493151,-0.21278538812785389,-0.15799086757990868,0,0.37351598173515982],"hovertemplate":["I don't understand this question: 0.8% <extra><\/extra>","Never: 5.6% <extra><\/extra>","Rarely: 4.9% <extra><\/extra>","Sometimes: 13.3% <extra><\/extra>","Regularly: 37% <extra><\/extra>","Always: 38.4% <extra><\/extra>","I don't understand this question: 5% <extra><\/extra>","Never: 43.8% <extra><\/extra>","Rarely: 18.8% <extra><\/extra>","Sometimes: 16.8% <extra><\/extra>","Regularly: 10.3% <extra><\/extra>","Always: 5.2% <extra><\/extra>","I don't understand this question: 0.1% <extra><\/extra>","Never: 1.6% <extra><\/extra>","Rarely: 1% <extra><\/extra>","Sometimes: 10.4% <extra><\/extra>","Regularly: 40.5% <extra><\/extra>","Always: 46.4% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","Never: 3% <extra><\/extra>","Rarely: 4.5% <extra><\/extra>","Sometimes: 16.3% <extra><\/extra>","Regularly: 39.1% <extra><\/extra>","Always: 36.3% <extra><\/extra>","I don't understand this question: 2.7% <extra><\/extra>","Never: 20.1% <extra><\/extra>","Rarely: 8.5% <extra><\/extra>","Sometimes: 12.1% <extra><\/extra>","Regularly: 22.1% <extra><\/extra>","Always: 34.4% <extra><\/extra>","I don't understand this question: 4.1% <extra><\/extra>","Never: 5.6% <extra><\/extra>","Rarely: 5.5% <extra><\/extra>","Sometimes: 15.8% <extra><\/extra>","Regularly: 37.4% <extra><\/extra>","Always: 31.7% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D","#396285","#396285","#396285","#396285","#396285","#396285","#61819D","#61819D","#61819D","#61819D","#61819D","#61819D","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"]},"color":["I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always","I don't understand this question","Never","Rarely","Sometimes","Regularly","Always"],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"width":"100%","height":800,"margin":{"b":100,"l":60,"t":28,"r":10},"barmode":"stack","clickmode":"none","annotations":[{"x":1,"y":0,"text":"Sample size = 1095","showarrow":false,"xanchor":"right","yanchor":"auto","xshift":0,"yshift":-100,"xref":"paper","yref":"paper","font":{"size":14}},{"text":"","y":1,"x":"min","showarrow":false,"yshift":28,"xref":"paper","yref":"paper","font":{"size":16.800000000000001}}],"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"range":[-1,1],"ticktext":["100%","50%","0%","50%","100%"],"tickvals":[-1,-0.5,0,0.5,1]},"yaxis":{"domain":[0,1],"automargin":true,"title":"","tickfont":{"size":14},"titlefont":{"size":16.800000000000001},"type":"category","categoryorder":"array","categoryarray":["Work to quality<br>standards","Use version control","Understand project<br>roles","Understand project<br>aims","Publish code in<br>the open","Have a succession<br>plan"]},"hoverlabel":{"bgcolor":"white","font":{"size":14}},"legend":{"xanchor":"left","yanchor":"bottom","orientation":"h","y":1,"traceorder":"normal","font":{"size":14}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false,"displayModeBar":false},"data":[{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.00821917808219178,0.050228310502283102,0.00091324200913242006,0.0073059360730593605,0.027397260273972601,0.041095890410958902],"orientation":"h","base":[-0.24657534246575341,-0.84474885844748859,-0.13150684931506848,-0.24566210045662101,-0.43470319634703192,-0.30958904109589042],"hovertemplate":["I don't understand this question: 0.8% <extra><\/extra>","I don't understand this question: 5% <extra><\/extra>","I don't understand this question: 0.1% <extra><\/extra>","I don't understand this question: 0.7% <extra><\/extra>","I don't understand this question: 2.7% <extra><\/extra>","I don't understand this question: 4.1% <extra><\/extra>"],"marker":{"color":["#12436D","#12436D","#12436D","#12436D","#12436D","#12436D"],"line":{"color":"rgba(102,194,165,1)"}},"type":"bar","name":"I don't understand this question","textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.055707762557077628,0.43835616438356162,0.01643835616438356,0.030136986301369864,0.20091324200913241,0.055707762557077628],"orientation":"h","base":[-0.23835616438356164,-0.79452054794520555,-0.13059360730593605,-0.23835616438356166,-0.40730593607305932,-0.26849315068493151],"hovertemplate":["Never: 5.6% <extra><\/extra>","Never: 43.8% <extra><\/extra>","Never: 1.6% <extra><\/extra>","Never: 3% <extra><\/extra>","Never: 20.1% <extra><\/extra>","Never: 5.6% <extra><\/extra>"],"marker":{"color":["#396285","#396285","#396285","#396285","#396285","#396285"],"line":{"color":"rgba(252,141,98,1)"}},"type":"bar","name":"Never","textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.049315068493150684,0.18812785388127853,0.010045662100456621,0.044748858447488583,0.084931506849315067,0.054794520547945202],"orientation":"h","base":[-0.18264840182648401,-0.35616438356164387,-0.11415525114155251,-0.20821917808219179,-0.20639269406392691,-0.21278538812785389],"hovertemplate":["Rarely: 4.9% <extra><\/extra>","Rarely: 18.8% <extra><\/extra>","Rarely: 1% <extra><\/extra>","Rarely: 4.5% <extra><\/extra>","Rarely: 8.5% <extra><\/extra>","Rarely: 5.5% <extra><\/extra>"],"marker":{"color":["#61819D","#61819D","#61819D","#61819D","#61819D","#61819D"],"line":{"color":"rgba(141,160,203,1)"}},"type":"bar","name":"Rarely","textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.13333333333333333,0.16803652968036531,0.10410958904109589,0.16347031963470321,0.12146118721461187,0.15799086757990868],"orientation":"h","base":[-0.1333333333333333,-0.16803652968036531,-0.10410958904109588,-0.16347031963470321,-0.12146118721461185,-0.15799086757990868],"hovertemplate":["Sometimes: 13.3% <extra><\/extra>","Sometimes: 16.8% <extra><\/extra>","Sometimes: 10.4% <extra><\/extra>","Sometimes: 16.3% <extra><\/extra>","Sometimes: 12.1% <extra><\/extra>","Sometimes: 15.8% <extra><\/extra>"],"marker":{"color":["#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6","#88A1B6"],"line":{"color":"rgba(231,138,195,1)"}},"type":"bar","name":"Sometimes","textfont":{"color":"rgba(231,138,195,1)"},"error_y":{"color":"rgba(231,138,195,1)"},"error_x":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.36986301369863012,0.10319634703196347,0.40456621004566212,0.39086757990867582,0.22100456621004566,0.37351598173515982],"orientation":"h","base":[0,0,0,0,0,0],"hovertemplate":["Regularly: 37% <extra><\/extra>","Regularly: 10.3% <extra><\/extra>","Regularly: 40.5% <extra><\/extra>","Regularly: 39.1% <extra><\/extra>","Regularly: 22.1% <extra><\/extra>","Regularly: 37.4% <extra><\/extra>"],"marker":{"color":["#F9B492","#F9B492","#F9B492","#F9B492","#F9B492","#F9B492"],"line":{"color":"rgba(166,216,84,1)"}},"type":"bar","name":"Regularly","textfont":{"color":"rgba(166,216,84,1)"},"error_y":{"color":"rgba(166,216,84,1)"},"error_x":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":["Have a succession<br>plan","Publish code in<br>the open","Understand project<br>aims","Understand project<br>roles","Use version control","Work to quality<br>standards"],"x":[0.38356164383561642,0.052054794520547946,0.46392694063926943,0.36347031963470322,0.34429223744292237,0.31689497716894977],"orientation":"h","base":[0.36986301369863017,0.10319634703196345,0.40456621004566207,0.39086757990867588,0.22100456621004572,0.37351598173515982],"hovertemplate":["Always: 38.4% <extra><\/extra>","Always: 5.2% <extra><\/extra>","Always: 46.4% <extra><\/extra>","Always: 36.3% <extra><\/extra>","Always: 34.4% <extra><\/extra>","Always: 31.7% <extra><\/extra>"],"marker":{"color":["#F46A25","#F46A25","#F46A25","#F46A25","#F46A25","#F46A25"],"line":{"color":"rgba(255,217,47,1)"}},"type":"bar","name":"Always","textfont":{"color":"rgba(255,217,47,1)"},"error_y":{"color":"rgba(255,217,47,1)"},"error_x":{"color":"rgba(255,217,47,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
