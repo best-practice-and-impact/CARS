@@ -135,6 +135,7 @@ code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) |>
   CARS::get_ci(3, 4) |> 
   dplyr::relocate(n, .after = Var2)
 
+
 plot <- CARS::plot_stacked(code_freqs_by_year[c(1:4, 6)], 
                            orientation = "v", 
                            type = "bar", 
@@ -241,7 +242,11 @@ all_wave_data$cs_grade <- factor(all_wave_data$cs_grade, levels = c(
 grade_freqs <- table(all_wave_data$year, all_wave_data$cs_grade) %>% 
   data.frame() %>%
   dplyr::group_by(Var1) %>%
+<<<<<<< HEAD
   dplyr::mutate(total = sum(Freq), n = Freq / sum(Freq)) |> 
+=======
+  dplyr::mutate(sample = sum(Freq), n = Freq / sum(Freq)) |> 
+>>>>>>> main
   data.frame() |> 
   dplyr::relocate(n, .after = Var2)
 
