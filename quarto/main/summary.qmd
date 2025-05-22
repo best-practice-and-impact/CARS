@@ -18,11 +18,6 @@ all_wave_data <- CARS::get_all_waves()
 tables <- CARS::summarise_all(data, config, all_tables = TRUE)
 
 ```
-:::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
-We advise linking directly to this document when distributing to ensure the most up to date information.
-:::
-
 
 ## How to use this research
 
@@ -122,7 +117,7 @@ table <- CARS::df_to_table(freqs[c(1:3, 6, 7)],
                            sample = FALSE)
 
 
-plot <- CARS::plot_stacked(freqs[c(1:5)], 
+plot <- CARS::plot_stacked(freqs[c(1:4,6)], 
                            type = "line", 
                            orientation = "v", 
                            font_size = 14,
@@ -247,7 +242,8 @@ This question was only asked of respondents with coding experience outside of th
 
 plot <- CARS::plot_freqs(data = tables,
                    config = config,
-                   question = "ability_change", 
+                   question = "ability_change",
+                   xlab = "How has your coding ability changed during your current role?",
                    font_size = 14,
                    orientation = "h")
 

@@ -15,11 +15,6 @@ all_wave_data <- CARS::get_all_waves()
 
 ```
 
-:::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
-We advise linking directly to this document when distributing to ensure the most up to date information.
-:::
-
 
 # How we collect data
 
@@ -124,10 +119,11 @@ year_dist %>%
 
 ## Coding frequency
 
-Every year, we ask respondents how often they code to achieve work objectives. While our communication strategy has changed over time, particularly to encourage more non-coders to respond, the findings remain consistent, with a gradual increase in the number of coders over time. Although we seek responses from all analysts the data probably over-represents people with current or prior coding experience.
+Every year, we ask respondents how often they code to achieve work objectives. In 2024, this question was only asked of respondents with current or prior coding experience. Although we seek responses from all analysts the data probably over-represents people with coding experience. In 2024, `r round(sum(data$code_freq == "Never" | is.na(data$code_freq)) / nrow(data) * 100, 1)`% of respondents never used code at work or had no coding experience.
 
 ```{r}
 all_wave_data$code_freq <- gsub("All the time", "Always", all_wave_data$code_freq)
+all_wave_data$code_freq[is.na(all_wave_data$code_freq)] <- "Never"
 
 all_wave_data$code_freq <- factor(all_wave_data$code_freq, config$code_freq$levels)
 
@@ -139,7 +135,7 @@ code_freqs_by_year <- table(all_wave_data$year, all_wave_data$code_freq) |>
   CARS::get_ci(3, 4) |> 
   dplyr::relocate(n, .after = Var2)
 
-plot <- CARS::plot_stacked(code_freqs_by_year[c(1:5)], 
+plot <- CARS::plot_stacked(code_freqs_by_year[c(1:4, 6)], 
                            orientation = "v", 
                            type = "bar", 
                            font_size = 14, 
@@ -158,7 +154,7 @@ CARS::wrap_outputs("code-freq", plot, table)
 
 ## Grade
 
-Across all years, over 80% of Civil Service respondents reported that they are at H, S or Grade 7 grades (or equivalent). While this will be representative of the grade distribution of analysts in some government organisations, it may not be the case for all organisations.
+Across all years, over 80% of Civil Service respondents reported that they are at H, S or Grade 7 grades (or equivalent). Note, this excludes respondents where an equivalent grade could not be determined. While this will be representative of the grade distribution of analysts in some government organisations, it may not be the case for all organisations.
 
 ```{r}
 all_wave_data$cs_grade <- dplyr::coalesce(all_wave_data$cs_grade, all_wave_data$CS_grade) 
@@ -245,7 +241,7 @@ all_wave_data$cs_grade <- factor(all_wave_data$cs_grade, levels = c(
 grade_freqs <- table(all_wave_data$year, all_wave_data$cs_grade) %>% 
   data.frame() %>%
   dplyr::group_by(Var1) %>%
-  dplyr::mutate(sample = sum(Freq), n = Freq / sum(Freq)) |> 
+  dplyr::mutate(total = sum(Freq), n = Freq / sum(Freq)) |> 
   data.frame() |> 
   dplyr::relocate(n, .after = Var2)
 
@@ -264,9 +260,9 @@ CARS::wrap_outputs("grades-by-year", plot, table)
 
 ## Profession
 
-Below is a breakdown of the proportion of respondents in different Civil Service professions. These cover the [Analysis Function professions](https://analysisfunction.civilservice.gov.uk/about-us/frequently-asked-questions/) and do not apply outside of the civil service. The exception to these are data scientists and data engineers who do not have an official government profession. They are included separately here to avoid skewing the data for other professions. Note that respondents can be members of more than one analytical profession. Profession data is difficult to compare across years as these questions have changed in line with changes to the Analysis Function.
+Below is a breakdown of the proportion of respondents in different Civil Service professions. These cover the [Analysis Function professions](https://analysisfunction.civilservice.gov.uk/about-us/frequently-asked-questions/) and do not apply outside of the Civil Service. The exception to these are data scientists and data engineers who do not have an official government profession. Note that respondents can be members of more than one analytical profession. Profession data is difficult to compare across years as these questions have changed in line with changes to the Analysis Function.
 
-The CARS sample has high representation from statisticians compared with other professions. This again may be representative of some organisations but not all.
+The CARS sample has high representation from statisticians compared with other professions. This again may be representative of some organisations but not all, and is not representative of the [Civil Service](https://www.gov.uk/government/statistics/civil-service-statistics-2024/statistical-bulletin-civil-service-statistics-2024#profession) as a whole.
 
 ```{r}
 prof_cols <- colnames(data)[grepl("prof_", colnames(data))]
