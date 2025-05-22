@@ -1,47 +1,46 @@
 #TOC > ul > li > a.active {
   background-color: white;
   border-bottom: none;
-  border-left: 1px solid #ff6900 !important;
-  color: black !important;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
 }
 
 #TOC > ul > li > a.active {
   background-color: white;
   border-bottom: none;
-  border-left: 1px solid #ff6900 !important;
-  color: black !important;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
+  font-weight: bold;
 }
+
 
 #TOC > ul > li > ul > li > a.active {
   background-color: white;
   border-bottom: none;
-  border-left: 1px solid #ff6900 !important;
-  color: black !important;
-}
-
-#TOC > ul > li > ul > li > a.active {
-  background-color: white;
-  border-bottom: none;
-  border-left: 1px solid #ff6900 !important;
-  color: black !important;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
+  font-weight: bold;
 }
 
 
 #TOC > ul > li > a:hover {
-  background-color: #ffdd00;
-  border-left: 1px solid black;
-  color: black !important;
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
 }
 
 #TOC > ul > li > ul > li > a:hover {
-  background-color: #ffdd00;
-  border-left: 1px solid black;
-  color: black !important;
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
 }
 
+.sidebar nav[role=doc-toc]>h2 {
+  font-weight: bold;
+}
 
 .navbar {
-  background-color: #004556;
+  background-color: #12436D;
   padding-bottom: 4px;
 }
 
@@ -54,21 +53,21 @@
 }
 
 .nav-link.active {
-  border-bottom: 4px solid #ff6900;
-  background-color: #004556;
+  border-bottom: 4px solid #F46A25;
+  background-color: #12436D;
 }
 
 .navbar-collapse > ul > li > a {
-  border-bottom: 4px solid #004556;
+  border-bottom: 4px solid #12436D;
 }
 
 .navbar-collapse > ul > li > a:hover {
-  border-bottom: 4px solid #ff6900;
+  border-bottom: 4px solid #F46A25;
 }
 
 .navbar-collapse > ul > li > a:focus {
-  background-color: #ffdd00;
-  border-bottom: 4px solid black;
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
   color: black;
 }
 
@@ -78,13 +77,13 @@
 }
 
 .navbar-toggle:hover {
-  background-color: black;
-  border-color: #ff6900;
+  background-color: #F46A25;
+  border-color: #F46A25;
 }
 
 .navbar-toggle:focus {
-  background-color: #ffdd00;
-  border: 2px solid black;
+  background-color: #F46A25;
+  border: 2px solid #F46A25;
   color: black;
 }
 
@@ -93,13 +92,13 @@
 }
 
 .toggle-button:hover {
-  background-color: #ffdd00;
-  border-bottom: 4px solid black;
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
   color: black;
 }
 
 p > a:hover{
-  background-color: #ffdd00;
-  border-bottom: 4px solid black;
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
   color: black;
 }
