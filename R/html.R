@@ -27,20 +27,12 @@ wrap_outputs <- function(name, chart, table) {
     stop("Unexpected input - chart is not an html widget")
   }
 
-  if (typeof(table) != "character" | length(table) != 1) {
-    stop("Unexpected input - table is not a character object")
-  }
-
-
-  # Remove knitr tags from table html if needed
-  table <- htmltools::HTML(gsub("```\\{=html\\}|```\n", "", table))
-
   js <- htmltools::HTML(setup_table_toggle())
 
   buttons <- htmltools::HTML(insert_table_toggle(name))
 
   chart_div <- htmltools::HTML(paste0('<div id="', name, '-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">'))
-  table_div <- htmltools::HTML(paste0('<div id="', name, '-table">'))
+  table_div <- htmltools::HTML(paste0('<div id="', name, '-table" role="img" aria-label="Table. Click the show chart button to present the data as a chart instead.">'))
   close_div <- htmltools::HTML("</div>")
 
   widget <- htmlwidgets::prependContent(chart, js, buttons, chart_div)
@@ -131,7 +123,6 @@ insert_table_toggle <- function(output_name) {
 
   style <- glue::glue('<style>
   #{chart_button_name} {open}display: none;{close}
-  #{table_name} {open}display: none;{close}
 </style>')
 
   html <- glue::glue('{toggle_chart_button}\n{toggle_table_button}\n{style}')

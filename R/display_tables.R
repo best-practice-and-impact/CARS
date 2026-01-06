@@ -13,16 +13,19 @@
 
 df_to_table <- function(data, config, question, crosstab = FALSE, column_headers, sample = TRUE) {
 
+
+
   if (!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
       data <- data[[cols]]
   }
 
-  table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
+  table_data <- data
 
   table_data["n"] <- round(table_data["n"] * 100, 1) |> lapply(paste0, "%")
 
   if (crosstab) {
+    table_data <- dplyr::select(table_data, !dplyr::any_of(c("count", "sample")))
     table_data <- df_to_crosstab(table_data)
 
     alignment <- c("l", rep("r", ncol(table_data)-1))
@@ -38,17 +41,21 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
   if (!missing(column_headers)) {
     colnames(table_data) <- column_headers
   } else {
-    colnames(table_data) <- c(full_question, "Percentage")
+    colnames(table_data) <- c(full_question, "Percentage", "Count", "Total")
   }
 
 
-  html <- knitr::kable(table_data, align = alignment, format = "html") |> kableExtra::kable_styling()
+  table <- DT::datatable(table_data,
+                         extensions = 'Buttons',
+                         rownames = FALSE,
+                         options = list(dom = 'tB',
+                                        buttons = c('copy', 'csv', 'excel')
+                                        )
+  )
 
-  if (sample == TRUE){
-    html <- kableExtra::add_footnote(html, paste0("Sample size = ", data$sample[1]), notation = "none")
-  }
 
-  return(html)
+
+  return(table)
 }
 
 #' @title Convert data frame to crosstab
