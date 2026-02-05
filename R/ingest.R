@@ -197,7 +197,6 @@ get_all_waves <- function() {
     w6_data <- CARS::get_tidy_data_file ("2024_data.csv")
     w5_data <- CARS::get_tidy_data_file ("2023_data.csv")
     w4_data <- CARS::get_tidy_data_file ("2022_data.csv")
-    w3_data <- CARS::get_tidy_data_file ("2021_data.csv")
 
     data <- CARS::clean_data(data, config)
     data <- CARS::derive_language_status(data)
@@ -210,6 +209,7 @@ get_all_waves <- function() {
   w6_data$year <- 2024
 
   w5_data <- w5_data |>
+    CARS::w5_rename_cols() |>
     CARS::w5_apply_skip_logic() |>
     CARS::w5_clean_data() |>
     CARS::w5_derive_vars()
