@@ -193,15 +193,20 @@ tidy_colnames <- function(raw_data) {
 
 get_all_waves <- function() {
 
-    data <- CARS::get_tidy_data_file ("2024_data.csv")
+    data <- CARS::get_tidy_data_file ("2026_data.csv")
+    w6_data <- CARS::get_tidy_data_file ("2024_data.csv")
     w5_data <- CARS::get_tidy_data_file ("2023_data.csv")
     w4_data <- CARS::get_tidy_data_file ("2022_data.csv")
-    w3_data <- CARS::get_tidy_data_file ("2021_data.csv")
 
     data <- CARS::clean_data(data, config)
     data <- CARS::derive_language_status(data)
-    data$year <- 2024
+    data$year <- 2026
   data <- dplyr::rename(data, heard_of_RAP = "heard_of_rap")
+
+  w6_data <- w6_data |>
+    CARS::w6_clean_data() |>
+    CARS::w6_derive_vars()
+  w6_data$year <- 2024
 
   w5_data <- w5_data |>
     CARS::w5_rename_cols() |>
@@ -216,13 +221,8 @@ get_all_waves <- function() {
     CARS::w4_clean_departments()
   w4_data$year <- 2022
 
-  w3_data <- w3_data |>
-    CARS::w3_rename_cols() |>
-    CARS::w3_enforce_streaming()
-  w3_data$year <- 2021
-
-
-  data <- dplyr::bind_rows(data, w5_data, w4_data, w3_data)
+  data <- dplyr::bind_rows(data, w6_data, w5_data, w4_data)
 
   return(data)
 }
+
