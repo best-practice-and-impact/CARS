@@ -2,11 +2,8 @@ tracking_link:
   "Default Web Link": "Default link"
   "Data Science Slack": "Slack"
   "RAP Champions": "RAP Champions"
-  "AF Newsletter": "Profession newsletters/mailing lists"
   "Profession Newsletter": "Profession newsletters/mailing lists"
-  "RAS Newsletter ONS": "ONS Newsletter"
-  "Quality Champions ONS": "Quality Champions"
-  "ONS RAP Network": "ONS RAP Network"
+  "Internal ONS": "ONS Networks"
 
 workplace:
   question: "Where do you primarily work?"
