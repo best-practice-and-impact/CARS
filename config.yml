@@ -2,11 +2,8 @@ tracking_link:
   "Default Web Link": "Default link"
   "Data Science Slack": "Slack"
   "RAP Champions": "RAP Champions"
-  "AF Newsletter": "Profession newsletters/mailing lists"
   "Profession Newsletter": "Profession newsletters/mailing lists"
-  "RAS Newsletter ONS": "ONS Newsletter"
-  "Quality Champions ONS": "Quality Champions"
-  "ONS RAP Network": "ONS RAP Network"
+  "Internal ONS": "ONS Networks"
 
 workplace:
   question: "Where do you primarily work?"
@@ -158,20 +155,19 @@ ons_directorate:
   levels: ["Business Surveys",
             "Communications & Digital Publishing",
             "Data Growth and Operations",
-            "Data Science Campus",
-            "Digital Services and Technology",
-            "Economic Statistics Change",
+            "Digital Services",
             "Economic Statistics Production and Analysis",
             "Finance, Planning & Performance",
-            "Health and International",
-            "Integrated Data Programme and Service",
+            "Integrated Data Programme",
             "Macroeconomic and Environment Statistics and Analysis",
             "Methodology and Quality",
+            "Office of the National Statistician",
             "People & Business Services",
-            "Population Transformation",
             "Population Statistics",
             "Public Policy Analysis",
+            "Security and information Management",
             "Social Surveys",
+            "Strategy, Planning, Innovation, Delivery, Assurance and Support",
             "Other"]
 
 pay_band:
@@ -209,39 +205,12 @@ njc_grade:
           "Grade 11",
           "Other"]
 
-nhs_country:
-  question: "Which UK country do you primarily work in?"
-  levels: ["England",
-          "Scotland",
-          "Wales",
-          "Northern Ireland"]
-
-nhs_england:
-  question: "In England, which type of NHS organisation are you primarily based in?"
-  levels: ["NHS England",
-          "NHS Trust",
-          "Other"]
-
-nhs_scotland:
-  question: "In Scotland, which type of NHS organisation are you primarily based in?"
-  levels: ["NHS Scotland",
-          "Public Health Scotland",
-          "Regional Health Board",
-          "Special Health Board",
-          "Other"]
-
-nhs_wales:
-  question: "In Wales, which type of NHS organisation are you primarily based in?"
-  levels: ["Public Health Wales",
-          "Local Health Board",
-          "NHS Trust",
-          "Other"]
-
-nhs_ni:
-  question: "In Northern Ireland, which type of NHS organisation are you primarily based in?"
-  levels: ["Public Health Agency",
-          "Health and Social Care Trust",
-          "Other"]
+time_in_role:
+  question: "How long have you been in your current role?"
+  levels: ["Less than 1 year",
+            "Between 1 and 3 years",
+            "Between 3 and 5 years",
+            "Over 5 years"]
 
 coding_exp:
   question: "Do you have any coding experience?"
@@ -249,15 +218,43 @@ coding_exp:
           "No"]
 
 team:
-  question: "Do you work in a team with people who write code to complete their work?"
+  question: "Do you regularly work with people who write code to complete their work?"
   levels: ["Yes",
           "No"]
 
-management:
-  question: "Do you line manage anyone who writes code to complete their work?"
+manage_project:
+  question: "Would you feel confident managing a coding project?"
   levels: ["Yes",
-          "No - I manage people who do not write code",
-          "No - I don't line manage anyone"]
+          "No",
+          "Not sure"]
+
+coding_learn_pref:
+  question: "Would you like to use coding in your current role?"
+  levels: ["Yes",
+          "No",
+          "Not sure / not applicable"]
+
+coding_learn_barriers:
+  question: "What are the barriers, if any, to you learning to code in your current role?"
+  levels: ["Yes",
+           "No"]
+  cols:
+    learn_avail_resource: "Availability of resources"
+    learn_suit_resources: "Suitability of resources"
+    learn_opportunity: "Lack of opportunity"
+    learn_tools: "Availability of tools"
+    learn_manager_support: "Lack of management support"
+    learn_peer_support: "Lack of peer support"
+    learn_no_barrier: "No barriers/not applicable"
+    learn_other_barrier: "Other"
+
+coding_years:
+  question: "How many years of professional coding experience do you have?"
+  levels: ["None",
+          "Less than 1 year",
+          "Between 1 and 3 years",
+          "Between 3 and 5 years",
+          "Over 5 years"]
 
 code_freq:
   question: "In your current role, how often do you write code to complete your work objectives?"
@@ -267,31 +264,11 @@ code_freq:
           "Regularly",
           "Always"]
 
-code_leisure:
-  question: "How often do you write code outside of work?"
-  levels: ["Never",
-          "Rarely",
-          "Sometimes",
-          "Regularly",
-          "Always"]
-
-first_learned:
-  question: "Where did you first learn to code?"
-  levels: ["Self-taught",
-          "Primary/secondary education",
-          "Higher Education",
-          "Current role",
-          "Previous public sector employment",
-          "Previous private sector employment",
-          "Other"]
-
-coding_years:
-  question: "How many years of experience do you have in a coding role?"
-  levels: ["None",
-          "Less than 1 year",
-          "1 - 3 years",
-          "3 - 5 years",
-          "Over 5 years"]
+coding_freq_pref:
+  question: "Would you prefer to use more coding in your role?"
+  levels: ["Yes",
+          "No",
+          "Not sure / not applicable"]
 
 ability_change:
   question: "How has your coding ability changed during your current role?"
@@ -301,43 +278,113 @@ ability_change:
           "It has become slightly worse",
           "It has become significantly worse"]
 
-coding_tools_access:
-  question: "Is this tool available to use for your work?"
+coding_improve_barriers:
+  question: "What are the barriers, if any, to improving your coding skills in your current role"
   levels: ["Yes",
-          "No",
-          "Don't know"]
+           "No"]
   cols:
-    access_python: "Python"
-    access_R: "R"
-    access_matlab: "Matlab"
-    access_SAS: "SAS"
-    access_SPSS: "SPSS"
-    access_SQL: "SQL"
-    access_stata: "Stata"
-    access_VBA: "VBA"
-    access_git: "Git"
-    access_other: "Other"
+    improve_avail_resources: "Availability of resources"
+    improve_suit_resources: "Suitability of resources"
+    improve_opportunity: "Lack of opportunity"
+    improve_tools: "Availability of tools"
+    improve_manager_support: "Lack of management support"
+    improve_peer_support: "Lack of peer support"
+    improve_no_barrier: "No barriers/not applicable"
+    improve_other_barrier: "Other"
 
 coding_tools_knowledge:
-  question: "Do you know how to use this tool for your work?"
+  question: "Which of these tools do you know how to use"
   levels: ["Yes",
-            "No",
-            "Not required for my work"]
+            "No"]
   cols:
     knowledge_python: "Python"
     knowledge_R: "R"
+    knowledge_dax: "DAX"
     knowledge_matlab: "Matlab"
     knowledge_SAS: "SAS"
     knowledge_SPSS: "SPSS"
     knowledge_SQL: "SQL"
     knowledge_stata: "Stata"
+    knowledge_spark: "Spark"
     knowledge_VBA: "VBA"
-    knowledge_git: "Git"
     knowledge_other: "Other"
+
+coding_tools_use:
+  question: "Which of these tools do you use in your current role"
+  levels: ["Yes",
+            "No"]
+  cols:
+    use_python: "Python"
+    use_R: "R"
+    use_dax: "DAX"
+    use_matlab: "Matlab"
+    use_SAS: "SAS"
+    use_SPSS: "SPSS"
+    use_SQL: "SQL"
+    use_stata: "Stata"
+    use_spark: "Spark"
+    use_VBA: "VBA"
+    use_other: "Other"
+
+git:
+  question: "Do you know how to use Git"
+  levels: ["Yes, I use it in my current role",
+          "Yes, but I don't use it in my current role",
+          "No"]
+
+cloud:
+ question: "Do you use any cloud data platforms or services in your current role?"
+ levels: ["Yes",
+          "No"]
+ cols:
+  google: "Google (e.g. GCP)"
+  amazon: "Amazon (e.g. AWS)"
+  microsoft: "Microsoft (e.g. Azure)"
+  cloudera: "Cloudera"
+  databricks: "Databricks"
+  cloud_none: "None"
+  cloud_other: "Other"
+
+ai:
+  question: "Do you use any AI assistants when coding at work?"
+  levels: ["Yes",
+          "No"]
+
+ai_tools:
+  question: "Which of the following AI assistants do you use when coding in your current role?"
+  levels: ["Yes",
+          "No"]
+  cols:
+    ai_gpt: "ChatGPT"
+    ai_github: "GitHub Copilot"
+    ai_google: "Google Gemini"
+    ai_microsoft: "Microsoft Copilot"
+    ai_claude: "Claude"
+    ai_codex: "OpenAI Codex"
+    ai_other: "Other"
+
+ai_use:
+  question: "When coding at work, how often do you use AI assistants for the following tasks"
+  levels: ["Never",
+          "Rarely",
+          "Sometimes",
+          "Regularly",
+          "Always"]
+  cols:
+    ai_use_write: "Writing code"
+    ai_use_debug: "Debugging code"
+    ai_use_doc: "Documenting code"
+    ai_use_question: "Getting answers to a coding question"
+    ai_use_testing: "Testing code"
+    ai_use_learn: "Learning about new concepts"
+    ai_use_other: "Other"
+
+ai_impact:
+  question: "What impact, if any, has AI had on your coding at work?"
 
 coding_practices:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["I don't understand this question",
+  levels: ["Not sure / not applicable",
           "Never",
           "Rarely",
           "Sometimes",
@@ -355,7 +402,7 @@ coding_practices:
 
 working_practices:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["I don't understand this question",
+  levels: ["Not sure / not applicable",
           "Never",
           "Rarely",
           "Sometimes",
@@ -371,7 +418,7 @@ working_practices:
 
 doc:
   question: "When coding in your current role, how often do you do the following?"
-  levels: ["I don't understand this question",
+  levels: ["Not sure / not applicable",
           "Never",
           "Rarely",
           "Sometimes",
@@ -384,64 +431,51 @@ doc:
     doc_design: "Document pipeline design"
     doc_qa: "Document manual QA steps"
 
-ai:
-  question: "Do you use any AI tools when coding at work?"
-  levels: ["Yes",
-          "No"]
-
-ai_tools:
-  question: "Which of the following AI tools do you use when coding at work?"
-  levels: ["Yes",
-          "No"]
-  cols:
-    ai_gpt: "ChatGPT"
-    ai_github: "GitHub Copilot"
-    ai_google: "Google Gemini"
-    ai_microsoft: "Microsoft Copilot"
-    ai_vscode: "Visual Studio Intellicode"
-    ai_other: "Other"
-
-ai_use:
-  question: "What do you use AI tools for when coding at work?"
-  levels: ["Yes",
-          "No"]
-  cols:
-    ai_use_write: "Writing code"
-    ai_use_debug: "Debugging code"
-    ai_use_efficiency: "Improving efficiency of code"
-    ai_use_convert: "Converting code to a new language"
-    ai_use_doc: "Documenting code"
-    ai_use_question: "Getting answers to a coding question"
-    ai_use_testing: "Testing code"
-    ai_use_data: "Generating synthetic data"
-    ai_use_other: "Other"
-
-ai_trust:
-  question: "Do you trust the outputs from AI tools when coding at work?"
-  levels: ["Strongly trust",
-          "Somewhat trust",
-          "Neutral/not sure",
-          "Somewhat distrust",
-          "Strongly distrust"]
-
-heard_of_rap:
-  question: "Have you heard anything about reproducible analytical pipelines (RAPs)?"
-  levels: ["Yes",
-          "No"]
-
-rap_opinions:
-  question: "For each of the following please answer to what degree you agree with the statement."
+rap_implementing:
+  question: "To what extent to you agree with the following statement: 'I am currently implementing RAP in my work' "
   levels: ["Strongly Disagree",
           "Disagree",
           "Neutral",
           "Agree",
           "Strongly Agree"]
+
+rap_barriers:
+  question: "What, if any, are the main barriers to you implementing RAP in your current role?"
+  levels: ["Yes",
+           "No"]
   cols:
-    rap_important: "I think it is important to implement RAP in my work"
-    rap_resources: "I have the resources I need to help me implement RAP in my work"
-    rap_implementing: "I am currently implementing RAP in my work"
-    dept_values_rap: "My department values RAP"
+    rap_tools: "Availability of tools"
+    rap_management: "Lack of management support"
+    rap_skills: "Current skills"
+    rap_guidance: "Lack of guidance"
+    rap_time: "Not enough time"
+    rap_peer_support: "Lack of peer support"
+    rap_unsuited: "Work not suited to RAP"
+    rap_none: "No barriers"
     rap_other: "Other"
+
+standards:
+  question: "Do you work to any analysis or coding quality standards?"
+  levels: ["Yes, internal to my organisation",
+           "Yes, Civil Service or other external standards",
+           "Yes. both internal external and external standards",
+           "No, I am not aware of any",
+           "Not sure"]
+
+duck_book:
+  question: "Are you aware of the 'Duck Book' (Quality Assurance of Code for Analysis and Research?)"
+  levels: ["Yes, I use it",
+           "Yes, but I don't use it",
+           "No"]
+
+packages:
+  question: "Do you or your team use any cross-government or department-specific analysis packages in your work?"
+  levels: ["Yes",
+          "No",
+          "Not sure or not applicable"]
+
+packages_list:
+  question: "If you know of any useful public sector analysis packages, please add a link here"
 
 qs_aware:
   question: "The ONS Quality Standard for Analysis gives the minimal standard of quality expected for all analysis in ONS. How aware, if at all, are you of the Quality Standard?"
@@ -466,7 +500,7 @@ comments:
   question: "Do you have any further comments on your experiences with coding in government analysis and research?"
 
 future_surveys:
-  question: "What would you like to see in future surveys?"
+  question: "Is there anything you would like to see in future surveys?"
 
 
 rap_components:
