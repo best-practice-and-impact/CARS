@@ -21,7 +21,7 @@ derive_vars <- function(data) {
 
 #' @title Derive language status
 #'
-#' @description Derive the status of each programmming language as "access" (access only), "knowledge" (knowledge only), "both" or "neither".
+#' @description Derive the status of each programmming language as "use" (use only), "knowledge" (knowledge only), "both" or "neither".
 #'
 #' @param data tidied CARS wave 3 data (data.frame).
 #'
@@ -30,21 +30,21 @@ derive_vars <- function(data) {
 
 derive_language_status <- function(data) {
 
-  lang_list <- colnames(data)[grepl("access_", colnames(data))]
+  lang_list <- colnames(data)[grepl("use_", colnames(data))]
 
   lang_list <- lang_list[!grepl("other", lang_list)]
 
-  lang_list <- gsub("access_", "", lang_list)
+  lang_list <- gsub("use_", "", lang_list)
 
   new_vars <- sapply(lang_list, function(lang) {
-    access_col <- data[[paste0("access_", lang)]]
+    use_col <- data[[paste0("use_", lang)]]
 
     knowledge_col <- data[[paste0("knowledge_", lang)]]
 
-    dplyr::case_when(access_col == "Yes" & knowledge_col == "Yes" ~ "Both",
-                     access_col == "Yes" & knowledge_col != "Yes" ~ "Access Only",
-                     access_col != "Yes" & knowledge_col == "Yes" ~ "Knowledge Only",
-                     access_col != "Yes" & knowledge_col != "Yes" ~ "Neither")
+    dplyr::case_when(use_col == "Yes" & knowledge_col == "Yes" ~ "Both",
+                     use_col == "Yes" & knowledge_col != "Yes" ~ "Use Only",
+                     use_col != "Yes" & knowledge_col == "Yes" ~ "Knowledge Only",
+                     use_col != "Yes" & knowledge_col != "Yes" ~ "Neither")
   })
 
   colnames(new_vars) <- paste0("status_", lang_list)

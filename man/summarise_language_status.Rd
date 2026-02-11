@@ -13,5 +13,5 @@ summarise_language_status(data)
 frequency table (data.frame)
 }
 \description{
-calculate counts of responents reporting access to, knowledge of, or both for each programming language.
+calculate counts of responents reporting knowledge of, use of, or both for each programming language.
 }
