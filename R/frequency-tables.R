@@ -186,7 +186,7 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 
 #' @title Summarise programming language status
 #'
-#' @description calculate counts of responents reporting knowledge of, use of, or both for each programming language.
+#' @description calculate counts of respondents reporting knowledge of, use of, or both for each programming language.
 #'
 #' @param data full CARS dataset after pre-processing
 #'
