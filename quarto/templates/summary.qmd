@@ -66,7 +66,7 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 
 ```{r}
 
-tables$access <- tables$access |> 
+tables$use <- tables$use |> 
   dplyr::arrange(factor(name, levels = c("Python",
                                          "R", 
                                          "SQL",
@@ -76,8 +76,8 @@ tables$access <- tables$access |>
                                          "Stata",
                                          "VBA")))
 
-plot <- CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$access, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
+plot <- CARS::plot_stacked(tables$use, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
+table <- CARS::df_to_table(tables$use, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
 
 CARS::wrap_outputs("access", plot, table)
 
