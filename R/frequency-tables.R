@@ -14,49 +14,45 @@
 summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
 
   output_list <- list(
+    time_in_role = summarise_data(data, config, question = "time_in_role", sample = sample),
     code_freq = summarise_data(data, config, question = "code_freq", sample = sample),
+    coding_freq_pref = summarise_data(data, config, question = "coding_freq_pref", sample = sample),
     knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge", sample = sample),
-    access = summarise_coding_tools(data, config, question = "coding_tools_access", sample = sample),
-    first_learned = summarise_data(data, config, question = "first_learned", sample = sample),
+    use = summarise_coding_tools(data, config, question = "coding_tools_use", sample = sample),
     ability_change = summarise_data(data, config, question = "ability_change" , sample = sample),
+    coding_learn_pref = summarise_data(data, config, question = "coding_learn_pref", sample = sample),
+    coding_improve_barriers = summarise_data(data, config, question = "coding_improve_barriers", sample = sample),
+    coding_learn_barriers = summarise_data(data,config, question = "coding_learn_barriers", sample = sample),
     coding_years = summarise_data(data, config, question = "coding_years" , sample = sample),
     coding_practices = summarise_multi_col_data(data, config, question = "coding_practices" , sample = sample),
     working_practices = summarise_multi_col_data(data, config, question = "working_practices" , sample = sample),
     doc = summarise_multi_col_data(data, config, question = "doc" , sample = sample),
     rap_knowledge = summarise_data(data, config, question = "heard_of_rap" , sample = sample),
-    rap_opinions = summarise_rap_opinions(data, config, question = "rap_opinions" , sample = sample),
-    git_knowledge = summarise_git(data, config, question = "coding_tools_knowledge" , sample = sample),
-    access_git = summarise_git(data, config, question = "coding_tools_access" , sample = sample),
-    rap_components = summarise_rap_comp(data, config, question = "rap_components", sample = sample)
+    rap_components = summarise_rap_comp(data, config, question = "rap_components", sample = sample),
+    git = summarise_git(data, config, question = "git", sample = sample),
+    cloud= summarise_data(data, config, question = "cloud", sample = sample),
+    rap_implementing = summarise_data(data, config, question = "rap_implementing", sample = sample),
+    rap_barriers = summarise_data(data, config, question = "rap_barriers", sample = sample),
+    standards = summarise_data(data, config, question = "standards", sample = sample),
+    duck_book = summarise_data(data, config, question = "duck_book", sample = sample),
+    packages = summarise_data(data, config, question = "packages", sample = sample)
 
   )
-
+  
   if (all_tables) {
 
     output_list <- c(output_list,
                      list(
                        coding_exp = summarise_data(data, config, question = "coding_exp", sample = sample),
                        team = summarise_data(data, config, question = "team", sample = sample),
-                       management = summarise_data(data, config, question = "management", sample = sample),
-                       code_leisure = summarise_data(data, config, question = "code_leisure", sample = sample),
-                       ai = summarise_data(data, config, question = "ai" , sample = sample),
+                       manage_project = summarise_data(data, config, question = "manage_project", sample = sample), 
                        ai_tools = summarise_data(data, config, question = "ai_tools" , sample = sample),
-                       ai_use = summarise_data(data, config, question = "ai_use" , sample = sample),
-                       ai_trust = summarise_data(data, config, question = "ai_trust" , sample = sample),
+                       ai_use = summarise_multi_col_data(data, config, question = "ai_use" , sample = sample),
                        qs_aware = summarise_data(data, config, question = "qs_aware" , sample = sample),
                        qs_comply = summarise_data(data, config, question = "qs_comply" , sample = sample),
                        qq_aware = summarise_data(data, config, question = "qq_aware" , sample = sample),
                        capability_change_by_freq = summarise_cap_change_by_freq(data, config, question1 = "code_freq", question2 = "ability_change", sample = sample),
                        languages_by_prof = summarise_languages_by_prof(data, config, question = "professions" , sample = sample)
-                       # capability_change_by_line_manage = summarise_cap_change_by_line_manage(data),
-                       # capability_change_by_CS_grade = summarise_cap_change_by_CS_grade(data),
-                       # basic_score_by_implementation = summarise_basic_score_by_imp(data),
-                       # adv_score_by_implementation = summarise_adv_score_by_imp(data),
-                       # basic_score_by_understanding = summarise_basic_score_by_understanding(data),
-                       # adv_score_by_understanding = summarise_adv_score_by_understanding(data),
-                       # language_status = summarise_language_status(data),
-                       # open_source_by_prof = summarise_open_source_by_prof(data),
-                       # heard_of_RAP_by_prof = summarise_heard_of_RAP_by_prof(data)
                        ))
   }
 
