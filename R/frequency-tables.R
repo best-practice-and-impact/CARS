@@ -186,7 +186,7 @@ summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample =
 
 #' @title Summarise programming language status
 #'
-#' @description calculate counts of responents reporting access to, knowledge of, or both for each programming language.
+#' @description calculate counts of respondents reporting knowledge of, use of, or both for each programming language.
 #'
 #' @param data full CARS dataset after pre-processing
 #'
@@ -203,9 +203,11 @@ summarise_language_status <- function(data) {
                  "status_python",
                  "status_SPSS",
                  "status_stata",
-                 "status_matlab")
+                 "status_matlab",
+                 "status_dax",
+                 "status_spark")
 
-  levels <- c("Access Only", "Both", "Knowledge Only")
+  levels <- c("Use Only", "Both", "Knowledge Only")
 
   labels <- c("R",
               "SQL",
@@ -214,9 +216,13 @@ summarise_language_status <- function(data) {
               "Python",
               "SPSS",
               "Stata",
-              "Matlab")
+              "Matlab",
+              "DAX",
+              "Spark")
 
-  frequencies <- calculate_freqs(data, questions, levels, labels)
+  data[] <- lapply(data, factor, levels = levels)
+
+  frequencies <- calculate_freqs(data, questions, labels, prop = TRUE, sample = FALSE)
 
   return(frequencies)
 
