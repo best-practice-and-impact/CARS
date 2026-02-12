@@ -51,7 +51,6 @@ clean_data <- function(data, config){
  data <- data |>
    apply_skip_logic() |>
    clean_departments() |>
-   clean_first_learned() |>
    clean_quality_qs()
 
  return(data)
@@ -102,44 +101,6 @@ clean_departments <- function(data) {
 
 }
 
-#' @title Clean first_learned data
-#'
-#' @description categorise 'other' responses.
-#'
-#' @param data cleaned CARS dataset
-#'
-#' @return CARS dataset
-#' @export
-
-clean_first_learned <- function(data) {
-
-  he_match <- c("PhD",
-               "MSc",
-               "University")
-
-  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(he_match, collapse = "|"))] <- "Higher Education"
-
-  se_match <- c("College",
-                "AS level")
-
-  data$first_learned[stringr::str_detect(tolower(data$first_learned), stringr::str_c(he_match, collapse = "|"))] <- "Primary/secondary education"
-
-
-  set_responses <- c(
-  "Higher Education",
-  "Primary/secondary education",
-  "Self-taught",
-  "Previous public sector employment",
-  "Current role",
-  "Previous private sector employment"
-  )
-
-  data$first_learned[!(data$first_learned %in% set_responses) & !is.na(data$first_learned)] <- "Other"
-
-  return(data)
-
-}
-
 #' @title Rename columns
 #'
 #' @description Renames columns and removes unnecessary columns
@@ -152,8 +113,8 @@ clean_first_learned <- function(data) {
 #' @export
 
 rename_cols <- function(data, config) {
-  if (ncol(data) != 109) {
-    stop("Unexpected input: incorrect number of columns. Please use the 2024 CARS dataset.")
+  if (ncol(data) != 138) {
+    stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
   }
 
   colnames(data)[c(1:ncol(data))] <- c(
@@ -169,36 +130,40 @@ rename_cols <- function(data, config) {
     "workplace",
     "cs_grade",
     "department",
-    "department_other",
+    "department_other", 
     names(config[["professions"]][["cols"]]),
     "ons_directorate",
     "pay_band",
     "nhs_band",
     "njc_grade",
-    "nhs_country",
-    "nhs_england",
-    "nhs_scotland",
-    "nhs_wales",
-    "nhs_ni",
+    "time_in_role",
     "coding_exp",
     "team",
-    "management",
-    "code_freq",
-    "code_leisure",
-    "first_learned",
+    "manage_project",
+    "coding_learn_pref",
+    names(config[["coding_learn_barriers"]][["cols"]]),
     "coding_years",
+    "code_freq",
+    "coding_freq_pref",
     "ability_change",
-    names(config[["coding_tools_access"]][["cols"]]),
+    names(config[["coding_improve_barriers"]][["cols"]]),
     names(config[["coding_tools_knowledge"]][["cols"]]),
-    names(config[["coding_practices"]][["cols"]]),
-    names(config[["working_practices"]][["cols"]]),
-    names(config[["doc"]][["cols"]]),
+    names(config[["coding_tools_use"]][["cols"]]),
+    "git",
+    names(config[["cloud"]][["cols"]]),
     "ai",
     names(config[["ai_tools"]][["cols"]]),
     names(config[["ai_use"]][["cols"]]),
-    "ai_trust",
-    "heard_of_rap",
-    names(config[["rap_opinions"]][["cols"]]),
+    "ai_impact",
+    names(config[["coding_practices"]][["cols"]]),
+    names(config[["working_practices"]][["cols"]]),
+    names(config[["doc"]][["cols"]]),
+    "rap_implementing",
+    names(config[["rap_barriers"]][["cols"]]),
+    "standards",
+    "duck_book",
+    "packages",
+    "packages_list",
     "qs_aware",
     "qs_comply",
     "qq_aware",
