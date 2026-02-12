@@ -16,7 +16,7 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
   output_list <- list(
     code_freq = summarise_data(data, config, question = "code_freq", sample = sample),
     knowledge = summarise_coding_tools(data, config, question = "coding_tools_knowledge", sample = sample),
-    access = summarise_coding_tools(data, config, question = "coding_tools_access", sample = sample),
+    use = summarise_coding_tools(data, config, question = "coding_tools_use", sample = sample),
     ability_change = summarise_data(data, config, question = "ability_change" , sample = sample),
     coding_years = summarise_data(data, config, question = "coding_years" , sample = sample),
     coding_practices = summarise_multi_col_data(data, config, question = "coding_practices" , sample = sample),
@@ -34,7 +34,7 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
                        team = summarise_data(data, config, question = "team", sample = sample),
                        ai = summarise_data(data, config, question = "ai" , sample = sample),
                        ai_tools = summarise_data(data, config, question = "ai_tools" , sample = sample),
-                       ai_use = summarise_data(data, config, question = "ai_use" , sample = sample),
+                       ai_use = summarise_multi_col_data(data, config, question = "ai_use" , sample = sample),
                        qs_aware = summarise_data(data, config, question = "qs_aware" , sample = sample),
                        qs_comply = summarise_data(data, config, question = "qs_comply" , sample = sample),
                        qq_aware = summarise_data(data, config, question = "qq_aware" , sample = sample),
