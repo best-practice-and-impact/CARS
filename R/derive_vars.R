@@ -30,9 +30,9 @@ derive_vars <- function(data) {
 
 derive_language_status <- function(data) {
 
-  lang_list <- colnames(data)[grepl("use_", colnames(data))]
+  lang_list <- colnames(data)[grepl("^use_", colnames(data))]
 
-  lang_list <- lang_list[!grepl("other", lang_list)]
+  lang_list <- lang_list[!grepl("other|none", lang_list)]
 
   lang_list <- gsub("use_", "", lang_list)
 

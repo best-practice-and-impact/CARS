@@ -1,6 +1,6 @@
 library(magrittr)
 
-data <- CARS::get_tidy_data_file("2024_data.csv")
+data <- CARS::get_tidy_data_file("2026_data.csv")
 config <- yaml::read_yaml("config.yml")
 
 data<- CARS::clean_data(data, config)

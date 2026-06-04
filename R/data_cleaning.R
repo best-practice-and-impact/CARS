@@ -8,31 +8,26 @@
 #' @return cleaned data.frame
 #'
 #' @export
-
 apply_skip_logic <- function(data) {
-
   data <- dplyr::mutate(data, across(c(4:19), ~ dplyr::case_when(workplace == "NHS or local healthcare service" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(20:27), ~ dplyr::case_when(workplace == "Civil service, including devolved administrations"  ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(4:27), ~ dplyr::case_when(!workplace %in% c("Civil service, including devolved administrations", "NHS or local healthcare service") & !is.na(data$workplace) ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(19, 98:100), ~ dplyr::case_when(workplace != "Civil service, including devolved administrations" | department != "Office for National Statistics" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(20:27), ~ dplyr::case_when(!is.na(ons_directorate) & ons_directorate != "test" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(20:22), ~ dplyr::case_when(workplace == "Civil service, including devolved administrations"  ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(4:22), ~ dplyr::case_when(!workplace %in% c("Civil service, including devolved administrations", "NHS or local healthcare service") & !is.na(data$workplace) ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(127:129), ~ dplyr::case_when(workplace != "Civil service, including devolved administrations" | department != "Office for National Statistics" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(20:22), ~ dplyr::case_when(!is.na(ons_directorate) & ons_directorate != "test" ~ NA, .default = .)))
 
   data[, "nhs_band"]  <- dplyr::case_when(data$pay_band %in% c("Local Authority or NJC", "Other / Not sure", "test") & !is.na(data$pay_band)  ~ NA, .default = data$nhs_band)
   data[, "njc_grade"] <- dplyr::case_when(data$pay_band %in% c("NHS", "Other / Not sure", "test") & !is.na(data$pay_band)  ~ NA, .default = data$njc_grade)
-  data[, "nhs_england"] <- dplyr::case_when(data$nhs_country %in% c("Scotland", "Wales", "Northern Ireland", "test") ~ NA, .default = data$nhs_england)
-  data[, "nhs_scotland"] <- dplyr::case_when(data$nhs_country %in% c("England", "Wales", "Northern Ireland", "test") ~ NA, .default = data$nhs_scotland)
-  data[, "nhs_wales"] <- dplyr::case_when(data$nhs_country %in% c("England", "Scotland", "Northern Ireland", "test") ~ NA, .default = data$nhs_wales)
-  data[, "nhs_ni"] <- dplyr::case_when(data$nhs_country %in% c("England", "Scotland", "Wales", "test") & !is.na(data$nhs_country) ~ NA, .default = data$nhs_ni)
 
-  data <- dplyr::mutate(data, across(c(31:91), ~ dplyr::case_when(coding_exp == "No" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(56:91), ~ dplyr::case_when(code_freq == "Never" ~ NA, .default = .)))
-  data[, "ability_change"] <- dplyr::case_when(data$first_learned == "Current role" ~ NA, .default = data$ability_change)
-  data <- dplyr::mutate(data, across(c(76:91), ~ dplyr::case_when(ai == "No" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(93:97), ~ dplyr::case_when(heard_of_rap == "No" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(25:35), ~ dplyr::case_when(coding_exp == "Yes" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(25:26, 125:126), ~ dplyr::case_when(coding_exp == "No" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(78:105), ~ dplyr::case_when(code_freq == "Never" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(26:126), ~ dplyr::case_when(coding_learn_pref %in% c("Yes", "No", "Not sure / not applicable") | department != "Office for National Statistics" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(79:93), ~ dplyr::case_when(ai == "No" ~ NA, .default = .)))
+  data <- dplyr::mutate(data, across(c(126), ~ dplyr::case_when(packages != "Yes" ~ NA, .default = .)))
 
-  return(data)
-
+return(data)
 }
+
 
 
 #' @title Clean data
@@ -118,59 +113,21 @@ rename_cols <- function(data, config) {
     stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
   }
 
-  colnames(data)[c(1:ncol(data))] <- c(
-    "UserID",
-    "ID",
-    "Name",
-    "Email",
-    "IP.Address",
-    "Unique.ID",
-    "Started",
-    "Ended",
-    "tracking_link",
-    "workplace",
-    "cs_grade",
-    "department",
-    "department_other",
-    names(config[["professions"]][["cols"]]),
-    "ons_directorate",
-    "pay_band",
-    "nhs_band",
-    "njc_grade",
-    "time_in_role",
-    "coding_exp",
-    "team",
-    "manage_project",
-    "coding_learn_pref",
-    names(config[["coding_learn_barriers"]][["cols"]]),
-    "coding_years",
-    "code_freq",
-    "coding_freq_pref",
-    "ability_change",
-    names(config[["coding_improve_barriers"]][["cols"]]),
-    names(config[["coding_tools_knowledge"]][["cols"]]),
-    names(config[["coding_tools_use"]][["cols"]]),
-    "git",
-    names(config[["cloud"]][["cols"]]),
-    "ai",
-    names(config[["ai_tools"]][["cols"]]),
-    names(config[["ai_use"]][["cols"]]),
-    "ai_impact",
-    names(config[["coding_practices"]][["cols"]]),
-    names(config[["working_practices"]][["cols"]]),
-    names(config[["doc"]][["cols"]]),
-    "rap_implementing",
-    names(config[["rap_barriers"]][["cols"]]),
-    "standards",
-    "duck_book",
-    "packages",
-    "packages_list",
-    "qs_aware",
-    "qs_comply",
-    "qq_aware",
-    "comments",
-    "future_surveys"
-  )
+  normalise_spaces <- function(x) {
+    x <- gsub("\u00A0", " ", x, fixed = TRUE)
+    x <- trimws(x)
+    return(x)
+  }
+
+  flat <- unlist(config$rename_dict, recursive = TRUE, use.names = TRUE)
+  old_keys <- sub("^[^.]+\\.", "", names(flat))
+  rename_dict <- setNames(unname(flat), old_keys)
+
+  names(data) <- normalise_spaces(names(data))
+  names(rename_dict) <- normalise_spaces(names(rename_dict))
+
+  data <- data %>%
+    rename_with(~ dplyr::coalesce(unname(rename_dict[.x]), .x))
 
   data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
