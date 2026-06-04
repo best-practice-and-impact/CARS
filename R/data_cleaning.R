@@ -72,10 +72,11 @@ clean_departments <- function(data) {
   data$department[data$workplace %in% c("Environment Agency", "EA")] <- "Environment Agency"
   data$department[data$department_other == "Home Office "] <- "Home Office"
   data$department[data$department_other == "Centre for Environment Fisheries and Aquaculture Science"] <- "Centre for Environment, Fisheries and Aquaculture Science"
-  data$department[data$department_other == "Department of Finance"] <- "Northern Ireland Executive"
-  data$department[data$department_other == "National Records of Scotland"] <- "National Records of Scotland"
-  data$department[data$department_other %in% c("Health and Safety Executive ", "Health and Safety Executive")] <- "Health and Safety Executive"
+  data$department[data$department_other %in% c("Department of Finance", "dept of finance")] <- "Northern Ireland Executive"
+  data$department[data$department_other %in% c("National Records of Scotland", "NRS", "National Records of Scotland (Census team) ")] <- "National Records of Scotland"
+  data$department[data$department_other %in% c("The Health and Safety Executive", "Health and Safety Executive ", "Health and Safety Executive", "Health & Safety Executive")] <- "Health and Safety Executive"
   data$department[data$department_other == "UKHSA"] <- "UK Health Security Agency"
+  data$department[data$department_other == "Fast Stream Cabinet Office"] <- "Cabinet Office (excl. agencies)"
 
   defra_orgs <- c(
     "Department for Environment, Food and Rural Affairs (excl. agencies)",
