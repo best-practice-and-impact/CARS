@@ -308,6 +308,7 @@ coding_tools_knowledge:
     knowledge_spark: "Spark"
     knowledge_VBA: "VBA"
     knowledge_other: "Other"
+    knowledge_none: "None"
 
 coding_tools_use:
   question: "Which of these tools do you use in your current role"
@@ -325,6 +326,7 @@ coding_tools_use:
     use_spark: "Spark"
     use_VBA: "VBA"
     use_other: "Other"
+    use_none: "None"
 
 git:
   question: "Do you know how to use Git"
