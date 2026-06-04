@@ -108,7 +108,7 @@ clean_departments <- function(data) {
 #' @export
 
 rename_cols <- function(data, config) {
-  if (ncol(data) != 138) {
+  if (ncol(data) != 140) {
     stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
   }
 
