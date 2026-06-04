@@ -112,59 +112,21 @@ rename_cols <- function(data, config) {
     stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
   }
 
-  colnames(data)[c(1:ncol(data))] <- c(
-    "UserID",
-    "ID",
-    "Name",
-    "Email",
-    "IP.Address",
-    "Unique.ID",
-    "Started",
-    "Ended",
-    "tracking_link",
-    "workplace",
-    "cs_grade",
-    "department",
-    "department_other",
-    names(config[["professions"]][["cols"]]),
-    "ons_directorate",
-    "pay_band",
-    "nhs_band",
-    "njc_grade",
-    "time_in_role",
-    "coding_exp",
-    "team",
-    "manage_project",
-    "coding_learn_pref",
-    names(config[["coding_learn_barriers"]][["cols"]]),
-    "coding_years",
-    "code_freq",
-    "coding_freq_pref",
-    "ability_change",
-    names(config[["coding_improve_barriers"]][["cols"]]),
-    names(config[["coding_tools_knowledge"]][["cols"]]),
-    names(config[["coding_tools_use"]][["cols"]]),
-    "git",
-    names(config[["cloud"]][["cols"]]),
-    "ai",
-    names(config[["ai_tools"]][["cols"]]),
-    names(config[["ai_use"]][["cols"]]),
-    "ai_impact",
-    names(config[["coding_practices"]][["cols"]]),
-    names(config[["working_practices"]][["cols"]]),
-    names(config[["doc"]][["cols"]]),
-    "rap_implementing",
-    names(config[["rap_barriers"]][["cols"]]),
-    "standards",
-    "duck_book",
-    "packages",
-    "packages_list",
-    "qs_aware",
-    "qs_comply",
-    "qq_aware",
-    "comments",
-    "future_surveys"
-  )
+  normalise_spaces <- function(x) {
+    x <- gsub("\u00A0", " ", x, fixed = TRUE)
+    x <- trimws(x)
+    return(x)
+  }
+
+  flat <- unlist(config$rename_dict, recursive = TRUE, use.names = TRUE)
+  old_keys <- sub("^[^.]+\\.", "", names(flat))
+  rename_dict <- setNames(unname(flat), old_keys)
+
+  names(data) <- normalise_spaces(names(data))
+  names(rename_dict) <- normalise_spaces(names(rename_dict))
+
+  data <- data %>%
+    rename_with(~ dplyr::coalesce(unname(rename_dict[.x]), .x))
 
   data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
 
