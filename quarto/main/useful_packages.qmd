@@ -1,0 +1,121 @@
+---
+title: Useful Packages
+output:
+  html_document
+---
+
+::: callout-note
+Links were correct at time of publication.
+:::
+
+Below are links to the packages respondents reported using when asked: *Do you or your team use any cross-government or department-specific analysis packages in your work? For example, R or python packages that were developed to help with common analysis or data tasks in your department or the wider public sector. Examples include splink, govcookiecutter, afcharts.*
+
+-   [afcharts](https://github.com/best-practice-and-impact/afcharts)
+
+-   [afcharts-py](https://github.com/best-practice-and-impact/afcharts-py)
+
+-   [aftables](https://github.com/best-practice-and-impact/aftables)
+
+-   [aims-api](https://github.com/ONSdigital/aims-api)
+
+-   [ASC_LA_Peer_Groups](https://github.com/NHSDigital/ASC_LA_Peer_Groups)
+
+-   [classifai](https://github.com/datasciencecampus/classifAI)
+
+-   [data.checker](https://github.com/ONSdigital/data.checker)
+
+-   [datachecker](https://github.com/ONSdigital/datachecker)
+
+-   [dbtools](https://github.com/moj-analytical-services/dbtools)
+
+-   [decompositionLE](https://github.com/herts-phei/decompositionLE)
+
+-   [DefraUtils](https://github.com/Defra-Data-Science-Centre-of-Excellence/DefraUtils)
+
+-   [desktop-tutorial](https://github.com/ONSdigital/desktop-tutorial)
+
+-   [dfeqa](https://github.com/quhack/dfeqa)
+
+-   [dfeR](https://github.com/dfe-analytical-services/dfeR)
+
+-   [dfeshiny](https://github.com/dfe-analytical-services/dfeshiny)
+
+-   [dhsc_quarto_template](https://github.com/dhsc-govuk/dhsc_quarto_template)
+
+-   [eesyscreener](https://github.com/dfe-analytical-services/eesyscreener)
+
+-   [favr](https://cran.r-project.org/web/packages/favr/index.html)
+
+-   [forwardlook](https://github.com/UKHSA-Collaboration/forwardlook)
+
+-   [FunnelPlotR](https://github.com/nhs-r-community/FunnelPlotR)
+
+-   [ggbreak](https://github.com/UKHSA-Collaboration/ggbreak)
+
+-   [govcookiecutter](https://best-practice-and-impact.github.io/govcookiecutter/)
+
+-   [govcookiecutter-lite](https://github.com/best-practice-and-impact/govcookiecutter-lite)
+
+-   [govspeakr](https://github.com/department-for-transport-public/govspeakr)
+
+-   [gptables](https://github.com/ONSdigital/gptables)
+
+-   [iot-leontief-python](https://github.com/wgdsu/iot-leontief-python)
+
+-   [KASStylesR](https://github.com/wgdsu/KASStylesR)
+
+-   [laurium](https://github.com/moj-analytical-services/laurium)
+
+-   [NHSRplotthedots](https://nhsrplotthedots.nhsrcommunity.com/articles/intro.html)
+
+-   [NHSRtt](https://github.com/nhs-bnssg-analytics/NHSRtt)
+
+-   [objr](https://scotgovanalysis.github.io/objr/)
+
+-   [odsconvertr](https://github.com/department-for-transport/odsconvertr)
+
+-   [ONSdigital.dlh-utils](https://github.com/uk-gov-mirror/ONSdigital.dlh-utils)
+
+-   [ONSdigital.scalelink](https://github.com/uk-gov-mirror/ONSdigital.scalelink)
+
+-   [opendatascot](https://scotgovanalysis.github.io/opendatascot/)
+
+-   [PHEindicatormethods](https://github.com/dhsc-govuk/PHEindicatormethods)
+
+-   [polars](https://github.com/pola-rs/polars)
+
+-   [py-af-colours](https://github.com/best-practice-and-impact/py-af-colours)
+
+-   [quarto-govuk](https://github.com/rossbowen/quarto-govuk)
+
+-   [rapid.spreadsheets](https://github.com/RAPID-ONS/rapid.spreadsheets)
+
+-   [rdsa-utils](https://github.com/ONSdigital/rdsa-utils)
+
+-   [renv](https://github.com/rstudio/renv)
+
+-   [research-and-development](https://github.com/ONSdigital/research-and-development)
+
+-   [rgovspeak](https://github.com/Defra-Data-Science-Centre-of-Excellence/rgovspeak)
+
+-   [rixpress](https://github.com/ropensci/rixpress/)
+
+-   [RTT_compartmental_modelling](https://github.com/nhs-bnssg-analytics/RTT_compartmental_modellingl)
+
+-   [sgplot](https://scotgovanalysis.github.io/sgplot/)
+
+-   [shinyGovstyle](https://github.com/dfe-analytical-services/shinyGovstyle)
+
+-   [splink](https://github.com/moj-analytical-services/splink)
+
+-   [sssstats](https://github.com/ScotGovAnalysis/sssstats)
+
+-   [targets](https://github.com/ropensci/targets)
+
+-   [tarchetypes](https://github.com/ropensci/tarchetypes)
+
+-   [uk_address_matcher](https://github.com/moj-analytical-services/uk_address_matcher)
+
+-   [unpivotr](https://github.com/nacnudus/unpivotr)
+
+-   [xlsss](https://github.com/ScotGovAnalysis/xlsss)
