@@ -183,28 +183,42 @@ tidy_colnames <- function(raw_data) {
   return(output)
 }
 
-#' @title Get all CARS data, including previous waves
+#' @title Create and cache all CARS data
 #'
-#' @description Ingest and preprocess all previous CARS data
+#' @description Process and save cleaned CARS data to cache file
 #'
-#' @return data frame
+#' @param cache_file Path to save the cache file
+#' @param ... Named configuration parameters (e.g., config, w6_config)
 #'
-#' @export
+#' @return data frame (invisibly)
+#'
+#' @keywords internal
 
-get_all_waves <- function() {
+create_all_waves_cache <- function(cache_file = NULL, ...) {
 
-    data <- CARS::get_tidy_data_file ("2026_data.csv")
-    w6_data <- CARS::get_tidy_data_file ("2024_data.csv")
-    w5_data <- CARS::get_tidy_data_file ("2023_data.csv")
-    w4_data <- CARS::get_tidy_data_file ("2022_data.csv")
+  configs <- list(...)
 
-    data <- CARS::clean_data(data, config)
-    data <- CARS::derive_language_status(data)
-    data$year <- 2026
+  if (is.null(cache_file)) {
+    cache_file <- file.path(Sys.getenv("CARS_DATA_DIR"), "all_waves_cleaned.rds")
+  }
+
+  cache_dir <- dirname(cache_file)
+  if (!dir.exists(cache_dir)) {
+    dir.create(cache_dir, recursive = TRUE)
+  }
+
+  data <- CARS::get_tidy_data_file("2026_data.csv")
+  w6_data <- CARS::get_tidy_data_file("2024_data.csv")
+  w5_data <- CARS::get_tidy_data_file("2023_data.csv")
+  w4_data <- CARS::get_tidy_data_file("2022_data.csv")
+
+  data <- CARS::clean_data(data, configs$config)
+  data <- CARS::derive_language_status(data)
+  data$year <- 2026
   data <- dplyr::rename(data, heard_of_RAP = "heard_of_rap")
 
   w6_data <- w6_data |>
-    CARS::w6_clean_data() |>
+    CARS::w6_clean_data(configs$w6_config) |>
     CARS::w6_derive_vars()
   w6_data$year <- 2024
 
@@ -223,6 +237,38 @@ get_all_waves <- function() {
 
   data <- dplyr::bind_rows(data, w6_data, w5_data, w4_data)
 
-  return(data)
+  saveRDS(data, cache_file)
+
+  invisible(data)
 }
 
+
+#' @title Load cached CARS data
+#'
+#' @description Load all cleaned CARS data from cache file
+#'
+#' @param cache_file Path to the cache file (default: "data/cache/all_waves_cleaned.rds")
+#' @param create_if_missing If TRUE and cache doesn't exist, create it (default: TRUE)
+#' @param ... Named configuration parameters (e.g., config, w6_config)
+#'
+#' @return data frame
+#'
+#' @export
+
+get_all_waves <- function(cache_file = NULL, create_if_missing = TRUE, ...) {
+
+  if (is.null(cache_file)) {
+    cache_file <- file.path(Sys.getenv("CARS_DATA_DIR"), "all_waves_cleaned.rds")
+  }
+
+  if (!file.exists(cache_file)) {
+    if (create_if_missing) {
+      message("Cache not found. Creating cache file...")
+      return(create_all_waves_cache(cache_file, ...))
+    } else {
+      stop("Cache file not found at: ", cache_file)
+    }
+  }
+
+  readRDS(cache_file)
+}
