@@ -1,5 +1,5 @@
 ---
-title: "The state of UK public sector analysis code: 2024"
+title: "The state of UK public sector analysis code: 2026"
 output:
   html:
     self-contained: true
@@ -10,10 +10,11 @@ output:
 data <- CARS::get_tidy_data_file("2026_data.csv")
 config <- yaml::read_yaml("../../config.yml")
 
-data <- CARS::clean_data(data, config)
-data <- CARS::derive_vars(data)
+waves_data <- CARS::get_all_waves()
 
-all_wave_data <- CARS::get_all_waves()
+data <- waves_data$"2026"
+
+all_wave_data <- dplyr::bind_rows(waves_data)
 
 tables <- CARS::summarise_all(data, config, all_tables = TRUE)
 
