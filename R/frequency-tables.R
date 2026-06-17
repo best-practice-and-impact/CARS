@@ -27,7 +27,7 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     coding_practices = summarise_multi_col_data(data, config, question = "coding_practices" , sample = sample),
     working_practices = summarise_multi_col_data(data, config, question = "working_practices" , sample = sample),
     doc = summarise_multi_col_data(data, config, question = "doc" , sample = sample),
-    rap_knowledge = summarise_data(data, config, question = "heard_of_rap" , sample = sample),
+    # rap_knowledge = summarise_data(data, config, question = "heard_of_rap" , sample = sample),
     rap_components = summarise_rap_comp(data, config, question = "rap_components", sample = sample),
     git = summarise_git(data, config, question = "git", sample = sample),
     cloud= summarise_data(data, config, question = "cloud", sample = sample),
@@ -38,14 +38,15 @@ summarise_all <- function(data, config, all_tables = FALSE, sample = TRUE) {
     packages = summarise_data(data, config, question = "packages", sample = sample)
 
   )
-  
+
   if (all_tables) {
 
     output_list <- c(output_list,
                      list(
                        coding_exp = summarise_data(data, config, question = "coding_exp", sample = sample),
                        team = summarise_data(data, config, question = "team", sample = sample),
-                       manage_project = summarise_data(data, config, question = "manage_project", sample = sample), 
+                       manage_project = summarise_data(data, config, question = "manage_project", sample = sample),
+                       ai = summarise_data(data, config, question = "ai" , sample = sample),
                        ai_tools = summarise_data(data, config, question = "ai_tools" , sample = sample),
                        ai_use = summarise_multi_col_data(data, config, question = "ai_use" , sample = sample),
                        qs_aware = summarise_data(data, config, question = "qs_aware" , sample = sample),
@@ -278,7 +279,7 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
   col2 <- q2[["cols"]]
   levels2 <- q2[["levels"]]
 
-  data <- dplyr::filter(data, (coding_exp == "Yes" & data$first_learned != "Current role"))
+  data <- dplyr::filter(data, coding_exp == "Yes")
 
   frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2, prop, sample)
 
@@ -668,8 +669,12 @@ get_question_data <- function(config, question){
 
 calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
 
-  if (sum(!cols %in% colnames(data)) > 0) {
-    stop("unexpected_input: check column names")
+  missing_cols <- setdiff(cols, colnames(data))
+  if (length(missing_cols) > 0) {
+    stop(
+      paste("unexpected_input: check column names. Missing:", paste(missing_cols, collapse = ", ")),
+      call. = FALSE
+    )
   }
 
   if (is.null(labels) & (length(cols) > 1)) {
