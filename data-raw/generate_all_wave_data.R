@@ -11,7 +11,7 @@
 #' @keywords internal
 create_all_waves_cache <- function(
     cache_dir = Sys.getenv("CARS_DATA_DIR"),
-    prefix = "cars_cleaned",
+    suffix = "cleaned_data",
     ...
 ) {
   configs <- list(...)
@@ -26,7 +26,7 @@ create_all_waves_cache <- function(
   w4_data <- CARS::get_tidy_data_file("2022_data.csv")
 
   data <- CARS::clean_data(data, configs$config)
-  data <- CARS::derive_language_status(data)
+  data <- CARS::derive_vars(data)
   data$year <- 2026
 
   w6_data <- w6_data |>
@@ -55,7 +55,7 @@ create_all_waves_cache <- function(
   )
 
   for (yr in names(yearly_data)) {
-    out_file <- file.path(cache_dir, paste0(prefix, "_", yr, ".rds"))
+    out_file <- file.path(cache_dir, paste0(yr, "_", suffix, ".rds"))
     saveRDS(yearly_data[[yr]], out_file)
   }
 

@@ -198,14 +198,14 @@ tidy_colnames <- function(raw_data) {
 #' @export
 get_all_waves <- function(
     cache_dir = Sys.getenv("CARS_DATA_DIR"),
-    prefix = "cars_cleaned",
+    suffix = "cleaned_data",
     years = c(2026, 2024, 2023, 2022),
-    combine = TRUE
+    combine = FALSE
 ) {
   waves_data <- setNames(vector("list", length(years)), as.character(years))
 
   for (yr in years) {
-    in_file <- file.path(cache_dir, paste0(prefix, "_", yr, ".rds"))
+    in_file <- file.path(cache_dir, paste0(yr, "_", suffix, ".rds"))
     if (!file.exists(in_file)) {
       stop("Missing cache file for year ", yr, ": ", in_file, call. = FALSE)
     }
