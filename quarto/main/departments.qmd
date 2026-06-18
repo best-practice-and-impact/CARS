@@ -8,19 +8,17 @@ output:
 [comment]: <> (This document should only be edited as a template: quarto/templates/departments.qmd)
 
 :::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+Please note, these are the initial summary statistics for CARS 2026 and further analysis will follow. 
 We advise linking directly to this document when distributing to ensure the most up to date information.
 :::
 
 Below are links to profession-specific reports These contain summary statistics, filtered by department. Only departments with 20 or more respondents are included.
 
-- [Centre for Environment, Fisheries and Aquaculture Science](departments/centre-for-environment-fisheries-and-aquaculture-science.html)
+- [Cabinet Office (excl. agencies)](departments/cabinet-office-excl-agencies-.html)
 
 - [Department for Business & Trade](departments/department-for-business--trade.html)
 
 - [Department for Education (excl. agencies)](departments/department-for-education-excl-agencies-.html)
-
-- [Department for Energy Security & Net Zero](departments/department-for-energy-security--net-zero.html)
 
 - [Department for Environment, Food and Rural Affairs (excl. agencies)](departments/department-for-environment-food-and-rural-affairs-excl-agencies-.html)
 
@@ -28,32 +26,26 @@ Below are links to profession-specific reports These contain summary statistics,
 
 - [Department for Science, Innovation & Technology (excl. agencies)](departments/department-for-science-innovation--technology-excl-agencies-.html)
 
-- [Department for Transport (excl. agencies)](departments/department-for-transport-excl-agencies-.html)
-
 - [Department for Work & Pensions](departments/department-for-work--pensions.html)
 
 - [Department of Health & Social Care (excl. agencies)](departments/department-of-health--social-care-excl-agencies-.html)
 
-- [HM Land Registry](departments/hm-land-registry.html)
-
 - [HM Revenue & Customs (excl. agencies)](departments/hm-revenue--customs-excl-agencies-.html)
-
-- [Home Office (excl. agencies)](departments/home-office-excl-agencies-.html)
-
-- [Ministry of Defence (excl. agencies)](departments/ministry-of-defence-excl-agencies-.html)
 
 - [Ministry of Justice (excl. agencies)](departments/ministry-of-justice-excl-agencies-.html)
 
-- [NHS](departments/nhs.html)
+- [National Records of Scotland](departments/national-records-of-scotland.html)
 
 - [Northern Ireland Statistics and Research Agency](departments/northern-ireland-statistics-and-research-agency.html)
 
 - [Office for National Statistics](departments/office-for-national-statistics.html)
 
-- [Ofqual](departments/ofqual.html)
+- [Other](departments/other.html)
 
 - [Scottish Government (excl. agencies)](departments/scottish-government-excl-agencies-.html)
 
 - [UK Health Security Agency](departments/uk-health-security-agency.html)
+
+- [Welsh Government](departments/welsh-government.html)
 
 
