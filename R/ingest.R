@@ -183,46 +183,38 @@ tidy_colnames <- function(raw_data) {
   return(output)
 }
 
-#' @title Get all CARS data, including previous waves
+
+#' @title Load cached CARS data by year
 #'
-#' @description Ingest and preprocess all previous CARS data
+#' @description Load per-year cached CARS data files created by create_all_waves_cache()
 #'
-#' @return data frame
+#' @param cache_dir Directory containing yearly cache files
+#' @param prefix Filename prefix used for yearly cache files
+#' @param years Integer vector of years to load
+#' @param combine If TRUE, return one bound data frame; otherwise return named list
+#'
+#' @return Named list of data frames or a single bound data frame
 #'
 #' @export
+get_all_waves <- function(
+    cache_dir = Sys.getenv("CARS_DATA_DIR"),
+    suffix = "cleaned_data",
+    years = c(2026, 2024, 2023, 2022),
+    combine = FALSE
+) {
+  waves_data <- setNames(vector("list", length(years)), as.character(years))
 
-get_all_waves <- function() {
+  for (yr in years) {
+    in_file <- file.path(cache_dir, paste0(yr, "_", suffix, ".rds"))
+    if (!file.exists(in_file)) {
+      stop("Missing cache file for year ", yr, ": ", in_file, call. = FALSE)
+    }
+    waves_data[[as.character(yr)]] <- readRDS(in_file)
+  }
 
-    data <- CARS::get_tidy_data_file ("2026_data.csv")
-    w6_data <- CARS::get_tidy_data_file ("2024_data.csv")
-    w5_data <- CARS::get_tidy_data_file ("2023_data.csv")
-    w4_data <- CARS::get_tidy_data_file ("2022_data.csv")
+  if (isTRUE(combine)) {
+    return(dplyr::bind_rows(waves_data))
+  }
 
-    data <- CARS::clean_data(data, config)
-    data <- CARS::derive_language_status(data)
-    data$year <- 2026
-  data <- dplyr::rename(data, heard_of_RAP = "heard_of_rap")
-
-  w6_data <- w6_data |>
-    CARS::w6_clean_data() |>
-    CARS::w6_derive_vars()
-  w6_data$year <- 2024
-
-  w5_data <- w5_data |>
-    CARS::w5_rename_cols() |>
-    CARS::w5_apply_skip_logic() |>
-    CARS::w5_clean_data() |>
-    CARS::w5_derive_vars()
-  w5_data$year <- 2023
-
-  w4_data <- w4_data |>
-    CARS::w4_rename_cols() |>
-    CARS::w4_enforce_streaming() |>
-    CARS::w4_clean_departments()
-  w4_data$year <- 2022
-
-  data <- dplyr::bind_rows(data, w6_data, w5_data, w4_data)
-
-  return(data)
+  return(waves_data)
 }
-

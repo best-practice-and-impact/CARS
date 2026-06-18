@@ -2,13 +2,27 @@
 % Please edit documentation in R/ingest.R
 \name{get_all_waves}
 \alias{get_all_waves}
-\title{Get all CARS data, including previous waves}
+\title{Load cached CARS data by year}
 \usage{
-get_all_waves()
+get_all_waves(
+  cache_dir = Sys.getenv("CARS_DATA_DIR"),
+  suffix = "cleaned_data",
+  years = c(2026, 2024, 2023, 2022),
+  combine = FALSE
+)
+}
+\arguments{
+\item{cache_dir}{Directory containing yearly cache files}
+
+\item{years}{Integer vector of years to load}
+
+\item{combine}{If TRUE, return one bound data frame; otherwise return named list}
+
+\item{prefix}{Filename prefix used for yearly cache files}
 }
 \value{
-data frame
+Named list of data frames or a single bound data frame
 }
 \description{
-Ingest and preprocess all previous CARS data
+Load per-year cached CARS data files created by create_all_waves_cache()
 }

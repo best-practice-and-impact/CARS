@@ -553,7 +553,6 @@ ai_use:
     ai_use_question: "Getting answers to a coding question"
     ai_use_testing: "Testing code"
     ai_use_learn: "Learning about new concepts"
-    ai_use_other: "Other"
 
 ai_impact:
   question: "What impact, if any, has AI had on your coding at work?"
