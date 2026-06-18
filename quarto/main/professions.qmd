@@ -8,7 +8,7 @@ output:
 [comment]: <> (This document should only be edited as a template: quarto/templates/professions.qmd)
 
 :::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2023 and further analysis will follow. 
+Please note, these are the initial summary statistics for CARS 2026 and further analysis will follow. 
 We advise linking directly to this document when distributing to ensure the most up to date information.
 :::
 
@@ -19,8 +19,6 @@ Below are links to profession-specific reports These contain summary statistics,
 - [Government Digital and Data](professions/government-digital-and-data.html)
 
 - [Government Economic Service](professions/government-economic-service.html)
-
-- [Government Geography Profession](professions/government-geography-profession.html)
 
 - [Government Operational Research Service](professions/government-operational-research-service.html)
 

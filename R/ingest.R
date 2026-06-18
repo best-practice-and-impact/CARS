@@ -191,7 +191,6 @@ tidy_colnames <- function(raw_data) {
 #' @param cache_dir Directory containing yearly cache files
 #' @param prefix Filename prefix used for yearly cache files
 #' @param years Integer vector of years to load
-#' @param combine If TRUE, return one bound data frame; otherwise return named list
 #'
 #' @return Named list of data frames or a single bound data frame
 #'
@@ -199,8 +198,7 @@ tidy_colnames <- function(raw_data) {
 get_all_waves <- function(
     cache_dir = Sys.getenv("CARS_DATA_DIR"),
     suffix = "cleaned_data",
-    years = c(2026, 2024, 2023, 2022),
-    combine = FALSE
+    years = c(2026, 2024, 2023, 2022)
 ) {
   waves_data <- setNames(vector("list", length(years)), as.character(years))
 
@@ -212,8 +210,8 @@ get_all_waves <- function(
     waves_data[[as.character(yr)]] <- readRDS(in_file)
   }
 
-  if (isTRUE(combine)) {
-    return(dplyr::bind_rows(waves_data))
+  if (length(years) == 1) {
+    return(waves_data[[1]])
   }
 
   return(waves_data)

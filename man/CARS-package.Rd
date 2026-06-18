@@ -11,5 +11,10 @@ Analysis code for the coding in analysis and research survey (CARS).
 \author{
 \strong{Maintainer}: Analysis standards and pipelines \email{asap@ons.gov.uk}
 
+Authors:
+\itemize{
+  \item Analysis standards and pipelines \email{asap@ons.gov.uk}
+}
+
 }
 \keyword{internal}

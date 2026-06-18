@@ -7,16 +7,13 @@
 get_all_waves(
   cache_dir = Sys.getenv("CARS_DATA_DIR"),
   suffix = "cleaned_data",
-  years = c(2026, 2024, 2023, 2022),
-  combine = FALSE
+  years = c(2026, 2024, 2023, 2022)
 )
 }
 \arguments{
 \item{cache_dir}{Directory containing yearly cache files}
 
 \item{years}{Integer vector of years to load}
-
-\item{combine}{If TRUE, return one bound data frame; otherwise return named list}
 
 \item{prefix}{Filename prefix used for yearly cache files}
 }

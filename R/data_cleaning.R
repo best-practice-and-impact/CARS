@@ -21,7 +21,7 @@ apply_skip_logic <- function(data) {
   data <- dplyr::mutate(data, across(c(25:35), ~ dplyr::case_when(coding_exp == "Yes" ~ NA, .default = .)))
   data <- dplyr::mutate(data, across(c(25:26, 125:126), ~ dplyr::case_when(coding_exp == "No" ~ NA, .default = .)))
   data <- dplyr::mutate(data, across(c(78:105), ~ dplyr::case_when(code_freq == "Never" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(26:126), ~ dplyr::case_when(coding_learn_pref %in% c("Yes", "No", "Not sure / not applicable") | department != "Office for National Statistics" ~ NA, .default = .)))
+  # data <- dplyr::mutate(data, across(c(26:126), ~ dplyr::case_when(coding_learn_pref %in% c("Yes", "No", "Not sure / not applicable") | department != "Office for National Statistics" ~ NA, .default = .)))
   data <- dplyr::mutate(data, across(c(79:93), ~ dplyr::case_when(ai == "No" ~ NA, .default = .)))
   data <- dplyr::mutate(data, across(c(126), ~ dplyr::case_when(packages != "Yes" ~ NA, .default = .)))
 

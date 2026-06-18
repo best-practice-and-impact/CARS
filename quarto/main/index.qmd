@@ -6,7 +6,7 @@ title: "Home"
 
 The Coding in Analysis and Research Survey (CARS) was developed to understand better how government analysts use programming. Most questions focused on whether and how analysts use coding in their work. The survey is also concerned with [Reproducible Analytical Pipelines (RAP)](#rap). 
 
-The survey was distributed to government analysts and researchers in the autumn of 2024. The results presented summarise the key findings from 1300 respondents from over 50 public sector organisations.
+The survey was distributed to government analysts and researchers in the autumn of 2026. The results presented summarise the key findings from 986 respondents from over 50 public sector organisations.
 
 
 ## Who is this research for?
