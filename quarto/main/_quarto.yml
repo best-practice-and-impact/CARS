@@ -17,6 +17,8 @@ website:
         text: Department summaries
       - href: professions.qmd
         text: Profession summaries
+      - href: useful_packages.qmd
+        text: Useful packages
 
 format:
   html:
