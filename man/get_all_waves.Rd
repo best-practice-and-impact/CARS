@@ -24,5 +24,5 @@ get_all_waves(
 Named list of data frames or a single bound data frame
 }
 \description{
-Load per-year cached CARS data files created by create_all_waves_cache()
+Load per-year cached CARS data files
 }
