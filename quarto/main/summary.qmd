@@ -32,7 +32,7 @@ We asked respondents if they had any coding experience, inside or outside of wor
 
 To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
 
-#### 2024 data
+#### 2026 data
 
 ```{r}
 
