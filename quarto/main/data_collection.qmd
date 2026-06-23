@@ -19,17 +19,17 @@ all_wave_data <- dplyr::bind_rows(waves_data)
 
 # How we collect data
 
-The Coding in Analysis and Research Survey (CARS) data collection takes place for approximately one month, every autumn. The survey is self-selecting and participation is voluntary. Launch dates vary slightly by year to maximise response rate, for example by avoiding clashes with other internal surveys. In 2024, data collection took place from 22 October to 31 December.
+The Coding in Analysis and Research Survey (CARS) data collection takes place for approximately one month, every autumn/winter. The survey is self-selecting and participation is voluntary. Launch dates vary slightly by year to maximise response rate, for example by avoiding clashes with other internal surveys. In 2026, data collection took place from 26 Janurary to 13 March.
 
 We invite analysts to participate in the survey using a variety of online channels, mailing lists, networks and newsletters. For the past four years, the most common source of data has been through departmental Reproducible Analytical Pipeline (RAP) champions, who promote the survey in their organisations. We rely on various champion networks, Heads of Profession (HoPs) for analysis and Departmental Directors of Analysis (DDans) to promote the survey and encourage their analytical communities to participate. This means the response rate and any selection bias will vary across organisations.
 
 Our promotional materials make it clear that we are interested in responses from all analysts, whether or not they use coding in their work. The survey may however attract a disproportionate number of respondents who have an interest in coding and RAP. We advise against making strong inferences about differences between professions and departments or attempting to estimate real frequencies from the data because of these potential limitations.
 
-Lastly, while the survey is open to all public sector analysts, the vast majority of responses come from the UK and devolved Civil Service (`r round(sum(data$workplace == "Civil service, including devolved administrations") / nrow(data) * 100, 1)`% in 2024). As such, follow-up questions on grade and profession applied only to civil servants.
+Lastly, while the survey is open to all public sector analysts, the vast majority of responses come from the UK and devolved Civil Service (`r round(sum(data$workplace == "Civil service, including devolved administrations") / nrow(data) * 100, 1)`% in 2026). As such, follow-up questions on grade and profession applied only to civil servants.
 
 ## Where our data comes from
 
-Link tracking allows us to see where responses are coming from. Links promoted by RAP champions were the most commonly used for the past three waves, and accounted for over half of responses in 2024.
+Link tracking allows us to see where responses are coming from. Links promoted by RAP champions were the most commonly used for the past three waves, and accounted for over half of responses in 2026.
 
 ```{r}
 rename_list <- c(config[["tracking_link"]],
@@ -120,7 +120,7 @@ year_dist %>%
 
 ## Coding frequency
 
-Every year, we ask respondents how often they code to achieve work objectives. In 2024, this question was only asked of respondents with current or prior coding experience. Although we seek responses from all analysts the data probably over-represents people with coding experience. In 2024, `r round(sum(data$code_freq == "Never" | is.na(data$code_freq)) / nrow(data) * 100, 1)`% of respondents never used code at work or had no coding experience.
+Every year, we ask respondents how often they code to achieve work objectives. In 2026, this question was only asked of respondents with current or prior coding experience. Although we seek responses from all analysts the data probably over-represents people with coding experience. In 2026, `r round(sum(data$code_freq == "Never" | is.na(data$code_freq)) / nrow(data) * 100, 1)`% of respondents never used code at work or had no coding experience.
 
 ```{r}
 all_wave_data$code_freq <- gsub("All the time", "Always", all_wave_data$code_freq)
@@ -264,7 +264,7 @@ CARS::wrap_outputs("grades-by-year", plot, table)
 
 Below is a breakdown of the proportion of respondents in different Civil Service professions. These cover the [Analysis Function professions](https://analysisfunction.civilservice.gov.uk/about-us/frequently-asked-questions/) and do not apply outside of the Civil Service. The exception to these are data scientists and data engineers who do not have an official government profession. Note that respondents can be members of more than one analytical profession. Profession data is difficult to compare across years as these questions have changed in line with changes to the Analysis Function.
 
-The CARS sample has high representation from statisticians compared with other professions. This again may be representative of some organisations but not all, and is not representative of the [Civil Service](https://www.gov.uk/government/statistics/civil-service-statistics-2024/statistical-bulletin-civil-service-statistics-2024#profession) as a whole.
+The CARS sample has high representation from statisticians compared with other professions. This again may be representative of some organisations but not all, and is not representative of the [Civil Service](https://www.gov.uk/government/statistics/civil-service-statistics-2025/statistical-bulletin-civil-service-statistics-2025#profession) as a whole.
 
 ```{r}
 prof_cols <- colnames(data)[grepl("prof_", colnames(data))]
