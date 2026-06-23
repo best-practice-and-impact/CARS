@@ -83,7 +83,6 @@ summarise_data <- function(data, config, question, prop = TRUE, sample = TRUE) {
   return(frequencies)
 }
 
-
 #' @title Generic summarise multi-column data into frequency table
 #'
 #' @description calculate frequency table for multi-column data where no additional operations are needed
@@ -112,7 +111,6 @@ summarise_multi_col_data <- function(data, config, question, prop = TRUE, sample
   return(frequencies)
 
 }
-
 
 #' @title Summarise coding tools
 #'
@@ -143,91 +141,6 @@ summarise_coding_tools <- function(data, config, question, prop = TRUE, sample =
 
 }
 
-
-#' @title Opinions of RAP
-#'
-#' @description Create frequency table of opinions of RAP
-#'
-#' @param data full CARS dataset after pre-processing
-#' @param config CARS config
-#' @param question rap opinions question, taken from config
-#' @param prop returns proportion, TRUE by default
-#' @param sample additionally returns count and sample size. TRUE by default
-#'
-#' @return frequency table (data.frame)
-#' @export
-#'
-summarise_rap_opinions <- function(data, config, question, prop = TRUE, sample = TRUE) {
-
-  list2env(get_question_data(config, question), envir = environment())
-
-  labels <- config[[question]][["cols"]]
-
-  cols <- cols[!grepl("other", cols)]
-
-  data[] <- lapply(data, factor, levels = levels)
-
-  frequencies <- calculate_freqs(data, cols, labels, prop = prop, sample = sample)
-
-  frequencies$name <- factor(frequencies$name, levels = labels)
-
-  frequencies <- dplyr::arrange(frequencies, name, match(value, levels))
-
-  frequencies$name <- as.character(frequencies$name)
-
-  return(frequencies)
-
-}
-
-
-
-#' @title Summarise programming language status
-#'
-#' @description calculate counts of respondents reporting knowledge of, use of, or both for each programming language.
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-#'
-#' @importFrom rlang .data
-
-summarise_language_status <- function(data) {
-
-  questions <- c("status_R",
-                 "status_SQL",
-                 "status_SAS",
-                 "status_VBA",
-                 "status_python",
-                 "status_SPSS",
-                 "status_stata",
-                 "status_matlab",
-                 "status_dax",
-                 "status_spark")
-
-  levels <- c("Use Only", "Both", "Knowledge Only")
-
-  labels <- c("R",
-              "SQL",
-              "SAS",
-              "VBA",
-              "Python",
-              "SPSS",
-              "Stata",
-              "Matlab",
-              "DAX",
-              "Spark")
-
-  data[] <- lapply(data, factor, levels = levels)
-
-  frequencies <- calculate_freqs(data, questions, labels, prop = TRUE, sample = FALSE)
-
-  return(frequencies)
-
-}
-
-
-
-
 #' @title Summarise access to git and knowledge of git
 #'
 #' @description calculate frequency table for if someone has access to git and calculate frequency table for if someone knows how to version control using git
@@ -254,7 +167,6 @@ summarise_git <- function(data, config, question, prop = TRUE, sample = TRUE) {
   return(frequencies)
 
 }
-
 
 #' @title Summarise capability change by coding frequency
 #'
@@ -331,75 +243,6 @@ summarise_rap_comp <- function(data, config, question, sample = TRUE) {
 
 }
 
-#' @title Summarise capability change by management responsibility
-#'
-#' @description calculate the cross tab of capability change by management responsibility
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_cap_change_by_line_manage <- function(data){
-
-  col1 <- "management"
-
-  col2 <- "coding_ability_change"
-
-  levels1 <- c("Yes",
-               "No - I manage people who do not write code",
-               "No - I don't line manage anyone")
-
-  levels2 <- c(
-    "It has become significantly worse",
-    "It has become slightly worse",
-    "It has stayed the same",
-    "It has become slightly better",
-    "It has become significantly better")
-
-  frequencies <- calculate_multi_table_freqs(data, col1, col2, levels1, levels2)
-
-  return(frequencies)
-
-}
-
-
-#' @title Summarise capability change by CS grade
-#'
-#' @description calculate the cross tab of capability change by CS grade
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-
-summarise_cap_change_by_CS_grade <- function(data){
-
-  col1 <- "CS_grade"
-
-  col2 <- "coding_ability_change"
-
-  levels1 <- c("Higher Executive Officer (or equivalent)",
-               "Senior Executive Officer (or equivalent)",
-               "Grade 6 and 7")
-
-  levels2 <- c(
-    "It has become significantly worse",
-    "It has become slightly worse",
-    "It has stayed the same",
-    "It has become slightly better",
-    "It has become significantly better")
-
-  selected_data <- data |>
-    dplyr::select(CS_grade, coding_ability_change) |>
-    dplyr::mutate(CS_grade = dplyr::case_when(CS_grade %in% c("Grade 7 (or equivalent)",
-                                                              "Grade 6 (or equivalent)") ~ "Grade 6 and 7",
-                                              TRUE ~ CS_grade))
-
-  frequencies <- calculate_multi_table_freqs(selected_data, col1, col2, levels1, levels2)
-
-  return(frequencies)
-
-}
-
 #' @title Summarise programming language knowledge by profession
 #'
 #' @description only used the main summary page. Needs to be turned into wide data for html table.
@@ -445,109 +288,6 @@ summarise_languages_by_prof <- function(data, config, question, prop = TRUE, sam
   outputs$Profession <- dplyr::recode(outputs$Profession, !!!labels)
 
   return(outputs)
-}
-
-
-#' @title Summarise open source practice by profession
-#'
-#' @description only used the main summary page. Needs to be turned into wide data for html table.
-#'
-#' @param data CARS data (pre-processed)
-#'
-#' @return data.frame
-#'
-#' @importFrom dplyr recode
-
-summarise_open_source_by_prof <- function(data) {
-
-  profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
-             "prof_GORS", "prof_GSR", "prof_GSG")
-
-  prof_names <- c("Data engineers",
-                  "Data scientists",
-                  "Digital and data (DDAT)",
-                  "Actuaries",
-                  "Economists (GES)",
-                  "Geographers",
-                  "Operational researchers (GORS)",
-                  "Social researchers (GSR)",
-                  "Statisticians (GSG)")
-
-  names(prof_names) <- profs
-
-  outputs <- lapply(profs, function(prof) {
-    filtered_data <- dplyr::filter(data, get(prof) == "Yes")
-
-    if(nrow(filtered_data) > 0) {
-
-      output <- summarise_coding_practices(filtered_data)
-
-      output <- output[output[[1]] == "Use open source software",]
-
-      output$name <- prof
-
-      return(output)
-    }
-  })
-
-  outputs <- do.call(rbind, outputs)
-
-  rownames(outputs) <- NULL
-
-  outputs$name <- recode(outputs$name, !!!prof_names)
-
-  return(outputs)
-}
-
-
-#' @title Summarise heard of RAP by profession
-#'
-#' @description Create frequency table of RAP awareness for professions
-#'
-#' @param data full CARS dataset after pre-processing
-#'
-#' @return frequency table (data.frame)
-#'
-#' @importFrom dplyr filter mutate case_match arrange
-
-summarise_heard_of_RAP_by_prof <- function(data) {
-
-  filtered_data <- dplyr::filter(data, workplace == "Civil service, including devolved administrations")
-  filtered_RAP_data <- dplyr::filter(filtered_data, heard_of_RAP == "Yes")
-
-  questions <- c("heard_of_RAP")
-
-  profs <- c("prof_DE", "prof_DS", "prof_DDAT", "prof_GAD", "prof_GES", "prof_geog",
-             "prof_GORS", "prof_GSR", "prof_GSG")
-
-  prof_names <- c("Data engineers",
-                  "Data scientists",
-                  "Digital and data (DDAT)",
-                  "Actuaries",
-                  "Economists (GES)",
-                  "Geographers",
-                  "Operational researchers (GORS)",
-                  "Social researchers (GSR)",
-                  "Statisticians (GSG)")
-
-  names(prof_names) <- profs
-
-  frequencies <- calculate_freqs(filtered_data, questions, profs)
-
-  frequencies <- frequencies |>
-    dplyr::mutate(value = factor(value, levels = profs)) |>
-    dplyr::arrange(value) |>
-    dplyr::mutate(n = colSums(filtered_RAP_data[profs] == "Yes") / ifelse(colSums(filtered_data[profs] == "Yes") != 0,
-                                                                          colSums(filtered_data[profs] == "Yes"),
-                                                                          1))
-
-  rownames(frequencies) <- NULL
-  names(frequencies$n) <- NULL
-
-  frequencies$value <- recode(frequencies$value, !!!prof_names)
-
-  return(frequencies)
-
 }
 
 #' @title Summarise open source vs proprietary capability
@@ -620,7 +360,6 @@ summarise_rap_awareness_over_time <- function(data) {
 
     return(RAP_awareness)
 }
-
 
 #' @title Get question metadata
 #'
@@ -721,7 +460,6 @@ calculate_freqs <- function(data, cols, labels, prop = TRUE, sample = FALSE){
   return(frequencies)
 }
 
-
 #' @title Convert frequencies to proportions
 #'
 #' @param data frequency table with three columns (can be of any name): name, value and count
@@ -765,7 +503,6 @@ add_sample_size <- function(frequencies, prop){
   return(frequencies)
 
 }
-
 
 #' @title Create tidy cross table
 #'
