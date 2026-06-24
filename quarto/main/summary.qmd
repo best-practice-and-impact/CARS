@@ -266,12 +266,14 @@ CARS::wrap_outputs("coding-learn-pref", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$coding_improve_barriers,  
+coding_improve_barriers <- dplyr::arrange(tables$coding_improve_barriers, value, desc(n))
+
+plot <- CARS::plot_stacked(coding_improve_barriers,  
                            xlab = "Barrier", 
                            colour_scale = "scale", 
                            font_size = 14)
 
-table <- CARS::df_to_table(tables$coding_improve_barriers,  
+table <- CARS::df_to_table(coding_improve_barriers,  
                            column_headers = c("Barrier", "Yes", "No"), 
                            crosstab = TRUE)
 
@@ -281,12 +283,14 @@ CARS::wrap_outputs("coding-improve-barriers", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$coding_learn_barriers,  
+coding_learn_barriers <- dplyr::arrange(tables$coding_learn_barriers, value, desc(n))
+
+plot <- CARS::plot_stacked(coding_learn_barriers,  
                            xlab = "Barrier", 
                            colour_scale = "scale", 
                            font_size = 14)
 
-table <- CARS::df_to_table(tables$coding_learn_barriers,  
+table <- CARS::df_to_table(coding_learn_barriers,  
                            column_headers = c("Barrier", "Yes", "No"), 
                            crosstab = TRUE)
 
@@ -324,12 +328,13 @@ We asked all respondents who use AI tools when coding at work, what they use the
 
 ai_use_data <- dplyr::filter(tables$ai_use, name != "Other") 
 
+ai_use_data <- dplyr::arrange(ai_use_data, value, n)
 
 plot <- CARS::plot_stacked(data = ai_use_data,
                            colour_scale = "scale",
                    font_size = 14)
 
-table <- CARS::df_to_table(data = tables$ai_use,
+table <- CARS::df_to_table(data = ai_use_data,
                            column_headers = c("AI use", "Yes", "No"), crosstab = TRUE)
 
 
@@ -342,12 +347,14 @@ CARS::wrap_outputs("ai-use", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$cloud,  
+cloud <- dplyr::arrange(tables$cloud, value, desc(n))
+
+plot <- CARS::plot_stacked(cloud,  
                            xlab = "Data Platform", 
                            colour_scale = "scale", 
                            font_size = 14)
 
-table <- CARS::df_to_table(tables$cloud,  
+table <- CARS::df_to_table(cloud,  
                            column_headers = c("Data Platform", "Yes", "No"), 
                            crosstab = TRUE)
 
@@ -412,12 +419,14 @@ CARS::wrap_outputs("rap-implementing", plot, table)
 
 ```{r}
 
-plot <- CARS::plot_stacked(tables$rap_barriers,  
+rap_barriers <- dplyr::arrange(tables$rap_barriers, value, desc(n))
+
+plot <- CARS::plot_stacked(rap_barriers,  
                            xlab = "Barrier", 
                            colour_scale = "scale", 
                            font_size = 14)
 
-table <- CARS::df_to_table(tables$rap_barriers,  
+table <- CARS::df_to_table(rap_barriers,  
                            column_headers = c("Barrier", "Yes", "No"), 
                            crosstab = TRUE)
 
