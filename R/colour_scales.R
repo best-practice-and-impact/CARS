@@ -180,20 +180,13 @@ get_gradient <- function(n, colour = c(18, 67, 109), colour_names = TRUE) {
 #'
 #' @description create a list of 3 colours in RGB; orange, blue and green for plotting
 #'
-#' @param n the number of colours needed
 #' @param colour_names whether to return HTML colour names. TRUE by default.
 #'
 #' @return RGB colours
 #'
 #' @export
 
-get_3colour_scale <- function(n, colour_names = TRUE) {
-
-  if (!is.numeric(n) | length(n) > 1) {
-    stop("n is not a numeric value")
-  } else if (n != 3) {
-    stop("Unexpected value - n should be = 3")
-  }
+get_3colour_scale <- function(colour_names = TRUE) {
 
   colours <- list(c(244, 106, 37), c(18, 67, 109), c(40, 161, 151))
 

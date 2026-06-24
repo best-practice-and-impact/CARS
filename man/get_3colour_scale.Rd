@@ -4,11 +4,9 @@
 \alias{get_3colour_scale}
 \title{create 3 colour palette}
 \usage{
-get_3colour_scale(n, colour_names = TRUE)
+get_3colour_scale(colour_names = TRUE)
 }
 \arguments{
-\item{n}{the number of colours needed}
-
 \item{colour_names}{whether to return HTML colour names. TRUE by default.}
 }
 \value{
