@@ -22,9 +22,9 @@ tables <- CARS::summarise_all(data, config, all_tables = TRUE)
 
 ## How to use this research
 
-Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated. 
+Responding to CARS is voluntary. The results presented here are from a self-selecting sample of government analysts. Because respondents are self-selecting, the results we present reflect the views of the analysts who participated.
 
-For more detail, [see the data collection page](data_collection.qmd). 
+For more detail, [see the data collection page](data_collection.qmd).
 
 ## Coding frequency and tools
 
@@ -32,21 +32,9 @@ We asked respondents if they had any coding experience, inside or outside of wor
 
 To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
 
+# Coding frequency 
+
 #### 2026 data
-
-```{r}
-
-plot <- CARS::plot_freqs(data = tables$time_in_role, 
-                   xlab = "How long have you been in your current role?",
-                   font_size = 14)
-
-table <- CARS::df_to_table(data = tables, 
-                           config = config, 
-                           question = "time_in_role")
-
-CARS::wrap_outputs("time-in-role", plot, table)
-
-```
 
 ```{r}
 
@@ -62,6 +50,10 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
+### Using more coding
+
+In 2026, we also asked respondents whether they would like to use more coding in their role, and `r round(sum(data$coding_freq_pref == "Yes") / nrow(data) * 100, 1)`% said that they would.
+
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$coding_freq_pref, 
@@ -76,7 +68,6 @@ CARS::wrap_outputs("coding-freq-pref", plot, table)
 
 ```
 
-
 ### Access to and knowledge of programming languages
 
 Given a list of programming tools, we asked all respondents with coding experience if the tool was available to use for their work. Note this includes respondents who do not code in their current role.
@@ -84,6 +75,7 @@ Given a list of programming tools, we asked all respondents with coding experien
 Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
 
 ### Use of coding tools
+
 ```{r}
 tables$use <- tables$use |> 
   dplyr::arrange(factor(name, levels = c("Python",
@@ -102,11 +94,12 @@ CARS::wrap_outputs("use", plot, table)
 
 ```
 
+### Knowledge of coding tools
+
 Given the same list of programming tools, the same respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
 
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
-### Knowledge of coding tools
 ```{r}
 tables$knowledge <- tables$knowledge |> 
   dplyr::arrange(factor(name, levels = c("Python",
@@ -125,7 +118,7 @@ CARS::wrap_outputs("knowledge", plot, table)
 
 ```
 
-### Open source capability  over time
+### Open source capability over time
 
 The proportion of respondents who report having the capability to use R and Python, is shown alongside the proportion who are able to use SAS, SPSS or Stata, for the past four years of the survey.
 
@@ -161,7 +154,6 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 
 ```
 
-
 ### Professions capability in different tools
 
 Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
@@ -176,13 +168,11 @@ CARS::df_to_table(tables$languages_by_prof[c(2,1,3)],
 
 ```
 
-
 ### git
-
 
 We asked respondents to answer "Yes", "No" for the following question:
 
-- Do you know how to use Git?
+-   Do you know how to use Git?
 
 Please note these outputs include people with coding experience who do not code in their current role.
 
@@ -200,7 +190,6 @@ table <- CARS::df_to_table(data = tables$git,
 CARS::wrap_outputs("git", plot, table)
 
 ```
-
 
 ## Coding capability and change
 
@@ -223,7 +212,6 @@ table <- CARS::df_to_table(data = tables,
 CARS::wrap_outputs("coding-years", plot, table)
 
 ```
-
 
 ### Change in coding ability during current role
 
@@ -248,6 +236,30 @@ CARS::wrap_outputs("ability-change", plot, table)
 
 ```
 
+### Managing a coding project
+
+We asked respondents if they'd feel confident managing a coding project.
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$manage_project, 
+                   xlab = "Would you feel confident managing a coding project?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "manage_project")
+
+CARS::wrap_outputs("manage-project", plot, table)
+
+```
+
+## Motivation and barriers to coding
+
+### Motivation
+
+Respondents who do not currently code in their role were asked whether they would like to use coding as part of their work.
+
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables,
@@ -263,6 +275,10 @@ table <- CARS::df_to_table(data = tables,
 CARS::wrap_outputs("coding-learn-pref", plot, table)
 
 ```
+
+## Specific barriers
+
+We asked respondents about any barriers they face in learning to code in their current role. The most commonly cited barrier was a lack of opportunity.
 
 ```{r}
 
@@ -280,6 +296,8 @@ table <- CARS::df_to_table(coding_improve_barriers,
 CARS::wrap_outputs("coding-improve-barriers", plot, table)
 
 ```
+
+We also asked respondents about any barriers to improving their coding skills in their current role.
 
 ```{r}
 
@@ -301,6 +319,7 @@ CARS::wrap_outputs("coding-learn-barriers", plot, table)
 ## AI tools
 
 ### Use of AI tools
+
 We asked all respondents who use code in their role, it they use AI tools when coding at work.
 
 The term 'AI' was not defined in this question.
@@ -321,8 +340,7 @@ CARS::wrap_outputs("ai", plot, table)
 
 ### How AI tools are used
 
-We asked all respondents who use AI tools when coding at work, what they use these tools for. 
-
+We asked all respondents who use AI tools when coding at work, what they use these tools for.
 
 ```{r}
 
@@ -345,6 +363,8 @@ CARS::wrap_outputs("ai-use", plot, table)
 
 ### Use of cloud tools
 
+Respondents were asked if they use any cloud data platforms in their current role. 
+
 ```{r}
 
 cloud <- dplyr::arrange(tables$cloud, value, desc(n))
@@ -362,15 +382,14 @@ CARS::wrap_outputs("cloud", plot, table)
 
 ```
 
-
 ## Reproducible analytical pipelines (RAP)
 
 RAP refers to the use of good software engineering practices to make analysis pipelines more reproducible. This approach aims to use automation to improve the quality and efficiency of analytical processes.
 
 The following links contain more resources on RAP:
 
-* you can find minimum RAP standards in the [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
-* you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
+-   you can find minimum RAP standards in the [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
+-   you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
 
 ### Awareness of RAP over time
 
@@ -399,12 +418,14 @@ table <- CARS::df_to_table(freqs[c(2,5:7)],
 CARS::wrap_outputs("rap-awareness-over-time", plot, table)
 ```
 
-### Implimenting RAP
+### Implementing RAP
+
+We asked respondents to what extent they agreed with the statement: "I am currently implementing RAP in my work."
 
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$rap_implementing, 
-                   xlab = "To what extent to you agree with the following statement: 'I am currently implementing RAP in my work'?",
+                   xlab = "'I am currently implementing RAP in my work'?",
                    font_size = 14)
 
 table <- CARS::df_to_table(data = tables, 
@@ -416,6 +437,8 @@ CARS::wrap_outputs("rap-implementing", plot, table)
 ```
 
 ### RAP Barriers
+
+We also asked respondents about the main barriers to implementing RAP in their current role. The most commonly reported barrier was a lack of time.
 
 ```{r}
 
@@ -466,7 +489,6 @@ CARS::wrap_outputs("rap-comp", plot, table)
 ### Consistency of good coding practices
 
 We asked respondents who reported writing code at work how frequently they apply good coding practices when writing code at work.
-
 
 ```{r}
 
@@ -552,6 +574,8 @@ CARS::wrap_outputs("working_practices", plot, table)
 
 ### Standards
 
+Respondents were asked whether they follow any analysis or coding quality standards. The majority indicated that they do, using either internal standards, external guidance, or a combination of both.
+
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$standards, 
@@ -569,6 +593,10 @@ CARS::wrap_outputs("standards", plot, table)
 
 ### Duck Book
 
+Respondents were asked whether they were aware of the Duck Book.
+
+The [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html) is guidance produced by the ONS Analysis Standards and Pipelines Hub. It outlines software engineering best practices tailored to analysts and researchers who work with data using code.
+
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$duck_book, 
@@ -585,6 +613,10 @@ CARS::wrap_outputs("duck_book", plot, table)
 
 ### Packages
 
+In 2026, we asked respondents whether they or their team use cross-government or department-specific analysis packages in their work.
+
+See the list of packages reported by respondents on the [useful pages page](useful_packages.qmd).
+
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$packages, 
@@ -596,21 +628,5 @@ table <- CARS::df_to_table(data = tables,
                            question = "packages")
 
 CARS::wrap_outputs("packages", plot, table)
-
-```
-
-### Manage Project
-
-```{r}
-
-plot <- CARS::plot_freqs(data = tables$manage_project, 
-                   xlab = "Would you feel confident managing a coding project?",
-                   font_size = 14)
-
-table <- CARS::df_to_table(data = tables, 
-                           config = config, 
-                           question = "manage_project")
-
-CARS::wrap_outputs("manage-project", plot, table)
 
 ```
