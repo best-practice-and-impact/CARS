@@ -152,7 +152,7 @@ CARS::df_to_table(tables$languages_by_prof[c(2,1,3)],
 ### git
 
 
-We asked respondents to answer "Yes", "No" or "Don't know" for the following questions:
+We asked respondents to answer "Yes", "No" for the following question:
 
 - Do you know how to use Git?
 
