@@ -36,6 +36,20 @@ To see how this compares to other years, [see the data collection page](data_col
 
 ```{r}
 
+plot <- CARS::plot_freqs(data = tables$time_in_role, 
+                   xlab = "How long have you been in your current role?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "time_in_role")
+
+CARS::wrap_outputs("time-in-role", plot, table)
+
+```
+
+```{r}
+
 plot <- CARS::plot_freqs(data = tables$code_freq, 
                    xlab = "How often do you write code in your current role?",
                    font_size = 14)
@@ -45,6 +59,20 @@ table <- CARS::df_to_table(data = tables,
                            question = "code_freq")
 
 CARS::wrap_outputs("coding-freq", plot, table)
+
+```
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$coding_freq_pref, 
+                   xlab = "Would you prefer to use more coding in your role?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "coding_freq_pref")
+
+CARS::wrap_outputs("coding-freq-pref", plot, table)
 
 ```
 
@@ -161,8 +189,9 @@ Please note these outputs include people with coding experience who do not code 
 ```{r}
 plot <- CARS::plot_freqs(data = tables$git, 
                          font_size = 14, 
-                         xlab = "Do you know how to use Git?") |> 
-  CARS::set_axis_range(0, 1, axis = "y")
+                         xlab = "Do you know how to use Git?",
+                         orientation = "h") |> 
+  CARS::set_axis_range(0, 1, axis = "x")
 
 table <- CARS::df_to_table(data = tables$git, 
                            column_headers = c("Do you know how to use Git?", 
@@ -219,6 +248,52 @@ CARS::wrap_outputs("ability-change", plot, table)
 
 ```
 
+```{r}
+
+plot <- CARS::plot_freqs(data = tables,
+                   config = config,
+                   question = "coding_learn_pref",
+                   xlab = "Would you like to use coding in your current role?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables,
+                           config = config,
+                           question = "coding_learn_pref")
+
+CARS::wrap_outputs("coding-learn-pref", plot, table)
+
+```
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$coding_improve_barriers,  
+                           xlab = "Barrier", 
+                           colour_scale = "scale", 
+                           font_size = 14)
+
+table <- CARS::df_to_table(tables$coding_improve_barriers,  
+                           column_headers = c("Barrier", "Yes", "No"), 
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("coding-improve-barriers", plot, table)
+
+```
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$coding_learn_barriers,  
+                           xlab = "Barrier", 
+                           colour_scale = "scale", 
+                           font_size = 14)
+
+table <- CARS::df_to_table(tables$coding_learn_barriers,  
+                           column_headers = c("Barrier", "Yes", "No"), 
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("coding-learn-barriers", plot, table)
+
+```
+
 ## AI tools
 
 ### Use of AI tools
@@ -261,6 +336,25 @@ table <- CARS::df_to_table(data = tables$ai_use,
 CARS::wrap_outputs("ai-use", plot, table)
 ```
 
+## Cloud tools
+
+### Use of cloud tools
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$cloud,  
+                           xlab = "Data Platform", 
+                           colour_scale = "scale", 
+                           font_size = 14)
+
+table <- CARS::df_to_table(tables$cloud,  
+                           column_headers = c("Data Platform", "Yes", "No"), 
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("cloud", plot, table)
+
+```
+
 
 ## Reproducible analytical pipelines (RAP)
 
@@ -298,6 +392,38 @@ table <- CARS::df_to_table(freqs[c(2,5:7)],
 CARS::wrap_outputs("rap-awareness-over-time", plot, table)
 ```
 
+### Implimenting RAP
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$rap_implementing, 
+                   xlab = "To what extent to you agree with the following statement: 'I am currently implementing RAP in my work'?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "rap_implementing")
+
+CARS::wrap_outputs("rap-implementing", plot, table)
+
+```
+
+### RAP Barriers
+
+```{r}
+
+plot <- CARS::plot_stacked(tables$rap_barriers,  
+                           xlab = "Barrier", 
+                           colour_scale = "scale", 
+                           font_size = 14)
+
+table <- CARS::df_to_table(tables$rap_barriers,  
+                           column_headers = c("Barrier", "Yes", "No"), 
+                           crosstab = TRUE)
+
+CARS::wrap_outputs("rap-barriers", plot, table)
+
+```
 
 ## Good coding practices
 
@@ -415,3 +541,67 @@ CARS::wrap_outputs("working_practices", plot, table)
 
 ```
 
+### Standards
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$standards, 
+                   xlab = "Do you work to any analysis or coding quality standards?",
+                   font_size = 14,
+                   orientation = "h")
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "standards")
+
+CARS::wrap_outputs("standards", plot, table)
+
+```
+
+### Duck Book
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$duck_book, 
+                   xlab = "Are you aware of the 'Duck Book'?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "duck_book")
+
+CARS::wrap_outputs("duck_book", plot, table)
+
+```
+
+### Packages
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$packages, 
+                   xlab = "Do you or your team use any cross-government or department-specific analysis packages in your work?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "packages")
+
+CARS::wrap_outputs("packages", plot, table)
+
+```
+
+### Manage Project
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$manage_project, 
+                   xlab = "Would you feel confident managing a coding project?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "manage_project")
+
+CARS::wrap_outputs("manage-project", plot, table)
+
+```
