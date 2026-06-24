@@ -186,7 +186,7 @@ tidy_colnames <- function(raw_data) {
 
 #' @title Load cached CARS data by year
 #'
-#' @description Load per-year cached CARS data files created by create_all_waves_cache()
+#' @description Load per-year cached CARS data files
 #'
 #' @param cache_dir Directory containing yearly cache files
 #' @param prefix Filename prefix used for yearly cache files
