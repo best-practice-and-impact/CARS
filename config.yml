@@ -633,7 +633,7 @@ standards:
   question: "Do you work to any analysis or coding quality standards?"
   levels: ["Yes, internal to my organisation",
            "Yes, Civil Service or other external standards",
-           "Yes. both internal external and external standards",
+           "Yes, both internal external and external standards",
            "No, I am not aware of any",
            "Not sure"]
 
