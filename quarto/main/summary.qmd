@@ -58,7 +58,8 @@ In 2026, we also asked respondents with coding experience whether they would lik
 
 plot <- CARS::plot_freqs(data = tables$coding_freq_pref, 
                    xlab = "Would you prefer to use more coding in your role?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables, 
                            config = config, 
@@ -164,7 +165,8 @@ Please note that respondents might be members of more than one profession, and m
 
 CARS::df_to_table(tables$languages_by_prof[c(2,1,3)], 
             crosstab = TRUE, 
-            sample = FALSE)
+            sample = FALSE,
+            heatmap = TRUE)
 
 ```
 
@@ -180,8 +182,7 @@ Please note these outputs include people with coding experience who do not code 
 plot <- CARS::plot_freqs(data = tables$git, 
                          font_size = 14, 
                          xlab = "Do you know how to use Git?",
-                         orientation = "h") |> 
-  CARS::set_axis_range(0, 1, axis = "x")
+                         type = "pie")
 
 table <- CARS::df_to_table(data = tables$git, 
                            column_headers = c("Do you know how to use Git?", 
@@ -244,7 +245,8 @@ We asked respondents if they'd feel confident managing a coding project.
 
 plot <- CARS::plot_freqs(data = tables$manage_project, 
                    xlab = "Would you feel confident managing a coding project?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables, 
                            config = config, 
@@ -266,7 +268,8 @@ plot <- CARS::plot_freqs(data = tables,
                    config = config,
                    question = "coding_learn_pref",
                    xlab = "Would you like to use coding in your current role?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables,
                            config = config,
@@ -329,7 +332,8 @@ plot <- CARS::plot_freqs(data = tables,
                    config = config,
                    question = "ai",
                    xlab = "Do you use any AI assistants when coding at work?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables,
                            config = config,
@@ -346,14 +350,14 @@ We asked all respondents who use AI tools when coding at work, what they use the
 
 ai_use_data <- dplyr::filter(tables$ai_use, name != "Other") 
 
-ai_use_data <- dplyr::arrange(ai_use_data, value, n)
+plot <- CARS::plot_likert(ai_use_data,
+                          mid = 3, neutral_mid = TRUE,
+                          break_q_names_col = "name",
+                          max_lines = 2, font_size = 14,
+                          height = 800, width = "100%")
 
-plot <- CARS::plot_stacked(data = ai_use_data,
-                           colour_scale = "scale",
-                   font_size = 14)
-
-table <- CARS::df_to_table(data = ai_use_data,
-                           column_headers = c("AI use", "Yes", "No"), crosstab = TRUE)
+table <- CARS::df_to_table(ai_use_data,
+                           column_headers = c("AI use", "Never", "Rarely", "Sometimes", "Regularly", "Always"), crosstab = TRUE)
 
 
 CARS::wrap_outputs("ai-use", plot, table)
@@ -390,33 +394,6 @@ The following links contain more resources on RAP:
 
 -   you can find minimum RAP standards in the [RAP MVP](rap_mvp_maturity_guidance/Reproducible-Analytical-Pipelines-MVP.md%20at%20master%20·%20best-practice-and-impact/rap_mvp_maturity_guidance%20·%20GitHub)
 -   you can find guidance on quality assuring code in the [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/intro.html)
-
-### Awareness of RAP over time
-
-We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).
-
-```{r}
-freqs <- CARS::summarise_rap_awareness_over_time(all_wave_data)
-```
-
-```{r}
-plot <- CARS::plot_freqs(freqs[c(2,5:7)], 
-                         type = "line", 
-                         xlab = "Year", 
-                         font_size = 14, 
-                         error_y = CARS::set_error_bars(freqs$lower_ci, freqs$upper_ci)) |> 
-  CARS::set_axis_range(0, 1, axis = "y")
-
-table <- CARS::df_to_table(freqs[c(2,5:7)],
-                           column_headers = c(
-                             "Year",
-                             "Heard of RAP (percent)",
-                             "Lower confidence limit",
-                             "Upper confidence limit"),
-                           sample = FALSE)
-
-CARS::wrap_outputs("rap-awareness-over-time", plot, table)
-```
 
 ### Implementing RAP
 
@@ -601,7 +578,8 @@ The [Duck Book](https://best-practice-and-impact.github.io/qa-of-code-guidance/i
 
 plot <- CARS::plot_freqs(data = tables$duck_book, 
                    xlab = "Are you aware of the 'Duck Book'?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables, 
                            config = config, 
@@ -621,7 +599,8 @@ See the list of packages reported by respondents on the [useful pages page](usef
 
 plot <- CARS::plot_freqs(data = tables$packages, 
                    xlab = "Do you or your team use any cross-government or department-specific analysis packages in your work?",
-                   font_size = 14)
+                   font_size = 14,
+                   type = "pie")
 
 table <- CARS::df_to_table(data = tables, 
                            config = config, 

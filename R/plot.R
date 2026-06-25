@@ -261,6 +261,9 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       title = list(text = xlab, x = 0, xanchor = "left", font = list(size = font_size)),
       margin = list(b = 100, t = font_size * 4),
       hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
+      legend = list(
+        font = list(size = font_size)
+      ),
       annotations = list(x = 1, y = 0, text = sample,
                          showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
                          xref='paper', yref='paper', font=list(size = font_size))
