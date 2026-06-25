@@ -52,7 +52,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ### Using more coding
 
-In 2026, we also asked respondents whether they would like to use more coding in their role, and `r round(sum(data$coding_freq_pref == "Yes") / nrow(data) * 100, 1)`% said that they would.
+In 2026, we also asked respondents with coding experience whether they would like to use more coding in their role.
 
 ```{r}
 
@@ -425,7 +425,7 @@ We asked respondents to what extent they agreed with the statement: "I am curren
 ```{r}
 
 plot <- CARS::plot_freqs(data = tables$rap_implementing, 
-                   xlab = "'I am currently implementing RAP in my work'?",
+                   xlab = "'I am currently implementing RAP in my work'",
                    font_size = 14)
 
 table <- CARS::df_to_table(data = tables, 
@@ -574,7 +574,7 @@ CARS::wrap_outputs("working_practices", plot, table)
 
 ### Standards
 
-Respondents were asked whether they follow any analysis or coding quality standards. The majority indicated that they do, using either internal standards, external guidance, or a combination of both.
+Respondents were asked whether they follow any analysis or coding quality standards, whether that be either internal standards, external guidance, or a combination of both.
 
 ```{r}
 
