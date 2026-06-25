@@ -124,11 +124,11 @@ create_dummy_data <- function(type = c("test", "clean")){
                   )
 
   Q19 <- paste0("Q", seq(19.1, 19.7, 0.1), " ", config[["coding_learn_barriers"]][["cols"]][-8])
-  Q20 <- paste0("Q", seq(20.1, 20.11, 0.1), " ", config[["coding_tools_knowledge"]][["cols"]][-11])
-  Q21 <- paste0("Q", seq(21.1, 21.11, 0.1), " ", config[["coding_tools_use"]][["cols"]][-11])
+  Q20 <- paste0("Q20.", seq_len(11), " ", config[["coding_tools_knowledge"]][["cols"]][-11])
+  Q21 <- paste0("Q21.", seq_len(11), " ", config[["coding_tools_use"]][["cols"]][-11])
   Q23 <- paste0("Q", seq(23.1, 23.6, 0.1), " ", config[["cloud"]][["cols"]][-6] )
   Q25 <- paste0("Q", seq(25.1, 25.6, 0.1), " ", config[["ai_tools"]][["cols"]][-6])
-  Q26 <- paste0("Q", seq(26.1, 26.5, 0.1), " ", config[["ai_use"]][["cols"]][-5])
+  Q26 <- paste0("Q", seq(26.1, 26.6, 0.1), " ", config[["ai_use"]][["cols"]][-6])
   Q28 <- paste0("Q", seq(28.1, 28.8, 0.1), " ", config[["coding_practices"]][["cols"]])
   Q29 <- paste0("Q", seq(29.1, 29.6, 0.1), " ", config[["working_practices"]][["cols"]])
   Q30 <- paste0("Q", seq(30.1, 30.5, 0.1), " ", config[["doc"]][["cols"]])
@@ -136,7 +136,7 @@ create_dummy_data <- function(type = c("test", "clean")){
 
   cars_dummy_data[, c(Q19, "Q19.8", Q20, "Q20.12",
                       Q21, "Q21.12", "Q22", Q23, "Q23.7",
-                      "Q24", Q25, Q26, "Q27", Q28, Q29,
+                      "Q24", Q25, "Q25.7", Q26, "Q27", Q28, Q29,
                       Q30, "Q31", Q32)] <- NA
 
   cars_dummy_data <- cars_dummy_data |>
