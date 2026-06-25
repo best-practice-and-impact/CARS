@@ -14,6 +14,8 @@ data <- waves_data$"2026"
 
 all_wave_data <- dplyr::bind_rows(waves_data)
 
+tables <- CARS::summarise_all(data, config, all_tables = TRUE)
+
 ```
 
 
@@ -284,3 +286,20 @@ CARS::df_to_table(frequencies[c(1,3)],
 
 ```
 
+## Time in role
+
+Respondents were asked how long that had been in their current role. 
+
+```{r}
+
+plot <- CARS::plot_freqs(data = tables$time_in_role, 
+                   xlab = "How long have you been in your current role?",
+                   font_size = 14)
+
+table <- CARS::df_to_table(data = tables, 
+                           config = config, 
+                           question = "time_in_role")
+
+CARS::wrap_outputs("time-in-role", plot, table)
+
+```
