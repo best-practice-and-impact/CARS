@@ -122,7 +122,7 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @param question question to display. String, matching config (optional)
 #' @param colour Colour name. Defaults to blue (see @get_gradient())
 #' @param break_q_names_col applies break_q_names to the column. Not applied by default
-#' @param type optional: chart type ("bar" or "line").
+#' @param type optional: chart type ("bar", "line", or "pie).
 #' @param max_lines maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()
 #' @param xlab X axis title (optional)
 #' @param ylab Y axis title (optional)
@@ -135,9 +135,12 @@ freq_subplots <- function(data, xlab, ylab, height, width, bar_colour, nrows = 3
 #' @export
 
 
-plot_freqs <- function(data, config, question, colour, break_q_names_col, type = c("bar", "line"),
+plot_freqs <- function(data, config, question, colour, break_q_names_col, type = c("bar", "line", "pie"),
                        max_lines = 2,  xlab = "", ylab = "", font_size = 12,
                        orientation = c("v", "h"), ...) {
+
+  orientation <- match.arg(orientation)
+  type <- match.arg(type)
 
   if(!missing(config)){
     list2env(get_question_data(config, question), envir = environment())
@@ -146,7 +149,11 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 
   # Set default bar colour
   if (missing(colour)) {
-    colour <- get_gradient(1)[[1]]
+    if (type != "pie") {
+      colour <- get_gradient(1)[[1]]
+    } else {
+      colours <- get_3colour_scale()
+    }
   } else if (!is.character(colour) | length(colour) != 1) {
     stop("Unexpected input - colour should be a single colour name.")
   }
@@ -170,9 +177,6 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
     stop("Unexpected input - font_size is not numeric.")
   }
 
-  orientation <- match.arg(orientation)
-  type <- match.arg(type)
-
   # Apply break_q_names to a column
   if(!missing(break_q_names_col)) {
     # Coerce to character type
@@ -185,23 +189,25 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
 
   axes <- axis_settings(xlab, ylab, font_size)
 
-  if (orientation == "v") {
-    data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
-    x_vals <- data[[1]]
-    y_vals <- data[[2]]
-    x_axis <- axes$cat_axis
-    y_axis <- axes$scale_axis
-    title_text <- xlab
-  } else if (orientation == "h") {
-    data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
-    x_vals <- data[[2]]
-    y_vals <- data[[1]]
-    x_axis <- axes$scale_axis
-    y_axis <- axes$cat_axis
-    ylab <- xlab
-  }
+  if (type != "pie") {
+    if (orientation == "v") {
+      data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+      x_vals <- data[[1]]
+      y_vals <- data[[2]]
+      x_axis <- axes$cat_axis
+      y_axis <- axes$scale_axis
+      title_text <- xlab
+    } else if (orientation == "h") {
+      data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
+      x_vals <- data[[2]]
+      y_vals <- data[[1]]
+      x_axis <- axes$scale_axis
+      y_axis <- axes$cat_axis
+      ylab <- xlab
+    }
 
-  y_axis$title <- "" # Y axis title is created as a caption instead
+    y_axis$title <- "" # Y axis title is created as a caption instead
+  }
 
   if("sample" %in% colnames(data)){
     sample <-  paste0("Sample size = ", data$sample[1])
@@ -233,18 +239,46 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       hovertemplate = hovertext,
       ...
     )
+  } else if (type == "pie") {
+    fig <- plotly::plot_ly(
+      labels = data[[1]],
+      values = abs(data[[2]]),
+      type = "pie",
+      textinfo = "label+percent",
+      texttemplate = "<b>%{percent}</b>",
+      hovertemplate = "%{label}: %{percent}<extra></extra>",
+      marker = list(colors = colours,
+                    line = list(color = '#FFFFFF', width = 1)),
+      ...
+    )
   }
 
   fig <- plotly::config(fig, displayModeBar = F)
-  fig <- plotly::layout(fig,
-                        xaxis = x_axis,
-                        yaxis = y_axis,
-                        margin = list(b = 100, t = font_size * 2),
-                        hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
-                        annotations = list(x = 1, y = 0, text = sample,
-                                           showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                           xref='paper', yref='paper', font=list(size = font_size))
-  )
+
+  if (type == "pie") {
+    fig <- plotly::layout(
+      fig,
+      title = list(text = xlab, x = 0, xanchor = "left", font = list(size = font_size)),
+      margin = list(b = 100, t = font_size * 4),
+      hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
+      legend = list(
+        font = list(size = font_size)
+      ),
+      annotations = list(x = 1, y = 0, text = sample,
+                         showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
+                         xref='paper', yref='paper', font=list(size = font_size))
+    )
+  } else {
+    fig <- plotly::layout(fig,
+                          xaxis = x_axis,
+                          yaxis = y_axis,
+                          margin = list(b = 100, t = font_size * 2),
+                          hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
+                          annotations = list(x = 1, y = 0, text = sample,
+                                             showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
+                                             xref='paper', yref='paper', font=list(size = font_size))
+    )
+  }
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
 

@@ -453,7 +453,7 @@ ability_change:
           "It has become significantly worse"]
 
 coding_improve_barriers:
-  question: "What are the barriers, if any, to improving your coding skills in your current role"
+  question: "What are the barriers, if any, to improving your coding skills in your current role?"
   levels: ["Yes",
            "No"]
   cols:
@@ -607,7 +607,7 @@ doc:
     doc_qa: "Document manual QA steps"
 
 rap_implementing:
-  question: "To what extent to you agree with the following statement: 'I am currently implementing RAP in my work' "
+  question: "To what extent to you agree with the following statement: 'I am currently implementing RAP in my work'?"
   levels: ["Strongly Disagree",
           "Disagree",
           "Neutral",
@@ -633,12 +633,12 @@ standards:
   question: "Do you work to any analysis or coding quality standards?"
   levels: ["Yes, internal to my organisation",
            "Yes, Civil Service or other external standards",
-           "Yes. both internal external and external standards",
+           "Yes, both internal and external standards",
            "No, I am not aware of any",
            "Not sure"]
 
 duck_book:
-  question: "Are you aware of the 'Duck Book' (Quality Assurance of Code for Analysis and Research?)"
+  question: "Are you aware of the 'Duck Book' (Quality Assurance of Code for Analysis and Research)?"
   levels: ["Yes, I use it",
            "Yes, but I don't use it",
            "No"]

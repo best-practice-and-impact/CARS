@@ -10,7 +10,7 @@ plot_freqs(
   question,
   colour,
   break_q_names_col,
-  type = c("bar", "line"),
+  type = c("bar", "line", "pie"),
   max_lines = 2,
   xlab = "",
   ylab = "",
@@ -30,7 +30,7 @@ plot_freqs(
 
 \item{break_q_names_col}{applies break_q_names to the column. Not applied by default}
 
-\item{type}{optional: chart type ("bar" or "line").}
+\item{type}{optional: chart type ("bar", "line", or "pie).}
 
 \item{max_lines}{maximum number of lines. Int, defaults to 2/ See carsurvey::break_q_names()}
 

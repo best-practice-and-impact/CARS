@@ -1,38 +1,75 @@
-#' @title Data frame to html table
+#' @title Convert frequency data frame to HTML table
 #'
-#' @description converts dataframe to presentation HTML table
+#' @description
+#' Creates an HTML table from frequency data, with optional crosstab formatting,
+#' optional heatmap-style cell colouring for percentage values, and optional sample-size footnote.
 #'
-#' @param data list of CARS frequency tables, table names should match config
-#' @param config CARS config
-#' @param question string, question of interest. Name should match config.
-#' @param column_headers optional: list of column headers for the output table
-#' @param crosstab whether to create a cross tabulation. FALSE by default
-#' @param sample additionally returns sample size. TRUE by default
-#' @return HTML table
+#' @param data Frequency data (data frame). Expected input includes columns such as
+#'   category/question text, \code{n} (proportion), and optionally \code{count} and \code{sample}.
+#' @param config CARS config object (optional). If supplied, \code{question} is used with
+#'   \code{get_question_data()} to select relevant columns.
+#' @param question Question key to display/select when \code{config} is provided.
+#' @param crosstab Logical; if \code{TRUE}, formats output as a crosstab via \code{df_to_crosstab()}.
+#' @param column_headers Optional character vector of column names to apply to the output table.
+#' @param sample Logical; if \code{TRUE}, appends sample size as a table footnote.
+#' @param heatmap Logical; if \code{TRUE}, applies heatmap colouring to percentage cells.
+#' @param heatmap_palette Character vector of colours used for heatmap scaling
+#'   (passed to \code{scales::col_numeric()}).
+#' @param crosstab_global_scale Logical; used only when \code{crosstab = TRUE}.
+#'   If \code{TRUE}, all crosstab value columns share one colour scale;
+#'   if \code{FALSE}, each value column is scaled independently.
+#'
+#' @return A \code{kableExtra}/HTML table object.
+#'
+#' @details
+#' The function removes \code{count} and \code{sample} from displayed columns, converts
+#' \code{n} proportions to percentage labels, and applies alignment rules by table type.
+#' Heatmap styling is applied with \code{kableExtra::cell_spec()}, so HTML escaping is disabled
+#' when \code{heatmap = TRUE}.
+#'
+#' @examples
+#' \dontrun{
+#' df_to_table(data = tables$code_freq)
+#'
+#' df_to_table(
+#'   data = tables$code_freq,
+#'   crosstab = TRUE,
+#'   heatmap = TRUE
+#' )
+#' }
+#'
 #' @export
 
-df_to_table <- function(data, config, question, crosstab = FALSE, column_headers, sample = TRUE) {
+df_to_table <- function(data,
+                        config,
+                        question,
+                        crosstab = FALSE,
+                        column_headers,
+                        sample = TRUE,
+                        heatmap = FALSE,
+                        heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
+                        crosstab_global_scale = TRUE) {
 
-  if (!missing(config)){
+  if (!missing(config)) {
     list2env(get_question_data(config, question), envir = environment())
-      data <- data[[cols]]
+    data <- data[[cols]]
   }
 
   table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
 
-  table_data["n"] <- round(table_data["n"] * 100, 1) |> lapply(paste0, "%")
+  # Keep numeric copy for heatmap, show n as percent text
+  n_pct <- round(table_data$n * 100, 1)
+  table_data$n <- paste0(n_pct, "%")
 
   if (crosstab) {
     table_data <- df_to_crosstab(table_data)
-
-    alignment <- c("l", rep("r", ncol(table_data)-1))
+    alignment <- c("l", rep("r", ncol(table_data) - 1))
 
     if (missing(column_headers)) {
       column_headers <- colnames(table_data)
     }
-
   } else {
-    alignment <- c(rep("l", ncol(table_data)-1), "r")
+    alignment <- c(rep("l", ncol(table_data) - 1), "r")
   }
 
   if (!missing(column_headers)) {
@@ -41,11 +78,62 @@ df_to_table <- function(data, config, question, crosstab = FALSE, column_headers
     colnames(table_data) <- c(full_question, "Percentage")
   }
 
+  if (isTRUE(heatmap)) {
+    if (crosstab) {
+      value_cols <- 2:ncol(table_data)
 
-  html <- knitr::kable(table_data, align = alignment, format = "html") |> kableExtra::kable_styling()
+      num_df <- lapply(table_data[value_cols], function(x) {
+        as.numeric(gsub("%", "", as.character(x)))
+      })
 
-  if (sample == TRUE){
-    html <- kableExtra::add_footnote(html, paste0("Sample size = ", data$sample[1]), notation = "none")
+      if (isTRUE(crosstab_global_scale)) {
+        global_domain <- range(unlist(num_df), na.rm = TRUE)
+      }
+
+      for (j in seq_along(value_cols)) {
+        col_idx <- value_cols[j]
+        vals <- num_df[[j]]
+        domain <- if (isTRUE(crosstab_global_scale)) global_domain else range(vals, na.rm = TRUE)
+
+        bg <- scales::col_numeric(palette = heatmap_palette, domain = domain)(vals)
+
+        table_data[[col_idx]] <- kableExtra::cell_spec(
+          table_data[[col_idx]],
+          format = "html",
+          background = bg,
+          color = "white"
+        )
+      }
+    } else {
+      pct_col <- ncol(table_data)
+      bg <- scales::col_numeric(
+        palette = heatmap_palette,
+        domain = range(n_pct, na.rm = TRUE)
+      )(n_pct)
+
+      table_data[[pct_col]] <- kableExtra::cell_spec(
+        table_data[[pct_col]],
+        format = "html",
+        background = bg,
+        color = "white"
+      )
+    }
+  }
+
+  html <- knitr::kable(
+    table_data,
+    align = alignment,
+    format = "html",
+    escape = !isTRUE(heatmap)
+  ) |>
+    kableExtra::kable_styling()
+
+  if (isTRUE(sample)) {
+    html <- kableExtra::add_footnote(
+      html,
+      paste0("Sample size = ", data$sample[1]),
+      notation = "none"
+    )
   }
 
   return(html)

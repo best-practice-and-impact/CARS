@@ -2,7 +2,7 @@
 % Please edit documentation in R/display_tables.R
 \name{df_to_table}
 \alias{df_to_table}
-\title{Data frame to html table}
+\title{Convert frequency data frame to HTML table}
 \usage{
 df_to_table(
   data,
@@ -10,25 +10,58 @@ df_to_table(
   question,
   crosstab = FALSE,
   column_headers,
-  sample = TRUE
+  sample = TRUE,
+  heatmap = FALSE,
+  heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
+  crosstab_global_scale = TRUE
 )
 }
 \arguments{
-\item{data}{list of CARS frequency tables, table names should match config}
+\item{data}{Frequency data (data frame). Expected input includes columns such as
+category/question text, \code{n} (proportion), and optionally \code{count} and \code{sample}.}
 
-\item{config}{CARS config}
+\item{config}{CARS config object (optional). If supplied, \code{question} is used with
+\code{get_question_data()} to select relevant columns.}
 
-\item{question}{string, question of interest. Name should match config.}
+\item{question}{Question key to display/select when \code{config} is provided.}
 
-\item{crosstab}{whether to create a cross tabulation. FALSE by default}
+\item{crosstab}{Logical; if \code{TRUE}, formats output as a crosstab via \code{df_to_crosstab()}.}
 
-\item{column_headers}{optional: list of column headers for the output table}
+\item{column_headers}{Optional character vector of column names to apply to the output table.}
 
-\item{sample}{additionally returns sample size. TRUE by default}
+\item{sample}{Logical; if \code{TRUE}, appends sample size as a table footnote.}
+
+\item{heatmap}{Logical; if \code{TRUE}, applies heatmap colouring to percentage cells.}
+
+\item{heatmap_palette}{Character vector of colours used for heatmap scaling
+(passed to \code{scales::col_numeric()}).}
+
+\item{crosstab_global_scale}{Logical; used only when \code{crosstab = TRUE}.
+If \code{TRUE}, all crosstab value columns share one colour scale;
+if \code{FALSE}, each value column is scaled independently.}
 }
 \value{
-HTML table
+A \code{kableExtra}/HTML table object.
 }
 \description{
-converts dataframe to presentation HTML table
+Creates an HTML table from frequency data, with optional crosstab formatting,
+optional heatmap-style cell colouring for percentage values, and optional sample-size footnote.
+}
+\details{
+The function removes \code{count} and \code{sample} from displayed columns, converts
+\code{n} proportions to percentage labels, and applies alignment rules by table type.
+Heatmap styling is applied with \code{kableExtra::cell_spec()}, so HTML escaping is disabled
+when \code{heatmap = TRUE}.
+}
+\examples{
+\dontrun{
+df_to_table(data = tables$code_freq)
+
+df_to_table(
+  data = tables$code_freq,
+  crosstab = TRUE,
+  heatmap = TRUE
+)
+}
+
 }
