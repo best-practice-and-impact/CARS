@@ -1,4 +1,33 @@
 
+#' @title Load and combine config files
+#'
+#' @description Reads all YAML config files in a folder (or explicit paths) and combines
+#' them into a single config list. Config files must not contain duplicate top-level keys.
+#'
+#' @param ... Paths to YAML config files or a single folder path (character strings)
+#'
+#' @return A combined config list
+#'
+#' @export
+load_configs <- function(...) {
+  paths <- c(...)
+
+  if (length(paths) == 1 && dir.exists(paths)) {
+    paths <- list.files(paths, pattern = "\\.yml$", full.names = TRUE)
+    if (length(paths) == 0) stop("No .yml files found in directory.")
+  } else {
+    missing_files <- paths[!file.exists(paths)]
+    if (length(missing_files) > 0) {
+      stop(paste("Config file(s) not found:", paste(missing_files, collapse = ", ")))
+    }
+  }
+
+  configs <- lapply(paths, yaml::read_yaml)
+
+  do.call(c, configs)
+}
+
+
 #' @title Get tidy data from API
 #'
 #' @description API function for data ingest. Loads data from the smartsurvey API and convert to a tidy data frame.

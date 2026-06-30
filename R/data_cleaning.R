@@ -1,35 +1,4 @@
 
-#' @title Apply skip logic
-#'
-#' @description Applies skip logic to dataset, returning NA for downstream questions to adhere to survey streaming.
-#'
-#' @param data data.frame
-#'
-#' @return cleaned data.frame
-#'
-#' @export
-apply_skip_logic <- function(data) {
-  data <- dplyr::mutate(data, across(c(4:19), ~ dplyr::case_when(workplace == "NHS or local healthcare service" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(20:22), ~ dplyr::case_when(workplace == "Civil service, including devolved administrations"  ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(4:22), ~ dplyr::case_when(!workplace %in% c("Civil service, including devolved administrations", "NHS or local healthcare service") & !is.na(data$workplace) ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(127:129), ~ dplyr::case_when(workplace != "Civil service, including devolved administrations" | department != "Office for National Statistics" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(20:22), ~ dplyr::case_when(!is.na(ons_directorate) & ons_directorate != "test" ~ NA, .default = .)))
-
-  data[, "nhs_band"]  <- dplyr::case_when(data$pay_band %in% c("Local Authority or NJC", "Other / Not sure", "test") & !is.na(data$pay_band)  ~ NA, .default = data$nhs_band)
-  data[, "njc_grade"] <- dplyr::case_when(data$pay_band %in% c("NHS", "Other / Not sure", "test") & !is.na(data$pay_band)  ~ NA, .default = data$njc_grade)
-
-  data <- dplyr::mutate(data, across(c(25:35), ~ dplyr::case_when(coding_exp == "Yes" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(25:26, 125:126), ~ dplyr::case_when(coding_exp == "No" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(78:105), ~ dplyr::case_when(code_freq == "Never" ~ NA, .default = .)))
-  # data <- dplyr::mutate(data, across(c(26:126), ~ dplyr::case_when(coding_learn_pref %in% c("Yes", "No", "Not sure / not applicable") | department != "Office for National Statistics" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(79:93), ~ dplyr::case_when(ai == "No" ~ NA, .default = .)))
-  data <- dplyr::mutate(data, across(c(126), ~ dplyr::case_when(packages != "Yes" ~ NA, .default = .)))
-
-return(data)
-}
-
-
-
 #' @title Clean data
 #'
 #' @description Rename columns, enforce streaming
@@ -42,16 +11,85 @@ return(data)
 
 clean_data <- function(data, config){
 
- data <- rename_cols(data, config)
- data <- data |>
-   apply_skip_logic() |>
-   clean_departments() |>
-   clean_quality_qs()
+  data <- data |>
+    rename_cols(config) |>
+    apply_skip_logic(config) |>
+    clean_departments() |>
+    clean_quality_qs()
 
- return(data)
+  return(data)
 
 }
 
+#' @title Rename columns
+#'
+#' @description Renames columns and removes unnecessary columns
+#'
+#' @param data tidy CARS dataset
+#' @param config CARS config
+#'
+#' @return data.frame
+#'
+#' @export
+
+rename_cols <- function(data, config) {
+  if (ncol(data) != 140) {
+    stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
+  }
+
+  normalise_spaces <- function(x) {
+    x <- gsub("\u00A0", " ", x, fixed = TRUE)
+    x <- trimws(x)
+    return(x)
+  }
+
+  flat <- unlist(config$rename_dict, recursive = TRUE, use.names = TRUE)
+  old_keys <- sub("^[^.]+\\.", "", names(flat))
+  rename_dict <- setNames(unname(flat), old_keys)
+
+  names(data) <- normalise_spaces(names(data))
+  names(rename_dict) <- normalise_spaces(names(rename_dict))
+
+  data <- data %>%
+    rename_with(~ dplyr::coalesce(unname(rename_dict[.x]), .x))
+
+  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
+
+  return(data)
+}
+
+#' @title Apply skip logic
+#'
+#' @description Applies skip logic to dataset, returning NA for downstream questions to adhere to survey streaming.
+#'
+#' @param data data.frame
+#'
+#' @return cleaned data.frame
+#'
+#' @export
+apply_skip_logic <- function(data, config) {
+  for (rule in config$skip_rules) {
+    skip_cols <- rule$skip_columns
+    cond <- rule$condition
+
+    if (cond == "equals") {
+      condition <- data[[rule$trigger_column]] == rule$trigger_value & !is.na(data[[rule$trigger_column]])
+    } else if (cond == "not_equals") {
+      condition <- data[[rule$trigger_column]] != rule$trigger_value & !is.na(data[[rule$trigger_column]])
+    } else if (cond == "in") {
+      condition <- data[[rule$trigger_column]] %in% rule$trigger_value & !is.na(data[[rule$trigger_column]])
+    } else if (cond == "not_in") {
+      condition <- !data[[rule$trigger_column]] %in% rule$trigger_value & !is.na(data[[rule$trigger_column]])
+    }
+
+    data <- dplyr::mutate(
+      data,
+      across(all_of(skip_cols), ~ dplyr::if_else(condition, NA, .))
+    )
+  }
+
+  return(data)
+}
 
 #' @title Clean department data
 #'
@@ -95,43 +133,6 @@ clean_departments <- function(data) {
 
   return(data)
 
-}
-
-#' @title Rename columns
-#'
-#' @description Renames columns and removes unnecessary columns
-#'
-#' @param data tidy CARS dataset
-#' @param config CARS config
-#'
-#' @return data.frame
-#'
-#' @export
-
-rename_cols <- function(data, config) {
-  if (ncol(data) != 140) {
-    stop("Unexpected input: incorrect number of columns. Please use the 2026 CARS dataset.")
-  }
-
-  normalise_spaces <- function(x) {
-    x <- gsub("\u00A0", " ", x, fixed = TRUE)
-    x <- trimws(x)
-    return(x)
-  }
-
-  flat <- unlist(config$rename_dict, recursive = TRUE, use.names = TRUE)
-  old_keys <- sub("^[^.]+\\.", "", names(flat))
-  rename_dict <- setNames(unname(flat), old_keys)
-
-  names(data) <- normalise_spaces(names(data))
-  names(rename_dict) <- normalise_spaces(names(rename_dict))
-
-  data <- data %>%
-    rename_with(~ dplyr::coalesce(unname(rename_dict[.x]), .x))
-
-  data <- data[!colnames(data) %in% c("UserID", "Unique.ID", "Name", "Email", "IP.Address", "Started", "Ended")]
-
-  return(data)
 }
 
 #' Clean quality question columns to remove whitespace
