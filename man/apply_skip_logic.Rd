@@ -4,7 +4,7 @@
 \alias{apply_skip_logic}
 \title{Apply skip logic}
 \usage{
-apply_skip_logic(data)
+apply_skip_logic(data, config)
 }
 \arguments{
 \item{data}{data.frame}

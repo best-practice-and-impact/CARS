@@ -1,7 +1,7 @@
 library(magrittr)
 
 data <- CARS::get_tidy_data_file("2026_data.csv")
-config <- yaml::read_yaml("config.yml")
+config <- CARS::load_configs("configs/")
 
 data <- CARS::clean_data(data, config)
 data <- CARS::derive_vars(data)

@@ -1,0 +1,67 @@
+skip_rules:
+
+  - name: "healthcare_worker"
+    trigger_column: "workplace"
+    trigger_value: "NHS or local healthcare service"
+    skip_columns: ["cs_grade", "department", "department_other", "prof_DE", "prof_DS", "prof_GDD", "prof_GAD", "prof_GES", "prof_geog", "prof_GORS", "prof_GSE", "prof_GSR", "prof_GSG", "prof_none", "prof_other", "ons_directorate"]
+    condition: "equals"
+
+  - name: "civil_service_general"
+    trigger_column: "workplace"
+    trigger_value: "Civil service, including devolved administrations"
+    skip_columns: ["pay_band", "nhs_band", "njc_grade"]
+    condition: "equals"
+
+  - name: "other_workplace"
+    trigger_column: "workplace"
+    trigger_value: ["Civil service, including devolved administrations", "NHS or local healthcare service"]
+    skip_columns: ["cs_grade", "department", "department_other", "prof_DE", "prof_DS", "prof_GDD", "prof_GAD", "prof_GES", "prof_geog", "prof_GORS", "prof_GSE", "prof_GSR", "prof_GSG", "prof_none", "prof_other", "ons_directorate", "pay_band", "nhs_band", "njc_grade"]
+    condition: "not_in"
+
+  - name: "ons_directorate_check"
+    trigger_column: "ons_directorate"
+    trigger_value: "test"
+    skip_columns: ["pay_band", "nhs_band", "njc_grade"]
+    condition: "not_equals"
+
+  - name: "nhs_band_skip"
+    trigger_column: "pay_band"
+    trigger_value: ["Local Authority or NJC", "Other / Not sure", "test"]
+    skip_columns: ["nhs_band"]
+    condition: "in"
+
+  - name: "njc_grade_skip"
+    trigger_column: "pay_band"
+    trigger_value: ["NHS", "Other / Not sure", "test"]
+    skip_columns: ["njc_grade"]
+    condition: "in"
+
+  - name: "coding_exp_yes"
+    trigger_column: "coding_exp"
+    trigger_value: "Yes"
+    skip_columns: ["team", "manage_project", "coding_learn_pref", "learn_avail_resource", "learn_suit_resources", "learn_opportunity", "learn_tools", "learn_manager_support", "learn_peer_support", "learn_no_barrier", "learn_other_barrier"]
+    condition: "equals"
+
+  - name: "coding_exp_no"
+    trigger_column: "coding_exp"
+    trigger_value: "No"
+    skip_columns: ["team", "manage_project", "standards", "duck_book"]
+    condition: "equals"
+
+  - name: "code_freq_never"
+    trigger_column: "code_freq"
+    trigger_value: "Never"
+    skip_columns: ["cloud_none", "cloud_other", "ai", "ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn", "ai_impact", "prac_open_source", "prac_code_style", "prac_functions", "prac_control_flow", "prac_config", "prac_review", "prac_manual_tests", "prac_auto_tests", "work_git", "work_succession", "work_aims"]
+    condition: "equals"
+
+  - name: "ai_no"
+    trigger_column: "ai"
+    trigger_value: "No"
+    skip_columns: ["cloud_other", "ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn"]
+    condition: "equals"
+
+  - name: "packages_no"
+    trigger_column: "packages"
+    trigger_value: "Yes"
+    skip_columns: ["duck_book"]
+    condition: "not_equals"
