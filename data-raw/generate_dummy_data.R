@@ -8,7 +8,7 @@ sample_replace <- purrr::partial(sample, size = 502, replace = TRUE)
 
 sample_replace_500 <- purrr::partial(sample, size = 500, replace = TRUE)
 
-config <- yaml::read_yaml("./config.yml")
+config <- CARS::load_configs("../configs/")
 
 create_dummy_data <- function(type = c("test", "clean")){
 
