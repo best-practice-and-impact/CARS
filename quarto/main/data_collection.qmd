@@ -6,7 +6,7 @@ title: "Data collection"
 library(magrittr)
 
 data <- CARS::get_tidy_data_file("2026_data.csv")
-config <- yaml::read_yaml("../../config.yml")
+config <- CARS::load_configs("../../configs/")
 
 waves_data <- CARS::get_all_waves()
 
