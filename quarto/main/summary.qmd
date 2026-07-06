@@ -163,7 +163,7 @@ CARS::df_to_table(languages_by_prof,
 
 ```
 
-### git
+### Git
 
 We asked respondents to answer "Yes", "No" for the following question:
 
