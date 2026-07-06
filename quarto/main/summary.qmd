@@ -32,7 +32,7 @@ We asked respondents if they had any coding experience, inside or outside of wor
 
 To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
 
-# Coding frequency 
+# Coding frequency
 
 #### 2026 data
 
@@ -50,7 +50,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-### Using more coding
+### Coding interest 
 
 In 2026, we also asked respondents with coding experience whether they would like to use more coding in their role.
 
@@ -78,15 +78,8 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 ### Use of coding tools
 
 ```{r}
-tables$use <- tables$use |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables$use <- tables$use |>
+  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
 
 plot <- CARS::plot_stacked(tables$use, xlab = "Programming tool", colour_scale = "scale", font_size = 14)
 table <- CARS::df_to_table(tables$use, column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
@@ -102,15 +95,8 @@ Given the same list of programming tools, the same respondents were asked if the
 Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
 
 ```{r}
-tables$knowledge <- tables$knowledge |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables$knowledge <- tables$knowledge |>
+  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
 
 plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
 table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
@@ -167,10 +153,9 @@ CARS::df_to_table(tables$languages_by_prof[c(2,1,3)],
             crosstab = TRUE, 
             sample = FALSE,
             heatmap = TRUE)
-
 ```
 
-### git
+### Git
 
 We asked respondents to answer "Yes", "No" for the following question:
 
@@ -367,7 +352,7 @@ CARS::wrap_outputs("ai-use", plot, table)
 
 ### Use of cloud tools
 
-Respondents were asked if they use any cloud data platforms in their current role. 
+Respondents were asked if they use any cloud data platforms in their current role.
 
 ```{r}
 
