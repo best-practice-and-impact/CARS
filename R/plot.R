@@ -188,6 +188,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
   }
 
   axes <- axis_settings(xlab, ylab, font_size)
+  connector_lines <- NULL
 
   if (type != "pie") {
     if (orientation == "v") {
@@ -196,6 +197,9 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       y_vals <- data[[2]]
       x_axis <- axes$cat_axis
       y_axis <- axes$scale_axis
+      if (type == "bar") {
+        y_axis$visible <- FALSE
+      }
       title_text <- xlab
     } else if (orientation == "h") {
       data[[1]] <- factor(data[[1]], levels = rev(unique(data[[1]])))
@@ -203,6 +207,28 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       y_vals <- data[[1]]
       x_axis <- axes$scale_axis
       y_axis <- axes$cat_axis
+      x_axis$visible <- FALSE
+      if (type == "bar") {
+        max_x <- max(abs(data[[2]]), na.rm = TRUE)
+        connector_start <- -0.08 * max_x
+        x_axis$range <- c(connector_start, max_x * 1.12)
+        n_bars <- length(y_vals)
+        connector_lines <- lapply(
+          seq_len(max(0, n_bars - 1)),
+          function(i) {
+            list(
+              type = "line",
+              xref = "paper",
+              yref = "y",
+              x0 = -0.08,
+              x1 = 1,
+              y0 = i - 0.5,
+              y1 = i - 0.5,
+              line = list(color = "#A6A6A6", width = 1, dash = "dot")
+            )
+          }
+        )
+      }
       ylab <- xlab
     }
 
@@ -216,14 +242,20 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
   }
 
   hovertext <- paste0(data[[1]], ": ", round(abs(data[[2]]) * 100, 1), "%", " <extra></extra>")
+  bar_labels <- paste0(round(abs(data[[2]]) * 100, 1), "%")
 
   if (type == "bar") {
     fig <- plotly::plot_ly(
       x = x_vals,
       y = y_vals,
-      marker = list(color = colour),
+      marker = list(color = colour, cornerradius = 6),
       type = "bar",
       orientation = orientation,
+      text = bar_labels,
+      texttemplate = "<b>%{text}</b>",
+      textfont = list(size = font_size * 1.1),
+      textposition = "outside",
+      cliponaxis = FALSE,
       hovertemplate = hovertext,
       ...
     )
@@ -244,9 +276,10 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       labels = data[[1]],
       values = abs(data[[2]]),
       type = "pie",
-      textinfo = "label+percent",
+      textinfo = "none",
       textposition = "outside",
       texttemplate = "<b>%{percent}</b>",
+      textfont = list(size = font_size * 1.1),
       hovertemplate = "%{label}: %{percent}<extra></extra>",
       marker = list(colors = colours,
                     line = list(color = '#FFFFFF', width = 1)),
@@ -270,15 +303,22 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
                          xref='paper', yref='paper', font=list(size = font_size))
     )
   } else {
-    fig <- plotly::layout(fig,
-                          xaxis = x_axis,
-                          yaxis = y_axis,
-                          margin = list(b = 100, t = font_size * 2),
-                          hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
-                          annotations = list(x = 1, y = 0, text = sample,
-                                             showarrow = F, xanchor='right', yanchor='auto', xshift=0, yshift=-100,
-                                             xref='paper', yref='paper', font=list(size = font_size))
+    layout_args <- list(
+      fig,
+      xaxis = x_axis,
+      yaxis = y_axis,
+      margin = list(b = 100, t = font_size * 2),
+      hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
+      annotations = list(
+        x = 1, y = 0, text = sample,
+        showarrow = F, xanchor = 'right', yanchor = 'auto', xshift = 0, yshift = -100,
+        xref = 'paper', yref = 'paper', font = list(size = font_size)
+      )
     )
+    if (!is.null(connector_lines)) {
+      layout_args$shapes <- connector_lines
+    }
+    fig <- do.call(plotly::layout, layout_args)
   }
 
   fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
