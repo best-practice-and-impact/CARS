@@ -50,7 +50,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-### Using more coding
+### Using code more
 
 In 2026, we also asked respondents with coding experience whether they would like to use more coding in their role.
 
