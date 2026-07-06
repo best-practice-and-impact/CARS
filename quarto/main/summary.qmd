@@ -270,15 +270,18 @@ We asked respondents about any barriers they face in learning to code in their c
 
 ```{r}
 
-coding_improve_barriers <- dplyr::arrange(tables$coding_improve_barriers, value, desc(n))
+coding_improve_barriers <- tables$coding_improve_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_improve_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(coding_improve_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("coding-improve-barriers", plot, table)
@@ -289,15 +292,18 @@ We also asked respondents about any barriers to improving their coding skills in
 
 ```{r}
 
-coding_learn_barriers <- dplyr::arrange(tables$coding_learn_barriers, value, desc(n))
+coding_learn_barriers <- tables$coding_learn_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_learn_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(coding_learn_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("coding-learn-barriers", plot, table)
@@ -356,15 +362,18 @@ Respondents were asked if they use any cloud data platforms in their current rol
 
 ```{r}
 
-cloud <- dplyr::arrange(tables$cloud, value, desc(n))
+cloud <- tables$cloud |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(cloud,  
                            xlab = "Data Platform", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(cloud,  
-                           column_headers = c("Data Platform", "Yes", "No"), 
+                           column_headers = c("Data Platform", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("cloud", plot, table)
@@ -404,15 +413,18 @@ We also asked respondents about the main barriers to implementing RAP in their c
 
 ```{r}
 
-rap_barriers <- dplyr::arrange(tables$rap_barriers, value, desc(n))
+rap_barriers <- tables$rap_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(rap_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(rap_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("rap-barriers", plot, table)
