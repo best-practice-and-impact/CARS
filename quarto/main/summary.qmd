@@ -141,7 +141,7 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 
 ```
 
-### Professions capability in different tools
+### Professions capability in different tools (%)
 
 Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
 
@@ -152,7 +152,8 @@ Please note that respondents might be members of more than one profession, and m
 CARS::df_to_table(tables$languages_by_prof[c(2,1,3)], 
             crosstab = TRUE, 
             sample = FALSE,
-            heatmap = TRUE)
+            heatmap = TRUE,
+            show_percent_symbol = FALSE)
 ```
 
 ### Git

@@ -18,6 +18,7 @@
 #' @param crosstab_global_scale Logical; used only when \code{crosstab = TRUE}.
 #'   If \code{TRUE}, all crosstab value columns share one colour scale;
 #'   if \code{FALSE}, each value column is scaled independently.
+#' @param show_percent_symbol Logical; if \code{TRUE}, appends \code{"%"} to displayed percentage values.
 #'
 #' @return A \code{kableExtra}/HTML table object.
 #'
@@ -48,7 +49,8 @@ df_to_table <- function(data,
                         sample = TRUE,
                         heatmap = FALSE,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
-                        crosstab_global_scale = TRUE) {
+                        crosstab_global_scale = TRUE,
+                        show_percent_symbol = TRUE) {
 
   if (!missing(config)) {
     list2env(get_question_data(config, question), envir = environment())
@@ -59,7 +61,11 @@ df_to_table <- function(data,
 
   # Keep numeric copy for heatmap, show n as percent text
   n_pct <- round(table_data$n * 100, 1)
-  table_data$n <- paste0(n_pct, "%")
+  if (isTRUE(show_percent_symbol)) {
+    table_data$n <- paste0(n_pct, "%")
+  } else {
+    table_data$n <- as.character(n_pct)
+  }
 
   if (crosstab) {
     table_data <- df_to_crosstab(table_data)
