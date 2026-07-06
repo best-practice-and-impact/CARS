@@ -59,7 +59,7 @@ df_to_table <- function(data,
 
   # Keep numeric copy for heatmap, show n as percent text
   n_pct <- round(table_data$n * 100, 1)
-  table_data$n <- paste0(n_pct, "%")
+  table_data$n <- paste0(n_pct)
 
   if (crosstab) {
     table_data <- df_to_crosstab(table_data)
@@ -83,7 +83,7 @@ df_to_table <- function(data,
       value_cols <- 2:ncol(table_data)
 
       num_df <- lapply(table_data[value_cols], function(x) {
-        as.numeric(gsub("%", "", as.character(x)))
+        as.numeric(x)
       })
 
       if (isTRUE(crosstab_global_scale)) {
@@ -128,7 +128,8 @@ df_to_table <- function(data,
     format = "html",
     escape = !isTRUE(heatmap)
   ) |>
-    kableExtra::kable_styling()
+    kableExtra::kable_styling() |>
+    kableExtra::column_spec(1, extra_css = "white-space: nowrap;")
 
   if (isTRUE(sample)) {
     html <- kableExtra::add_footnote(
