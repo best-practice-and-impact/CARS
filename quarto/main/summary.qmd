@@ -364,16 +364,18 @@ Respondents were asked if they use any cloud data platforms in their current rol
 
 ```{r}
 
-cloud <- dplyr::arrange(tables$cloud, value, desc(n))
+cloud <- tables$cloud |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", !(name %in% c("None", "Other"))) |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(cloud,  
-                           xlab = "Data Platform", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+plot <- CARS::plot_freqs(cloud,  
+                         xlab = "Data Platform", 
+                         orientation = "h",
+                         font_size = 14)
 
 table <- CARS::df_to_table(cloud,  
-                           column_headers = c("Data Platform", "Yes", "No"), 
-                           crosstab = TRUE)
+                           column_headers = c("Data Platform", "Yes"))
 
 CARS::wrap_outputs("cloud", plot, table)
 
