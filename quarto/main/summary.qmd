@@ -375,7 +375,7 @@ plot <- CARS::plot_freqs(cloud,
                          font_size = 14)
 
 table <- CARS::df_to_table(cloud,  
-                           column_headers = c("Data Platform", "Yes"))
+                           column_headers = c("Data Platform", "Yes(%)"))
 
 CARS::wrap_outputs("cloud", plot, table)
 
@@ -414,16 +414,18 @@ We also asked respondents about the main barriers to implementing RAP in their c
 
 ```{r}
 
-rap_barriers <- dplyr::arrange(tables$rap_barriers, value, desc(n))
+rap_barriers <- tables$rap_barriers |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(rap_barriers,  
-                           xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+plot <- CARS::plot_freqs(rap_barriers,  
+                         xlab = "Barrier", 
+                         orientation = "h", 
+                         font_size = 14)
 
 table <- CARS::df_to_table(rap_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
-                           crosstab = TRUE)
+                           column_headers = c("Barrier", "Yes(%)"))
 
 CARS::wrap_outputs("rap-barriers", plot, table)
 
