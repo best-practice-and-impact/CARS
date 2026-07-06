@@ -272,6 +272,7 @@ We asked respondents about any barriers they face in learning to code in their c
 
 coding_improve_barriers <- tables$coding_improve_barriers |>
   dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
   dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_improve_barriers,  
@@ -294,6 +295,7 @@ We also asked respondents about any barriers to improving their coding skills in
 
 coding_learn_barriers <- tables$coding_learn_barriers |>
   dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
   dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_learn_barriers,  
@@ -364,6 +366,7 @@ Respondents were asked if they use any cloud data platforms in their current rol
 
 cloud <- tables$cloud |>
   dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
   dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(cloud,  
@@ -415,6 +418,7 @@ We also asked respondents about the main barriers to implementing RAP in their c
 
 rap_barriers <- tables$rap_barriers |>
   dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
   dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(rap_barriers,  
