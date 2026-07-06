@@ -245,7 +245,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       values = abs(data[[2]]),
       type = "pie",
       textinfo = "label+percent",
-      texttemplate = "<b>%{percent}</b>",
+      textposition = "outside",
       hovertemplate = "%{label}: %{percent}<extra></extra>",
       marker = list(colors = colours,
                     line = list(color = '#FFFFFF', width = 1)),
