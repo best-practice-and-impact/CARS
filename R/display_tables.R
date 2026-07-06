@@ -101,7 +101,8 @@ df_to_table <- function(data,
           table_data[[col_idx]],
           format = "html",
           background = bg,
-          color = "white"
+          color = "white",
+          extra_css = "display: block; padding: 7.5px; margin: -7.5px; border-radius: 0;"
         )
       }
     } else {
@@ -115,7 +116,8 @@ df_to_table <- function(data,
         table_data[[pct_col]],
         format = "html",
         background = bg,
-        color = "white"
+        color = "white",
+        extra_css = "display: block; padding: 7.5px; margin: -7.5px; border-radius: 0;"
       )
     }
   }
