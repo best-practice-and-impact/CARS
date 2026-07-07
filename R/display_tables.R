@@ -18,6 +18,7 @@
 #' @param crosstab_global_scale Logical; used only when \code{crosstab = TRUE}.
 #'   If \code{TRUE}, all crosstab value columns share one colour scale;
 #'   if \code{FALSE}, each value column is scaled independently.
+#' @param show_percent_symbol Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.
 #'
 #' @return A \code{kableExtra}/HTML table object.
 #'
@@ -48,7 +49,8 @@ df_to_table <- function(data,
                         sample = TRUE,
                         heatmap = FALSE,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
-                        crosstab_global_scale = TRUE) {
+                        crosstab_global_scale = TRUE,
+                        percent = TRUE) {
 
   if (!missing(config)) {
     list2env(get_question_data(config, question), envir = environment())
@@ -59,10 +61,16 @@ df_to_table <- function(data,
 
   # Keep numeric copy for heatmap, show n as percent text
   n_pct <- round(table_data$n * 100, 1)
-  table_data$n <- paste0(n_pct)
+  missing_n <- is.na(n_pct)
+  if (isTRUE(percent)) {
+    table_data$n <- ifelse(missing_n, "", paste0(n_pct, "%"))
+  } else {
+    table_data$n <- ifelse(missing_n, "", as.character(n_pct))
+  }
 
   if (crosstab) {
     table_data <- df_to_crosstab(table_data)
+    table_data <- dplyr::mutate(table_data, dplyr::across(-1, ~ ifelse(is.na(.x), "", as.character(.x))))
     alignment <- c("l", rep("r", ncol(table_data) - 1))
 
     if (missing(column_headers)) {
@@ -96,9 +104,11 @@ df_to_table <- function(data,
         domain <- if (isTRUE(crosstab_global_scale)) global_domain else range(vals, na.rm = TRUE)
 
         bg <- scales::col_numeric(palette = heatmap_palette, domain = domain)(vals)
+        display_vals <- table_data[[col_idx]]
+        display_vals[display_vals %in% c("NA", "NA%")] <- ""
 
         table_data[[col_idx]] <- kableExtra::cell_spec(
-          table_data[[col_idx]],
+          display_vals,
           format = "html",
           background = bg,
           color = "white",
