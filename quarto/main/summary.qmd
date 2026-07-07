@@ -561,6 +561,79 @@ CARS::wrap_outputs("rap-comp", plot, table)
 
 ```
 
+### RAP components over time
+
+The table below shows RAP component use over time for 2023, 2024 and 2026. Empty cells indicate that a component was not asked in that year.
+
+```{r}
+
+years <- c("2023", "2024", "2026")
+
+rap_labels <- unlist(config[["rap_components"]][["cols"]], use.names = TRUE)
+
+rap_components_by_year <- lapply(years, function(year) {
+  year_data <- waves_data[[year]]
+  available_cols <- intersect(names(rap_labels), colnames(year_data))
+
+  if (length(available_cols) == 0) {
+    return(NULL)
+  }
+
+  denominator <- sum(year_data$code_freq != "Never", na.rm = TRUE)
+
+  if (denominator == 0) {
+    return(data.frame(
+      name = unname(rap_labels[available_cols]),
+      year = year,
+      n = NA_real_,
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  data.frame(
+    name = unname(rap_labels[available_cols]),
+    year = year,
+    n = colSums(year_data[available_cols], na.rm = TRUE) / denominator,
+    stringsAsFactors = FALSE
+  )
+}) |>
+  dplyr::bind_rows()
+
+rap_components_over_time <- data.frame(
+  name = unname(rap_labels),
+  year = rep(years, each = length(rap_labels)),
+  stringsAsFactors = FALSE
+) |>
+  dplyr::left_join(rap_components_by_year, by = c("name", "year"))
+
+component_order <- rap_components_over_time |>
+  dplyr::filter(year == "2026") |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::pull(name)
+
+if (length(component_order) == 0) {
+  component_order <- unname(rap_labels)
+}
+
+rap_components_over_time <- rap_components_over_time |>
+  dplyr::mutate(
+    name = factor(name, levels = component_order),
+    year = factor(year, levels = years)
+  ) |>
+  dplyr::arrange(name, year)
+
+CARS::df_to_table(
+  rap_components_over_time[c("name", "year", "n")],
+  crosstab = TRUE,
+  sample = FALSE,
+  heatmap = TRUE,
+  crosstab_global_scale = TRUE,
+  show_percent_symbol = FALSE,
+  column_headers = c("RAP component", years)
+)
+
+```
+
 ### Consistency of good coding practices
 
 We asked respondents who reported writing code at work how frequently they apply good coding practices when writing code at work.

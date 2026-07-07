@@ -211,6 +211,8 @@ summarise_cap_change_by_freq <- function(data, config, question1, question2, pro
 #' @return frequency table (data.frame)
 #'
 #' @importFrom dplyr mutate arrange
+#'
+#' @export
 
 summarise_rap_comp <- function(data, config, question, sample = TRUE) {
 
