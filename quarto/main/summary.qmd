@@ -207,7 +207,7 @@ CARS::df_to_table(languages_by_prof,
             crosstab = TRUE, 
             sample = FALSE,
             heatmap = TRUE,
-            show_percent_symbol = FALSE)
+            percent = FALSE)
 ```
 
 ### Git
@@ -629,7 +629,7 @@ CARS::df_to_table(
   sample = FALSE,
   heatmap = TRUE,
   crosstab_global_scale = TRUE,
-  show_percent_symbol = FALSE,
+  percent = FALSE,
   column_headers = c("RAP component", years)
 )
 
