@@ -102,7 +102,7 @@ df_to_table <- function(data,
           format = "html",
           background = bg,
           color = "white",
-          extra_css = "display: block; padding: 7.5px; margin: -7.5px; border-radius: 0;"
+          extra_css = "display: block; padding: 4.1px; margin: -4.1px; border-radius: 0;"
         )
       }
     } else {
@@ -117,7 +117,7 @@ df_to_table <- function(data,
         format = "html",
         background = bg,
         color = "white",
-        extra_css = "display: block; padding: 7.5px; margin: -7.5px; border-radius: 0;"
+        extra_css = "display: block; padding: 4.1px; margin: -4.1px; border-radius: 0;"
       )
     }
   }
