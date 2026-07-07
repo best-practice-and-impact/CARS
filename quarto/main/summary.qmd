@@ -26,13 +26,13 @@ Responding to CARS is voluntary. The results presented here are from a self-sele
 
 For more detail, [see the data collection page](data_collection.qmd).
 
-## Coding frequency and tools
+# Coding frequency and tools
 
 We asked respondents if they had any coding experience, inside or outside of work. Of `r nrow(data)` respondents, `r round(sum(data$coding_exp == "Yes") / nrow(data) * 100, 1)`% had coding experience. We asked all respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
 
 To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
 
-# Coding frequency
+## Coding frequency
 
 #### 2026 data
 
@@ -50,7 +50,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-### Coding interest 
+## Coding interest 
 
 In 2026, we also asked respondents with coding experience whether they would like to use more coding in their role.
 
@@ -69,7 +69,7 @@ CARS::wrap_outputs("coding-freq-pref", plot, table)
 
 ```
 
-### Knowledge and use of programming languages
+#### Knowledge and use of programming languages
 
 ### Knowledge of coding tools
 
@@ -310,7 +310,7 @@ CARS::wrap_outputs("coding-learn-pref", plot, table)
 
 ```
 
-## Specific barriers
+### Specific barriers
 
 We asked respondents about any barriers they face in learning to code in their current role. The most commonly cited barrier was a lack of opportunity.
 
