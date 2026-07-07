@@ -153,7 +153,8 @@ CARS::df_to_table(tables$languages_by_prof[c(2,1,3)],
             crosstab = TRUE, 
             sample = FALSE,
             heatmap = TRUE,
-            show_percent_symbol = FALSE)
+            show_percent_symbol = FALSE,
+            striped_rows = FALSE)
 ```
 
 ### Git
@@ -334,6 +335,57 @@ table <- CARS::df_to_table(data = tables,
                            question = "ai")
 
 CARS::wrap_outputs("ai", plot, table)
+```
+
+### AI tool use by profession
+
+Overall `r round(tables$ai[tables$ai[[1]] == "Yes", "n"][[1]] * 100, 1)`% of coders reported using AI tools when coding at work. The chart below breaks this down by analytical profession, showing the proportion of coders who use AI assistants.
+
+```{r}
+
+prof_q <- CARS::get_question_data(config, "professions")
+prof_cols <- prof_q$cols[!grepl("none|other", prof_q$cols)]
+prof_labels <- config[["professions"]][["cols"]]
+prof_labels <- prof_labels[!grepl("no profession|Other", prof_labels)]
+
+ai_by_prof <- lapply(prof_cols, function(col) {
+  filtered_data <- dplyr::filter(data, get(col) == "Yes")
+
+  if (nrow(filtered_data) > 0) {
+    ai_freq <- CARS::summarise_data(filtered_data, config, question = "ai", sample = TRUE)
+    ai_yes <- ai_freq[ai_freq[[1]] == "Yes", , drop = FALSE]
+
+    if (nrow(ai_yes) > 0) {
+      ai_yes$profession_col <- col
+      return(ai_yes)
+    }
+  }
+})
+
+ai_by_prof <- do.call(rbind, ai_by_prof)
+
+ai_by_prof <- ai_by_prof |>
+  dplyr::transmute(
+    name = dplyr::recode(profession_col, !!!prof_labels),
+    n = n,
+    count = count,
+    sample = sample
+  ) |>
+  dplyr::arrange(dplyr::desc(n))
+
+ai_by_prof_plot <- ai_by_prof
+colnames(ai_by_prof_plot)[colnames(ai_by_prof_plot) == "sample"] <- "denominator"
+
+plot <- CARS::plot_freqs(ai_by_prof_plot,
+                         xlab = "Profession",
+                         font_size = 14,
+                         orientation = "h")
+
+table <- CARS::df_to_table(ai_by_prof,
+                           column_headers = c("Profession", "Yes"),
+                           sample = FALSE)
+
+CARS::wrap_outputs("ai-by-prof", plot, table)
 ```
 
 ### How AI tools are used
