@@ -69,13 +69,30 @@ CARS::wrap_outputs("coding-freq-pref", plot, table)
 
 ```
 
-### Access to and knowledge of programming languages
+### Knowledge and use of programming languages
 
-Given a list of programming tools, we asked all respondents with coding experience if the tool was available to use for their work. Note this includes respondents who do not code in their current role.
+### Knowledge of coding tools
 
-Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
+Given a list of programming tools, we asked all respondents with coding experience whether they knew how to use each tool, regardless of whether they currently use it in their work. Note this includes respondents who do not code in their current role.
+
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested. 
+
+```{r}
+tables$knowledge <- tables$knowledge |>
+  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
+
+plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+
+CARS::wrap_outputs("knowledge", plot, table)
+
+```
 
 ### Use of coding tools
+
+Using the same list of programming tools, we asked respondents which tools they currently use in their role.
+
+
 
 ```{r}
 tables$use <- tables$use |>
@@ -88,20 +105,48 @@ CARS::wrap_outputs("use", plot, table)
 
 ```
 
-### Knowledge of coding tools
 
-Given the same list of programming tools, the same respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
 
-Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
+### Use compared with knowledge of coding tools
+
+The chart below compares the proportion of respondents with coding experience who reported knowing how to use each programming tool with the proportion who reported using it in their current role.
 
 ```{r}
-tables$knowledge <- tables$knowledge |>
-  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
 
-plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+tools_compare <- dplyr::bind_rows(
+  tables$use |>
+    dplyr::filter(value == "Yes") |>
+    dplyr::transmute(name, status = "Use", n, count, sample),
+  tables$knowledge |>
+    dplyr::filter(value == "Yes") |>
+    dplyr::transmute(name, status = "Knowledge", n, count, sample)
+)
 
-CARS::wrap_outputs("knowledge", plot, table)
+tool_order <- tools_compare |>
+  dplyr::group_by(name) |>
+  dplyr::summarise(total = sum(n, na.rm = TRUE), .groups = "drop") |>
+  dplyr::arrange(dplyr::desc(total)) |>
+  dplyr::pull(name)
+
+tools_compare <- tools_compare |>
+  dplyr::mutate(
+    name = factor(name, levels = tool_order),
+    status = factor(status, levels = c("Use", "Knowledge"))
+  ) |>
+  dplyr::arrange(name, status)
+
+plot <- CARS::plot_dumbbell(tools_compare,
+                            group_order = c("Use", "Knowledge"),
+                            xlab = "Percent",
+                            ylab = "Programming tool",
+                            font_size = 14)
+
+table <- CARS::df_to_table(tools_compare[c(1:3)],
+                           crosstab = TRUE,
+                           column_headers = c("Programming tool", "Use", "Knowledge"),
+                           sample = FALSE)
+
+CARS::wrap_outputs("tools-compare", plot, table)
 
 ```
 
@@ -153,8 +198,7 @@ CARS::df_to_table(tables$languages_by_prof[c(2,1,3)],
             crosstab = TRUE, 
             sample = FALSE,
             heatmap = TRUE,
-            show_percent_symbol = FALSE,
-            striped_rows = FALSE)
+            show_percent_symbol = FALSE)
 ```
 
 ### Git
@@ -339,7 +383,7 @@ CARS::wrap_outputs("ai", plot, table)
 
 ### AI tool use by profession
 
-Overall `r round(tables$ai[tables$ai[[1]] == "Yes", "n"][[1]] * 100, 1)`% of coders reported using AI tools when coding at work. The chart below breaks this down by analytical profession, showing the proportion of coders who use AI assistants.
+Overall, `r round(tables$ai[tables$ai[[1]] == "Yes", "n"][[1]] * 100, 1)`% of coders reported using AI tools when coding at work. The chart below breaks this down by analytical profession, showing the proportion of coders who use AI assistants.
 
 ```{r}
 
