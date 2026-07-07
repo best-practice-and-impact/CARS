@@ -26,13 +26,13 @@ Responding to CARS is voluntary. The results presented here are from a self-sele
 
 For more detail, [see the data collection page](data_collection.qmd).
 
-## Coding frequency and tools
+# Coding frequency and tools
 
 We asked respondents if they had any coding experience, inside or outside of work. Of `r nrow(data)` respondents, `r round(sum(data$coding_exp == "Yes") / nrow(data) * 100, 1)`% had coding experience. We asked all respondents with coding experience "In your current role, how often do you write code to complete your work objectives?"
 
 To see how this compares to other years, [see the data collection page](data_collection.qmd#coding-frequency)
 
-# Coding frequency 
+## Coding frequency
 
 #### 2026 data
 
@@ -50,7 +50,7 @@ CARS::wrap_outputs("coding-freq", plot, table)
 
 ```
 
-### Using more coding
+## Coding interest 
 
 In 2026, we also asked respondents with coding experience whether they would like to use more coding in their role.
 
@@ -69,24 +69,34 @@ CARS::wrap_outputs("coding-freq-pref", plot, table)
 
 ```
 
-### Access to and knowledge of programming languages
+#### Knowledge and use of programming languages
 
-Given a list of programming tools, we asked all respondents with coding experience if the tool was available to use for their work. Note this includes respondents who do not code in their current role.
+### Knowledge of coding tools
 
-Access to tools does not necessarily refer to official policy. Some analysts may have access to tools others cannot access within the same organisation.
+Given a list of programming tools, we asked all respondents with coding experience whether they knew how to use each tool, regardless of whether they currently use it in their work. Note this includes respondents who do not code in their current role.
+
+Please note that capability in programming languages is self-reported here and was not objectively defined or tested. 
+
+```{r}
+tables$knowledge <- tables$knowledge |>
+  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
+
+plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
+table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+
+CARS::wrap_outputs("knowledge", plot, table)
+
+```
 
 ### Use of coding tools
 
+Using the same list of programming tools, we asked respondents which tools they currently use in their role.
+
+
+
 ```{r}
-tables$use <- tables$use |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables$use <- tables$use |>
+  dplyr::arrange(dplyr::desc(value == "Yes"), dplyr::desc(n))
 
 plot <- CARS::plot_stacked(tables$use, xlab = "Programming tool", colour_scale = "scale", font_size = 14)
 table <- CARS::df_to_table(tables$use, column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
@@ -95,27 +105,48 @@ CARS::wrap_outputs("use", plot, table)
 
 ```
 
-### Knowledge of coding tools
 
-Given the same list of programming tools, the same respondents were asked if they knew how to program with the tool to a level suitable for their work, answering "Yes", "No" or "Not required for my work".
 
-Please note that capability in programming languages is self-reported here and was not objectively defined or tested. The statement "not required for my work" was similarly not defined.
+### Use compared with knowledge of coding tools
+
+The chart below compares the proportion of respondents with coding experience who reported knowing how to use each programming tool with the proportion who reported using it in their current role.
 
 ```{r}
-tables$knowledge <- tables$knowledge |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
 
-plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+tools_compare <- dplyr::bind_rows(
+  tables$use |>
+    dplyr::filter(value == "Yes") |>
+    dplyr::transmute(name, status = "Use", n, count, sample),
+  tables$knowledge |>
+    dplyr::filter(value == "Yes") |>
+    dplyr::transmute(name, status = "Knowledge", n, count, sample)
+)
 
-CARS::wrap_outputs("knowledge", plot, table)
+tool_order <- tools_compare |>
+  dplyr::group_by(name) |>
+  dplyr::summarise(total = sum(n, na.rm = TRUE), .groups = "drop") |>
+  dplyr::arrange(dplyr::desc(total)) |>
+  dplyr::pull(name)
+
+tools_compare <- tools_compare |>
+  dplyr::mutate(
+    name = factor(name, levels = tool_order),
+    status = factor(status, levels = c("Use", "Knowledge"))
+  ) |>
+  dplyr::arrange(name, status)
+
+plot <- CARS::plot_dumbbell(tools_compare,
+                            group_order = c("Use", "Knowledge"),
+                            xlab = "Percent",
+                            ylab = "Programming tool",
+                            font_size = 14)
+
+table <- CARS::df_to_table(tools_compare[c(1:3)],
+                           crosstab = TRUE,
+                           column_headers = c("Programming tool", "Use", "Knowledge"),
+                           sample = FALSE)
+
+CARS::wrap_outputs("tools-compare", plot, table)
 
 ```
 
@@ -155,7 +186,7 @@ CARS::wrap_outputs("tools-over-time", plot, table)
 
 ```
 
-### Professions capability in different tools
+### Professions capability in different tools (%)
 
 Differences in preferred languages may lead to silos between analytical professions. Here we show the percentage of respondents reporting capability in different tools, within the different analytical professions.
 
@@ -166,11 +197,11 @@ Please note that respondents might be members of more than one profession, and m
 CARS::df_to_table(tables$languages_by_prof[c(2,1,3)], 
             crosstab = TRUE, 
             sample = FALSE,
-            heatmap = TRUE)
-
+            heatmap = TRUE,
+            show_percent_symbol = FALSE)
 ```
 
-### git
+### Git
 
 We asked respondents to answer "Yes", "No" for the following question:
 
@@ -279,21 +310,25 @@ CARS::wrap_outputs("coding-learn-pref", plot, table)
 
 ```
 
-## Specific barriers
+### Specific barriers
 
 We asked respondents about any barriers they face in learning to code in their current role. The most commonly cited barrier was a lack of opportunity.
 
 ```{r}
 
-coding_improve_barriers <- dplyr::arrange(tables$coding_improve_barriers, value, desc(n))
+coding_improve_barriers <- tables$coding_improve_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_improve_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(coding_improve_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("coding-improve-barriers", plot, table)
@@ -304,15 +339,19 @@ We also asked respondents about any barriers to improving their coding skills in
 
 ```{r}
 
-coding_learn_barriers <- dplyr::arrange(tables$coding_learn_barriers, value, desc(n))
+coding_learn_barriers <- tables$coding_learn_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(coding_learn_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(coding_learn_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("coding-learn-barriers", plot, table)
@@ -342,6 +381,57 @@ table <- CARS::df_to_table(data = tables,
 CARS::wrap_outputs("ai", plot, table)
 ```
 
+### AI tool use by profession
+
+Overall, `r round(tables$ai[tables$ai[[1]] == "Yes", "n"][[1]] * 100, 1)`% of coders reported using AI tools when coding at work. The chart below breaks this down by analytical profession, showing the proportion of coders who use AI assistants.
+
+```{r}
+
+prof_q <- CARS::get_question_data(config, "professions")
+prof_cols <- prof_q$cols[!grepl("none|other", prof_q$cols)]
+prof_labels <- config[["professions"]][["cols"]]
+prof_labels <- prof_labels[!grepl("no profession|Other", prof_labels)]
+
+ai_by_prof <- lapply(prof_cols, function(col) {
+  filtered_data <- dplyr::filter(data, get(col) == "Yes")
+
+  if (nrow(filtered_data) > 0) {
+    ai_freq <- CARS::summarise_data(filtered_data, config, question = "ai", sample = TRUE)
+    ai_yes <- ai_freq[ai_freq[[1]] == "Yes", , drop = FALSE]
+
+    if (nrow(ai_yes) > 0) {
+      ai_yes$profession_col <- col
+      return(ai_yes)
+    }
+  }
+})
+
+ai_by_prof <- do.call(rbind, ai_by_prof)
+
+ai_by_prof <- ai_by_prof |>
+  dplyr::transmute(
+    name = dplyr::recode(profession_col, !!!prof_labels),
+    n = n,
+    count = count,
+    sample = sample
+  ) |>
+  dplyr::arrange(dplyr::desc(n))
+
+ai_by_prof_plot <- ai_by_prof
+colnames(ai_by_prof_plot)[colnames(ai_by_prof_plot) == "sample"] <- "denominator"
+
+plot <- CARS::plot_freqs(ai_by_prof_plot,
+                         xlab = "Profession",
+                         font_size = 14,
+                         orientation = "h")
+
+table <- CARS::df_to_table(ai_by_prof,
+                           column_headers = c("Profession", "Yes"),
+                           sample = FALSE)
+
+CARS::wrap_outputs("ai-by-prof", plot, table)
+```
+
 ### How AI tools are used
 
 We asked all respondents who use AI tools when coding at work, what they use these tools for.
@@ -367,19 +457,23 @@ CARS::wrap_outputs("ai-use", plot, table)
 
 ### Use of cloud tools
 
-Respondents were asked if they use any cloud data platforms in their current role. 
+Respondents were asked if they use any cloud data platforms in their current role.
 
 ```{r}
 
-cloud <- dplyr::arrange(tables$cloud, value, desc(n))
+cloud <- tables$cloud |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(cloud,  
                            xlab = "Data Platform", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(cloud,  
-                           column_headers = c("Data Platform", "Yes", "No"), 
+                           column_headers = c("Data Platform", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("cloud", plot, table)
@@ -419,15 +513,19 @@ We also asked respondents about the main barriers to implementing RAP in their c
 
 ```{r}
 
-rap_barriers <- dplyr::arrange(tables$rap_barriers, value, desc(n))
+rap_barriers <- tables$rap_barriers |>
+  dplyr::filter(value == "Yes") |>
+  dplyr::filter(!(grepl("^Other", name, ignore.case = TRUE) & n == 0)) |>
+  dplyr::arrange(desc(n))
 
 plot <- CARS::plot_stacked(rap_barriers,  
                            xlab = "Barrier", 
-                           colour_scale = "scale", 
-                           font_size = 14)
+                           colour_scale = "gradient", 
+                           font_size = 14) |>
+  plotly::layout(showlegend = FALSE)
 
 table <- CARS::df_to_table(rap_barriers,  
-                           column_headers = c("Barrier", "Yes", "No"), 
+                           column_headers = c("Barrier", "Yes"), 
                            crosstab = TRUE)
 
 CARS::wrap_outputs("rap-barriers", plot, table)
@@ -460,6 +558,79 @@ table <- CARS::df_to_table(tables$rap_components,
                                               "Percentage of analysts who code in their work"))
 
 CARS::wrap_outputs("rap-comp", plot, table)
+
+```
+
+### RAP components over time
+
+The table below shows RAP component use over time for 2023, 2024 and 2026. Empty cells indicate that a component was not asked in that year.
+
+```{r}
+
+years <- c("2023", "2024", "2026")
+
+rap_labels <- unlist(config[["rap_components"]][["cols"]], use.names = TRUE)
+
+rap_components_by_year <- lapply(years, function(year) {
+  year_data <- waves_data[[year]]
+  available_cols <- intersect(names(rap_labels), colnames(year_data))
+
+  if (length(available_cols) == 0) {
+    return(NULL)
+  }
+
+  denominator <- sum(year_data$code_freq != "Never", na.rm = TRUE)
+
+  if (denominator == 0) {
+    return(data.frame(
+      name = unname(rap_labels[available_cols]),
+      year = year,
+      n = NA_real_,
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  data.frame(
+    name = unname(rap_labels[available_cols]),
+    year = year,
+    n = colSums(year_data[available_cols], na.rm = TRUE) / denominator,
+    stringsAsFactors = FALSE
+  )
+}) |>
+  dplyr::bind_rows()
+
+rap_components_over_time <- data.frame(
+  name = unname(rap_labels),
+  year = rep(years, each = length(rap_labels)),
+  stringsAsFactors = FALSE
+) |>
+  dplyr::left_join(rap_components_by_year, by = c("name", "year"))
+
+component_order <- rap_components_over_time |>
+  dplyr::filter(year == "2026") |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::pull(name)
+
+if (length(component_order) == 0) {
+  component_order <- unname(rap_labels)
+}
+
+rap_components_over_time <- rap_components_over_time |>
+  dplyr::mutate(
+    name = factor(name, levels = component_order),
+    year = factor(year, levels = years)
+  ) |>
+  dplyr::arrange(name, year)
+
+CARS::df_to_table(
+  rap_components_over_time[c("name", "year", "n")],
+  crosstab = TRUE,
+  sample = FALSE,
+  heatmap = TRUE,
+  crosstab_global_scale = TRUE,
+  show_percent_symbol = FALSE,
+  column_headers = c("RAP component", years)
+)
 
 ```
 

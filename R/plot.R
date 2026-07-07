@@ -245,7 +245,7 @@ plot_freqs <- function(data, config, question, colour, break_q_names_col, type =
       values = abs(data[[2]]),
       type = "pie",
       textinfo = "label+percent",
-      texttemplate = "<b>%{percent}</b>",
+      textposition = "outside",
       hovertemplate = "%{label}: %{percent}<extra></extra>",
       marker = list(colors = colours,
                     line = list(color = '#FFFFFF', width = 1)),
@@ -552,6 +552,143 @@ plot_grouped <- function(data, n, break_q_names_col, max_lines = 2, xlab = "", y
 
   return(fig)
 
+}
+
+
+#' @title Plot dumbbell chart
+#'
+#' @description Produce a dumbbell chart (plotly) for tidy frequency data with two groups.
+#'
+#' @param data Frequency data (data frame). Expected columns: category, group, value.
+#'   Additional columns such as count and sample are allowed.
+#' @param break_q_names_col applies break_q_names to the column. Not applied by default.
+#' @param group_order optional character vector specifying the order of the two groups.
+#' @param max_lines maximum number of lines. Int, defaults to 2.
+#' @param xlab X axis title.
+#' @param ylab Y axis title.
+#' @param font_size minimum font size for the plot (numeric).
+#' @param ... additional plotly marker arguments.
+#'
+#' @return plotly chart
+#'
+#' @export
+
+plot_dumbbell <- function(data, break_q_names_col, group_order, max_lines = 2,
+                          xlab = "Percent", ylab = "", font_size = 12, ...) {
+
+  if (!is.data.frame(data)) {
+    stop("Unexpected input - data is not a data.frame.")
+  } else if (ncol(data) < 3) {
+    stop("Unexpected input - data should have at least three columns.")
+  } else if (!is.numeric(data[[3]])) {
+    stop("Unexpected input - data column 3 is not numeric.")
+  }
+
+  if (!is.character(xlab) | !is.character(ylab) | length(xlab) > 1 | length(ylab) > 1) {
+    stop("Unexpected input - labels should be single character strings.")
+  }
+
+  if (!is.numeric(font_size)) {
+    stop("Unexpected input - font_size is not numeric.")
+  }
+
+  if (!missing(break_q_names_col)) {
+    data[[break_q_names_col]] <- as.character(data[[break_q_names_col]])
+    data[[break_q_names_col]] <- break_q_names(data[[break_q_names_col]], max_lines = max_lines)
+  }
+
+  if (missing(group_order)) {
+    group_order <- unique(as.character(data[[2]]))
+  }
+
+  if (length(group_order) != 2) {
+    stop("Unexpected input - dumbbell chart requires exactly two groups.")
+  }
+
+  data[[1]] <- factor(data[[1]], levels = unique(data[[1]]))
+  data[[2]] <- factor(as.character(data[[2]]), levels = group_order)
+
+  wide_data <- data |>
+    dplyr::select(1, 2, 3) |>
+    tidyr::pivot_wider(names_from = 2, values_from = 3) |>
+    data.frame(check.names = FALSE)
+
+  wide_data[[1]] <- factor(wide_data[[1]], levels = rev(levels(data[[1]])))
+
+  colours <- get_2colour_scale(2)
+  names(colours) <- group_order
+
+  sample <- ""
+  if ("sample" %in% colnames(data) && length(unique(stats::na.omit(data$sample))) == 1) {
+    sample <- paste0("Sample size = ", stats::na.omit(data$sample)[1])
+  }
+
+  fig <- plotly::plot_ly()
+
+  fig <- fig |>
+    plotly::add_segments(
+      data = wide_data,
+      x = wide_data[[group_order[1]]],
+      xend = wide_data[[group_order[2]]],
+      y = wide_data[[1]],
+      yend = wide_data[[1]],
+      line = list(color = "#bdbdbd", width = 3),
+      hoverinfo = "skip",
+      showlegend = FALSE
+    ) |>
+    plotly::add_markers(
+      data = wide_data,
+      x = wide_data[[group_order[1]]],
+      y = wide_data[[1]],
+      name = group_order[1],
+      marker = list(color = colours[[group_order[1]]], size = 10),
+      hovertemplate = paste0(group_order[1], ": %{x:.1%}<extra></extra>"),
+      ...
+    ) |>
+    plotly::add_markers(
+      data = wide_data,
+      x = wide_data[[group_order[2]]],
+      y = wide_data[[1]],
+      name = group_order[2],
+      marker = list(color = colours[[group_order[2]]], size = 10),
+      hovertemplate = paste0(group_order[2], ": %{x:.1%}<extra></extra>"),
+      ...
+    )
+
+  fig <- plotly::config(fig, displayModeBar = F)
+
+  fig <- plotly::layout(
+    fig,
+    xaxis = list(
+      title = xlab,
+      tickfont = list(size = font_size),
+      titlefont = list(size = font_size * 1.2),
+      tickformat = ".0%"
+    ),
+    yaxis = list(
+      title = "",
+      tickfont = list(size = font_size),
+      titlefont = list(size = font_size * 1.2)
+    ),
+    margin = list(b = 100, t = font_size * 2),
+    legend = list(
+      orientation = "h",
+      xanchor = "center",
+      yanchor = "bottom",
+      x = 0.5,
+      y = 1,
+      traceorder = "normal",
+      font = list(size = font_size)
+    ),
+    hoverlabel = list(bgcolor = "white", font = list(size = font_size)),
+    annotations = list(x = 1, y = 0, text = sample,
+                       showarrow = F, xanchor = 'right', yanchor = 'auto', xshift = 0, yshift = -100,
+                       xref = 'paper', yref = 'paper', font = list(size = font_size))
+  )
+
+  fig <- plotly::layout(fig, annotations = create_y_lab(ylab, font_size))
+
+  return(fig)
 }
 
 
