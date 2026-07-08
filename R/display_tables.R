@@ -58,11 +58,6 @@ df_to_table <- function(data,
     "border-right: 0 !important;"
   )
   heatmap_row_css <- "border-top: 0 !important; border-bottom: 0 !important;"
-  table_attr <- if (isTRUE(heatmap)) {
-    'style="border-collapse: collapse; border-spacing: 0;"'
-  } else {
-    NULL
-  }
 
   if (!missing(config)) {
     list2env(get_question_data(config, question), envir = environment())
@@ -128,13 +123,18 @@ df_to_table <- function(data,
     }
   }
 
-  html <- knitr::kable(
-    table_data,
+  kable_args <- list(
+    x = table_data,
     align = alignment,
     format = "html",
-    escape = TRUE,
-    table.attr = table_attr
-  ) |>
+    escape = TRUE
+  )
+
+  if (isTRUE(heatmap)) {
+    kable_args$table.attr <- 'style="border-collapse: collapse; border-spacing: 0;"'
+  }
+
+  html <- do.call(knitr::kable, kable_args) |>
     kableExtra::kable_styling(
       full_width = FALSE,
       position = "left",
