@@ -25,8 +25,7 @@
 #' @details
 #' The function removes \code{count} and \code{sample} from displayed columns, converts
 #' \code{n} proportions to percentage labels, and applies alignment rules by table type.
-#' Heatmap styling is applied with \code{kableExtra::cell_spec()}, so HTML escaping is disabled
-#' when \code{heatmap = TRUE}.
+#' Heatmap styling is applied at the table-cell level with \code{kableExtra::column_spec()}.
 #'
 #' @examples
 #' \dontrun{
@@ -51,6 +50,19 @@ df_to_table <- function(data,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
                         crosstab_global_scale = TRUE,
                         percent = TRUE) {
+  heatmap_col_css <- paste(
+    "padding: 6px 10px !important;",
+    "border-top: 0 !important;",
+    "border-bottom: 0 !important;",
+    "border-left: 0 !important;",
+    "border-right: 0 !important;"
+  )
+  heatmap_row_css <- "border-top: 0 !important; border-bottom: 0 !important;"
+  table_attr <- if (isTRUE(heatmap)) {
+    'style="border-collapse: collapse; border-spacing: 0;"'
+  } else {
+    NULL
+  }
 
   if (!missing(config)) {
     list2env(get_question_data(config, question), envir = environment())
@@ -68,7 +80,7 @@ df_to_table <- function(data,
     table_data$n <- ifelse(missing_n, "", as.character(n_pct))
   }
 
-  if (crosstab) {
+  if (isTRUE(crosstab)) {
     table_data <- df_to_crosstab(table_data)
     table_data <- dplyr::mutate(table_data, dplyr::across(-1, ~ ifelse(is.na(.x), "", as.character(.x))))
     alignment <- c("l", rep("r", ncol(table_data) - 1))
@@ -86,10 +98,11 @@ df_to_table <- function(data,
     colnames(table_data) <- c(full_question, "Percentage")
   }
 
-  if (isTRUE(heatmap)) {
-    if (crosstab) {
-      value_cols <- 2:ncol(table_data)
+  heatmap_backgrounds <- list()
 
+  if (isTRUE(heatmap)) {
+    if (isTRUE(crosstab)) {
+      value_cols <- 2:ncol(table_data)
       num_df <- lapply(table_data[value_cols], function(x) {
         as.numeric(x)
       })
@@ -102,33 +115,16 @@ df_to_table <- function(data,
         col_idx <- value_cols[j]
         vals <- num_df[[j]]
         domain <- if (isTRUE(crosstab_global_scale)) global_domain else range(vals, na.rm = TRUE)
-
         bg <- scales::col_numeric(palette = heatmap_palette, domain = domain)(vals)
-        display_vals <- table_data[[col_idx]]
-        display_vals[display_vals %in% c("NA", "NA%")] <- ""
-
-        table_data[[col_idx]] <- kableExtra::cell_spec(
-          display_vals,
-          format = "html",
-          background = bg,
-          color = "white",
-          extra_css = "display: block; padding: 4.1px; margin: -4.1px; border-radius: 0;"
-        )
+        table_data[[col_idx]][table_data[[col_idx]] %in% c("NA", "NA%")] <- ""
+        heatmap_backgrounds[[as.character(col_idx)]] <- bg
       }
     } else {
       pct_col <- ncol(table_data)
-      bg <- scales::col_numeric(
-        palette = heatmap_palette,
-        domain = range(n_pct, na.rm = TRUE)
-      )(n_pct)
-
-      table_data[[pct_col]] <- kableExtra::cell_spec(
-        table_data[[pct_col]],
-        format = "html",
-        background = bg,
-        color = "white",
-        extra_css = "display: block; padding: 4.1px; margin: -4.1px; border-radius: 0;"
-      )
+      pct_domain <- range(n_pct, na.rm = TRUE)
+      bg <- scales::col_numeric(palette = heatmap_palette, domain = pct_domain)(n_pct)
+      table_data[[pct_col]][table_data[[pct_col]] %in% c("NA", "NA%")] <- ""
+      heatmap_backgrounds[[as.character(pct_col)]] <- bg
     }
   }
 
@@ -136,10 +132,35 @@ df_to_table <- function(data,
     table_data,
     align = alignment,
     format = "html",
-    escape = !isTRUE(heatmap)
+    escape = TRUE,
+    table.attr = table_attr
   ) |>
-    kableExtra::kable_styling() |>
+    kableExtra::kable_styling(
+      full_width = FALSE,
+      position = "left",
+      bootstrap_options = "condensed"
+    ) |>
     kableExtra::column_spec(1, extra_css = "white-space: nowrap;")
+
+  if (isTRUE(heatmap)) {
+    heatmap_cols <- if (isTRUE(crosstab)) 2:ncol(table_data) else ncol(table_data)
+
+    for (col_idx in heatmap_cols) {
+      html <- kableExtra::column_spec(
+        html,
+        col_idx,
+        background = heatmap_backgrounds[[as.character(col_idx)]],
+        color = "white",
+        extra_css = heatmap_col_css
+      )
+    }
+
+    html <- kableExtra::row_spec(
+      html,
+      1:nrow(table_data),
+      extra_css = heatmap_row_css
+    )
+  }
 
   if (isTRUE(sample)) {
     html <- kableExtra::add_footnote(
