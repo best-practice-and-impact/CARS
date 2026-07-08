@@ -64,20 +64,15 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 
 ```{r}
 
-tables$use <- tables$use |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables_use <- tables$use |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", name != "None") |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(tables$use, xlab = "Programming tool", colour_scale = "scale", font_size = 14)
-table <- CARS::df_to_table(tables$use, column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+plot <- CARS::plot_freqs(tables_use, xlab = "Programming tool use", orientation = "h", font_size = 14)
+table <- CARS::df_to_table(tables_use, column_headers = c("Programming language", "Use"))
 
-CARS::wrap_outputs("access", plot, table)
+CARS::wrap_outputs("use", plot, table)
 
 ```
 
@@ -89,18 +84,13 @@ Please note that capability in programming languages is self-reported here and w
 
 ```{r}
 
-tables$knowledge <- tables$knowledge |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables_knowledge <- tables$knowledge |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", name != "None") |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No"), crosstab = TRUE)
+plot <- CARS::plot_freqs(tables_knowledge, xlab = "Programming tool knowledge", orientation = "h", font_size = 14)
+table <- CARS::df_to_table(tables_knowledge, column_headers = c("Programming language", "Knowledge"))
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -119,8 +109,8 @@ Please note these outputs include people who do not code at work.
 ```{r}
 plot <- CARS::plot_freqs(data = tables$git, 
                          font_size = 14, 
-                         xlab = "Do you know how to use Git?") |> 
-  CARS::set_axis_range(0, 1, axis = "y")
+                         xlab = "Do you know how to use Git?",
+                         type = "pie")
 
 table <- CARS::df_to_table(data = tables$git, 
                            column_headers = c("Do you know how to use Git?", 

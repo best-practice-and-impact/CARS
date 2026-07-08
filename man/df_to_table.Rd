@@ -13,7 +13,8 @@ df_to_table(
   sample = TRUE,
   heatmap = FALSE,
   heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
-  crosstab_global_scale = TRUE
+  crosstab_global_scale = TRUE,
+  show_percent_symbol = TRUE
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ category/question text, \code{n} (proportion), and optionally \code{count} and \
 \item{crosstab_global_scale}{Logical; used only when \code{crosstab = TRUE}.
 If \code{TRUE}, all crosstab value columns share one colour scale;
 if \code{FALSE}, each value column is scaled independently.}
+
+\item{show_percent_symbol}{Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.}
 }
 \value{
 A \code{kableExtra}/HTML table object.
