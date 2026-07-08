@@ -3,9 +3,10 @@
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
   color: #373a3c !important;
+  font-weight: bold;
 }
 
-#TOC > ul > li > a.active {
+#TOC > ul > li > ul > li > a.active {
   background-color: white;
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
@@ -14,7 +15,7 @@
 }
 
 
-#TOC > ul > li > ul > li > a.active {
+#TOC > ul > li > ul > li > ul > li > a.active {
   background-color: white;
   border-bottom: none;
   border-left: 1px solid #F46A25 !important;
@@ -30,6 +31,12 @@
 }
 
 #TOC > ul > li > ul > li > a:hover {
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
+}
+
+#TOC > ul > li > ul > li > ul > li > a:hover {
   background-color: #F46A25;
   border-left: 1px solid #F46A25;
   color: #373a3c !important;
