@@ -1,0 +1,111 @@
+#TOC > ul > li > a.active {
+  background-color: white;
+  border-bottom: none;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
+  font-weight: bold;
+}
+
+#TOC > ul > li > ul > li > a.active {
+  background-color: white;
+  border-bottom: none;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
+  font-weight: bold;
+}
+
+
+#TOC > ul > li > ul > li > ul > li > a.active {
+  background-color: white;
+  border-bottom: none;
+  border-left: 1px solid #F46A25 !important;
+  color: #373a3c !important;
+  font-weight: bold;
+}
+
+
+#TOC > ul > li > a:hover {
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
+}
+
+#TOC > ul > li > ul > li > a:hover {
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
+}
+
+#TOC > ul > li > ul > li > ul > li > a:hover {
+  background-color: #F46A25;
+  border-left: 1px solid #F46A25;
+  color: #373a3c !important;
+}
+
+.sidebar nav[role=doc-toc]>h2 {
+  font-weight: bold;
+}
+
+.navbar {
+  background-color: #12436D;
+  padding-bottom: 4px;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+
+.navbar-collapse > ul > li > a {
+  color: white !important;
+}
+
+.nav-link.active {
+  border-bottom: 4px solid #F46A25;
+  background-color: #12436D;
+}
+
+.navbar-collapse > ul > li > a {
+  border-bottom: 4px solid #12436D;
+}
+
+.navbar-collapse > ul > li > a:hover {
+  border-bottom: 4px solid #F46A25;
+}
+
+.navbar-collapse > ul > li > a:focus {
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
+  color: black;
+}
+
+.navbar-toggle {
+  color: white;
+  border-width: 2px;
+}
+
+.navbar-toggle:hover {
+  background-color: #F46A25;
+  border-color: #F46A25;
+}
+
+.navbar-toggle:focus {
+  background-color: #F46A25;
+  border: 2px solid #F46A25;
+  color: black;
+}
+
+.toggle-button {
+  text-decoration: underline;
+}
+
+.toggle-button:hover {
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
+  color: black;
+}
+
+p > a:hover{
+  background-color: #F46A25;
+  border-bottom: 4px solid #F46A25;
+  color: black;
+}

@@ -11,21 +11,19 @@ output:
 
 library(magrittr)
 
-data <- CARS::get_tidy_data_file("2024_data.csv")
-config <- yaml::read_yaml("../../../config.yml")
+data <- CARS::get_tidy_data_file("2026_data.csv")
+config <- CARS::load_configs("../../../configs/")
 
-data <- CARS::clean_data(data, config)
-data <- CARS::derive_vars(data)
+data <- CARS::get_all_waves(years = 2026)
 
 data <- data[!is.na(data$department) & data$department == "Scottish Government (excl. agencies)", ]
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
 
-
 ```
 
 :::{.callout-note}
-Please note, these are the initial summary statistics for CARS 2024 and further analysis will follow. 
+Please note, these are the initial summary statistics for CARS 2026 and further analysis will follow. 
 We advise linking directly to this document when distributing to ensure the most up to date information.
 :::
 
@@ -66,20 +64,15 @@ Access to tools does not necessarily refer to official policy. Some analysts may
 
 ```{r}
 
-tables$access <- tables$access |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables_use <- tables$use |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", name != "None") |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(tables$access, xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$access, column_headers = c("Programming tool", "Yes", "No", "Don't know"), crosstab = TRUE)
+plot <- CARS::plot_freqs(tables_use, xlab = "Programming tool use", orientation = "h", font_size = 14)
+table <- CARS::df_to_table(tables_use, column_headers = c("Programming language", "Use"))
 
-CARS::wrap_outputs("access", plot, table)
+CARS::wrap_outputs("use", plot, table)
 
 ```
 
@@ -91,18 +84,13 @@ Please note that capability in programming languages is self-reported here and w
 
 ```{r}
 
-tables$knowledge <- tables$knowledge |> 
-  dplyr::arrange(factor(name, levels = c("Python",
-                                         "R", 
-                                         "SQL",
-                                         "Matlab",
-                                         "SAS",
-                                         "SPSS", 
-                                         "Stata",
-                                         "VBA")))
+tables_knowledge <- tables$knowledge |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", name != "None") |>
+  dplyr::select(name, n, count, sample)
 
-plot <- CARS::plot_stacked(tables$knowledge,  xlab = "Programming tool", colour_scale = "3scale", font_size = 14)
-table <- CARS::df_to_table(tables$knowledge,  column_headers = c("Programming tool", "Yes", "No", "Not required for my work"), crosstab = TRUE)
+plot <- CARS::plot_freqs(tables_knowledge, xlab = "Programming tool knowledge", orientation = "h", font_size = 14)
+table <- CARS::df_to_table(tables_knowledge, column_headers = c("Programming language", "Knowledge"))
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -111,64 +99,28 @@ CARS::wrap_outputs("knowledge", plot, table)
 ### Access to and knowledge of git
 
 
-We asked respondents to answer "Yes", "No" or "Don't know" for the following questions:
+We asked respondents to answer "Yes" or "No" for the following question:
 
-- Is git available to use in your work?
 - Do you know how to use git to version-control your work?
 
 Please note these outputs include people who do not code at work.
 
-### Access to git
-
-```{r}
-plot <- CARS::plot_freqs(data = tables$access_git, 
-                         xlab = "Is Git available to use for your work?", 
-                         font_size = 14) |> 
-  CARS::set_axis_range(0, 1, axis = "y")
-
-table <- CARS::df_to_table(data = tables$access_git, 
-                           column_headers = c("Is Git available to use for your work?", 
-                                              "Percentage"))
-
-CARS::wrap_outputs("git-access", plot, table)
-
-```
-
 ### Knowledge of git
 ```{r}
-plot <- CARS::plot_freqs(data = tables$git_knowledge, 
+plot <- CARS::plot_freqs(data = tables$git, 
                          font_size = 14, 
-                         xlab = "Do you know how to use Git for your work?") |> 
-  CARS::set_axis_range(0, 1, axis = "y")
+                         xlab = "Do you know how to use Git?",
+                         type = "pie")
 
-table <- CARS::df_to_table(data = tables$git_knowledge, 
-                           column_headers = c("Do you know how to use Git for your work?", 
+table <- CARS::df_to_table(data = tables$git, 
+                           column_headers = c("Do you know how to use Git?", 
                                               "Percentage"))
 
-CARS::wrap_outputs("git-knowledge", plot, table)
+CARS::wrap_outputs("git", plot, table)
 
 ```
 
 ## Coding capability and change
-
-### Where respondents first learned to code
-
-Respondents with coding experience were asked where they first learned to code.
-
-These data only show where people first learned to code. They do not show all the settings in which they learned to code, to what extent, or how long ago.
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$first_learned,
-                         xlab = "Where did you first learn to code?", font_size = 14,
-                         orientation = "h")
-table <- CARS::df_to_table(data = tables,
-                           config = config,
-                           question = "first_learned")
-
-CARS::wrap_outputs("where-learned", plot, table)
-
-```
 
 ### Coding experience
 
@@ -309,49 +261,6 @@ We asked respondents about their knowledge of and opinions on [reproducible anal
 The [RAP champions](https://analysisfunction.civilservice.gov.uk/support/reproducible-analytical-pipelines/reproducible-analytical-pipeline-rap-champions/) are a network of analysts across government who promote and support RAP development in their departments. Please [contact the analysis standards and pipelines team](mailto:asap@ons.gov.uk) for any enquiries about RAP or the champions network.
 
 The [Analysis Function RAP strategy](https://analysisfunction.civilservice.gov.uk/policy-store/reproducible-analytical-pipelines-strategy/) was released in June 2022 and sets out plans for adopting RAP across government.
-
-### Knowledge of RAP
-
-We asked all respondents if they had heard anything about reproducible analytical pipelines (RAPs).
-
-```{r}
-
-plot <- CARS::plot_freqs(tables$rap_knowledge,  
-                         xlab = "Have you heard of RAP?", 
-                         font_size = 14,
-                         orientation = "v")
-table <- CARS::df_to_table(tables$rap_knowledge, 
-                           column_headers = c("Have you heard of RAP?", "Percent"))
- 
-CARS::wrap_outputs("rap-knowledge", plot, table)
-
-```
-
-### Opinions on RAP
-
-We asked respondents who had heard of RAP whether they agreed with a series of statements.
-
-```{r}
-
-plot <- CARS::plot_likert(tables$rap_opinions,
-                          mid = 3, break_q_names_col = "name",
-                          max_lines = 2, font_size = 14,
-                          height = 700, width = "100%")
-
-table <- CARS::df_to_table(tables$rap_opinions,
-                           column_headers = c(
-                             "Statement",
-                             "Strongly Disagree (%)",
-                             "Disagree (%)",
-                             "Neutral (%)",
-                             "Agree (%)",
-                             "Strongly Agree (%)"
-                             ),
-                           crosstab = TRUE)
-
-CARS::wrap_outputs("rap-opinions", plot, table)
-
-```
 
 ## RAP scores
 
