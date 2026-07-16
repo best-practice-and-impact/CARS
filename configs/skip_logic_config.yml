@@ -45,19 +45,19 @@ skip_rules:
   - name: "coding_exp_no"
     trigger_column: "coding_exp"
     trigger_value: "No"
-    skip_columns: ["team", "manage_project", "standards", "duck_book"]
+    skip_columns: ["standards", "duck_book"]
     condition: "equals"
 
   - name: "code_freq_never"
     trigger_column: "code_freq"
     trigger_value: "Never"
-    skip_columns: ["cloud_none", "cloud_other", "ai", "ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn", "ai_impact", "prac_open_source", "prac_code_style", "prac_functions", "prac_control_flow", "prac_config", "prac_review", "prac_manual_tests", "prac_auto_tests", "work_git", "work_succession", "work_aims"]
+    skip_columns: ["ai", "ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn", "ai_impact", "prac_open_source", "prac_code_style", "prac_functions", "prac_control_flow", "prac_config", "prac_review", "prac_manual_tests", "prac_auto_tests", "work_git", "work_succession", "work_aims", "work_roles", "work_publish_code", "work_qa"]
     condition: "equals"
 
   - name: "ai_no"
     trigger_column: "ai"
     trigger_value: "No"
-    skip_columns: ["cloud_other", "ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn"]
+    skip_columns: ["ai_gpt", "ai_github", "ai_google", "ai_microsoft", "ai_claude", "ai_codex", "ai_other", "ai_use_write", "ai_use_debug", "ai_use_doc", "ai_use_testing", "ai_use_question", "ai_use_learn", "ai_impact"]
     condition: "equals"
 
   - name: "packages_no"
