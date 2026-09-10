@@ -50,7 +50,7 @@ df_to_table <- function(data,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
                         crosstab_global_scale = TRUE,
                         percent = TRUE,
-                        download = FALSE,
+                        download = TRUE,
                         download_filename = NULL,
                         download_label = "Download table as CSV",
                         download_dir = "downloads") {
