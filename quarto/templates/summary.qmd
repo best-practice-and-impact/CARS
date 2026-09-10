@@ -20,9 +20,15 @@ data <- {{{filter}}}
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
 
-download_dir <- file.path(
-  "downloads",
+tmp_dir <- file.path(
+  tempdir(),
   janitor::make_clean_names({{{department}}})
+)
+
+dir.create(
+  tmp_dir,
+  recursive = TRUE,
+  showWarnings = FALSE
 )
 
 ```
@@ -55,7 +61,7 @@ table <- CARS::df_to_table(data = tables,
                            config = config, 
                            question = "code_freq",
                            download_filename = "code-frequency.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("coding-freq", plot, table)
 
@@ -80,7 +86,7 @@ plot <- CARS::plot_freqs(tables_use, xlab = "Programming tool use", orientation 
 table <- CARS::df_to_table(tables_use, 
                            column_headers = c("Programming tool", "Percentage", "Count", "Total"),
                            download_filename = "code-language-use.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("use", plot, table)
 
@@ -103,7 +109,7 @@ plot <- CARS::plot_freqs(tables_knowledge, xlab = "Programming tool knowledge", 
 table <- CARS::df_to_table(tables_knowledge, 
                            column_headers = c("Programming tool", "Percentage", "Count", "Total"),
                            download_filename = "code-language-knowledge.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -131,7 +137,7 @@ table <- CARS::df_to_table(data = tables$git,
                                               "Count",
                                               "Total"),
                            download_filename = "git-knowledge.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("git", plot, table)
 
@@ -155,7 +161,7 @@ table <- CARS::df_to_table(data = tables,
                            config = config,
                            question = "coding_years",
                            download_filename = "coding-experience-years.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("coding-years", plot, table)
 
@@ -179,7 +185,7 @@ table <- CARS::df_to_table(data = tables,
                            config = config,
                            question = "ability_change",
                            download_filename = "coding-ability-change.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("ability-change", plot, table)
 
@@ -213,7 +219,7 @@ table <- CARS::df_to_table(tables$coding_practices,
                              ),
                            crosstab = TRUE,
                            download_filename = "coding-practices.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("good-practices", plot, table)
 
@@ -245,7 +251,7 @@ table <- CARS::df_to_table(tables$doc,
                              ),
                            crosstab = TRUE,
                            download_filename = "code-documentation.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("doc", plot, table)
 
@@ -275,7 +281,7 @@ table <- CARS::df_to_table(tables$working_practices,
                              ),
                            crosstab = TRUE,
                            download_filename = "good-work-pracices.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("working_practices", plot, table)
 
@@ -315,8 +321,44 @@ table <- CARS::df_to_table(tables$rap_components,
                                               "Type",
                                               "Percentage of analysts who code in their work"),
                            download_filename = "rap-components.csv",
-                           download_dir = download_dir)
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("rap-comp", plot, table)
 
+```
+
+### Download summary tables
+
+```{r}
+dir.create("downloads", showWarnings = FALSE)
+
+csv_files <- list.files(tmp_dir)
+
+zip_file <- file.path(
+  "downloads",
+  paste0(
+    janitor::make_clean_names({{{department}}}),
+    ".zip"
+  )
+)
+
+if (length(csv_files) > 0) {
+  if (file.exists(zip_file)) {
+    unlink(zip_file)
+  }
+  utils::zip(
+    zipfile = zip_file,
+    files = list.files(
+      tmp_dir,
+      full.names = TRUE
+    )
+  )
+}
+
+htmltools::tags$a(
+  href = zip_file,
+  download = basename(zip_file),
+  class = "btn btn-primary",
+  "Download all tables"
+)
 ```

@@ -205,31 +205,6 @@ df_to_table <- function(data,
       na = ""
     )
 
-    csv_href <- gsub("\\\\", "/", csv_path)
-
-    download_link <- htmltools::tags$p(
-      class = "table-download",
-      htmltools::tags$a(
-        href = csv_href,
-        download = download_filename,
-        class = "btn btn-outline-primary btn-sm",
-        role = "button",
-        `aria-label` = paste(download_label, download_filename),
-        htmltools::tags$i(
-          class = "bi bi-download",
-          `aria-hidden` = "true"
-        ),
-        htmltools::HTML("&nbsp;"),
-        download_label
-      )
-    )
-
-    return(
-      htmltools::tagList(
-        htmltools::HTML(as.character(html)),
-        download_link
-      )
-    )
   }
 
   return(html)
