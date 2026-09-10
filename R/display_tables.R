@@ -49,7 +49,11 @@ df_to_table <- function(data,
                         heatmap = FALSE,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
                         crosstab_global_scale = TRUE,
-                        percent = TRUE) {
+                        percent = TRUE,
+                        download = FALSE,
+                        download_filename = NULL,
+                        download_label = "Download table as CSV",
+                        download_dir = "downloads") {
   heatmap_col_css <- paste(
     "padding: 6px 10px !important;",
     "border-top: 0 !important;",
@@ -64,7 +68,7 @@ df_to_table <- function(data,
     data <- data[[cols]]
   }
 
-  table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
+  table_data <- data
 
   # Keep numeric copy for heatmap, show n as percent text
   n_pct <- round(table_data$n * 100, 1)
@@ -76,6 +80,7 @@ df_to_table <- function(data,
   }
 
   if (isTRUE(crosstab)) {
+    table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
     table_data <- df_to_crosstab(table_data)
     table_data <- dplyr::mutate(table_data, dplyr::across(-1, ~ ifelse(is.na(.x), "", as.character(.x))))
     alignment <- c("l", rep("r", ncol(table_data) - 1))
@@ -90,7 +95,7 @@ df_to_table <- function(data,
   if (!missing(column_headers)) {
     colnames(table_data) <- column_headers
   } else {
-    colnames(table_data) <- c(full_question, "Percentage")
+    colnames(table_data) <- c(full_question, "Percentage", "Count", "Total")
   }
 
   heatmap_backgrounds <- list()
@@ -167,6 +172,63 @@ df_to_table <- function(data,
       html,
       paste0("Sample size = ", data$sample[1]),
       notation = "none"
+    )
+  }
+
+  if (isTRUE(download)) {
+
+    if (is.null(download_filename)) {
+      stop(
+        "`download_filename` must be supplied when `download = TRUE`.",
+        call. = FALSE
+      )
+    }
+
+    download_filename <- basename(download_filename)
+
+    if (!grepl("\\.csv$", download_filename, ignore.case = TRUE)) {
+      download_filename <- paste0(download_filename, ".csv")
+    }
+
+    dir.create(
+      download_dir,
+      recursive = TRUE,
+      showWarnings = FALSE
+    )
+
+    csv_path <- file.path(download_dir, download_filename)
+
+    utils::write.csv(
+      table_data,
+      file = csv_path,
+      row.names = FALSE,
+      na = ""
+    )
+
+    csv_href <- gsub("\\\\", "/", csv_path)
+
+    download_link <- htmltools::tags$p(
+      class = "table-download",
+      htmltools::tags$a(
+        href = csv_href,
+        download = download_filename,
+        class = "btn btn-outline-primary btn-sm",
+        role = "button",
+        `aria-label` = paste(download_label, download_filename),
+        htmltools::tags$i(
+          class = "bi bi-download",
+          `aria-hidden` = "true"
+        ),
+        htmltools::HTML("&nbsp;"),
+        download_label
+      )
+    )
+
+    return(
+      htmltools::tagList(
+        htmltools::HTML(as.character(html)),
+        download_link
+      )
     )
   }
 

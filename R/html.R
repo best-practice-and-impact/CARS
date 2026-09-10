@@ -11,40 +11,92 @@
 #'
 #'@export
 
+#' @title Wrap outputs
+#'
+#' @description Wrap corresponding chart and table outputs and add toggle functionality
+#'
+#' @param name output name - string
+#' @param chart plotly widget
+#' @param table html table (character string or htmltools object)
+#'
+#' @return html widget containing the chart, table and toggling functionality
+#'
+#' @export
+
 wrap_outputs <- function(name, chart, table) {
 
-  # Validate name
-  if (typeof(name) != "character" | length(name) != 1) {
+  if (typeof(name) != "character" || length(name) != 1) {
     stop("Unexpected input - name should be a single character string")
-  } else if (!grepl("^[A-Za-z]+$", substring(name, 1, 1))) { # If the first character of output_name is not a letter
+  } else if (!grepl("^[A-Za-z]+$", substring(name, 1, 1))) {
     stop("Invalid html ID - output_name should begin with a letter")
-  } else if (!grepl("^[a-zA-Z0-9_.-]*$", name)) { # If output_name contains invalid characters for html id
-    stop("invalid html ID - output_name should not include special characters other than underscores, hyphens or stops")
+  } else if (!grepl("^[a-zA-Z0-9_.-]*$", name)) {
+    stop(
+      paste(
+        "Invalid html ID - output_name should not include special",
+        "characters other than underscores, hyphens or stops"
+      )
+    )
   }
 
-  # Validate chart and table
-  if (!any(class(chart) == "htmlwidget")) {
+  if (!inherits(chart, "htmlwidget")) {
     stop("Unexpected input - chart is not an html widget")
   }
 
-  if (typeof(table) != "character" | length(table) != 1) {
-    stop("Unexpected input - table is not a character object")
+  if (is.character(table) && length(table) == 1) {
+
+    table <- htmltools::HTML(
+      gsub("```\\{=html\\}|```\\s*", "", table)
+    )
+
+  } else if (
+    inherits(table, "shiny.tag") ||
+    inherits(table, "shiny.tag.list") ||
+    inherits(table, "html")
+  ) {
+
+  } else {
+
+    stop(
+      paste(
+        "Unexpected input - table must be either",
+        "a character HTML string or an htmltools object"
+      )
+    )
+
   }
-
-
-  # Remove knitr tags from table html if needed
-  table <- htmltools::HTML(gsub("```\\{=html\\}|```\n", "", table))
 
   js <- htmltools::HTML(setup_table_toggle())
 
   buttons <- htmltools::HTML(insert_table_toggle(name))
 
-  chart_div <- htmltools::HTML(paste0('<div id="', name, '-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">'))
-  table_div <- htmltools::HTML(paste0('<div id="', name, '-table">'))
+  chart_div <- htmltools::HTML(
+    paste0(
+      '<div id="',
+      name,
+      '-chart" role="img" aria-label="Chart. Click the show table button to present the data as a text table instead.">'
+    )
+  )
+
+  table_div <- htmltools::HTML(
+    paste0('<div id="', name, '-table">')
+  )
+
   close_div <- htmltools::HTML("</div>")
 
-  widget <- htmlwidgets::prependContent(chart, js, buttons, chart_div)
-  widget <- htmlwidgets::appendContent(widget, close_div, table_div, table, close_div)
+  widget <- htmlwidgets::prependContent(
+    chart,
+    js,
+    buttons,
+    chart_div
+  )
+
+  widget <- htmlwidgets::appendContent(
+    widget,
+    close_div,
+    table_div,
+    table,
+    close_div
+  )
 
   return(widget)
 
