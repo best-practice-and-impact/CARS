@@ -324,7 +324,7 @@ CARS::wrap_outputs("ability-change", plot, table)
 
 ### Managing a coding project
 
-We asked respondents if they'd feel confident managing a coding project.
+Respondents who do not currently code in their role were asked if they'd feel confident managing a coding project.
 
 ```{r}
 
@@ -376,30 +376,6 @@ We asked respondents about any barriers they face in learning to code in their c
 
 ```{r}
 
-coding_improve_barriers <- tables$coding_improve_barriers |> 
-  dplyr::arrange(value, desc(n)) |>
-  dplyr::filter(value == "Yes", name != "Other") |>
-  dplyr::select(name, n, count, sample)
-
-plot <- CARS::plot_freqs(coding_improve_barriers,  
-                         xlab = "Barrier", 
-                         orientation = "h", 
-                         font_size = 14)
-
-table <- CARS::df_to_table(coding_improve_barriers,  
-                           column_headers = c("Barrier", "Percentage", "Count", "Total"),
-                           download = TRUE,
-                           download_filename = "learning-to-code-barriers.csv",
-                           download_dir = tmp_dir)
-
-CARS::wrap_outputs("coding-improve-barriers", plot, table)
-
-```
-
-We also asked respondents about any barriers to improving their coding skills in their current role.
-
-```{r}
-
 coding_learn_barriers <- tables$coding_learn_barriers |> 
   dplyr::arrange(value, desc(n)) |>
   dplyr::filter(value == "Yes", name != "Other") |>
@@ -411,12 +387,30 @@ plot <- CARS::plot_freqs(coding_learn_barriers,
                          font_size = 14)
 
 table <- CARS::df_to_table(coding_learn_barriers,  
-                           column_headers = c("Barrier", "Percentage", "Count", "Total"),
-                           download = TRUE,
-                           download_filename = "improving-coding-barriers.csv",
-                           download_dir = tmp_dir)
+                           column_headers = c("Barrier", "Yes(%)"))
 
 CARS::wrap_outputs("coding-learn-barriers", plot, table)
+
+```
+
+We also asked respondents about any barriers to improving their coding skills in their current role.
+
+```{r}
+
+coding_improve_barriers <- tables$coding_improve_barriers |> 
+  dplyr::arrange(value, desc(n)) |>
+  dplyr::filter(value == "Yes", name != "Other") |>
+  dplyr::select(name, n, count, sample)
+
+plot <- CARS::plot_freqs(coding_improve_barriers,  
+                         xlab = "Barrier", 
+                         orientation = "h", 
+                         font_size = 14)
+
+table <- CARS::df_to_table(coding_improve_barriers,  
+                           column_headers = c("Barrier", "Yes(%)"))
+
+CARS::wrap_outputs("coding-improve-barriers", plot, table)
 
 ```
 
