@@ -8,6 +8,7 @@ export(clean_data)
 export(clean_departments)
 export(compare_models)
 export(create_filtered_pages)
+export(create_table_download_zip)
 export(create_y_lab)
 export(derive_language_status)
 export(derive_vars)
@@ -49,16 +50,20 @@ export(tidy_colnames)
 export(to_upper_first)
 export(wrap_outputs)
 import(dplyr)
-importFrom(dplyr,across)
-importFrom(dplyr,all_of)
-importFrom(dplyr,arrange)
-importFrom(dplyr,case_when)
-importFrom(dplyr,count)
-importFrom(dplyr,group_by)
-importFrom(dplyr,mutate)
-importFrom(dplyr,recode)
-importFrom(dplyr,rename_with)
-importFrom(dplyr,select)
+importFrom(dplyr,
+  across,
+  all_of,
+  arrange,
+  case_when,
+  count,
+  group_by,
+  mutate,
+  recode,
+  rename_with,
+  select
+)
 importFrom(magrittr,"%>%")
-importFrom(tidyr,drop_na)
-importFrom(tidyr,pivot_longer)
+importFrom(tidyr,
+  drop_na,
+  pivot_longer
+)

@@ -14,7 +14,11 @@ df_to_table(
   heatmap = FALSE,
   heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
   crosstab_global_scale = TRUE,
-  show_percent_symbol = TRUE
+  percent = TRUE,
+  download = FALSE,
+  download_filename = NULL,
+  download_label = "Download table as CSV",
+  download_dir = "downloads"
 )
 }
 \arguments{
@@ -41,6 +45,19 @@ category/question text, \code{n} (proportion), and optionally \code{count} and \
 If \code{TRUE}, all crosstab value columns share one colour scale;
 if \code{FALSE}, each value column is scaled independently.}
 
+\item{download}{Logical; if \code{TRUE}, writes the displayed table to a CSV
+file for inclusion in downloadable table bundles.}
+
+\item{download_filename}{Character string giving the name of the CSV file to
+create when \code{download = TRUE}. If omitted, an error is raised.}
+
+\item{download_label}{Character string specifying the text displayed in the
+download link. Ignored unless individual table downloads are enabled.}
+
+\item{download_dir}{Character string specifying the directory in which CSV
+files are written when \code{download = TRUE}. The directory is created if
+it does not already exist.}
+
 \item{show_percent_symbol}{Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.}
 }
 \value{
@@ -53,8 +70,7 @@ optional heatmap-style cell colouring for percentage values, and optional sample
 \details{
 The function removes \code{count} and \code{sample} from displayed columns, converts
 \code{n} proportions to percentage labels, and applies alignment rules by table type.
-Heatmap styling is applied with \code{kableExtra::cell_spec()}, so HTML escaping is disabled
-when \code{heatmap = TRUE}.
+Heatmap styling is applied at the table-cell level with \code{kableExtra::column_spec()}.
 }
 \examples{
 \dontrun{

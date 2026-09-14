@@ -11,11 +11,15 @@ wrap_outputs(name, chart, table)
 
 \item{chart}{plotly widget}
 
-\item{table}{html table (string) - knitr::kable is recommended}
+\item{table}{html table (character string or htmltools object)}
 }
 \value{
 html widget containing the chart, table and toggling functionality
+
+html widget containing the chart, table and toggling functionality
 }
 \description{
+Wrap corresponding chart and table outputs and add toggle functionality
+
 Wrap corresponding chart and table outputs and add toggle functionality
 }

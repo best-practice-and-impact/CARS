@@ -82,6 +82,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
       filter <- glue::glue('data[!is.na(data${prof_cols[[i]]}) & data${prof_cols[[i]]} == "Yes", ]')
 
       title <- paste0("Profession summary: ", prof_names[[i]])
+      name <- prof_names[[i]]
     } else if (type == "departments") {
       if (dep_list[i] == "Department for Environment, Food and Rural Affairs (including agencies)") {
         filter <- glue::glue('data[data$defra, ]')
@@ -90,6 +91,7 @@ create_filtered_pages <- function(data, type = c("professions", "departments"),
       }
 
       title <- paste0("Department summary: ", dep_list[i])
+      name <- dep_list[i]
     }
 
     # Custom open and close tags are used here to avoid clashes with quarto syntax
