@@ -19,6 +19,15 @@
 #'   If \code{TRUE}, all crosstab value columns share one colour scale;
 #'   if \code{FALSE}, each value column is scaled independently.
 #' @param show_percent_symbol Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.
+#' @param download Logical; if \code{TRUE}, writes the displayed table to a CSV
+#'   file for inclusion in downloadable table bundles.
+#' @param download_filename Character string giving the name of the CSV file to
+#'   create when \code{download = TRUE}. If omitted, an error is raised.
+#' @param download_label Character string specifying the text displayed in the
+#'   download link. Ignored unless individual table downloads are enabled.
+#' @param download_dir Character string specifying the directory in which CSV
+#'   files are written when \code{download = TRUE}. The directory is created if
+#'   it does not already exist.
 #'
 #' @return A \code{kableExtra}/HTML table object.
 #'
@@ -49,7 +58,11 @@ df_to_table <- function(data,
                         heatmap = FALSE,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
                         crosstab_global_scale = TRUE,
-                        percent = TRUE) {
+                        percent = TRUE,
+                        download = FALSE,
+                        download_filename = NULL,
+                        download_label = "Download table as CSV",
+                        download_dir = "downloads") {
   heatmap_col_css <- paste(
     "padding: 6px 10px !important;",
     "border-top: 0 !important;",
@@ -64,7 +77,7 @@ df_to_table <- function(data,
     data <- data[[cols]]
   }
 
-  table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
+  table_data <- data
 
   # Keep numeric copy for heatmap, show n as percent text
   n_pct <- round(table_data$n * 100, 1)
@@ -76,6 +89,7 @@ df_to_table <- function(data,
   }
 
   if (isTRUE(crosstab)) {
+    table_data <- dplyr::select(table_data, !dplyr::any_of(c("count", "sample")))
     table_data <- df_to_crosstab(table_data)
     table_data <- dplyr::mutate(table_data, dplyr::across(-1, ~ ifelse(is.na(.x), "", as.character(.x))))
     alignment <- c("l", rep("r", ncol(table_data) - 1))
@@ -90,7 +104,7 @@ df_to_table <- function(data,
   if (!missing(column_headers)) {
     colnames(table_data) <- column_headers
   } else {
-    colnames(table_data) <- c(full_question, "Percentage")
+    colnames(table_data) <- c(full_question, "Percentage", "Count", "Total")
   }
 
   heatmap_backgrounds <- list()
@@ -170,6 +184,38 @@ df_to_table <- function(data,
     )
   }
 
+  if (isTRUE(download)) {
+
+    if (is.null(download_filename)) {
+      stop(
+        "`download_filename` must be supplied when `download = TRUE`.",
+        call. = FALSE
+      )
+    }
+
+    download_filename <- basename(download_filename)
+
+    if (!grepl("\\.csv$", download_filename, ignore.case = TRUE)) {
+      download_filename <- paste0(download_filename, ".csv")
+    }
+
+    dir.create(
+      download_dir,
+      recursive = TRUE,
+      showWarnings = FALSE
+    )
+
+    csv_path <- file.path(download_dir, download_filename)
+
+    utils::write.csv(
+      table_data,
+      file = csv_path,
+      row.names = FALSE,
+      na = ""
+    )
+
+  }
+
   return(html)
 }
 
@@ -192,4 +238,68 @@ df_to_crosstab <- function(data) {
     data.frame(check.names = FALSE)
 
   return(data)
+}
+
+
+#' @title Create ZIP download link for all tables
+#'
+#' @description
+#' Creates a ZIP archive containing all CSV files in a specified directory and
+#' returns an HTML download button for use in Quarto or HTML reports.
+#'
+#' If a ZIP file with the same name already exists, it is overwritten.
+#'
+#' @param tmp_dir Character string. Directory containing the CSV files to include
+#'   in the ZIP archive.
+#' @param zip_file Character string. Path to the ZIP file to create.
+#' @param label Character string. Text displayed on the download button.
+#'   Defaults to \code{"Download all tables"}.
+#'
+#' @return
+#' An \code{htmltools::tag} object containing a download link to the ZIP archive,
+#' or \code{NULL} if no CSV files are found.
+#'
+#' @export
+create_table_download_zip <- function(
+    tmp_dir,
+    zip_file,
+    label = "Download all tables"
+) {
+
+  output_dir <- file.path(getwd(), "downloads")
+
+  dir.create(
+    output_dir,
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+
+  zip_file <- file.path(
+    output_dir,
+    zip_file
+  )
+
+  csv_files <- list.files(tmp_dir)
+
+  if (length(csv_files) == 0) {
+    return(NULL)
+  }
+
+  if (file.exists(zip_file)) {
+    file.remove(zip_file)
+  }
+
+  zip::zip(
+    zipfile = zip_file,
+    files = csv_files,
+    root = tmp_dir
+  )
+
+  htmltools::tags$a(
+    href = zip_file,
+    download = basename(zip_file),
+    class = "btn btn-primary",
+    label
+  )
+
 }
