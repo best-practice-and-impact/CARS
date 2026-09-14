@@ -19,6 +19,15 @@
 #'   If \code{TRUE}, all crosstab value columns share one colour scale;
 #'   if \code{FALSE}, each value column is scaled independently.
 #' @param show_percent_symbol Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.
+#' @param download Logical; if \code{TRUE}, writes the displayed table to a CSV
+#'   file for inclusion in downloadable table bundles.
+#' @param download_filename Character string giving the name of the CSV file to
+#'   create when \code{download = TRUE}. If omitted, an error is raised.
+#' @param download_label Character string specifying the text displayed in the
+#'   download link. Ignored unless individual table downloads are enabled.
+#' @param download_dir Character string specifying the directory in which CSV
+#'   files are written when \code{download = TRUE}. The directory is created if
+#'   it does not already exist.
 #'
 #' @return A \code{kableExtra}/HTML table object.
 #'
@@ -80,7 +89,7 @@ df_to_table <- function(data,
   }
 
   if (isTRUE(crosstab)) {
-    table_data <- dplyr::select(data, !dplyr::any_of(c("count", "sample")))
+    table_data <- dplyr::select(table_data, !dplyr::any_of(c("count", "sample")))
     table_data <- df_to_crosstab(table_data)
     table_data <- dplyr::mutate(table_data, dplyr::across(-1, ~ ifelse(is.na(.x), "", as.character(.x))))
     alignment <- c("l", rep("r", ncol(table_data) - 1))

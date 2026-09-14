@@ -109,13 +109,3 @@ p > a:hover{
   border-bottom: 4px solid #F46A25;
   color: black;
 }
-
-.table-download {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.table-download .btn {
-  font-weight: 600;
-  text-decoration: none;
-}

@@ -45,6 +45,19 @@ category/question text, \code{n} (proportion), and optionally \code{count} and \
 If \code{TRUE}, all crosstab value columns share one colour scale;
 if \code{FALSE}, each value column is scaled independently.}
 
+\item{download}{Logical; if \code{TRUE}, writes the displayed table to a CSV
+file for inclusion in downloadable table bundles.}
+
+\item{download_filename}{Character string giving the name of the CSV file to
+create when \code{download = TRUE}. If omitted, an error is raised.}
+
+\item{download_label}{Character string specifying the text displayed in the
+download link. Ignored unless individual table downloads are enabled.}
+
+\item{download_dir}{Character string specifying the directory in which CSV
+files are written when \code{download = TRUE}. The directory is created if
+it does not already exist.}
+
 \item{show_percent_symbol}{Logical; if \code{TRUE}, appends a percent symbol to displayed percentage values.}
 }
 \value{
