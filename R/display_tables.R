@@ -50,7 +50,7 @@ df_to_table <- function(data,
                         heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
                         crosstab_global_scale = TRUE,
                         percent = TRUE,
-                        download = TRUE,
+                        download = FALSE,
                         download_filename = NULL,
                         download_label = "Download table as CSV",
                         download_dir = "downloads") {
@@ -229,4 +229,68 @@ df_to_crosstab <- function(data) {
     data.frame(check.names = FALSE)
 
   return(data)
+}
+
+
+#' @title Create ZIP download link for all tables
+#'
+#' @description
+#' Creates a ZIP archive containing all CSV files in a specified directory and
+#' returns an HTML download button for use in Quarto or HTML reports.
+#'
+#' If a ZIP file with the same name already exists, it is overwritten.
+#'
+#' @param tmp_dir Character string. Directory containing the CSV files to include
+#'   in the ZIP archive.
+#' @param zip_file Character string. Path to the ZIP file to create.
+#' @param label Character string. Text displayed on the download button.
+#'   Defaults to \code{"Download all tables"}.
+#'
+#' @return
+#' An \code{htmltools::tag} object containing a download link to the ZIP archive,
+#' or \code{NULL} if no CSV files are found.
+#'
+#' @export
+create_table_download_zip <- function(
+    tmp_dir,
+    zip_file,
+    label = "Download all tables"
+) {
+
+  output_dir <- file.path(getwd(), "downloads")
+
+  dir.create(
+    output_dir,
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+
+  zip_file <- file.path(
+    output_dir,
+    zip_file
+  )
+
+  csv_files <- list.files(tmp_dir)
+
+  if (length(csv_files) == 0) {
+    return(NULL)
+  }
+
+  if (file.exists(zip_file)) {
+    file.remove(zip_file)
+  }
+
+  zip::zip(
+    zipfile = zip_file,
+    files = csv_files,
+    root = tmp_dir
+  )
+
+  htmltools::tags$a(
+    href = zip_file,
+    download = basename(zip_file),
+    class = "btn btn-primary",
+    label
+  )
+
 }

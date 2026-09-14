@@ -14,7 +14,11 @@ df_to_table(
   heatmap = FALSE,
   heatmap_palette = c("#12436D", "#28A197", "#F46A25"),
   crosstab_global_scale = TRUE,
-  show_percent_symbol = TRUE
+  percent = TRUE,
+  download = FALSE,
+  download_filename = NULL,
+  download_label = "Download table as CSV",
+  download_dir = "downloads"
 )
 }
 \arguments{
@@ -53,8 +57,7 @@ optional heatmap-style cell colouring for percentage values, and optional sample
 \details{
 The function removes \code{count} and \code{sample} from displayed columns, converts
 \code{n} proportions to percentage labels, and applies alignment rules by table type.
-Heatmap styling is applied with \code{kableExtra::cell_spec()}, so HTML escaping is disabled
-when \code{heatmap = TRUE}.
+Heatmap styling is applied at the table-cell level with \code{kableExtra::column_spec()}.
 }
 \examples{
 \dontrun{

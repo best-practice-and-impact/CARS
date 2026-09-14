@@ -884,35 +884,8 @@ CARS::wrap_outputs("packages", plot, table)
 
 ```
 
-### Download summary tables
-```{r}
-list.files(tmp_dir)
-```
+### Download tables
 
 ```{r}
-dir.create("downloads", showWarnings = FALSE)
-
-csv_files <- list.files(tmp_dir)
-
-zip_file <- "downloads/summary.zip"
-
-if (length(csv_files) > 0) {
-  if (file.exists(zip_file)) {
-    unlink(zip_file)
-  }
-  utils::zip(
-    zipfile = zip_file,
-    files = list.files(
-      tmp_dir,
-      full.names = TRUE
-    )
-  )
-}
-
-htmltools::tags$a(
-  href = zip_file,
-  download = basename(zip_file),
-  class = "btn btn-primary",
-  "Download all tables"
-)
+CARS::create_table_download_zip(tmp_dir = tmp_dir, zip_file = "summary.zip")
 ```
