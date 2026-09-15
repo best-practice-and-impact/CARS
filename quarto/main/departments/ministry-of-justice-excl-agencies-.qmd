@@ -20,6 +20,17 @@ data <- data[!is.na(data$department) & data$department == "Ministry of Justice (
 
 tables <- CARS::summarise_all(data, config, all_tables = FALSE)
 
+tmp_dir <- file.path(
+  tempdir(),
+  janitor::make_clean_names("Ministry of Justice (excl. agencies)")
+)
+
+dir.create(
+  tmp_dir,
+  recursive = TRUE,
+  showWarnings = FALSE
+)
+
 ```
 
 :::{.callout-note}
@@ -48,7 +59,10 @@ plot <- CARS::plot_freqs(data = tables$code_freq,
 
 table <- CARS::df_to_table(data = tables, 
                            config = config, 
-                           question = "code_freq")
+                           question = "code_freq",
+                           download = TRUE,
+                           download_filename = "code-frequency.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("coding-freq", plot, table)
 
@@ -70,7 +84,11 @@ tables_use <- tables$use |>
   dplyr::select(name, n, count, sample)
 
 plot <- CARS::plot_freqs(tables_use, xlab = "Programming tool use", orientation = "h", font_size = 14)
-table <- CARS::df_to_table(tables_use, column_headers = c("Programming language", "Use"))
+table <- CARS::df_to_table(tables_use, 
+                           column_headers = c("Programming tool", "Percentage", "Count", "Total"),
+                           download = TRUE,
+                           download_filename = "code-language-use.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("use", plot, table)
 
@@ -90,7 +108,11 @@ tables_knowledge <- tables$knowledge |>
   dplyr::select(name, n, count, sample)
 
 plot <- CARS::plot_freqs(tables_knowledge, xlab = "Programming tool knowledge", orientation = "h", font_size = 14)
-table <- CARS::df_to_table(tables_knowledge, column_headers = c("Programming language", "Knowledge"))
+table <- CARS::df_to_table(tables_knowledge, 
+                           column_headers = c("Programming tool", "Percentage", "Count", "Total"),
+                           download = TRUE,
+                           download_filename = "code-language-knowledge.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("knowledge", plot, table)
 
@@ -114,7 +136,12 @@ plot <- CARS::plot_freqs(data = tables$git,
 
 table <- CARS::df_to_table(data = tables$git, 
                            column_headers = c("Do you know how to use Git?", 
-                                              "Percentage"))
+                                              "Percentage",
+                                              "Count",
+                                              "Total"),
+                           download = TRUE,
+                           download_filename = "git-knowledge.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("git", plot, table)
 
@@ -136,7 +163,10 @@ plot <- CARS::plot_freqs(tables$coding_years,
                          orientation = "h")
 table <- CARS::df_to_table(data = tables,
                            config = config,
-                           question = "coding_years")
+                           question = "coding_years",
+                           download = TRUE,
+                           download_filename = "coding-experience-years.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("coding-years", plot, table)
 
@@ -158,7 +188,10 @@ plot <- CARS::plot_freqs(data = tables,
 
 table <- CARS::df_to_table(data = tables,
                            config = config,
-                           question = "ability_change")
+                           question = "ability_change",
+                           download = TRUE,
+                           download_filename = "coding-ability-change.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("ability-change", plot, table)
 
@@ -190,7 +223,10 @@ table <- CARS::df_to_table(tables$coding_practices,
                              "Regularly (%)",
                              "All the time (%)"
                              ),
-                           crosstab = TRUE)
+                           crosstab = TRUE,
+                           download = TRUE,
+                           download_filename = "coding-practices.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("good-practices", plot, table)
 
@@ -220,7 +256,10 @@ table <- CARS::df_to_table(tables$doc,
                              "Regularly (%)",
                              "Always (%)"
                              ),
-                           crosstab = TRUE)
+                           crosstab = TRUE,
+                           download = TRUE,
+                           download_filename = "code-documentation.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("doc", plot, table)
 
@@ -248,7 +287,10 @@ table <- CARS::df_to_table(tables$working_practices,
                              "Regularly (%)",
                              "Always (%)"
                              ),
-                           crosstab = TRUE)
+                           crosstab = TRUE,
+                           download = TRUE,
+                           download_filename = "good-work-pracices.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("working_practices", plot, table)
 
@@ -286,8 +328,25 @@ plot <- CARS::plot_grouped(tables$rap_components,
 table <- CARS::df_to_table(tables$rap_components,
                            column_headers = c("RAP component",
                                               "Type",
-                                              "Percentage of analysts who code in their work"))
+                                              "Percentage of analysts who code in their work"),
+                           download = TRUE,
+                           download_filename = "rap-components.csv",
+                           download_dir = tmp_dir)
 
 CARS::wrap_outputs("rap-comp", plot, table)
+
+```
+
+### Download tables
+
+```{r}
+CARS::create_table_download_zip(
+  tmp_dir = tmp_dir,
+  zip_file = paste0(
+    janitor::make_clean_names("Ministry of Justice (excl. agencies)"),
+    ".zip"
+  ),
+  label = paste("Download", "Ministry of Justice (excl. agencies)", "tables")
+)
 
 ```
