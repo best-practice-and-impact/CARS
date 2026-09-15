@@ -12,3 +12,6 @@ quarto/qa/summary_qa.html
 quarto/summary_qa_files/
 quarto/main/departments/
 quarto/main/professions/
+!docs/downloads/**
+!docs/departments/downloads/**
+!docs/professions/downloads/**
