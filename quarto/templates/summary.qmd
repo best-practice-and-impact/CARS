@@ -337,7 +337,7 @@ CARS::wrap_outputs("rap-comp", plot, table)
 
 ```
 
-### Download tables
+## Download tables
 
 ```{r}
 CARS::create_table_download_zip(

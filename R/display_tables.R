@@ -296,7 +296,10 @@ create_table_download_zip <- function(
   )
 
   htmltools::tags$a(
-    href = zip_file,
+    href = paste0(
+      "downloads/",
+      basename(zip_file)
+    ),
     download = basename(zip_file),
     class = "btn btn-primary",
     label
